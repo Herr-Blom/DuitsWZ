@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Die Geschichte des Kopfhörers – oefening</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    max-width: 1280px;
+    margin: 30px auto;
+    padding: 0 16px;
+    line-height: 1.6;
+    color: #222;
+    background: #fafafa;
+  }
+  h1 { font-size: 1.4em; border-bottom: 2px solid #333; padding-bottom: 6px; }
+  h2 { font-size: 1.05em; margin-top: 1.6em; }
+  .examen-header {
+    font-size: 1.05em;
+    font-weight: bold;
+    color: #444;
+    letter-spacing: .3px;
+  }
+  .layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    align-items: start;
+    margin-top: 24px;
+  }
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+  }
+  .article {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px 20px;
+    position: sticky;
+    top: 16px;
+    max-height: calc(100vh - 32px);
+    overflow-y: auto;
+  }
+  @media (max-width: 900px) {
+    .article { position: static; max-height: none; overflow-y: visible; }
+  }
+  .article h3 { margin-top: 0; }
+  .source { font-size: .85em; color: #666; margin-top: 12px; }
+  .note { font-size: .85em; color: #555; border-top: 1px dashed #bbb; padding-top: 8px; margin-top: 12px;}
+  .vragen { min-width: 0; }
+
+  .options { list-style: none; padding-left: 0; }
+  .options li { margin: 6px 0; }
+  .option-btn {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 9px 12px;
+    font-size: .97em;
+    font-family: inherit;
+    border: 1.5px solid #999;
+    border-radius: 6px;
+    background: #fff;
+    cursor: pointer;
+    transition: background .15s, border-color .15s;
+  }
+  .option-btn:hover:not(:disabled) { background: #eef4fb; border-color: #4a7fb5; }
+  .option-btn:disabled { cursor: default; opacity: .95; }
+  .option-btn.correct { background: #d8f5d8; border-color: #2e8b2e; font-weight: bold; }
+  .option-btn.wrong { background: #fbdcdc; border-color: #c0392b; }
+
+  .feedback {
+    margin-top: 10px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    display: none;
+    font-size: .95em;
+  }
+  .feedback.show { display: block; }
+  .feedback.ok { background: #e3f6e3; border-left: 5px solid #2e8b2e; }
+  .feedback.nok { background: #fdeaea; border-left: 5px solid #c0392b; }
+  .feedback .uitleg { margin-top: 6px; }
+  .feedback .vertaling {
+    margin-top: 8px;
+    padding: 8px 10px;
+    background: rgba(255,255,255,.65);
+    border-left: 3px solid #888;
+    border-radius: 4px;
+    font-size: .93em;
+  }
+  .feedback .vertaling em { color: #333; }
+
+  mark {
+    background: transparent;
+    color: inherit;
+    padding: 0;
+    border-radius: 3px;
+    transition: background .3s;
+  }
+  mark.active {
+    background: #ffe680;
+    padding: 0 2px;
+    outline: 2px solid #ffb347;
+  }
+
+  .reset {
+    margin-top: 24px;
+    padding: 8px 16px;
+    font-family: inherit;
+    font-size: .95em;
+    border: 1.5px solid #555;
+    background: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .reset:hover { background: #eee; }
+</style>
+</head>
+<body>
+
+<p class="examen-header">Examen vmbo gl/tl 2026 Tijdvak 1</p>
+<h1>Tekst 9 – Die Geschichte des Kopfhörers</h1>
+
+<div class="layout">
+
+  <!-- ================= TEKST (links) ================= -->
+  <div class="article">
+    <h3>Die Geschichte des Kopfhörers</h3>
+    <p style="margin-top:0;"><em>Heute ist es normal, dass wir unsere Lieblingsmusik unterwegs hören können. Nur war das früher nicht immer so. Seit wann gibt es denn eigentlich Kopfhörer?</em></p>
+
+    <h4 style="margin-bottom:4px;">Erste Kopfhörer tauchen auf</h4>
+    <p>
+      (1) <mark id="m-baldwin">Die ersten Kopfhörer kamen 1910 von Gründer und Inhaber Baldwin
+      Radio Company in Salt Lake City heraus. Diese Vorläufer der Kopfhörer
+      waren aber schlecht isoliert und versetzten dem Träger Stromschläge,
+      wenn man sie nicht richtig benutzte.</mark>
+    </p>
+    <p>
+      In den 1930er Jahren brachte die Firma Beyerdynamic besser isolierte
+      Kopfhörer heraus. Das Design, welches damals verwendet wurde, wird bis
+      heute für die On-Ear-Kopfhörer behalten.
+    </p>
+    <p>
+      1950 setzten sich Vinyl-Schallplatten durch. Zu dieser Zeit wurden auch
+      die ersten Stereo-Kopfhörer von John C. Koss vorgestellt. Er war
+      seinerzeit ein berühmter Jazz-Musiker aus Milwaukee, USA.
+    </p>
+    <p>
+      Diese <mark id="m-luecke">34</mark> war ein wichtiger Meilenstein in der Geschichte der
+      Kopfhörer, denn erstmals konnte man Musik auch in Stereo abspielen.
+    </p>
+    <p>
+      Die 1960er brachten uns batteriebetriebene Kopfhörer. Danach ging es für
+      die Kopfhörer nur noch bergauf. Bald schon wurde der Walkman (1979)
+      zum Statussymbol der Jugendlichen.
+    </p>
+    <p>
+      Die Marke Teufel mischt zwar schon seit 1980 erfolgreich auf dem
+      Audiomarkt mit, doch erst im Jahr 2009 schafften es die ersten Kopfhörer
+      von Teufel in das Sortiment. Viele verschiedene Modelle sind seitdem
+      erschienen und haben den Kopfhörer-Markt ordentlich aufgemischt,
+      darunter zum Beispiel die beliebten AIRY, die ersten Bluetooth-Kopfhörer
+      aus dem Hause Teufel.
+    </p>
+
+    <h4 style="margin-bottom:4px;">Kopfhörer und seine Vielfalt</h4>
+    <p>
+      (2) Heute finden wir auf dem Markt die verschiedensten Arten von
+      Kopfhörern. Von In-Ears und Over-Ears über Bluetooth- bis hin zum
+      Noise-Cancelling-Kopfhörer. Mittlerweile werden in fast jedem Segment
+      und für jede Sound-Anforderung Kopfhörer angeboten. Hierbei gibt es
+      kein besser oder schlechter. Jeder muss für sich entscheiden können,
+      welche Art von Kopfhörern ihm am besten zusagt.
+    </p>
+    <p>
+      <mark id="m-inears">In-Ears punkten vor allem bei den tieferen Tönen.</mark>
+      <mark id="m-onears">On-Ears sitzen nicht
+      immer ganz fest am Ohr, sodass der Klang zuweilen nach außen
+      entweicht und womöglich Sitznachbarn im Zug oder Kollegen im Büro
+      stören kann.</mark>
+      <mark id="m-overears">Over-Ears dagegen schirmen den Klang gut ab.</mark>
+    </p>
+    <p class="source">www.chinderzytig.ch, 22.11.2022</p>
+  </div>
+
+  <!-- ================= VRAGEN (rechts) ================= -->
+  <div class="vragen">
+
+    <!-- VRAAG 33 -->
+    <h2>1p 33 &nbsp;Welches Risiko gab es bei den Kopfhörern der Baldwin Radio Company?</h2>
+    <ul class="options" id="q33-options">
+      <li><button class="option-btn" data-q="33" data-opt="A">A&nbsp; elektrische Schocks</button></li>
+      <li><button class="option-btn" data-q="33" data-opt="B">B&nbsp; Gehörschaden</button></li>
+      <li><button class="option-btn" data-q="33" data-opt="C">C&nbsp; Ohrmuschel-Schmerzen</button></li>
+      <li><button class="option-btn" data-q="33" data-opt="D">D&nbsp; Störgeräusche</button></li>
+    </ul>
+    <div class="feedback" id="fb33"></div>
+
+    <!-- VRAAG 34 -->
+    <h2>1p 34 &nbsp;Welches Wort passt im Sinne des Textes in die Lücke im 1. Absatz?</h2>
+    <ul class="options" id="q34-options">
+      <li><button class="option-btn" data-q="34" data-opt="A">A&nbsp; Erfindung</button></li>
+      <li><button class="option-btn" data-q="34" data-opt="B">B&nbsp; Musikrichtung</button></li>
+      <li><button class="option-btn" data-q="34" data-opt="C">C&nbsp; Schallplatte</button></li>
+    </ul>
+    <div class="feedback" id="fb34"></div>
+
+    <!-- VRAAG 35 -->
+    <h2>1p 35 &nbsp;Wat is volgens alinea 2 het sterke punt van de “In-Ears”-koptelefoons? <br><span style="font-weight:normal;font-size:.92em;">Beantwoord deze vraag in het Nederlands.</span></h2>
+    <ul class="options" id="q35-options">
+      <li><button class="option-btn" data-q="35" data-opt="A">A&nbsp; Ze zijn het goedkoopst.</button></li>
+      <li><button class="option-btn" data-q="35" data-opt="B">B&nbsp; Ze geven de lage tonen goed weer.</button></li>
+      <li><button class="option-btn" data-q="35" data-opt="C">C&nbsp; Ze zitten altijd stevig vast.</button></li>
+      <li><button class="option-btn" data-q="35" data-opt="D">D&nbsp; Ze houden geluid goed tegen.</button></li>
+    </ul>
+    <div class="feedback" id="fb35"></div>
+
+    <!-- VRAAG 36 -->
+    <h2>1p 36 &nbsp;Van welk type koptelefoon wordt er in alinea 2 een zwak punt genoemd?</h2>
+    <ul class="options" id="q36-options">
+      <li><button class="option-btn" data-q="36" data-opt="A">A&nbsp; bluetooth-koptelefoon</button></li>
+      <li><button class="option-btn" data-q="36" data-opt="B">B&nbsp; in-Ears-koptelefoon</button></li>
+      <li><button class="option-btn" data-q="36" data-opt="C">C&nbsp; noise-cancelling-koptelefoon</button></li>
+      <li><button class="option-btn" data-q="36" data-opt="D">D&nbsp; on-Ears-koptelefoon</button></li>
+      <li><button class="option-btn" data-q="36" data-opt="E">E&nbsp; over-Ears-koptelefoon</button></li>
+    </ul>
+    <div class="feedback" id="fb36"></div>
+
+  </div>
+</div>
+
+<button class="reset" onclick="resetAll()">Alles opnieuw proberen</button>
+
+<script>
+const answers = {
+  "33": {
+    correct: "A",
+    uitleg:
+      "Juist is A. In de tekst staat: <em>„Diese Vorläufer der Kopfhörer waren aber schlecht isoliert und versetzten dem Träger Stromschläge, wenn man sie nicht richtig benutzte.“</em> Slecht geïsoleerde koptelefoons gaven de drager dus elektrische schokken. " +
+      "B (gehoorschade), C (pijn aan de oorschelp) en D (storinggeluiden) worden niet genoemd.",
+    vertaling:
+      "<strong>… versetzten dem Träger Stromschläge, wenn man sie nicht richtig benutzte.</strong> = <em>… gaven de drager elektrische schokken als je ze niet goed gebruikte.</em> " +
+      "„der Stromschlag“ = de elektrische schok; „schlecht isoliert“ = slecht geïsoleerd → optie A.",
+    markIds: ["m-baldwin"]
+  },
+  "34": {
+    correct: "A",
+    uitleg:
+      "Juist is A („Erfindung“). De zin luidt: <em>„Diese Erfindung war ein wichtiger Meilenstein in der Geschichte der Kopfhörer, denn erstmals konnte man Musik auch in Stereo abspielen.“</em> Het gaat om de uitvinding van de stereokoptelefoon door John C. Koss — een mijlpaal. " +
+      "B (muziekrichting) en C (plaat) passen niet: er wordt juist gesproken over de eerste stereokoptelefoon als uitvinding.",
+    vertaling:
+      "<strong>Diese Erfindung war ein wichtiger Meilenstein in der Geschichte der Kopfhörer.</strong> = <em>Deze uitvinding was een belangrijke mijlpaal in de geschiedenis van de koptelefoon.</em> " +
+      "„die Erfindung“ = de uitvinding; „der Meilenstein“ = de mijlpaal → optie A.",
+    markIds: ["m-luecke"]
+  },
+  "35": {
+    correct: "B",
+    uitleg:
+      "Juist is B. In alinea 2 staat: <em>„In-Ears punkten vor allem bei den tieferen Tönen.“</em> Letterlijk: in-ears scoren vooral bij de lagere tonen. Het sterke punt is dus dat ze lage tonen goed weergeven. " +
+      "A (goedkoopst) wordt niet gezegd. C (zitten altijd stevig vast) is onjuist — dat probleem wordt juist bij on-ears genoemd. D (houden geluid goed tegen) geldt volgens de tekst voor over-ears, niet voor in-ears.",
+    vertaling:
+      "<strong>In-Ears punkten vor allem bei den tieferen Tönen.</strong> = <em>In-ears scoren vooral bij de lagere tonen.</em> " +
+      "„punkten“ = scoren; „die tieferen Töne“ = de lagere tonen → optie B (lage tonen goed weer).",
+    markIds: ["m-inears"]
+  },
+  "36": {
+    correct: "D",
+    uitleg:
+      "Juist is D (on-Ears). In alinea 2 staat: <em>„On-Ears sitzen nicht immer ganz fest am Ohr, sodass der Klang zuweilen nach außen entweicht und womöglich Sitznachbarn im Zug oder Kollegen im Büro stören kann.“</em> Het zwakke punt is dus dat ze niet altijd goed afsluiten, waardoor geluid naar buiten lekt en anderen stoort. " +
+      "Voor in-ears (B) wordt juist een sterk punt genoemd; over-ears (E) sluiten volgens de tekst juist goed af. Bluetooth (A) en noise-cancelling (C) krijgen in alinea 2 geen zwak punt toegeschreven.",
+    vertaling:
+      "<strong>On-Ears sitzen nicht immer ganz fest am Ohr, sodass der Klang zuweilen nach außen entweicht …</strong> = <em>On-ears zitten niet altijd goed vast aan het oor, waardoor het geluid soms naar buiten lekt …</em> " +
+      "„entweichen“ = ontsnappen/weglekken; „stören“ = storen → optie D.",
+    markIds: ["m-onears"]
+  }
+};
+
+function showFeedback(q, isCorrect) {
+  const data = answers[q];
+  const fb = document.getElementById("fb" + q);
+  fb.className = "feedback show " + (isCorrect ? "ok" : "nok");
+  fb.innerHTML =
+    (isCorrect ? "✅ <strong>Juist!</strong> " : "❌ <strong>Onjuist.</strong> Het juiste antwoord is <strong>" + data.correct + "</strong>. ") +
+    '<div class="uitleg">' + data.uitleg + "</div>" +
+    '<div class="vertaling"><strong>Uitleg van de Duitse zin(nen):</strong><br>' + data.vertaling + "</div>";
+  data.markIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add("active");
+  });
+}
+
+function handleClick(e) {
+  const btn = e.target.closest(".option-btn");
+  if (!btn || btn.disabled || !btn.dataset.q) return;
+
+  const q = btn.dataset.q;
+  const opt = btn.dataset.opt;
+  const data = answers[q];
+  if (!data) return;
+  const isCorrect = opt === data.correct;
+
+  const buttons = document.querySelectorAll('#q' + q + '-options .option-btn');
+  buttons.forEach(b => {
+    b.disabled = true;
+    if (b.dataset.opt === opt) {
+      b.classList.add(isCorrect ? "correct" : "wrong");
+    }
+    if (!isCorrect && b.dataset.opt === data.correct) {
+      b.classList.add("correct");
+    }
+  });
+
+  showFeedback(q, isCorrect);
+}
+
+document.querySelectorAll(".option-btn").forEach(btn => {
+  btn.addEventListener("click", handleClick);
+});
+
+function resetAll() {
+  document.querySelectorAll(".option-btn").forEach(b => {
+    b.disabled = false;
+    b.classList.remove("correct", "wrong");
+  });
+  document.querySelectorAll(".feedback").forEach(f => {
+    f.className = "feedback";
+    f.innerHTML = "";
+  });
+  document.querySelectorAll("mark").forEach(m => m.classList.remove("active"));
+}
+</script>
+
+</body>
+</html>
