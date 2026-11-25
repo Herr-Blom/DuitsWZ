@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ich bin Bergläufer – oefening</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    max-width: 1280px;
+    margin: 30px auto;
+    padding: 0 16px;
+    line-height: 1.6;
+    color: #222;
+    background: #fafafa;
+  }
+  h1 { font-size: 1.4em; border-bottom: 2px solid #333; padding-bottom: 6px; }
+  h2 { font-size: 1.05em; margin-top: 1.6em; }
+  .examen-header {
+    font-size: 1.05em;
+    font-weight: bold;
+    color: #444;
+    letter-spacing: .3px;
+  }
+  .layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    align-items: start;
+    margin-top: 24px;
+  }
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+  }
+  .article {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px 20px;
+    position: sticky;
+    top: 16px;
+    max-height: calc(100vh - 32px);
+    overflow-y: auto;
+  }
+  @media (max-width: 900px) {
+    .article { position: static; max-height: none; overflow-y: visible; }
+  }
+  .article h3 { margin-top: 0; }
+  .source { font-size: .85em; color: #666; margin-top: 12px; }
+  .note { font-size: .85em; color: #555; border-top: 1px dashed #bbb; padding-top: 8px; margin-top: 12px;}
+  .vragen { min-width: 0; }
+
+  .options { list-style: none; padding-left: 0; }
+  .options li { margin: 6px 0; }
+  .option-btn {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 9px 12px;
+    font-size: .97em;
+    font-family: inherit;
+    border: 1.5px solid #999;
+    border-radius: 6px;
+    background: #fff;
+    cursor: pointer;
+    transition: background .15s, border-color .15s;
+  }
+  .option-btn:hover:not(:disabled) { background: #eef4fb; border-color: #4a7fb5; }
+  .option-btn:disabled { cursor: default; opacity: .95; }
+  .option-btn.correct { background: #d8f5d8; border-color: #2e8b2e; font-weight: bold; }
+  .option-btn.wrong { background: #fbdcdc; border-color: #c0392b; }
+
+  .feedback {
+    margin-top: 10px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    display: none;
+    font-size: .95em;
+  }
+  .feedback.show { display: block; }
+  .feedback.ok { background: #e3f6e3; border-left: 5px solid #2e8b2e; }
+  .feedback.nok { background: #fdeaea; border-left: 5px solid #c0392b; }
+  .feedback .uitleg { margin-top: 6px; }
+  .feedback .vertaling {
+    margin-top: 8px;
+    padding: 8px 10px;
+    background: rgba(255,255,255,.65);
+    border-left: 3px solid #888;
+    border-radius: 4px;
+    font-size: .93em;
+  }
+  .feedback .vertaling em { color: #333; }
+
+  mark {
+    background: transparent;
+    color: inherit;
+    padding: 0;
+    border-radius: 3px;
+    transition: background .3s;
+  }
+  mark.active {
+    background: #ffe680;
+    padding: 0 2px;
+    outline: 2px solid #ffb347;
+  }
+
+  .reset {
+    margin-top: 24px;
+    padding: 8px 16px;
+    font-family: inherit;
+    font-size: .95em;
+    border: 1.5px solid #555;
+    background: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .reset:hover { background: #eee; }
+
+  .check-btn {
+    display: inline-block;
+    width: auto;
+    margin-top: 10px;
+    padding: 9px 18px;
+    font-family: inherit;
+    font-size: .97em;
+    border: 1.5px solid #4a7fb5;
+    background: #eef4fb;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .check-btn:hover { background: #dbe8f6; }
+  .check-btn:disabled { opacity: .6; cursor: default; }
+
+  .open-input {
+    width: 100%;
+    font-family: inherit;
+    font-size: .97em;
+    padding: 9px 12px;
+    border: 1.5px solid #999;
+    border-radius: 6px;
+  }
+  .open-input:disabled { background: #f4f4f4; }
+
+  textarea {
+    width: 100%;
+    font-family: inherit;
+    font-size: .97em;
+    padding: 9px 12px;
+    border: 1.5px solid #999;
+    border-radius: 6px;
+    resize: vertical;
+  }
+  textarea:disabled { background: #f4f4f4; }
+
+  .waar-niet-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+    font-size: .95em;
+  }
+  .waar-niet-table th,
+  .waar-niet-table td {
+    border: 1px solid #ccc;
+    padding: 8px 10px;
+    text-align: left;
+    vertical-align: top;
+  }
+  .waar-niet-table th { background: #f0f0f0; font-weight: bold; }
+  .waar-niet-table th.center,
+  .waar-niet-table td.center { text-align: center; width: 70px; }
+  .waar-niet-table input[type="radio"] { transform: scale(1.25); cursor: pointer; }
+  .waar-niet-table tr.correct-row { background: #e3f6e3; }
+  .waar-niet-table tr.wrong-row { background: #fdeaea; }
+  .waar-niet-table .rij-feedback { font-size: .88em; margin-top: 4px; display: block; }
+  .waar-niet-table .rij-feedback.ok { color: #2e8b2e; }
+  .waar-niet-table .rij-feedback.nok { color: #c0392b; }
+
+  .ja-nee-buttons { display: flex; gap: 10px; margin-top: 8px; flex-wrap: wrap; }
+  .ja-nee-buttons .option-btn { width: auto; min-width: 80px; text-align: center; }
+</style>
+</head>
+<body>
+
+<p class="examen-header">Examen vmbo gl/tl 2026 Tijdvak 1</p>
+<h1>Tekst 4 – Ich bin Bergläufer</h1>
+
+<div class="layout">
+
+  <!-- ================= TEKST (links) ================= -->
+  <div class="article">
+    <h3>Ich bin Bergläufer</h3>
+    <p style="margin-top:0;"><em>Florian, 13, rennt in den Bergen über Stock und Stein.</em></p>
+
+    <p>
+      (1) <mark id="m-gipfel">Wenn ich einen steilen Berg hochrenne, schlägt mein Herz schneller,
+      meine Beine brennen, und der Gipfel scheint unendlich weit weg. Doch
+      ich weiß, was mich oben erwartet: die Aussicht, der Stolz und das Gefühl,
+      alles gegeben zu haben. Oben anzukommen, ist jedes Mal wie ein kleiner
+      Sieg – dann stehe ich da, über den Wolken, und fühle mich frei.</mark>
+    </p>
+    <p>
+      (2) Alles hat angefangen, als ich sechs Jahre alt war. Damals bin ich mit
+      meinen Eltern auf meine ersten Bergläufe gegangen. Am Anfang musste
+      ich oft Pausen machen, da meine Füße weh taten und ich Seitenstechen
+      hatte. Aber ich wollte besser werden und habe gelernt, länger durchzuhalten. <mark id="m-wettkampf">Mein erster Berglauf-Wettkampf war mit sieben Jahren. Der Lauf
+      damals war extrem anstrengend, aber ich bin Dritter geworden und habe
+      sogar einen Pokal bekommen!</mark>
+    </p>
+    <p>
+      (3) Am liebsten trainiere ich mit Freunden, das macht mir einfach mehr
+      Spaß. Ich bin meistens zweimal pro Woche in meinem Leichtathletikverein, um mich auf Wettkämpfe vorzubereiten. Unser Training dauert
+      etwa anderthalb Stunden. <mark id="m-spiele">Vor jedem Training machen wir Spiele, um
+      uns <span style="text-decoration:underline;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>.</mark> Vor Wettkämpfen hingegen, laufen wir uns nur locker warm,
+      um die Muskeln vorzubereiten.
+    </p>
+    <p>
+      (4) <mark id="m-glueck">An einem Wettkampftag bin ich immer etwas aufgeregt, aber das
+      gehört dazu. Ich habe meinen kleinen Glücksbringer dabei – einen
+      Marienkäfer aus Holz. Er erinnert mich daran, den Lauf zu genießen.</mark> An
+      der Startlinie stehen alle dicht nebeneinander, es riecht ein bisschen nach
+      Schweiß vom Aufwärmen und bestimmt auch, weil alle aufgeregt sind. <mark id="m-konzentration">Vor
+      dem Start rede ich nicht viel, sondern konzentriere mich auf mich.</mark> Ich
+      weiß, wie wichtig es ist, die Energie gut einzuteilen. <mark id="m-taktik">Viele laufen am
+      Anfang zu schnell los, aber dann haben sie am Ende keine Kraft mehr. Ich
+      habe gelernt, langsamer zu starten, damit ich am Ende noch einmal
+      richtig Gas geben kann.</mark> <mark id="m-startschuss">Wenn der Startschuss fällt, kriege ich Gänsehaut.
+      Es ist ein echtes Gemeinschaftsgefühl, wenn wir Läufer zusammen
+      starten.</mark>
+    </p>
+    <p>
+      (5) <mark id="m-kopf">Das Berglaufen ist für mich mehr als Sport. Es hilft mir, den Kopf freizubekommen. Es ist, als würde ich alles hinter mir lassen.</mark> Wenn ich eine
+      Weile keinen Sport mache, merke ich das sofort. Es kribbelt in meinen
+      Muskeln, und ich werde unruhig. Das Laufen in den Bergen ist zwar hart,
+      aber auch spannend. <mark id="m-veränderung">Je weiter ich mich nach oben kämpfe, desto mehr
+      verändert sich alles. Es wird ruhiger, der Baumbestand weniger, der
+      Boden steiniger, die Luft kälter.</mark> Das Gefühl, wenn ich den Gipfel erreiche
+      und das Tal unter mir liegt, ist unbeschreiblich.
+    </p>
+    <p class="source">Dein Spiegel, 2.2025</p>
+  </div>
+
+  <!-- ================= VRAGEN (rechts) ================= -->
+  <div class="vragen">
+
+    <!-- VRAAG 15 -->
+    <h2>1p 15 &nbsp;Welche Umschreibung passt am besten zum 1. Absatz?</h2>
+    <ul class="options" id="q15-options">
+      <li><button class="option-btn" data-q="15" data-opt="A">A&nbsp; einen Kick bekommen</button></li>
+      <li><button class="option-btn" data-q="15" data-opt="B">B&nbsp; immer schneller, immer besser</button></li>
+      <li><button class="option-btn" data-q="15" data-opt="C">C&nbsp; plötzliche Verwirrung</button></li>
+      <li><button class="option-btn" data-q="15" data-opt="D">D&nbsp; starke Konkurrenz</button></li>
+    </ul>
+    <div class="feedback" id="fb15"></div>
+
+    <!-- VRAAG 16 -->
+    <h2>1p 16 &nbsp;Vond Florian dat zijn eerste wedstrijd succesvol verlopen was? (alinea 2)<br>Antwoord met ‘ja’ of ‘nee’ én schrijf in het Nederlands op waaruit dat blijkt.</h2>
+    <div class="ja-nee-buttons" id="q16-options">
+      <button class="option-btn" data-q="16" data-opt="ja">ja</button>
+      <button class="option-btn" data-q="16" data-opt="nee">nee</button>
+    </div>
+    <p style="font-size:.95em; color:#444; margin-top:10px;">Waaruit blijkt dat? (in het Nederlands):</p>
+    <textarea id="q16-input" rows="3" placeholder="Schrijf hier je bewijs…"></textarea>
+    <div style="margin-top:10px;">
+      <button class="check-btn" id="q16-check">Controleer antwoord</button>
+    </div>
+    <div class="feedback" id="fb16"></div>
+
+    <!-- VRAAG 17 -->
+    <h2>1p 17 &nbsp;Was passt im Sinne des Textes in die Lücke im 3. Absatz?</h2>
+    <ul class="options" id="q17-options">
+      <li><button class="option-btn" data-q="17" data-opt="A">A&nbsp; aufzuwärmen</button></li>
+      <li><button class="option-btn" data-q="17" data-opt="B">B&nbsp; kennenzulernen</button></li>
+      <li><button class="option-btn" data-q="17" data-opt="C">C&nbsp; zu inspirieren</button></li>
+    </ul>
+    <div class="feedback" id="fb17"></div>
+
+    <!-- VRAAG 18 -->
+    <h2>2p 18 &nbsp;Geef van elk van de onderstaande beweringen aan of deze wel of niet overeenkomt met alinea 4.<br>Kruis aan ‘wel’ of ‘niet’.</h2>
+    <table class="waar-niet-table" id="q18-table">
+      <thead>
+        <tr>
+          <th>Bewering</th>
+          <th class="center">wel</th>
+          <th class="center">niet</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr data-row="1">
+          <td>1&nbsp; Florian heeft tijdens wedstrijddagen een mascotte bij zich.</td>
+          <td class="center"><input type="radio" name="q18-1" value="wel"></td>
+          <td class="center"><input type="radio" name="q18-1" value="niet"></td>
+        </tr>
+        <tr data-row="2">
+          <td>2&nbsp; Voor de start van een wedstrijd maakt Florian graag contact met andere deelnemers om hem heen.</td>
+          <td class="center"><input type="radio" name="q18-2" value="wel"></td>
+          <td class="center"><input type="radio" name="q18-2" value="niet"></td>
+        </tr>
+        <tr data-row="3">
+          <td>3&nbsp; Florian ziet een nadeel in de aanpak van andere wedstrijddeelnemers.</td>
+          <td class="center"><input type="radio" name="q18-3" value="wel"></td>
+          <td class="center"><input type="radio" name="q18-3" value="niet"></td>
+        </tr>
+        <tr data-row="4">
+          <td>4&nbsp; Het startsignaal van een wedstrijd bezorgt Florian een bijzonder gevoel.</td>
+          <td class="center"><input type="radio" name="q18-4" value="wel"></td>
+          <td class="center"><input type="radio" name="q18-4" value="niet"></td>
+        </tr>
+      </tbody>
+    </table>
+    <button class="check-btn" id="q18-check">Controleer antwoord</button>
+    <div class="feedback" id="fb18"></div>
+
+    <!-- VRAAG 19 -->
+    <h2>1p 19 &nbsp;Welche Aussage über das Berglaufen und Florian ist richtig? (5. Absatz)</h2>
+    <ul class="options" id="q19-options">
+      <li><button class="option-btn" data-q="19" data-opt="A">A&nbsp; Es ist für ihn ein Mittel, mehr über die Natur zu lernen.</button></li>
+      <li><button class="option-btn" data-q="19" data-opt="B">B&nbsp; Es ist für ihn ein Mittel, um abschalten zu können.</button></li>
+      <li><button class="option-btn" data-q="19" data-opt="C">C&nbsp; Es ist für ihn eine Möglichkeit, seine körperlichen Grenzen immer weiter zu verlegen.</button></li>
+      <li><button class="option-btn" data-q="19" data-opt="D">D&nbsp; Es ist für ihn einfach nur eine tolle Freizeitbeschäftigung.</button></li>
+    </ul>
+    <div class="feedback" id="fb19"></div>
+
+    <!-- VRAAG 20 -->
+    <h2>2p 20 &nbsp;Naarmate Florian bij zijn tochten hoger in de bergen komt, wordt het stiller en kouder. (alinea 5)<br>Welke twee andere veranderingen in de omgeving noemt hij nog?<br>Beantwoord deze vraag in het Nederlands.</h2>
+    <textarea id="q20-input" rows="3" placeholder="Verandering 1: ...&#10;Verandering 2: ..."></textarea>
+    <div style="margin-top:10px;">
+      <button class="check-btn" id="q20-check">Controleer antwoord</button>
+    </div>
+    <div class="feedback" id="fb20"></div>
+
+  </div>
+</div>
+
+<button class="reset" onclick="resetAll()">Alles opnieuw proberen</button>
+
+<script>
+const answers = {
+  "15": {
+    correct: "A",
+    uitleg:
+      "Juist is A („einen Kick bekommen“). Alinea 1 beschrijft de intense sensatie van het bergop rennen: <em>„schlägt mein Herz schneller, meine Beine brennen“</em> en de euforie boven: <em>„Oben anzukommen, ist jedes Mal wie ein kleiner Sieg – dann stehe ich da, über den Wolken, und fühle mich frei.“</em> Dat is een kick, een intense kickervaring. " +
+      "B (steeds sneller, steeds beter) past niet: het gaat om het gevoel, niet om progressie. C (plotselinge verwarring) en D (sterke concurrentie) komen niet in de alinea voor.",
+    vertaling:
+      "<strong>Wenn ich einen steilen Berg hochrenne, schlägt mein Herz schneller, meine Beine brennen, und der Gipfel scheint unendlich weit weg.</strong> = <em>Als ik een steile berg op ren, klopt mijn hart sneller, mijn benen branden en de top lijkt oneindig ver weg.</em> " +
+      "<strong>Oben anzukommen, ist jedes Mal wie ein kleiner Sieg – dann stehe ich da, über den Wolken, und fühle mich frei.</strong> = <em>Boven aankomen is elke keer als een kleine overwinning – dan sta ik daar, boven de wolken, en voel me vrij.</em> " +
+      "„ein Kick“ = een kick/euforisch gevoel → optie A.",
+    markIds: ["m-gipfel"]
+  },
+  "16": {
+    correct: "—",
+    uitleg:
+      "Juist is <strong>ja</strong>. In alinea 2 staat: <em>„Mein erster Berglauf-Wettkampf war mit sieben Jahren. Der Lauf damals war extrem anstrengend, aber ich bin Dritter geworden und habe sogar einen Pokal bekommen!“</em> Hij werd derde en kreeg zelfs een beker — dat is een succesvol verlopen eerste wedstrijd. " +
+      "Goed bewijs in het Nederlands: hij werd derde en kreeg een beker/pokal.",
+    vertaling:
+      "<strong>Mein erster Berglauf-Wettkampf war mit sieben Jahren.</strong> = <em>Mijn eerste bergloopwedstrijd was op zevenjarige leeftijd.</em> " +
+      "<strong>Der Lauf damals war extrem anstrengend, aber ich bin Dritter geworden und habe sogar einen Pokal bekommen!</strong> = <em>De loop toen was extreem inspannend, maar ik ben derde geworden en heb zelfs een beker gekregen!</em> " +
+      "„der Pokal“ = de beker; „Dritter werden“ = derde worden. → ja, succesvol.",
+    markIds: ["m-wettkampf"]
+  },
+  "17": {
+    correct: "A",
+    uitleg:
+      "Juist is A („aufzuwärmen“). In alinea 3 staat: <em>„Vor jedem Training machen wir Spiele, um uns aufzuwärmen. Vor Wettkämpfen hingegen, laufen wir uns nur locker warm, um die Muskeln vorzubereiten.“</em> De spelen dienen dus om op te warmen. " +
+      "B (kennenzulernen) en C (zu inspirieren) passen niet bij de tegenstelling met <em>„laufen uns nur locker warm“</em>.",
+    vertaling:
+      "<strong>Vor jedem Training machen wir Spiele, um uns aufzuwärmen.</strong> = <em>Voor elke training doen we spelletjes om op te warmen.</em> " +
+      "<strong>Vor Wettkämpfen hingegen, laufen wir uns nur locker warm, um die Muskeln vorzubereiten.</strong> = <em>Voor wedstrijden daarentegen lopen we ons alleen rustig warm om de spieren voor te bereiden.</em> " +
+      "„sich aufwärmen“ = opwarmen; „locker“ = rustig → optie A.",
+    markIds: ["m-spiele"]
+  },
+  "18": {
+    correct: "—",
+    uitleg:
+      "De juiste antwoorden per bewering:<br>" +
+      "<strong>1 = wel.</strong> <em>„Ich habe meinen kleinen Glücksbringer dabei – einen Marienkäfer aus Holz.“</em> Hij heeft dus een mascotte bij zich.<br>" +
+      "<strong>2 = niet.</strong> <em>„Vor dem Start rede ich nicht viel, sondern konzentriere mich auf mich.“</em> Hij zoekt juist géén contact.<br>" +
+      "<strong>3 = wel.</strong> <em>„Viele laufen am Anfang zu schnell los, aber dann haben sie am Ende keine Kraft mehr.“</em> Hij ziet daarin een nadeel in de aanpak van anderen.<br>" +
+      "<strong>4 = wel.</strong> <em>„Wenn der Startschuss fällt, kriege ich Gänsehaut.“</em> Dat is een bijzonder gevoel.",
+    vertaling:
+      "<strong>Ich habe meinen kleinen Glücksbringer dabei – einen Marienkäfer aus Holz.</strong> = <em>Ik heb mijn kleine geluksbrenger bij me – een lieveheersbeestje van hout.</em> " +
+      "<strong>Vor dem Start rede ich nicht viel, sondern konzentriere mich auf mich.</strong> = <em>Voor de start praat ik niet veel, maar concentreer ik me op mezelf.</em> " +
+      "<strong>Viele laufen am Anfang zu schnell los, aber dann haben sie am Ende keine Kraft mehr.</strong> = <em>Velen lopen in het begin te snel weg, maar dan hebben ze aan het eind geen kracht meer.</em> " +
+      "<strong>Wenn der Startschuss fällt, kriege ich Gänsehaut.</strong> = <em>Als het startschot klinkt, krijg ik kippenvel.</em>",
+    markIds: ["m-glueck", "m-konzentration", "m-taktik", "m-startschuss"]
+  },
+  "19": {
+    correct: "B",
+    uitleg:
+      "Juist is B. Alinea 5 zegt: <em>„Das Berglaufen ist für mich mehr als Sport. Es hilft mir, den Kopf freizubekommen. Es ist, als würde ich alles hinter mir lassen.“</em> Het berglopen helpt hem dus om af te schakelen („abschalten“). " +
+      "A (meer over de natuur leren) wordt niet gezegd. C (steeds verder zijn fysieke grenzen verleggen) staat er niet; het gaat om ontspanning en hoofd leegmaken. D (gewoon een leuke vrijetijdsbesteding) is te zwak: hij zegt juist „mehr als Sport“.",
+    vertaling:
+      "<strong>Das Berglaufen ist für mich mehr als Sport. Es hilft mir, den Kopf freizubekommen. Es ist, als würde ich alles hinter mir lassen.</strong> = <em>Het berglopen is voor mij meer dan sport. Het helpt me om mijn hoofd leeg te maken. Het is alsof ik alles achter me laat.</em> " +
+      "„den Kopf freibekommen“ = het hoofd leegmaken; „hinter sich lassen“ = achter zich laten → abschalten → optie B.",
+    markIds: ["m-kopf"]
+  },
+  "20": {
+    correct: "—",
+    uitleg:
+      "De twee andere veranderingen die Florian noemt, zijn: <strong>(1) het wordt minder bos / er zijn minder bomen</strong> (<em>„der Baumbestand weniger“</em>) en <strong>(2) de bodem wordt rotsiger / steniger</strong> (<em>„der Boden steiniger“</em>). " +
+      "Daarnaast noemt hij nog <em>„ruhiger“</em> (stiller) en <em>„die Luft kälter“</em> (kouder), maar die twee stonden al in de vraag. De twee andere zijn dus: minder bomen en een steniger/rotsiger bodem.",
+    vertaling:
+      "<strong>Je weiter ich mich nach oben kämpfe, desto mehr verändert sich alles. Es wird ruhiger, der Baumbestand weniger, der Boden steiniger, die Luft kälter.</strong> = <em>Hoe verder ik me naar boven worstel, hoe meer alles verandert. Het wordt stiller, het bomenbestand minder, de bodem steniger, de lucht kouder.</em> " +
+      "„der Baumbestand“ = het bomenbestand; „steinig“ = stenig/rotsig. De twee andere veranderingen zijn dus: minder bomen en een steniger bodem.",
+    markIds: ["m-veränderung"]
+  }
+};
+
+// ===== Vraag 16: ja/nee + open bewijs =====
+const q16Correct = "ja";
+
+function checkQ16() {
+  const fb = document.getElementById("fb16");
+  const data = answers["16"];
+
+  const gekozen = document.querySelector('#q16-options .option-btn.correct, #q16-options .option-btn.wrong');
+  const jaNee = document.querySelector('#q16-options .option-btn.selected');
+  const tekst = document.getElementById("q16-input").value.toLowerCase();
+
+  // zoek sleutelwoorden in het bewijs
+  const bewijsGoed =
+    (tekst.includes("derde") || tekst.includes("derde geworden") || tekst.includes("3e")) &&
+    (tekst.includes("beker") || tekst.includes("pokal") || tekst.includes("prijs") || tekst.includes("trofee"));
+
+  const jaNeeGoed = jaNee && jaNee.dataset.opt === q16Correct;
+  const ok = jaNeeGoed && bewijsGoed;
+
+  fb.className = "feedback show " + (ok ? "ok" : "nok");
+  fb.innerHTML =
+    (ok
+      ? "✅ <strong>Helemaal goed!</strong> Ja, hij werd derde en kreeg een beker. "
+      : "❌ <strong>Nog niet helemaal.</strong> " +
+        (!jaNeeGoed ? "Het juiste antwoord is <strong>ja</strong>. " : "") +
+        (!bewijsGoed ? "Het bewijs ontbreekt of is onvolledig: hij werd <strong>derde</strong> en kreeg een <strong>beker (Pokal)</strong>. " : "")) +
+    '<div class="uitleg">' + data.uitleg + "</div>" +
+    '<div class="vertaling"><strong>Uitleg van de Duitse zin(nen):</strong><br>' + data.vertaling + "</div>";
+
+  data.markIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add("active");
+  });
+
+  document.querySelectorAll("#q16-options .option-btn").forEach(b => b.disabled = true);
+  document.getElementById("q16-input").disabled = true;
+  document.getElementById("q16-check").disabled = true;
+}
+
+// selectie ja/nee bij vraag 16
+document.querySelectorAll("#q16-options .option-btn").forEach(btn => {
+  btn.addEventListener("click", function() {
+    document.querySelectorAll("#q16-options .option-btn").forEach(b => b.classList.remove("selected"));
+    this.classList.add("selected");
+    this.style.borderColor = "#4a7fb5";
+    this.style.background = "#eef4fb";
+  });
+});
+
+document.getElementById("q16-check").addEventListener("click", function(e) {
+  e.stopPropagation();
+  checkQ16();
+});
+
+// ===== Vraag 18: waar/niet =====
+const q18Correct = { 1: "wel", 2: "niet", 3: "wel", 4: "wel" };
+
+function checkQ18() {
+  const fb = document.getElementById("fb18");
+  let score = 0;
+  const rows = document.querySelectorAll("#q18-table tbody tr");
+
+  rows.forEach(tr => {
+    const rowNr = tr.dataset.row;
+    tr.classList.remove("correct-row", "wrong-row");
+    const existing = tr.querySelector(".rij-feedback");
+    if (existing) existing.remove();
+
+    const gekozen = tr.querySelector('input[type="radio"]:checked');
+    const juist = q18Correct[rowNr];
+    const rijFb = document.createElement("span");
+    rijFb.className = "rij-feedback";
+
+    if (gekozen && gekozen.value === juist) {
+      score++;
+      tr.classList.add("correct-row");
+      rijFb.classList.add("ok");
+      rijFb.textContent = "✓ Juist (" + juist + ")";
+    } else {
+      tr.classList.add("wrong-row");
+      rijFb.classList.add("nok");
+      rijFb.textContent = "✗ Onjuist — juist is: " + juist;
+    }
+    tr.querySelector("td").appendChild(rijFb);
+  });
+
+  const data = answers["18"];
+  const ok = score === 4;
+  fb.className = "feedback show " + (ok ? "ok" : "nok");
+  fb.innerHTML =
+    (ok
+      ? "✅ <strong>Helemaal goed!</strong> Alle vier de beweringen zijn juist beoordeeld. "
+      : "❌ <strong>Nog niet helemaal.</strong> Je had " + score + " van de 4 beweringen goed. ") +
+    '<div class="uitleg">' + data.uitleg + "</div>" +
+    '<div class="vertaling"><strong>Uitleg van de Duitse zin(nen):</strong><br>' + data.vertaling + "</div>";
+
+  data.markIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add("active");
+  });
+}
+
+document.getElementById("q18-check").addEventListener("click", checkQ18);
+
+// ===== Vraag 20: open vraag =====
+function checkQ20() {
+  const fb = document.getElementById("fb20");
+  const data = answers["20"];
+  const tekst = document.getElementById("q20-input").value.toLowerCase();
+
+  const bomen = tekst.includes("boom") || tekst.includes("bomen") || tekst.includes("bos") || tekst.includes("baumbestand");
+  const bodem = tekst.includes("steen") || tekst.includes("stenig") || tekst.includes("rots") || tekst.includes("rotsig") || tekst.includes("bodem");
+
+  const score = (bomen ? 1 : 0) + (bodem ? 1 : 0);
+  const ok = score === 2;
+
+  fb.className = "feedback show " + (ok ? "ok" : "nok");
+  fb.innerHTML =
+    (ok
+      ? "✅ <strong>Helemaal goed!</strong> Je hebt beide veranderingen genoemd. "
+      : "❌ <strong>Nog niet helemaal.</strong> Je hebt " + score + " van de 2 veranderingen genoemd. " +
+        (!bomen ? "Denk aan: <strong>minder bomen / minder bos</strong>. " : "") +
+        (!bodem ? "Denk aan: <strong>een steniger/rotsiger bodem</strong>. " : "")) +
+    '<div class="uitleg">' + data.uitleg + "</div>" +
+    '<div class="vertaling"><strong>Uitleg van de Duitse zin(nen):</strong><br>' + data.vertaling + "</div>";
+
+  data.markIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add("active");
+  });
+
+  document.getElementById("q20-input").disabled = true;
+  document.getElementById("q20-check").disabled = true;
+}
+
+document.getElementById("q20-check").addEventListener("click", function(e) {
+  e.stopPropagation();
+  checkQ20();
+});
+
+// ===== Meerkeuzevragen =====
+function showFeedback(q, isCorrect) {
+  const data = answers[q];
+  const fb = document.getElementById("fb" + q);
+  fb.className = "feedback show "

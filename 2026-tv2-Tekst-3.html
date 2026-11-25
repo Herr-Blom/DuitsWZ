@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neuer Verkaufsautomat in Berlin-Friedrichshain – oefening</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    max-width: 1280px;
+    margin: 30px auto;
+    padding: 0 16px;
+    line-height: 1.6;
+    color: #222;
+    background: #fafafa;
+  }
+  h1 { font-size: 1.4em; border-bottom: 2px solid #333; padding-bottom: 6px; }
+  h2 { font-size: 1.05em; margin-top: 1.6em; }
+  .examen-header {
+    font-size: 1.05em;
+    font-weight: bold;
+    color: #444;
+    letter-spacing: .3px;
+  }
+  .layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    align-items: start;
+    margin-top: 24px;
+  }
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+  }
+  .article {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px 20px;
+    position: sticky;
+    top: 16px;
+    max-height: calc(100vh - 32px);
+    overflow-y: auto;
+  }
+  @media (max-width: 900px) {
+    .article { position: static; max-height: none; overflow-y: visible; }
+  }
+  .article h3 { margin-top: 0; }
+  .source { font-size: .85em; color: #666; margin-top: 12px; }
+  .note { font-size: .85em; color: #555; border-top: 1px dashed #bbb; padding-top: 8px; margin-top: 12px;}
+  .vragen { min-width: 0; }
+
+  .options { list-style: none; padding-left: 0; }
+  .options li { margin: 6px 0; }
+  .option-btn {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 9px 12px;
+    font-size: .97em;
+    font-family: inherit;
+    border: 1.5px solid #999;
+    border-radius: 6px;
+    background: #fff;
+    cursor: pointer;
+    transition: background .15s, border-color .15s;
+  }
+  .option-btn:hover:not(:disabled) { background: #eef4fb; border-color: #4a7fb5; }
+  .option-btn:disabled { cursor: default; opacity: .95; }
+  .option-btn.correct { background: #d8f5d8; border-color: #2e8b2e; font-weight: bold; }
+  .option-btn.wrong { background: #fbdcdc; border-color: #c0392b; }
+
+  .feedback {
+    margin-top: 10px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    display: none;
+    font-size: .95em;
+  }
+  .feedback.show { display: block; }
+  .feedback.ok { background: #e3f6e3; border-left: 5px solid #2e8b2e; }
+  .feedback.nok { background: #fdeaea; border-left: 5px solid #c0392b; }
+  .feedback .uitleg { margin-top: 6px; }
+  .feedback .vertaling {
+    margin-top: 8px;
+    padding: 8px 10px;
+    background: rgba(255,255,255,.65);
+    border-left: 3px solid #888;
+    border-radius: 4px;
+    font-size: .93em;
+  }
+  .feedback .vertaling em { color: #333; }
+
+  mark {
+    background: transparent;
+    color: inherit;
+    padding: 0;
+    border-radius: 3px;
+    transition: background .3s;
+  }
+  mark.active {
+    background: #ffe680;
+    padding: 0 2px;
+    outline: 2px solid #ffb347;
+  }
+
+  .reset {
+    margin-top: 24px;
+    padding: 8px 16px;
+    font-family: inherit;
+    font-size: .95em;
+    border: 1.5px solid #555;
+    background: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .reset:hover { background: #eee; }
+
+  .check-btn {
+    display: inline-block;
+    width: auto;
+    margin-top: 10px;
+    padding: 9px 18px;
+    font-family: inherit;
+    font-size: .97em;
+    border: 1.5px solid #4a7fb5;
+    background: #eef4fb;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .check-btn:hover { background: #dbe8f6; }
+  .check-btn:disabled { opacity: .6; cursor: default; }
+
+  .open-input {
+    width: 100%;
+    font-family: inherit;
+    font-size: .97em;
+    padding: 9px 12px;
+    border: 1.5px solid #999;
+    border-radius: 6px;
+  }
+  .open-input:disabled { background: #f4f4f4; }
+</style>
+</head>
+<body>
+
+<p class="examen-header">Examen vmbo gl/tl 2026 Tijdvak 1</p>
+<h1>Tekst 3 – Neuer Verkaufsautomat in Berlin-Friedrichshain</h1>
+
+<div class="layout">
+
+  <!-- ================= TEKST (links) ================= -->
+  <div class="article">
+    <h3>Neuer Verkaufsautomat in Berlin-Friedrichshain</h3>
+    <p style="margin-top:0;"><em>Am Paketautomaten in Berlin-Friedrichshain gibt’s Retourenpakete. Was steckt drin – und lohnt sich das Glücksspiel?</em></p>
+
+    <p>
+      (1) Geld für etwas bezahlen ohne zu wissen, was eigentlich? In Berlin
+      kann man jetzt genau das tun: Im Stadtteil Friedrichshain findet sich,
+      etwas versteckt hinter einer Wurst-Bude, ein Verkaufsautomat mit der
+      Aufschrift „Secret Packs“. <mark id="m-retouren">Hier gibt es für zehn Euro Retouren von
+      Versandhändlern.</mark>
+    </p>
+    <p>
+      (2) Erfunden haben den Automaten findige Köpfe, mit dem Firmennamen
+      Loot Pack Hunters. <mark id="m-grosshaendler">„Wir kaufen die Retouren von einem Großhändler. Als
+      normaler Bürger kommt man da gar nicht ran“, sagten die Händler in
+      einem Interview.</mark> <mark id="m-inhalt">Was drinnen steckt, wissen selbst sie nicht. Teure
+      Geräte können es sein, Kleidungsstücke, aber auch simple TechnikBauteile wie Kabel und Stecker. Es gibt kleine Pakete und große, Tüten
+      und Schachteln, nur eines haben sie alle gemein: Die Namen der
+      Empfänger und Absender sind mit Sprühfarbe geschwärzt.</mark>
+    </p>
+    <p>
+      (3) Und was steckt nun darin? Als ich, Kurier-Reporter Florian, mit meinen
+      Freunden beim Automaten ankomme, sehen wir schon aus der Ferne,
+      dass mehrere junge Männer vor dem Automaten stehen. Einer hat ein
+      seltsames Bauteil aus einem Paket gefischt. Ein anderer zeigt mehrere
+      Handy-Hüllen. <mark id="m-form">Er hat mit Absicht Pakete aus dem Automaten gezogen,
+      die in der Form an Mobiltelefone erinnern, immer in der Hoffnung, dass
+      sich darin ein echtes Smartphone verbirgt. Doch: Pech gehabt!</mark>
+    </p>
+    <p>
+      (4) Dann versuchen wir es auch. Eine Freundin ist zuerst dran. Der
+      Automat piept und rattert, dann fällt ein kleines Paket in die Tiefe. Darin:
+      Ein Spiele-Controller, Billig-Marke, verwendbar mit verschiedenen
+      Konsolen. Dann bin ich an der Reihe. In meinem Päckchen steckt ein
+      Gerät, das man an den Fernseher anschließen kann, um etwa Netflix zu
+      empfangen. So etwas habe ich leider schon, aber trotzdem: Da der
+      Originalpreis bei mehr als 70 Euro liegt, mache ich mir zumindest
+      Hoffnung, das Ding verkauft zu bekommen. <mark id="m-fazit">Insgesamt also absolut nicht
+      schlecht für den Anfang!</mark>
+    </p>
+    <p>
+      (5) <mark id="m-konzept">Das Konzept scheint zu funktionieren.</mark> <mark id="m-geschaeft">Insgesamt 70 Euro haben wir
+      am Ende ausgegeben für Dinge, die wir eigentlich nicht brauchen. Es ist
+      ein Geschäftsmodell, das sich lohnen muss – und das ich gerne selbst
+      ausgedacht hätte.</mark> Als wir losgehen wollen, hält ein Polizeiwagen. Sogar
+      die Polizisten haben davon gehört und wollten kurz schauen, was es hier
+      zu holen gibt. Sie staunen über den Andrang, können aber mit dem, was
+      wir ihnen stolz präsentieren, wenig anfangen. Wir lachen gemeinsam,
+      dann ziehen wir weiter. <mark id="m-besuch">Ich fürchte, es wird nicht der letzte Besuch
+      bleiben.</mark>
+    </p>
+    <p class="source">Berliner Kurier, 3.8.2024</p>
+  </div>
+
+  <!-- ================= VRAGEN (rechts) ================= -->
+  <div class="vragen">
+
+    <!-- VRAAG 9 -->
+    <h2>1p 9 &nbsp;Was für einen Automaten gibt es jetzt in Berlin-Friedrichshain? (1. Absatz)<br>einen Automaten, bei dem man …</h2>
+    <ul class="options" id="q9-options">
+      <li><button class="option-btn" data-q="9" data-opt="A">A&nbsp; Essen von einem Imbiss kaufen kann</button></li>
+      <li><button class="option-btn" data-q="9" data-opt="B">B&nbsp; Online-Einkäufe retour senden kann</button></li>
+      <li><button class="option-btn" data-q="9" data-opt="C">C&nbsp; Päckchen mit unbekanntem Inhalt kaufen kann</button></li>
+      <li><button class="option-btn" data-q="9" data-opt="D">D&nbsp; seine Online-Bestellungen abholen kann</button></li>
+    </ul>
+    <div class="feedback" id="fb9"></div>
+
+    <!-- VRAAG 10 -->
+    <h2>1p 10 &nbsp;Welche Aussage passt zum 2. Absatz?</h2>
+    <ul class="options" id="q10-options">
+      <li><button class="option-btn" data-q="10" data-opt="A">A&nbsp; Automat mit komplexer Technologie</button></li>
+      <li><button class="option-btn" data-q="10" data-opt="B">B&nbsp; illegale Aktivitäten</button></li>
+      <li><button class="option-btn" data-q="10" data-opt="C">C&nbsp; unterschiedlichste Artikel</button></li>
+      <li><button class="option-btn" data-q="10" data-opt="D">D&nbsp; unverkäufliche Ware</button></li>
+    </ul>
+    <div class="feedback" id="fb10"></div>
+
+    <!-- VRAAG 11 -->
+    <h2>1p 11 &nbsp;Was zeigt der 3. Absatz?</h2>
+    <ul class="options" id="q11-options">
+      <li><button class="option-btn" data-q="11" data-opt="A">A&nbsp; dass die Bedienung des Automaten zu wünschen übrig lässt</button></li>
+      <li><button class="option-btn" data-q="11" data-opt="B">B&nbsp; dass man an der Form der Pakete schon viel ablesen kann</button></li>
+      <li><button class="option-btn" data-q="11" data-opt="C">C&nbsp; dass man mit Enttäuschungen rechnen muss</button></li>
+      <li><button class="option-btn" data-q="11" data-opt="D">D&nbsp; dass meistens richtig wertvolle Schätze auftauchen</button></li>
+    </ul>
+    <div class="feedback" id="fb11"></div>
+
+    <!-- VRAAG 12 -->
+    <h2>1p 12 &nbsp;In alinea 4 beoordeelt Florian (de schrijver van dit artikel) twee aankopen uit de automaat.<br>Hoe luidt zijn oordeel?</h2>
+    <ul class="options" id="q12-options">
+      <li><button class="option-btn" data-q="12" data-opt="A">A&nbsp; Hij is tevreden over de aankoop door een vriendin en ontevreden over zijn eigen aankoop.</button></li>
+      <li><button class="option-btn" data-q="12" data-opt="B">B&nbsp; Hij is ontevreden over de aankoop door een vriendin en tevreden over zijn eigen aankoop.</button></li>
+      <li><button class="option-btn" data-q="12" data-opt="C">C&nbsp; Hij is over beide aankopen tevreden.</button></li>
+      <li><button class="option-btn" data-q="12" data-opt="D">D&nbsp; Hij is over beide aankopen ontevreden.</button></li>
+    </ul>
+    <div class="feedback" id="fb12"></div>
+
+    <!-- VRAAG 13 -->
+    <h2>1p 13 &nbsp;„Das Konzept scheint zu funktionieren.“ (alinea 5)<br>In welke zin uit deze alinea wordt hetzelfde gezegd?<br>Schrijf de eerste twee Duitse woorden van die zin op.</h2>
+    <input type="text" class="open-input" id="q13-input" placeholder="Typ de eerste twee Duitse woorden…" autocomplete="off">
+    <div style="margin-top:10px;">
+      <button class="check-btn" id="q13-check">Controleer antwoord</button>
+    </div>
+    <div class="feedback" id="fb13"></div>
+
+    <!-- VRAAG 14 -->
+    <h2>1p 14 &nbsp;„Ich fürchte … Besuch bleiben.“ (letzter Satz)<br>Was will Florian damit sagen?</h2>
+    <ul class="options" id="q14-options">
+      <li><button class="option-btn" data-q="14" data-opt="A">A&nbsp; Er hat Angst davor, dass die Polizei den Automaten verbieten wird.</button></li>
+      <li><button class="option-btn" data-q="14" data-opt="B">B&nbsp; Er ist davon überzeugt, dass der Automat noch viel mehr Leute anziehen wird.</button></li>
+      <li><button class="option-btn" data-q="14" data-opt="C">C&nbsp; Er meint, dass er wahrscheinlich zum Automaten zurückkehren wird.</button></li>
+    </ul>
+    <div class="feedback" id="fb14"></div>
+
+  </div>
+</div>
+
+<button class="reset" onclick="resetAll()">Alles opnieuw proberen</button>
+
+<script>
+const answers = {
+  "9": {
+    correct: "C",
+    uitleg:
+      "Juist is C. De tekst zegt: <em>„ein Verkaufsautomat mit der Aufschrift ‚Secret Packs‘. Hier gibt es für zehn Euro Retouren von Versandhändlern.“</em> Je koopt dus pakketjes waarvan je de inhoud niet kent („Secret Packs“). " +
+      "A (eten van een imbis) is onjuist: de automaat staat achter een worsttent, maar verkoopt geen eten. B (online-aankopen terugsturen) en D (online-bestellingen ophalen) kloppen niet: het gaat om retouren van webshops die je zélf koopt, niet om je eigen pakketten.",
+    vertaling:
+      "<strong>Hier gibt es für zehn Euro Retouren von Versandhändlern.</strong> = <em>Hier zijn voor tien euro retouren van postorderbedrijven te koop.</em> " +
+      "„die Retoure“ = de retourzending; „der Versandhändler“ = het postorderbedrijf/webshop. " +
+      "<strong>„Secret Packs“</strong> = <em>„geheime pakketjes“</em> — je weet niet wat erin zit → optie C.",
+    markIds: ["m-retouren"]
+  },
+  "10": {
+    correct: "C",
+    uitleg:
+      "Juist is C. Alinea 2 somt op wat er allemaal in de pakketjes kan zitten: <em>„Teure Geräte können es sein, Kleidungsstücke, aber auch simple Technik-Bauteile wie Kabel und Stecker. Es gibt kleine Pakete und große, Tüten und Schachteln“</em>. Er is dus sprake van de meest uiteenlopende artikelen. " +
+      "A (complexe technologie) is onjuist: juist eenvoudige techniek zoals kabels en stekkers. B (illegale activiteiten) wordt niet gezegd. D (onverkoopbare waar) klopt niet: het zijn retouren, maar niet per se onverkoopbaar.",
+    vertaling:
+      "<strong>Teure Geräte können es sein, Kleidungsstücke, aber auch simple Technik-Bauteile wie Kabel und Stecker.</strong> = <em>Het kunnen dure apparaten zijn, kledingstukken, maar ook eenvoudige techniekonderdelen zoals kabels en stekkers.</em> " +
+      "„das Bauteil“ = het onderdeel; „der Stecker“ = de stekker. " +
+      "<strong>Es gibt kleine Pakete und große, Tüten und Schachteln</strong> = <em>Er zijn kleine en grote pakketten, zakken en dozen.</em> → verschillende soorten artikelen → C.",
+    markIds: ["m-inhoud"]
+  },
+  "11": {
+    correct: "C",
+    uitleg:
+      "Juist is C. In alinea 3 probeert een jongen pakketjes te pakken die qua vorm op mobieltjes lijken, in de hoop op een echt smartphone: <em>„Doch: Pech gehabt!“</em> (Helaas! Pech gehad!). Je moet dus rekening houden met teleurstellingen. " +
+      "A (bediening van de automaat) komt niet aan de orde. B (aan de vorm veel aflezen) is juist het tegenovergestelde: de vorm bleek misleidend. D (meestal waardevolle schatten) is onjuist; het gaat juist om pech.",
+    vertaling:
+      "<strong>Er hat mit Absicht Pakete aus dem Automaten gezogen, die in der Form an Mobiltelefone erinnern, immer in der Hoffnung, dass sich darin ein echtes Smartphone verbirgt. Doch: Pech gehabt!</strong> = <em>Hij had met opzet pakketjes uit de automaat getrokken die qua vorm aan mobiele telefoons doen denken, altijd in de hoop dat er een echte smartphone in zit. Maar: pech gehad!</em> " +
+      "„mit Absicht“ = met opzet; „in der Hoffnung“ = in de hoop; „sich verbergen“ = zich verbergen; „Pech haben“ = pech hebben. → je moet op teleurstellingen rekenen → C.",
+    markIds: ["m-form"]
+  },
+  "12": {
+    correct: "C",
+    uitleg:
+      "Juist is C. Over de aankoop van zijn vriendin (een spelcontroller van een goedkoop merk) zegt Florian niets negatiefs; hij beschrijft hem neutraal. Over zijn eigen aankoop (een apparaat om Netflix te ontvangen) zegt hij: <em>„So etwas habe ich leider schon, aber trotzdem: Da der Originalpreis bei mehr als 70 Euro liegt, mache ich mir zumindest Hoffnung, das Ding verkauft zu bekommen.“</em> En hij sluit af: <em>„Insgesamt also absolut nicht schlecht für den Anfang!“</em> Hij is dus over beide aankopen tevreden. " +
+      "A, B en D zijn onjuist omdat hij niet ontevreden is over (een van) beide aankopen.",
+    vertaling:
+      "<strong>Darin: Ein Spiele-Controller, Billig-Marke, verwendbar mit verschiedenen Konsolen.</strong> = <em>Daarin: een gamecontroller, goedkoop merk, bruikbaar met verschillende consoles.</em> " +
+      "<strong>So etwas habe ich leider schon, aber trotzdem: Da der Originalpreis bei mehr als 70 Euro liegt, mache ich mir zumindest Hoffnung, das Ding verkauft zu bekommen.</strong> = <em>Zoiets heb ik helaas al, maar toch: omdat de oorspronkelijke prijs boven de 70 euro ligt, maak ik me in ieder geval hoop het ding verkocht te krijgen.</em> " +
+      "<strong>Insgesamt also absolut nicht schlecht für den Anfang!</strong> = <em>Al met al dus absoluut niet slecht voor het begin!</em> → hij is over beide tevreden → C.",
+    markIds: ["m-fazit"]
+  },
+  "13": {
+    correct: "—",
+    uitleg:
+      "Juist is: <strong>„Es ist“</strong>. In alinea 5 staat: <em>„Es ist ein Geschäftsmodell, das sich lohnen muss – und das ich gerne selbst ausgedacht hätte.“</em> Met <em>„Es ist ein Geschäftsmodell, das sich lohnen muss“</em> wordt hetzelfde gezegd als met <em>„Das Konzept scheint zu funktionieren“</em>: het concept werkt / het is een winstgevend businessmodel. De eerste twee Duitse woorden van die zin zijn dus <strong>„Es ist“</strong>.",
+    vertaling:
+      "<strong>Das Konzept scheint zu funktionieren.</strong> = <em>Het concept lijkt te werken.</em> " +
+      "<strong>Es ist ein Geschäftsmodell, das sich lohnen muss – und das ich gerne selbst ausgedacht hätte.</strong> = <em>Het is een businessmodel dat zich moet lonen – en dat ik graag zelf bedacht zou hebben.</em> " +
+      "„sich lohnen“ = lonen/de moeite waard zijn; „sich ausdenken“ = bedenken. De eerste twee woorden zijn „Es ist“.",
+    markIds: ["m-konzept", "m-geschaeft"]
+  },
+  "14": {
+    correct: "C",
+    uitleg:
+      "Juist is C. De laatste zin luidt: <em>„Ich fürchte, es wird nicht der letzte Besuch bleiben.“</em> Letterlijk: „Ik vrees dat het niet het laatste bezoek zal blijven.“ Florian bedoelt dus dat hij waarschijnlijk nog eens terug zal gaan naar de automaat. " +
+      "A (angst dat de politie de automaat verbiedt) wordt niet gezegd: de politie komt alleen kijken en er is geen sprake van een verbod. B (de automaat trekt nog veel meer mensen) is een interpretatie die niet in de zin zelf staat; het gaat om zijn eigen bezoek.",
+    vertaling:
+      "<strong>Ich fürchte, es wird nicht der letzte Besuch bleiben.</strong> = <em>Ik vrees dat het niet het laatste bezoek zal blijven.</em> " +
+      "„fürchten“ = vrezen; „der Besuch“ = het bezoek; „bleiben“ = blijven. Hij zal dus waarschijnlijk nog eens terugkomen → C.",
+    markIds: ["m-besuch"]
+  }
+};
+
+// ===== Vraag 13: open vraag =====
+function checkQ13() {
+  const input = document.getElementById("q13-input");
+  const fb = document.getElementById("fb13");
+  const waarde = input.value.trim().toLowerCase().replace(/\s+/g, " ");
+  const data = answers["13"];
+
+  const goed = (waarde === "es ist");
+
+  fb.className = "feedback show " + (goed ? "ok" : "nok");
+  fb.innerHTML =
+    (goed
+      ? "✅ <strong>Juist!</strong> De eerste twee woorden zijn inderdaad „Es ist“. "
+      : "❌ <strong>Onjuist.</strong> Het juiste antwoord is <strong>„Es ist“</strong>. ") +
+    '<div class="uitleg">' + data.uitleg + "</div>" +
+    '<div class="vertaling"><strong>Uitleg van de Duitse zin(nen):</strong><br>' + data.vertaling + "</div>";
+
+  data.markIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add("active");
+  });
+
+  input.disabled = true;
+  document.getElementById("q13-check").disabled = true;
+}
+
+document.getElementById("q13-check").addEventListener("click", function(e) {
+  e.stopPropagation();
+  checkQ13();
+});
+
+// ===== Meerkeuzevragen =====
+function showFeedback(q, isCorrect) {
+  const data = answers[q];
+  const fb = document.getElementById("fb" + q);
+  fb.className = "feedback show " + (isCorrect ? "ok" : "nok");
+  fb.innerHTML =
+    (isCorrect ? "✅ <strong>Juist!</strong> " : "❌ <strong>Onjuist.</strong> Het juiste antwoord is <strong>" + data.correct + "</strong>. ") +
+    '<div class="uitleg">' + data.uitleg + "</div>" +
+    '<div class="vertaling"><strong>Uitleg van de Duitse zin(nen):</strong><br>' + data.vertaling + "</div>";
+  data.markIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add("active");
+  });
+}
+
+function handleClick(e) {
+  const btn = e.target.closest(".option-btn");
+  if (!btn || btn.disabled || !btn.dataset.q) return;
+
+  const q = btn.dataset.q;
+  const opt = btn.dataset.opt;
+  const data = answers[q];
+  if (!data) return;
+  const isCorrect = opt === data.correct;
+
+  const buttons = document.querySelectorAll('#q' + q + '-options .option-btn');
+  buttons.forEach(b => {
+    b.disabled = true;
+    if (b.dataset.opt === opt) {
+      b.classList.add(isCorrect ? "correct" : "wrong");
+    }
+    if (!isCorrect && b.dataset.opt === data.correct) {
+      b.classList.add("correct");
+    }
+  });
+
+  showFeedback(q, isCorrect);
+}
+
+document.querySelectorAll(".option-btn").forEach(btn => {
+  btn.addEventListener("click", handleClick);
+});
+
+function resetAll() {
+  document.querySelectorAll(".option-btn").forEach(b => {
+    b.disabled = false;
+    b.classList.remove("correct", "wrong");
+  });
+  document.querySelectorAll(".feedback").forEach(f => {
+    f.className = "feedback";
+    f.innerHTML = "";
+  });
+  document.querySelectorAll("mark").forEach(m => m.classList.remove("active"));
+
+  const q13input = document.getElementById("q13-input");
+  if (q13input) {
+    q13input.value = "";
+    q13input.disabled = false;
+  }
+  const q13check = document.getElementById("q13-check");
+  if (q13check) q13check.disabled = false;
+}
+</script>
+
+</body>
+</html>

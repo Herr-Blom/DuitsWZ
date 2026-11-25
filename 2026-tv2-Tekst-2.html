@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beim nächsten Halt Partystimmung – oefening</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    max-width: 1280px;
+    margin: 30px auto;
+    padding: 0 16px;
+    line-height: 1.6;
+    color: #222;
+    background: #fafafa;
+  }
+  h1 { font-size: 1.4em; border-bottom: 2px solid #333; padding-bottom: 6px; }
+  h2 { font-size: 1.05em; margin-top: 1.6em; }
+  .examen-header {
+    font-size: 1.05em;
+    font-weight: bold;
+    color: #444;
+    letter-spacing: .3px;
+  }
+  .layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    align-items: start;
+    margin-top: 24px;
+  }
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+  }
+  .article {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px 20px;
+    position: sticky;
+    top: 16px;
+    max-height: calc(100vh - 32px);
+    overflow-y: auto;
+  }
+  @media (max-width: 900px) {
+    .article { position: static; max-height: none; overflow-y: visible; }
+  }
+  .article h3 { margin-top: 0; }
+  .source { font-size: .85em; color: #666; margin-top: 12px; }
+  .note { font-size: .85em; color: #555; border-top: 1px dashed #bbb; padding-top: 8px; margin-top: 12px;}
+  .vragen { min-width: 0; }
+
+  .options { list-style: none; padding-left: 0; }
+  .options li { margin: 6px 0; }
+  .option-btn {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 9px 12px;
+    font-size: .97em;
+    font-family: inherit;
+    border: 1.5px solid #999;
+    border-radius: 6px;
+    background: #fff;
+    cursor: pointer;
+    transition: background .15s, border-color .15s;
+  }
+  .option-btn:hover:not(:disabled) { background: #eef4fb; border-color: #4a7fb5; }
+  .option-btn:disabled { cursor: default; opacity: .95; }
+  .option-btn.correct { background: #d8f5d8; border-color: #2e8b2e; font-weight: bold; }
+  .option-btn.wrong { background: #fbdcdc; border-color: #c0392b; }
+
+  .feedback {
+    margin-top: 10px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    display: none;
+    font-size: .95em;
+  }
+  .feedback.show { display: block; }
+  .feedback.ok { background: #e3f6e3; border-left: 5px solid #2e8b2e; }
+  .feedback.nok { background: #fdeaea; border-left: 5px solid #c0392b; }
+  .feedback .uitleg { margin-top: 6px; }
+  .feedback .vertaling {
+    margin-top: 8px;
+    padding: 8px 10px;
+    background: rgba(255,255,255,.65);
+    border-left: 3px solid #888;
+    border-radius: 4px;
+    font-size: .93em;
+  }
+  .feedback .vertaling em { color: #333; }
+
+  mark {
+    background: transparent;
+    color: inherit;
+    padding: 0;
+    border-radius: 3px;
+    transition: background .3s;
+  }
+  mark.active {
+    background: #ffe680;
+    padding: 0 2px;
+    outline: 2px solid #ffb347;
+  }
+
+  .reset {
+    margin-top: 24px;
+    padding: 8px 16px;
+    font-family: inherit;
+    font-size: .95em;
+    border: 1.5px solid #555;
+    background: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .reset:hover { background: #eee; }
+
+  /* waar/niet-vraag */
+  .waar-niet-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+    font-size: .95em;
+  }
+  .waar-niet-table th,
+  .waar-niet-table td {
+    border: 1px solid #ccc;
+    padding: 8px 10px;
+    text-align: left;
+    vertical-align: top;
+  }
+  .waar-niet-table th {
+    background: #f0f0f0;
+    font-weight: bold;
+  }
+  .waar-niet-table th.center,
+  .waar-niet-table td.center {
+    text-align: center;
+    width: 70px;
+  }
+  .waar-niet-table input[type="radio"] {
+    transform: scale(1.25);
+    cursor: pointer;
+  }
+  .waar-niet-table tr.correct-row { background: #e3f6e3; }
+  .waar-niet-table tr.wrong-row { background: #fdeaea; }
+  .waar-niet-table .rij-feedback {
+    font-size: .88em;
+    margin-top: 4px;
+    display: block;
+  }
+  .waar-niet-table .rij-feedback.ok { color: #2e8b2e; }
+  .waar-niet-table .rij-feedback.nok { color: #c0392b; }
+
+  .check-btn {
+    display: inline-block;
+    width: auto;
+    margin-top: 10px;
+    padding: 9px 18px;
+    font-family: inherit;
+    font-size: .97em;
+    border: 1.5px solid #4a7fb5;
+    background: #eef4fb;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .check-btn:hover { background: #dbe8f6; }
+  .check-btn:disabled { opacity: .6; cursor: default; }
+</style>
+</head>
+<body>
+
+<p class="examen-header">Examen vmbo gl/tl 2026 Tijdvak 1</p>
+<h1>Tekst 2 – Beim nächsten Halt Partystimmung</h1>
+
+<div class="layout">
+
+  <!-- ================= TEKST (links) ================= -->
+  <div class="article">
+    <h3>Beim nächsten Halt Partystimmung</h3>
+    <p style="margin-top:0;"><em>Busfahrer Arne Will sorgt mit Liedern und lockeren Sprüchen für gute Stimmung.</em></p>
+
+    <p>
+      (1) <mark id="m-singen">Ein Busfahrer, der Schlager und Kinderlieder singt und auch mal alle
+      Passagiere zum Singen von Geburtstagsliedern animiert: Wer bei Arne
+      Will einsteigt, der bekommt mit Glück Partystimmung geboten.</mark> Im
+      Gespräch mit dem 44-Jährigen wird aber schnell klar: Singen und Witze
+      sind für den Busfahrer aus Kiel mehr als nur Scherz. Sie helfen ihm auch,
+      wenn die Atmosphäre im Bus mal schlechter ist.
+    </p>
+    <p>
+      (2) <mark id="m-quereinstieg">Arne Will kommt aus Neumünster, ist über einen Quereinstieg als
+      einer von heute insgesamt rund 650 Busfahrern in Kiel eingestellt worden.</mark>
+      <mark id="m-fahrrad">Der frühere Filialleiter eines Fahrradgeschäfts in Kiel fährt seit viereinhalb
+      Jahren für die Kieler Verkehrsgesellschaft (KVG).</mark> „Das Busfahren an sich
+      hat mich schon immer interessiert“, erklärt Arne Will seine Motivation für
+      den Umstieg. <mark id="m-fuehrerschein">Auch, wenn der Führerschein mit 40 eine „große Herausforderung gewesen ist“,
+      hat er damit das Ziel erreicht, sich weiterzuentwickeln.</mark> <mark id="m-linien">Nun fährt er auf allen Linien der KVG.</mark>
+    </p>
+    <p>
+      (3) Der Mann mit dem markanten, tätowierten Äußeren, Markenzeichen
+      rote Mütze, sagt von sich selbst: „Ich liebe meinen Job und mag es,
+      Menschen eine Freude zu machen.“ <mark id="m-viral">Im vergangenen Herbst rollte Will
+      zum ersten Mal mit einem Bus in Partystimmung durch Kiel. „Da war eine
+      Gruppe junger Männer in die Linie 62 eingestiegen, einigermaßen
+      betrunken“, so Will. Im Scherz hatten er und die Gruppe sich einen Spaß
+      daraus gemacht, ein Lied zur TV-Serie SpongeBob Schwammkopf zu
+      singen. Das Ganze wurde gefilmt und ging in den sozialen Medien viral –
+      „1,2 Millionen Aufrufe in 24 Stunden“.</mark> Die Aktion war lustig und kam gut
+      an. Damit hatte Arne Will seinen Weg gefunden.
+    </p>
+    <p>
+      (4) <mark id="m-stimmung">Beim Blick in den Innenspiegel kann Will stets gut erkennen, in
+      welcher Stimmung die Fahrgäste sind. Und die hat sich durchaus
+      verändert. „Es wird sich schneller beschwert, manche sind unfreundlich.“
+      Er vermutet Unzufriedenheit dahinter.</mark> Und dann sind da noch die
+      „Straßenbedingungen“. Er formuliert es neutral. <mark id="m-strassen">Baustellen in Kiel, Stau,
+      Verspätungen – vom Frust kriegen auch die Busfahrer „ein bisschen was
+      ab“.</mark>
+    </p>
+    <p>
+      (5) Arne Will bezeichnet sich hingegen selbst als Optimist: „Ich habe eine
+      Möglichkeit gefunden, um Unzufriedenheit gar nicht erst aufkommen zu
+      lassen.“ Mal sind es Lieder, mal lockere Sprüche und Aktionen, mit denen
+      er potenziell schwierigen Situationen vorbeugt. Von der Wirkung ist
+      Busfahrer Arne Will überzeugt. „Auch Gäste mit schlechter Laune lassen
+      sich davon anstecken.“ <mark id="m-umleitung">Über eine nette Rückmeldung eines Fahrgastes
+      hat er sich besonders gefreut, als der Bus unvermittelt umgeleitet wurde:
+      „Sogar eine Stadtrundfahrt wird für 2,40 Euro geboten“.</mark>
+    </p>
+    <p>
+      (6) Aber eines ist dem Busfahrer wichtig: <mark id="m-sicherheit">„Ich konzentriere mich immer auf
+      den Verkehr. Singen oder Späße sind nur möglich, wenn die Situation es
+      zulässt. Die <span style="text-decoration:underline;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> der Fahrgäste steht an erster Stelle.“</mark>
+    </p>
+    <p class="source">Kieler Nachrichten, 31</p>
+  </div>
+
+  <!-- ================= VRAGEN (rechts) ================= -->
+  <div class="vragen">
+
+    <!-- VRAAG 3 -->
+    <h2>1p 3 &nbsp;Welche Aussage ist richtig? (1. Absatz)</h2>
+    <ul class="options" id="q3-options">
+      <li><button class="option-btn" data-q="3" data-opt="A">A&nbsp; Arne Will fährt mit einem speziellen Partybus durch Kiel.</button></li>
+      <li><button class="option-btn" data-q="3" data-opt="B">B&nbsp; Arne Will versucht, mit Musik und Humor Leute fröhlich zu machen.</button></li>
+      <li><button class="option-btn" data-q="3" data-opt="C">C&nbsp; Fahrgäste bitten Arne Will manchmal, Partymusik zu spielen.</button></li>
+      <li><button class="option-btn" data-q="3" data-opt="D">D&nbsp; Fahrgäste haben Arne Will zu seinem Geburtstag Lieder gesungen.</button></li>
+    </ul>
+    <div class="feedback" id="fb3"></div>
+
+    <!-- VRAAG 4 -->
+    <h2>2p 4 &nbsp;Geef van elk van de onderstaande beweringen over Arne Will aan of deze wel of niet overeenkomt met alinea 2.<br>Kruis aan ‘wel’ of ‘niet’.</h2>
+    <table class="waar-niet-table" id="q4-table">
+      <thead>
+        <tr>
+          <th>Bewering</th>
+          <th class="center">wel</th>
+          <th class="center">niet</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr data-row="1">
+          <td>1&nbsp; Hij heeft als productiemedewerker in een fietsfabriek gewerkt.</td>
+          <td class="center"><input type="radio" name="q4-1" value="wel"></td>
+          <td class="center"><input type="radio" name="q4-1" value="niet"></td>
+        </tr>
+        <tr data-row="2">
+          <td>2&nbsp; Hij werkt al een aantal jaren in de stad Kiel.</td>
+          <td class="center"><input type="radio" name="q4-2" value="wel"></td>
+          <td class="center"><input type="radio" name="q4-2" value="niet"></td>
+        </tr>
+        <tr data-row="3">
+          <td>3&nbsp; Het behalen van zijn rijbewijs op latere leeftijd is hem erg meegevallen.</td>
+          <td class="center"><input type="radio" name="q4-3" value="wel"></td>
+          <td class="center"><input type="radio" name="q4-3" value="niet"></td>
+        </tr>
+        <tr data-row="4">
+          <td>4&nbsp; Hij is inmiddels bekend met alle KVG-busroutes.</td>
+          <td class="center"><input type="radio" name="q4-4" value="wel"></td>
+          <td class="center"><input type="radio" name="q4-4" value="niet"></td>
+        </tr>
+      </tbody>
+    </table>
+    <button class="check-btn" id="q4-check">Controleer antwoord</button>
+    <div class="feedback" id="fb4"></div>
+
+    <!-- VRAAG 5 -->
+    <h2>1p 5 &nbsp;Was wird im 3. Absatz erklärt?</h2>
+    <ul class="options" id="q5-options">
+      <li><button class="option-btn" data-q="5" data-opt="A">A&nbsp; dass Arne Will besonders bei Kindern beliebt ist</button></li>
+      <li><button class="option-btn" data-q="5" data-opt="B">B&nbsp; dass Arne Will regelmäßig Videos von seinen Fahrten postet</button></li>
+      <li><button class="option-btn" data-q="5" data-opt="C">C&nbsp; wie Arne Will als singender Busfahrer bekannt wurde</button></li>
+      <li><button class="option-btn" data-q="5" data-opt="D">D&nbsp; wie es Arne Will einmal gelang, aggressive Fahrgäste zu beruhigen</button></li>
+    </ul>
+    <div class="feedback" id="fb5"></div>
+
+    <!-- VRAAG 6 -->
+    <h2>1p 6 &nbsp;Welcher Titel passt zum 4. Absatz?</h2>
+    <ul class="options" id="q6-options">
+      <li><button class="option-btn" data-q="6" data-opt="A">A&nbsp; Falsche Verkehrsschilder</button></li>
+      <li><button class="option-btn" data-q="6" data-opt="B">B&nbsp; Frustrierte Passagiere</button></li>
+      <li><button class="option-btn" data-q="6" data-opt="C">C&nbsp; Gewalt im Straßenverkehr</button></li>
+      <li><button class="option-btn" data-q="6" data-opt="D">D&nbsp; Pannen unterwegs</button></li>
+    </ul>
+    <div class="feedback" id="fb6"></div>
+
+    <!-- VRAAG 7 -->
+    <h2>1p 7 &nbsp;Wie hat mal ein Fahrgast reagiert, als Arne Will eine Umleitung fahren musste? (5. Absatz)</h2>
+    <ul class="options" id="q7-options">
+      <li><button class="option-btn" data-q="7" data-opt="A">A&nbsp; Der bekam schlechte Laune und hat Arne Will beschimpft.</button></li>
+      <li><button class="option-btn" data-q="7" data-opt="B">B&nbsp; Der hat Arne Will aus Mitleid eine kleine Spende gegeben.</button></li>
+      <li><button class="option-btn" data-q="7" data-opt="C">C&nbsp; Der hat nachher einen positiven Kommentar gegeben.</button></li>
+      <li><button class="option-btn" data-q="7" data-opt="D">D&nbsp; Der wollte sein Geld zurückhaben wegen der Verspätung.</button></li>
+    </ul>
+    <div class="feedback" id="fb7"></div>
+
+    <!-- VRAAG 8 -->
+    <h2>1p 8 &nbsp;Welches Wort passt im Sinne des Textes in die Lücke im 6. Absatz?</h2>
+    <ul class="options" id="q8-options">
+      <li><button class="option-btn" data-q="8" data-opt="A">A&nbsp; Geduld</button></li>
+      <li><button class="option-btn" data-q="8" data-opt="B">B&nbsp; Planung</button></li>
+      <li><button class="option-btn" data-q="8" data-opt="C">C&nbsp; Sicherheit</button></li>
+    </ul>
+    <div class="feedback" id="fb8"></div>
+
+  </div>
+</div>
+
+<button class="reset" onclick="resetAll()">Alles opnieuw proberen</button>
+
+<script>
+const answers = {
+  "3": {
+    correct: "B",
+    uitleg:
+      "Juist is B. De eerste alinea zegt: <em>„Ein Busfahrer, der Schlager und Kinderlieder singt und auch mal alle Passagiere zum Singen von Geburtstagsliedern animiert“</em> en <em>„Singen und Witze sind für den Busfahrer aus Kiel mehr als nur Scherz.“</em> Hij probeert dus met muziek en humor mensen vrolijk te maken. " +
+      "A is onjuist: er is geen sprake van een speciale partybus. C en D worden niet genoemd: hij zingt zelf en animeert passagiers, maar hij wordt niet gevraagd om partymuziek en het gaat niet om zijn eigen verjaardag.",
+    vertaling:
+      "<strong>Ein Busfahrer, der Schlager und Kinderlieder singt und auch mal alle Passagiere zum Singen von Geburtstagsliedern animiert</strong> = <em>Een buschauffeur die schlagers en kinderliedjes zingt en ook weleens alle passagiers aanzet tot het zingen van verjaardagsliedjes.</em> " +
+      "„der Schlager“ = het schlagerliedje; „animieren“ = aanzetten/stimuleren. " +
+      "<strong>Singen und Witze sind für den Busfahrer aus Kiel mehr als nur Scherz.</strong> = <em>Zingen en grappen zijn voor de buschauffeur uit Kiel meer dan alleen een grapje.</em> Dat past bij optie B.",
+    markIds: ["m-singen"]
+  },
+  "4": {
+    correct: "—",
+    uitleg:
+      "De juiste antwoorden per bewering:<br>" +
+      "<strong>1 = niet.</strong> Hij was <em>Filialleiter eines Fahrradgeschäfts</em> (bedrijfsleider van een fietsenwinkel), geen productiemedewerker in een fietsenfabriek.<br>" +
+      "<strong>2 = wel.</strong> <em>„fährt seit viereinhalb Jahren für die Kieler Verkehrsgesellschaft“</em> — hij werkt dus al een aantal jaren in Kiel.<br>" +
+      "<strong>3 = niet.</strong> De rijbewijs op zijn 40e was een <em>„große Herausforderung“</em> (grote uitdaging); het is hem dus niet meegevallen.<br>" +
+      "<strong>4 = wel.</strong> <em>„Nun fährt er auf allen Linien der KVG“</em> — hij kent nu alle KVG-busroutes.",
+    vertaling:
+      "<strong>Der frühere Filialleiter eines Fahrradgeschäfts in Kiel fährt seit viereinhalb Jahren für die Kieler Verkehrsgesellschaft (KVG).</strong> = <em>De voormalige bedrijfsleider van een fietsenwinkel in Kiel rijdt al viereneenhalf jaar voor de Kieler Verkehrsgesellschaft (KVG).</em> " +
+      "„der Filialleiter“ = de bedrijfsleider; „das Fahrradgeschäft“ = de fietsenwinkel (géén fabriek!). " +
+      "<strong>Auch, wenn der Führerschein mit 40 eine „große Herausforderung gewesen ist“, hat er damit das Ziel erreicht, sich weiterzuentwickeln.</strong> = <em>Ook al was het rijbewijs op zijn 40e een „grote uitdaging“, hij heeft daarmee het doel bereikt zich verder te ontwikkelen.</em> " +
+      "<strong>Nun fährt er auf allen Linien der KVG.</strong> = <em>Nu rijdt hij op alle lijnen van de KVG.</em>",
+    markIds: ["m-fahrrad", "m-fuehrerschein", "m-linien"]
+  },
+  "5": {
+    correct: "C",
+    uitleg:
+      "Juist is C. Alinea 3 vertelt hoe Arne Will voor het eerst met een bus in partystemming door Kiel reed: een groep jonge mannen stapte in, ze zongen uit scherts een lied uit SpongeBob, dat werd gefilmd en ging viral met 1,2 miljoen weergaven. Zo werd hij bekend als de zingende buschauffeur. " +
+      "A (vooral populair bij kinderen) wordt niet gezegd. B is onjuist: niet hij postte de video's, het geheel werd gefilmd en ging viral. D (agressieve passagiers kalmeren) komt in alinea 3 niet voor.",
+    vertaling:
+      "<strong>Im vergangenen Herbst rollte Will zum ersten Mal mit einem Bus in Partystimmung durch Kiel.</strong> = <em>Afgelopen herfst reed Will voor het eerst met een bus in feeststemming door Kiel.</em> " +
+      "<strong>Das Ganze wurde gefilmt und ging in den sozialen Medien viral – „1,2 Millionen Aufrufe in 24 Stunden“.</strong> = <em>Het geheel werd gefilmd en ging viral op sociale media – „1,2 miljoen weergaven in 24 uur“.</em> " +
+      "„viral gehen“ = viral gaan; „der Aufruf“ = de weergave/oproep. Dit verklaart hoe hij bekend werd → C.",
+    markIds: ["m-viral"]
+  },
+  "6": {
+    correct: "B",
+    uitleg:
+      "Juist is B. Alinea 4 gaat over de stemming van de passagiers: <em>„Es wird sich schneller beschwert, manche sind unfreundlich“</em> en over frustratie door <em>Baustellen, Stau, Verspätungen</em>. Het onderwerp is dus gefrustreerde passagiers. " +
+      "A (verkeersborden), C (geweld) en D (pech onderweg) komen niet aan de orde.",
+    vertaling:
+      "<strong>Es wird sich schneller beschwert, manche sind unfreundlich.</strong> = <em>Er wordt sneller geklaagd, sommigen zijn onvriendelijk.</em> " +
+      "„sich beschweren“ = klagen; „unfreundlich“ = onvriendelijk. " +
+      "<strong>Baustellen in Kiel, Stau, Verspätungen – vom Frust kriegen auch die Busfahrer „ein bisschen was ab“.</strong> = <em>Werkzaamheden in Kiel, files, vertragingen – van de frustratie krijgen ook de buschauffeurs „een beetje mee“.</em> " +
+      "„der Stau“ = de file; „die Verspätung“ = de vertraging; „der Frust“ = de frustratie. Dit past bij titel B.",
+    markIds: ["m-stimmung", "m-strassen"]
+  },
+  "7": {
+    correct: "C",
+    uitleg:
+      "Juist is C. In alinea 5 staat: <em>„Über eine nette Rückmeldung eines Fahrgastes hat er sich besonders gefreut, als der Bus unvermittelt umgeleitet wurde: ‚Sogar eine Stadtrundfahrt wird für 2,40 Euro geboten‘.“</em> De passagier gaf dus een positieve reactie (een complimentje). " +
+      "A (schelden), B (donatie uit medelijden) en D (geld terug) worden niet genoemd.",
+    vertaling:
+      "<strong>Über eine nette Rückmeldung eines Fahrgastes hat er sich besonders gefreut, als der Bus unvermittelt umgeleitet wurde.</strong> = <em>Over een aardige reactie van een passagier heeft hij zich bijzonder verheugd, toen de bus onverwacht omgeleid werd.</em> " +
+      "„die Rückmeldung“ = de reactie/feedback; „unvermittelt“ = onverwacht; „umleiten“ = omleiden. " +
+      "<strong>„Sogar eine Stadtrundfahrt wird für 2,40 Euro geboten“.</strong> = <em>„Zelfs een stadsrondrit wordt voor 2,40 euro geboden.“</em> Dat is een positieve opmerking → C.",
+    markIds: ["m-umleitung"]
+  },
+  "8": {
+    correct: "C",
+    uitleg:
+      "Juist is C (Sicherheit). In alinea 6 zegt Arne Will: <em>„Ich konzentriere mich immer auf den Verkehr. Singen oder Späße sind nur möglich, wenn die Situation es zulässt. Die Sicherheit der Fahrgäste steht an erster Stelle.“</em> Hij concentreert zich op het verkeer en zingen/grapjes mogen alleen als de situatie het toelaat; de veiligheid van de passagiers staat voorop. " +
+      "A (geduld) en B (planning) passen niet bij <em>„konzentriere mich immer auf den Verkehr“</em> en <em>„wenn die Situation es zulässt“</em>.",
+    vertaling:
+      "<strong>Ich konzentriere mich immer auf den Verkehr. Singen oder Späße sind nur möglich, wenn die Situation es zulässt. Die Sicherheit der Fahrgäste steht an erster Stelle.</strong> = <em>Ik concentreer me altijd op het verkeer. Zingen of grapjes zijn alleen mogelijk als de situatie het toelaat. De veiligheid van de passagiers staat op de eerste plaats.</em> " +
+      "„der Verkehr“ = het verkeer; „zulassen“ = toelaten; „die Sicherheit“ = de veiligheid; „an erster Stelle stehen“ = op de eerste plaats staan. → C.",
+    markIds: ["m-sicherheit"]
+  }
+};
+
+// ===== Vraag 4: waar/niet =====
+const q4Correct = { 1: "niet", 2: "wel", 3: "niet", 4: "wel" };
+
+function checkQ4() {
+  const fb = document.getElementById("fb4");
+  let score = 0;
+  const rows = document.querySelectorAll("#q4-table tbody tr");
+
+  rows.forEach(tr => {
+    const rowNr = tr.dataset.row;
+    tr.classList.remove("correct-row", "wrong-row");
+    const existing = tr.querySelector(".rij-feedback");
+    if (existing) existing.remove();
+
+    const gekozen = tr.querySelector('input[type="radio"]:checked');
+    const juist = q4Correct[rowNr];
+    const rijFb = document.createElement("span");
+    rijFb.className = "rij-feedback";
+
+    if (gekozen && gekozen.value === juist) {
+      score++;
+      tr.classList.add("correct-row");
+      rijFb.classList.add("ok");
+      rijFb.textContent = "✓ Juist (" + juist + ")";
+    } else {
+      tr.classList.add("wrong-row");
+      rijFb.classList.add("nok");
+      rijFb.textContent = "✗ Onjuist — juist is: " + juist;
+    }
+    tr.querySelector("td").appendChild(rijFb);
+  });
+
+  const data = answers["4"];
+  const ok = score === 4;
+  fb.className = "feedback show " + (ok ? "ok" : "nok");
+  fb.innerHTML =
+    (ok
+      ? "✅ <strong>Helemaal goed!</strong> Alle vier de beweringen zijn juist beoordeeld. "
+      : "❌ <strong>Nog niet helemaal.</strong> Je had " + score + " van de 4 beweringen goed. ") +
+    '<div class="uitleg">' + data.uitleg + "</div>" +
+    '<div class="vertaling"><strong>Uitleg van de Duitse zin(nen):</strong><br>' + data.vertaling + "</div>";
+
+  data.markIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add("active");
+  });
+}
+
+document.getElementById("q4-check").addEventListener("click", checkQ4);
+
+// ===== Meerkeuzevragen =====
+function showFeedback(q, isCorrect) {
+  const data = answers[q];
+  const fb = document.getElementById("fb" + q);
+  fb.className = "feedback show " + (isCorrect ? "ok" : "nok");
+  fb.innerHTML =
+    (isCorrect ? "✅ <strong>Juist!</strong> " : "❌ <strong>Onjuist.</strong> Het juiste antwoord is <strong>" + data.correct + "</strong>. ") +
+    '<div class="uitleg">' + data.uitleg + "</div>" +
+    '<div class="vertaling"><strong>Uitleg van de Duitse zin(nen):</strong><br>' + data.vertaling + "</div>";
+  data.markIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add("active");
+  });
+}
+
+function handleClick(e) {
+  const btn = e.target.closest(".option-btn");
+  if (!btn || btn.disabled) return;
+
+  const q = btn.dataset.q;
+  if (!q) return; // check-knop van vraag 4 heeft geen data-q
+  const opt = btn.dataset.opt;
+  const data = answers[q];
+  if (!data) return;
+  const isCorrect = opt === data.correct;
+
+  const buttons = document.querySelectorAll('#q' + q + '-options .option-btn');
+  buttons.forEach(b => {
+    b.disabled = true;
+    if (b.dataset.opt === opt) {
+      b.classList.add(isCorrect ? "correct" : "wrong");
+    }
+    if (!isCorrect && b.dataset.opt === data.correct) {
+      b.classList.add("correct");
+    }
+  });
+
+  showFeedback(q, isCorrect);
+}
+
+document.querySelectorAll(".option-btn").forEach(btn => {
+  btn.addEventListener("click", handleClick);
+});
+
+function resetAll() {
+  document.querySelectorAll(".option-btn").forEach(b => {
+    b.disabled = false;
+    b.classList.remove("correct", "wrong");
+  });
+  document.querySelectorAll(".feedback").forEach(f => {
+    f.className = "feedback";
+    f.innerHTML = "";
+  });
+  document.querySelectorAll("mark").forEach(m => m.classList.remove("active"));
+
+  // vraag 4 resetten
+  document.querySelectorAll('#q4-table input[type="radio"]').forEach(r => r.checked = false);
+  document.querySelectorAll("#q4-table tbody tr").forEach(tr => {
+    tr.classList.remove("correct-row", "wrong-row");
+    const fb = tr.querySelector(".rij-feedback");
+    if (fb) fb.remove();
+  });
+}
+</script>
+
+</body>
+</html>

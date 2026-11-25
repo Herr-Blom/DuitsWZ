@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gezielt den Traumjob suchen – oefening</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    max-width: 1280px;
+    margin: 30px auto;
+    padding: 0 16px;
+    line-height: 1.6;
+    color: #222;
+    background: #fafafa;
+  }
+  h1 { font-size: 1.4em; border-bottom: 2px solid #333; padding-bottom: 6px; }
+  h2 { font-size: 1.05em; margin-top: 1.6em; }
+  .examen-header {
+    font-size: 1.05em;
+    font-weight: bold;
+    color: #444;
+    letter-spacing: .3px;
+  }
+  .layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    align-items: start;
+    margin-top: 24px;
+  }
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+  }
+  .article {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px 20px;
+    position: sticky;
+    top: 16px;
+    max-height: calc(100vh - 32px);
+    overflow-y: auto;
+  }
+  @media (max-width: 900px) {
+    .article { position: static; max-height: none; overflow-y: visible; }
+  }
+  .article h3 { margin-top: 0; }
+  .source { font-size: .85em; color: #666; margin-top: 12px; }
+  .note { font-size: .85em; color: #555; border-top: 1px dashed #bbb; padding-top: 8px; margin-top: 12px;}
+  .vragen { min-width: 0; }
+
+  .options { list-style: none; padding-left: 0; }
+  .options li { margin: 6px 0; }
+  .option-btn {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 9px 12px;
+    font-size: .97em;
+    font-family: inherit;
+    border: 1.5px solid #999;
+    border-radius: 6px;
+    background: #fff;
+    cursor: pointer;
+    transition: background .15s, border-color .15s;
+  }
+  .option-btn:hover:not(:disabled) { background: #eef4fb; border-color: #4a7fb5; }
+  .option-btn:disabled { cursor: default; opacity: .95; }
+  .option-btn.correct { background: #d8f5d8; border-color: #2e8b2e; font-weight: bold; }
+  .option-btn.wrong { background: #fbdcdc; border-color: #c0392b; }
+
+  .feedback {
+    margin-top: 10px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    display: none;
+    font-size: .95em;
+  }
+  .feedback.show { display: block; }
+  .feedback.ok { background: #e3f6e3; border-left: 5px solid #2e8b2e; }
+  .feedback.nok { background: #fdeaea; border-left: 5px solid #c0392b; }
+  .feedback .uitleg { margin-top: 6px; }
+  .feedback .vertaling {
+    margin-top: 8px;
+    padding: 8px 10px;
+    background: rgba(255,255,255,.65);
+    border-left: 3px solid #888;
+    border-radius: 4px;
+    font-size: .93em;
+  }
+  .feedback .vertaling em { color: #333; }
+
+  mark {
+    background: transparent;
+    color: inherit;
+    padding: 0;
+    border-radius: 3px;
+    transition: background .3s;
+  }
+  mark.active {
+    background: #ffe680;
+    padding: 0 2px;
+    outline: 2px solid #ffb347;
+  }
+
+  .reset {
+    margin-top: 24px;
+    padding: 8px 16px;
+    font-family: inherit;
+    font-size: .95em;
+    border: 1.5px solid #555;
+    background: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .reset:hover { background: #eee; }
+
+  .check-btn {
+    display: inline-block;
+    width: auto;
+    margin-top: 10px;
+    padding: 9px 18px;
+    font-family: inherit;
+    font-size: .97em;
+    border: 1.5px solid #4a7fb5;
+    background: #eef4fb;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .check-btn:hover { background: #dbe8f6; }
+  .check-btn:disabled { opacity: .6; cursor: default; }
+
+  .match-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+    font-size: .95em;
+  }
+  .match-table th,
+  .match-table td {
+    border: 1px solid #ccc;
+    padding: 8px 10px;
+    text-align: left;
+    vertical-align: middle;
+  }
+  .match-table th { background: #f0f0f0; font-weight: bold; }
+  .match-table th.center,
+  .match-table td.center { text-align: center; width: 90px; }
+  .match-table select {
+    font-family: inherit;
+    font-size: .97em;
+    padding: 6px 8px;
+    border: 1.5px solid #999;
+    border-radius: 6px;
+    background: #fff;
+    cursor: pointer;
+  }
+  .match-table tr.correct-row { background: #e3f6e3; }
+  .match-table tr.wrong-row { background: #fdeaea; }
+  .match-table .rij-feedback { font-size: .88em; margin-top: 4px; display: block; }
+  .match-table .rij-feedback.ok { color: #2e8b2e; }
+  .match-table .rij-feedback.nok { color: #c0392b; }
+
+  .titels-lijst {
+    background: #f7f7f7;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 10px 14px;
+    margin-top: 8px;
+    font-size: .95em;
+  }
+  .titels-lijst ul { margin: 6px 0 0 0; padding-left: 18px; }
+  .titels-lijst li { margin: 3px 0; }
+</style>
+</head>
+<body>
+
+<p class="examen-header">Examen vmbo gl/tl 2026 Tijdvak 1</p>
+<h1>Tekst 6 – Gezielt den Traumjob suchen</h1>
+
+<div class="layout">
+
+  <!-- ================= TEKST (links) ================= -->
+  <div class="article">
+    <h3>Gezielt den Traumjob suchen</h3>
+    <p>
+      Den richtigen Job finden, der genau passt und Freude macht – wer
+      möchte das nicht? Darauf kann man gezielt hinarbeiten, sagt der
+      Kölner Karriereberater Bernd Slaghuis.
+    </p>
+    <p><strong>Das sind seine vier Tipps für den Weg zum Traumjob:</strong></p>
+    <p>
+      <strong>1.</strong> <mark id="m-tipp1">Es ist erst einmal wichtig zu wissen, was man eigentlich will. Diese
+      Fragen können dabei helfen: Was sind meine Werte? Was sind meine
+      Stärken? Wie sieht für mich ein optimaler Arbeitstag aus?</mark>
+    </p>
+    <p>
+      <strong>2.</strong> <mark id="m-tipp2">Man sollte konsequent auf Basis der eigenen Wünsche suchen. Zum
+      Beispiel in verschiedenen Internet-Jobportalen. Nach Bedarf kann man
+      filtern – etwa nach Teilzeit, Homeoffice oder speziellen Benefits. Und: für
+      Informationen sollte man sich mit anderen vernetzen.</mark>
+    </p>
+    <p>
+      <strong>3.</strong> <mark id="m-tipp3">Wesentlich ist der Lebenslauf, der laut Slaghuis so viele Seiten haben
+      sollte wie die erste Ziffer des eigenen Alters. Strukturiert, leicht lesbar und
+      ausführlich lautet die Devise. Im Brief sollten Bewerber erklären, was sie
+      als Person ausmacht.</mark>
+    </p>
+    <p>
+      <strong>4.</strong> <mark id="m-tipp4">Gute Vorbereitung ist alles. Man sollte sich gründlich über das
+      Unternehmen informieren und vielleicht vorher einmal aufschreiben,
+      welche Fragen man stellen möchte. Die sollten übrigens im Gespräch und
+      nicht erst am Ende gestellt werden. Man kann auch eine
+      Selbstpräsentation von maximal drei Minuten vorbereiten.</mark>
+    </p>
+    <p class="source">www.xing.com, 19.10.2023</p>
+  </div>
+
+  <!-- ================= VRAGEN (rechts) ================= -->
+  <div class="vragen">
+
+    <!-- VRAAG 22 -->
+    <h2>3p 22 &nbsp;In de tekst worden vier tips gegeven om je droombaan te vinden.<br>Schrijf achter de nummers 1 tot en met 4 de letter van de bijbehorende titel.<br>Let op: titels mogen maar één keer worden gebruikt en er blijven twee titels over.</h2>
+
+    <div class="titels-lijst">
+      <strong>Kies uit:</strong>
+      <ul>
+        <li><strong>a</strong> Bewerbungsdokumente</li>
+        <li><strong>b</strong> Sich selbst kennen</li>
+        <li><strong>c</strong> Eingeladen zum Vorstellungsgespräch: Was tun?</li>
+        <li><strong>d</strong> Fehlerfreies Anschreiben trainieren</li>
+        <li><strong>e</strong> Jobs gibt es im Überfluss</li>
+        <li><strong>f</strong> Strukturierte Suche</li>
+      </ul>
+    </div>
+
+    <table class="match-table" id="q22-table">
+      <thead>
+        <tr>
+          <th>Tip</th>
+          <th class="center">Titel</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr data-row="1">
+          <td><strong>1</strong>&nbsp; Weten wat je eigenlijk wilt (waarden, sterke punten, ideale werkdag)</td>
+          <td class="center">
+            <select data-row="1">
+              <option value="">—</option>
+              <option value="a">a</option>
+              <option value="b">b</option>
+              <option value="c">c</option>
+              <option value="d">d</option>
+              <option value="e">e</option>
+              <option value="f">f</option>
+            </select>
+          </td>
+        </tr>
+        <tr data-row="2">
+          <td><strong>2</strong>&nbsp; Consequent zoeken op basis van je wensen, filteren en netwerken</td>
+          <td class="center">
+            <select data-row="2">
+              <option value="">—</option>
+              <option value="a">a</option>
+              <option value="b">b</option>
+              <option value="c">c</option>
+              <option value="d">d</option>
+              <option value="e">e</option>
+              <option value="f">f</option>
+            </select>
+          </td>
+        </tr>
+        <tr data-row="3">
+          <td><strong>3</strong>&nbsp; De levensloop: gestructureerd, leesbaar en uitgebreid; in de brief uitleggen wat je als persoon kenmerkt</td>
+          <td class="center">
+            <select data-row="3">
+              <option value="">—</option>
+              <option value="a">a</option>
+              <option value="b">b</option>
+              <option value="c">c</option>
+              <option value="d">d</option>
+              <option value="e">e</option>
+              <option value="f">f</option>
+            </select>
+          </td>
+        </tr>
+        <tr data-row="4">
+          <td><strong>4</strong>&nbsp; Goede voorbereiding: informeer je over het bedrijf, bedenk vragen en bereid een zelfpresentatie voor</td>
+          <td class="center">
+            <select data-row="4">
+              <option value="">—</option>
+              <option value="a">a</option>
+              <option value="b">b</option>
+              <option value="c">c</option>
+              <option value="d">d</option>
+              <option value="e">e</option>
+              <option value="f">f</option>
+            </select>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <button class="check-btn" id="q22-check">Controleer antwoord</button>
+    <div class="feedback" id="fb22"></div>
+
+  </div>
+</div>
+
+<button class="reset" onclick="resetAll()">Alles opnieuw proberen</button>
+
+<script>
+const answers = {
+  "22": {
+    correct: "—",
+    uitleg:
+      "De juiste combinaties zijn:<br>" +
+      "<strong>1 = b (Sich selbst kennen).</strong> Tip 1 gaat over weten wat je eigenlijk wilt: je waarden, sterke punten en hoe een ideale werkdag eruitziet. Dat is jezelf kennen.<br>" +
+      "<strong>2 = f (Strukturierte Suche).</strong> Tip 2 gaat over consequent zoeken op basis van je wensen, filteren in jobportalen en netwerken. Dat is een gestructureerde zoektocht.<br>" +
+      "<strong>3 = a (Bewerbungsdokumente).</strong> Tip 3 gaat over de levensloop (Lebenslauf) en de brief: gestructureerd, leesbaar, uitgebreid en uitleggen wat je als persoon kenmerkt. Dat zijn je sollicitatiedocumenten.<br>" +
+      "<strong>4 = c (Eingeladen zum Vorstellungsgespräch: Was tun?).</strong> Tip 4 gaat over voorbereiding op het gesprek: je informeren over het bedrijf, vragen bedenken en een zelfpresentatie voorbereiden. Dat hoort bij een uitnodiging voor een sollicitatiegesprek.<br>" +
+      "De titels <strong>d</strong> (Fehlerfreies Anschreiben trainieren) en <strong>e</strong> (Jobs gibt es im Überfluss) blijven over en worden niet gebruikt.",
+    vertaling:
+      "<strong>1. Es ist erst einmal wichtig zu wissen, was man eigentlich will. Diese Fragen können dabei helfen: Was sind meine Werte? Was sind meine Stärken? Wie sieht für mich ein optimaler Arbeitstag aus?</strong> = <em>Het is allereerst belangrijk te weten wat je eigenlijk wilt. Deze vragen kunnen daarbij helpen: wat zijn mijn waarden? Wat zijn mijn sterke punten? Hoe ziet voor mij een optimale werkdag eruit?</em> → <strong>Sich selbst kennen (b)</strong>.<br>" +
+      "<strong>2. Man sollte konsequent auf Basis der eigenen Wünsche suchen. … Nach Bedarf kann man filtern – etwa nach Teilzeit, Homeoffice oder speziellen Benefits. Und: für Informationen sollte man sich mit anderen vernetzen.</strong> = <em>Je moet consequent op basis van je eigen wensen zoeken. … Naar behoefte kun je filteren – bijvoorbeeld op deeltijd, thuiswerken of speciale voordelen. En: voor informatie moet je met anderen netwerken.</em> → <strong>Strukturierte Suche (f)</strong>.<br>" +
+      "<strong>3. Wesentlich ist der Lebenslauf … Strukturiert, leicht lesbar und ausführlich lautet die Devise. Im Brief sollten Bewerber erklären, was sie als Person ausmacht.</strong> = <em>Wezenlijk is de levensloop … Gestructureerd, makkelijk leesbaar en uitgebreid is het devies. In de brief moeten sollicitanten uitleggen wat hen als persoon kenmerkt.</em> → <strong>Bewerbungsdokumente (a)</strong>.<br>" +
+      "<strong>4. Gute Vorbereitung ist alles. Man sollte sich gründlich über das Unternehmen informieren und vielleicht vorher einmal aufschreiben, welche Fragen man stellen möchte. … Man kann auch eine Selbstpräsentation von maximal drei Minuten vorbereiten.</strong> = <em>Goede voorbereiding is alles. Je moet je grondig over het bedrijf informeren en misschien van tevoren opschrijven welke vragen je wilt stellen. … Je kunt ook een zelfpresentatie van maximaal drie minuten voorbereiden.</em> → <strong>Eingeladen zum Vorstellungsgespräch: Was tun? (c)</strong>.",
+    markIds: ["m-tipp1", "m-tipp2", "m-tipp3", "m-tipp4"]
+  }
+};
+
+// ===== Vraag 22: matchopdracht =====
+const q22Correct = { 1: "b", 2: "f", 3: "a", 4: "c" };
+
+function checkQ22() {
+  const fb = document.getElementById("fb22");
+  const data = answers["22"];
+  let score = 0;
+  const rows = document.querySelectorAll("#q22-table tbody tr");
+
+  rows.forEach(tr => {
+    const rowNr = tr.dataset.row;
+    tr.classList.remove("correct-row", "wrong-row");
+    const existing = tr.querySelector(".rij-feedback");
+    if (existing) existing.remove();
+
+    const select = tr.querySelector("select");
+    const gekozen = select.value;
+    const juist = q22Correct[rowNr];
+    const rijFb = document.createElement("span");
+    rijFb.className = "rij-feedback";
+
+    if (gekozen === juist) {
+      score++;
+      tr.classList.add("correct-row");
+      rijFb.classList.add("ok");
+      rijFb.textContent = "✓ Juist (" + juist + ")";
+    } else {
+      tr.classList.add("wrong-row");
+      rijFb.classList.add("nok");
+      rijFb.textContent = "✗ Onjuist — juist is: " + juist + (gekozen ? " (jij koos: " + gekozen + ")" : " (niets gekozen)");
+    }
+    tr.querySelector("td").appendChild(rijFb);
+    select.disabled = true;
+  });
+
+  const ok = score === 4;
+  fb.className = "feedback show " + (ok ? "ok" : "nok");
+  fb.innerHTML =
+    (ok
+      ? "✅ <strong>Helemaal goed!</strong> Alle vier de tips zijn juist gekoppeld. "
+      : "❌ <strong>Nog niet helemaal.</strong> Je had " + score + " van de 4 koppelingen goed. ") +
+    '<div class="uitleg">' + data.uitleg + "</div>" +
+    '<div class="vertaling"><strong>Uitleg van de Duitse zin(nen):</strong><br>' + data.vertaling + "</div>";
+
+  data.markIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add("active");
+  });
+
+  document.getElementById("q22-check").disabled = true;
+}
+
+document.getElementById("q22-check").addEventListener("click", checkQ22);
+
+function resetAll() {
+  document.querySelectorAll(".option-btn").forEach(b => {
+    b.disabled = false;
+    b.classList.remove("correct", "wrong");
+  });
+  document.querySelectorAll(".feedback").forEach(f => {
+    f.className = "feedback";
+    f.innerHTML = "";
+  });
+  document.querySelectorAll("mark").forEach(m => m.classList.remove("active"));
+
+  // vraag 22 resetten
+  document.querySelectorAll("#q22-table select").forEach(s => {
+    s.value = "";
+    s.disabled = false;
+  });
+  document.querySelectorAll("#q22-table tbody tr").forEach(tr => {
+    tr.classList.remove("correct-row", "wrong-row");
+    const fb = tr.querySelector(".rij-feedback");
+    if (fb) fb.remove();
+  });
+  const check = document.getElementById("q22-check");
+  if (check) check.disabled = false;
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mit sieben habe ich schon die Stimme Pinocchios gesprochen – oefening</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    max-width: 1280px;
+    margin: 30px auto;
+    padding: 0 16px;
+    line-height: 1.6;
+    color: #222;
+    background: #fafafa;
+  }
+  h1 { font-size: 1.4em; border-bottom: 2px solid #333; padding-bottom: 6px; }
+  h2 { font-size: 1.05em; margin-top: 1.6em; }
+  .examen-header {
+    font-size: 1.05em;
+    font-weight: bold;
+    color: #444;
+    letter-spacing: .3px;
+  }
+  .layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    align-items: start;
+    margin-top: 24px;
+  }
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+  }
+  .article {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px 20px;
+    position: sticky;
+    top: 16px;
+    max-height: calc(100vh - 32px);
+    overflow-y: auto;
+  }
+  @media (max-width: 900px) {
+    .article { position: static; max-height: none; overflow-y: visible; }
+  }
+  .article h3 { margin-top: 0; }
+  .source { font-size: .85em; color: #666; margin-top: 12px; }
+  .note { font-size: .85em; color: #555; border-top: 1px dashed #bbb; padding-top: 8px; margin-top: 12px;}
+  .vragen { min-width: 0; }
+
+  .options { list-style: none; padding-left: 0; }
+  .options li { margin: 6px 0; }
+  .option-btn {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 9px 12px;
+    font-size: .97em;
+    font-family: inherit;
+    border: 1.5px solid #999;
+    border-radius: 6px;
+    background: #fff;
+    cursor: pointer;
+    transition: background .15s, border-color .15s;
+  }
+  .option-btn:hover:not(:disabled) { background: #eef4fb; border-color: #4a7fb5; }
+  .option-btn:disabled { cursor: default; opacity: .95; }
+  .option-btn.correct { background: #d8f5d8; border-color: #2e8b2e; font-weight: bold; }
+  .option-btn.wrong { background: #fbdcdc; border-color: #c0392b; }
+
+  .feedback {
+    margin-top: 10px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    display: none;
+    font-size: .95em;
+  }
+  .feedback.show { display: block; }
+  .feedback.ok { background: #e3f6e3; border-left: 5px solid #2e8b2e; }
+  .feedback.nok { background: #fdeaea; border-left: 5px solid #c0392b; }
+  .feedback .uitleg { margin-top: 6px; }
+  .feedback .vertaling {
+    margin-top: 8px;
+    padding: 8px 10px;
+    background: rgba(255,255,255,.65);
+    border-left: 3px solid #888;
+    border-radius: 4px;
+    font-size: .93em;
+  }
+  .feedback .vertaling em { color: #333; }
+
+  mark {
+    background: transparent;
+    color: inherit;
+    padding: 0;
+    border-radius: 3px;
+    transition: background .3s;
+  }
+  mark.active {
+    background: #ffe680;
+    padding: 0 2px;
+    outline: 2px solid #ffb347;
+  }
+
+  .waarheidstabel {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 8px;
+    font-size: .93em;
+  }
+  .waarheidstabel th, .waarheidstabel td {
+    border: 1px solid #bbb;
+    padding: 7px 9px;
+    vertical-align: middle;
+  }
+  .waarheidstabel th {
+    background: #f0f0f0;
+    font-weight: bold;
+    text-align: center;
+  }
+  .waarheidstabel td.bewering { text-align: left; }
+  .waarheidstabel td.keuze { text-align: center; white-space: nowrap; width: 110px; }
+  .keuze-btn {
+    padding: 5px 11px;
+    margin: 0 2px;
+    font-family: inherit;
+    font-size: .93em;
+    border: 1.5px solid #999;
+    border-radius: 5px;
+    background: #fff;
+    cursor: pointer;
+  }
+  .keuze-btn:hover:not(:disabled) { background: #eef4fb; border-color: #4a7fb5; }
+  .keuze-btn:disabled { cursor: default; }
+  .keuze-btn.correct { background: #d8f5d8; border-color: #2e8b2e; font-weight: bold; }
+  .keuze-btn.wrong { background: #fbdcdc; border-color: #c0392b; }
+  .subfeedback { font-size: .88em; margin-top: 6px; padding: 5px 9px; border-radius: 5px; display: none; }
+  .subfeedback.show { display: block; }
+  .subfeedback.ok { background: #e3f6e3; border-left: 4px solid #2e8b2e; }
+  .subfeedback.nok { background: #fdeaea; border-left: 4px solid #c0392b; }
+
+  .reset {
+    margin-top: 24px;
+    padding: 8px 16px;
+    font-family: inherit;
+    font-size: .95em;
+    border: 1.5px solid #555;
+    background: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .reset:hover { background: #eee; }
+</style>
+</head>
+<body>
+
+<p class="examen-header">Examen vmbo gl/tl 2026 Tijdvak 1</p>
+<h1>Tekst 2 – Mit sieben habe ich schon die Stimme Pinocchios gesprochen</h1>
+
+<div class="layout">
+
+  <!-- ================= TEKST (links) ================= -->
+  <div class="article">
+    <h3>Mit sieben habe ich schon die Stimme Pinocchios gesprochen</h3>
+    <p><em>Oliver Rohrbeck verrät im Interview, wie er Synchronsprecher<sup>1)</sup> wurde.</em></p>
+
+    <p><strong>(1) Wie kam es dazu, dass du Synchronsprecher geworden bist?</strong><br>
+    Oliver Rohrbeck: Als ich noch ein Kind war und noch nicht einmal lesen
+    konnte, wurde ich gefragt, ob ich bei der Sesamstraße mitspielen will. Ich
+    war dann in einem kurzen Video dabei. Und damals gab es noch nicht so
+    viele Filmfirmen. Da hat sich dann rumgesprochen, dass es einen Sechsjährigen gibt, der Lust hat, ein bisschen zu schauspielen.
+    <mark id="m1-angeboten">Also wurde ich gefragt, ob ich auch mal synchronisieren möchte.</mark>
+    So habe ich dann mit sieben Jahren die Stimme Pinocchios gesprochen und daraufhin immer
+    weiter Sprecherjobs bekommen.</p>
+
+    <p><strong>(2) Wie war es, schon als Kind Synchronsprecher zu sein?</strong><br>
+    <mark id="m2-super">Das war wie Spielengehen für mich! Ich fand das super:</mark>
+    Zuerst in eine Rolle schlüpfen und dann geht es ab nach Hause, fertig. Ich hatte sonst
+    eine ganz normale Kindheit. Nur ab und zu habe ich eben synchronisiert
+    oder mal vor der Kamera gestanden.</p>
+
+    <p><strong>(3) <mark id="m3-vraag">______ 5__________</mark></strong><br>
+    <mark id="m3-manuskript">Die Texte für ein Hörspiel nennt man Manuskript. Das bekomme ich
+    spätestens eine Woche vorher zugeschickt, lese es gründlich durch und
+    schaue mir meine Rolle an.</mark> Das ist eigentlich alles. Ich muss nur genau
+    wissen, wann etwas passiert und was passiert.</p>
+
+    <p><strong>(4) Wie läuft so eine Aufnahme im Studio ab?</strong><br>
+    Bei einer Fernsehserie zum Beispiel fahren wir meistens für zwei Tage
+    nach Hamburg und nehmen zwei Folgen auf.
+    <mark id="m4-nicht-durch">Aber wir machen nicht eine Folge von vorn bis hinten durch</mark> und dann am nächsten Tag die andere.
+    <mark id="m4-szenen">Wir richten uns danach, wann die anderen Synchronsprecher Zeit haben, die in den Szenen vorkommen.</mark>
+    <mark id="m4-durchlesen">Daher lese ich vorher die Texte gut durch, um Bescheid zu wissen: Wo sind wir gerade in der Geschichte?</mark></p>
+
+    <p><strong>(5) Musst du den Text immer genau so ablesen, wie er auf dem Zettel
+    steht?</strong><br>
+    Nein. Aber es gibt Hörspiele, wo man das genauso machen muss. Zum
+    Beispiel habe ich mal ein Hörspiel für den Bayerischen Rundfunk
+    aufgenommen. Da war es den Machern schon sehr wichtig, dass die
+    Texte genauso gesprochen werden.
+    <mark id="m5-veranderen">Bei anderen Hörspielen kann ich immer mal was verändern und umdrehen,</mark>
+    aber ich kann an der Geschichte nichts ändern. Ich kann also nicht sagen: „Ist ja blöd, die
+    Geschichte – wollen wir nicht ein ganz anderes Ende erfinden?“ Das kann
+    ich nicht machen.</p>
+
+    <p class="source">Timo Gotsch / Stuttgarter Kinderzeitung / 3.11.2023</p>
+    <p class="note"><sup>1)</sup> Synchronsprecher: stemacteur, acteur die met zijn of haar stem acteert in bijvoorbeeld
+    tekenfilms of reclamespots</p>
+  </div>
+
+  <!-- ================= VRAGEN (rechts) ================= -->
+  <div class="vragen">
+
+    <!-- VRAAG 3 -->
+    <h2>1p 3 &nbsp;Was erzählt Oliver Rohrbeck im 1. Absatz?</h2>
+    <ul class="options" id="q3-options">
+      <li><button class="option-btn" data-q="3" data-opt="A">A&nbsp; Er findet Schauspielen schöner als Synchronisieren.</button></li>
+      <li><button class="option-btn" data-q="3" data-opt="B">B&nbsp; Er hat als Kind eine Sprechrolle angeboten bekommen.</button></li>
+      <li><button class="option-btn" data-q="3" data-opt="C">C&nbsp; Er hat hart kämpfen müssen, um Synchronsprecher zu werden.</button></li>
+      <li><button class="option-btn" data-q="3" data-opt="D">D&nbsp; Er interessiert sich am meisten für Zeichentrickfilme.</button></li>
+    </ul>
+    <div class="feedback" id="fb3"></div>
+
+    <!-- VRAAG 4 -->
+    <h2>1p 4 &nbsp;Wie hat Oliver Rohrbeck das Synchronsprechen als Kind erfahren? (2. Absatz)</h2>
+    <ul class="options" id="q4-options">
+      <li><button class="option-btn" data-q="4" data-opt="A">A&nbsp; Es hat seine Freiheit begrenzt.</button></li>
+      <li><button class="option-btn" data-q="4" data-opt="B">B&nbsp; Es war eine sehr angenehme Tätigkeit für ihn.</button></li>
+      <li><button class="option-btn" data-q="4" data-opt="C">C&nbsp; Es war wichtig, um seine Energie loszuwerden.</button></li>
+    </ul>
+    <div class="feedback" id="fb4"></div>
+
+    <!-- VRAAG 5 -->
+    <h2>1p 5 &nbsp;Welche Interviewfrage passt zum 3. Absatz?</h2>
+    <ul class="options" id="q5-options">
+      <li><button class="option-btn" data-q="5" data-opt="A">A&nbsp; Welche Fähigkeiten sind für ein Hörspiel wichtig?</button></li>
+      <li><button class="option-btn" data-q="5" data-opt="B">B&nbsp; Wie bereitest du dich auf ein Hörspiel vor?</button></li>
+      <li><button class="option-btn" data-q="5" data-opt="C">C&nbsp; Wie lange dauern die Aufnahmen für ein Hörspiel?</button></li>
+    </ul>
+    <div class="feedback" id="fb5"></div>
+
+    <!-- VRAAG 6 -->
+    <h2>2p 6 &nbsp;Geef van elk van de onderstaande beweringen aan of deze wel of niet overeenkomt met alinea 4. Kruis aan ‘wel’ of ‘niet’.</h2>
+    <table class="waarheidstabel" id="q6-table">
+      <thead>
+        <tr>
+          <th style="text-align:left;">Bewering</th>
+          <th>wel</th>
+          <th>niet</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr data-bewering="1">
+          <td class="bewering">1&nbsp; Oliver Rohrbeck en zijn collega’s nemen per opnamedag een complete aflevering van een tv-serie op.</td>
+          <td class="keuze">
+            <button class="keuze-btn" data-q="6" data-b="1" data-opt="wel">wel</button>
+            <button class="keuze-btn" data-q="6" data-b="1" data-opt="niet">niet</button>
+          </td>
+          <td class="keuze"></td>
+        </tr>
+        <tr data-bewering="2">
+          <td class="bewering">2&nbsp; Elke stemacteur spreekt thuis zijn eigen tekst in en later worden alle stemmen in de juiste volgorde gemonteerd.</td>
+          <td class="keuze">
+            <button class="keuze-btn" data-q="6" data-b="2" data-opt="wel">wel</button>
+            <button class="keuze-btn" data-q="6" data-b="2" data-opt="niet">niet</button>
+          </td>
+          <td class="keuze"></td>
+        </tr>
+        <tr data-bewering="3">
+          <td class="bewering">3&nbsp; Scènes waarin dezelfde stemacteurs spelen worden achter elkaar opgenomen.</td>
+          <td class="keuze">
+            <button class="keuze-btn" data-q="6" data-b="3" data-opt="wel">wel</button>
+            <button class="keuze-btn" data-q="6" data-b="3" data-opt="niet">niet</button>
+          </td>
+          <td class="keuze"></td>
+        </tr>
+        <tr data-bewering="4">
+          <td class="bewering">4&nbsp; Oliver Rohrbeck wil goed op de hoogte zijn van het verloop van het verhaal.</td>
+          <td class="keuze">
+            <button class="keuze-btn" data-q="6" data-b="4" data-opt="wel">wel</button>
+            <button class="keuze-btn" data-q="6" data-b="4" data-opt="niet">niet</button>
+          </td>
+          <td class="keuze"></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="feedback" id="fb6"></div>
+
+    <!-- VRAAG 7 -->
+    <h2>1p 7 &nbsp;Was sagt Oliver Rohrbeck im 5. Absatz aus?</h2>
+    <ul class="options" id="q7-options">
+      <li><button class="option-btn" data-q="7" data-opt="A">A&nbsp; Er bestimmt, wie eine Hörspielgeschichte ausgehen soll.</button></li>
+      <li><button class="option-btn" data-q="7" data-opt="B">B&nbsp; Er darf manchmal etwas an seiner Sprechrolle ändern.</button></li>
+      <li><button class="option-btn" data-q="7" data-opt="C">C&nbsp; Er hat schon eigene Hörspiele für das Radio geschrieben.</button></li>
+      <li><button class="option-btn" data-q="7" data-opt="D">D&nbsp; Er muss immer auf eine deutliche Aussprache achten.</button></li>
+    </ul>
+    <div class="feedback" id="fb7"></div>
+
+  </div>
+</div>
+
+<button class="reset" onclick="resetAll()">Alles opnieuw proberen</button>
+
+<script>
+const answers = {
+  "3": {
+    correct: "B",
+    uitleg:
+      "Juist is B. De directe zin is: <em>„Also wurde ich gefragt, ob ich auch mal synchronisieren möchte.“</em> Hij kreeg die spreekrol dus aangeboden. A, C en D worden niet in de tekst gezegd.",
+    vertaling:
+      "<strong>Also wurde ich gefragt, ob ich auch mal synchronisieren möchte.</strong> = <em>Dus werd ik gevraagd of ik ook eens wilde synchroniseren.</em> " +
+      "„gefragt werden“ = gevraagd worden; „ob ich … möchte“ = of ik … wilde. Hij werd dus gevraagd/aangeboden, hij hoefde niet te vechten (C) en het ging niet om tekenfilms kijken (D).",
+    markIds: ["m1-angeboten"]
+  },
+  "4": {
+    correct: "B",
+    uitleg:
+      "Juist is B. De directe zin is: <em>„Das war wie Spielengehen für mich! Ich fand das super“</em>. Hij ervoer het synchroniseren dus als heel prettig. A en C staan er niet.",
+    vertaling:
+      "<strong>Das war wie Spielengehen für mich!</strong> = <em>Dat was voor mij net als naar de speeltuin gaan / spelen!</em> " +
+      "<strong>Ich fand das super:</strong> = <em>Ik vond dat geweldig:</em> " +
+      "„Spielengehen“ is spelen/naar de speelplaats gaan; „super finden“ = geweldig vinden. Hij vond het dus aangenaam (B), niet beperkend (A) en niet om energie kwijt te raken (C).",
+    markIds: ["m2-super"]
+  },
+  "5": {
+    correct: "B",
+    uitleg:
+      "Juist is B. De directe zinnen zijn: <em>„Die Texte für ein Hörspiel nennt man Manuskript. Das bekomme ich spätestens eine Woche vorher zugeschickt, lese es gründlich durch und schaue mir meine Rolle an.“</em> Dat beschrijft precies zijn voorbereiding. A en C komen in deze alinea niet aan bod.",
+    vertaling:
+      "<strong>Die Texte für ein Hörspiel nennt man Manuskript.</strong> = <em>De teksten voor een hoorspel noem je een manuscript.</em> " +
+      "<strong>Das bekomme ich spätestens eine Woche vorher zugeschickt, lese es gründlich durch und schaue mir meine Rolle an.</strong> = <em>Dat krijg ik uiterlijk een week van tevoren toegestuurd, ik lees het grondig door en bekijk mijn rol.</em> " +
+      "„zugeschickt bekommen“ = toegestuurd krijgen; „gründlich durchlesen“ = grondig doorlezen; „sich etwas ansehen“ = iets bekijken. Dit gaat dus over voorbereiding (B), niet over vaardigheden (A) of duur (C).",
+    markIds: ["m3-vraag", "m3-manuskript"]
+  },
+  "6": {
+    correct: { "1": "niet", "2": "niet", "3": "wel", "4": "wel" },
+    uitleg:
+      "Juist is: 1 niet, 2 niet, 3 wel, 4 wel. " +
+      "Bij 1 staat direct: <em>„Aber wir machen nicht eine Folge von vorn bis hinten durch“</em> — dus niet een complete aflevering per dag. " +
+      "Bij 2 staat niets over thuis inspreken; ze zijn samen in de studio in Hamburg. " +
+      "Bij 3 staat direct: <em>„Wir richten uns danach, wann die anderen Synchronsprecher Zeit haben, die in den Szenen vorkommen.“</em> " +
+      "Bij 4 staat direct: <em>„Daher lese ich vorher die Texte gut durch, um Bescheid zu wissen: Wo sind wir gerade in der Geschichte?“</em>",
+    vertaling:
+      "<strong>1.</strong> <em>„Aber wir machen nicht eine Folge von vorn bis hinten durch“</em> = <em>Maar we nemen niet één aflevering van begin tot eind door.</em> Dus de bewering „een complete aflevering per opnamedag“ is <strong>niet</strong> juist. " +
+      "<strong>2.</strong> Over thuis inspreken en later monteren staat niets in alinea 4; ze gaan juist samen naar Hamburg. Dus <strong>niet</strong>. " +
+      "<strong>3.</strong> <em>„Wir richten uns danach, wann die anderen Synchronsprecher Zeit haben, die in den Szenen vorkommen.“</em> = <em>We richten ons naar wanneer de andere stemacteurs tijd hebben die in de scènes voorkomen.</em> Scènes met dezelfde stemacteurs worden dus achter elkaar opgenomen → <strong>wel</strong>. " +
+      "<strong>4.</strong> <em>„Daher lese ich vorher die Texte gut durch, um Bescheid zu wissen: Wo sind wir gerade in der Geschichte?“</em> = <em>Daarom lees ik van tevoren de teksten goed door om te weten: waar zijn we nu in het verhaal?</em> Hij wil dus goed op de hoogte zijn → <strong>wel</strong>.",
+    markIds: ["m4-nicht-durch", "m4-szenen", "m4-durchlesen"]
+  },
+  "7": {
+    correct: "B",
+    uitleg:
+      "Juist is B. De directe zin is: <em>„Bei anderen Hörspielen kann ich immer mal was verändern und umdrehen“</em> — hij mag dus soms iets aan zijn spreekrol veranderen. A is onjuist: aan de geschiedenis zelf mag hij niets veranderen. C en D worden niet gezegd.",
+    vertaling:
+      "<strong>Bei anderen Hörspielen kann ich immer mal was verändern und umdrehen,</strong> = <em>Bij andere hoorspelen kan ik altijd wel iets veranderen en omdraaien,</em> " +
+      "dus hij mag soms iets aan zijn spreekrol wijzigen (B). " +
+      "Even verderop: <em>„aber ich kann an der Geschichte nichts ändern“</em> = <em>maar aan het verhaal zelf kan ik niets veranderen.</em> Daarom is A onjuist. Over eigen hoorspelen schrijven (C) of duidelijke uitspraak (D) gaat het niet.",
+    markIds: ["m5-veranderen"]
+  }
+};
+
+function showFeedback(q, isCorrect) {
+  const data = answers[q];
+  const fb = document.getElementById("fb" + q);
+  fb.className = "feedback show " + (isCorrect ? "ok" : "nok");
+  let juistAntwoord;
+  if (q === "6") {
+    juistAntwoord = "1 niet, 2 niet, 3 wel, 4 wel";
+  } else {
+    juistAntwoord = data.correct;
+  }
+  fb.innerHTML =
+    (isCorrect ? "✅ <strong>Juist!</strong> " : "❌ <strong>Onjuist.</strong> Het juiste antwoord is <strong>" + juistAntwoord + "</strong>. ") +
+    '<div class="uitleg">' + data.uitleg + "</div>" +
+    '<div class="vertaling"><strong>Uitleg van de Duitse zin(nen):</strong><br>' + data.vertaling + "</div>";
+  data.markIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add("active");
+  });
+}
+
+function handleClick(e) {
+  const btn = e.target.closest(".option-btn");
+  if (!btn || btn.disabled) return;
+
+  const q = btn.dataset.q;
+  const opt = btn.dataset.opt;
+  const data = answers[q];
+  const isCorrect = opt === data.correct;
+
+  const buttons = document.querySelectorAll('#q' + q + '-options .option-btn');
+  buttons.forEach(b => {
+    b.disabled = true;
+    if (b.dataset.opt === opt) {
+      b.classList.add(isCorrect ? "correct" : "wrong");
+    }
+    if (!isCorrect && b.dataset.opt === data.correct) {
+      b.classList.add("correct");
+    }
+  });
+
+  showFeedback(q, isCorrect);
+}
+
+function handleKeuzeClick(e) {
+  const btn = e.target.closest(".keuze-btn");
+  if (!btn || btn.disabled) return;
+
+  const b = btn.dataset.b;
+  const opt = btn.dataset.opt;
+  const data = answers["6"];
+  const correctOpt = data.correct[b];
+  const isCorrect = opt === correctOpt;
+
+  const row = btn.closest("tr");
+  row.querySelectorAll(".keuze-btn").forEach(k => {
+    k.disabled = true;
+    if (k.dataset.opt === opt) {
+      k.classList.add(isCorrect ? "correct" : "wrong");
+    }
+    if (!isCorrect && k.dataset.opt === correctOpt) {
+      k.classList.add("correct");
+    }
+  });
+
+  let sub = row.querySelector(".subfeedback");
+  if (!sub) {
+    sub = document.createElement("div");
+    sub.className = "subfeedback";
+    row.querySelector(".bewering").appendChild(sub);
+  }
+  sub.className = "subfeedback show " + (isCorrect ? "ok" : "nok");
+  sub.innerHTML = isCorrect
+    ? "✅ Juist."
+    : "❌ Onjuist — het juiste antwoord is <strong>" + correctOpt + "</strong>.";
+
+  const alleRijen = document.querySelectorAll('#q6-table tbody tr');
+  const allesBeantwoord = Array.from(alleRijen).every(r =>
+    Array.from(r.querySelectorAll(".keuze-btn")).some(k => k.disabled)
+  );
+
+  if (allesBeantwoord) {
+    const alleJuist = Array.from(alleRijen).every(r => {
+      const gekozenWrong = Array.from(r.querySelectorAll(".keuze-btn")).some(k => k.classList.contains("wrong"));
+      return !gekozenWrong;
+    });
+    showFeedback("6", alleJuist);
+  }
+}
+
+document.querySelectorAll(".option-btn").forEach(btn => {
+  btn.addEventListener("click", handleClick);
+});
+document.querySelectorAll(".keuze-btn").forEach(btn => {
+  btn.addEventListener("click", handleKeuzeClick);
+});
+
+function resetAll() {
+  document.querySelectorAll(".option-btn").forEach(b => {
+    b.disabled = false;
+    b.classList.remove("correct", "wrong");
+  });
+  document.querySelectorAll(".keuze-btn").forEach(b => {
+    b.disabled = false;
+    b.classList.remove("correct", "wrong");
+  });
+  document.querySelectorAll(".feedback").forEach(f => {
+    f.className = "feedback";
+    f.innerHTML = "";
+  });
+  document.querySelectorAll(".subfeedback").forEach(s => s.remove());
+  document.querySelectorAll("mark").forEach(m => m.classList.remove("active"));
+}
+</script>
+
+</body>
+</html>

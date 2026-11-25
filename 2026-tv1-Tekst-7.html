@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Müllsammeln unter Wasser – oefening</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    max-width: 1280px;
+    margin: 30px auto;
+    padding: 0 16px;
+    line-height: 1.6;
+    color: #222;
+    background: #fafafa;
+  }
+  h1 { font-size: 1.4em; border-bottom: 2px solid #333; padding-bottom: 6px; }
+  h2 { font-size: 1.05em; margin-top: 1.6em; }
+  .examen-header {
+    font-size: 1.05em;
+    font-weight: bold;
+    color: #444;
+    letter-spacing: .3px;
+  }
+  .layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    align-items: start;
+    margin-top: 24px;
+  }
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+  }
+  .article {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px 20px;
+    position: sticky;
+    top: 16px;
+    max-height: calc(100vh - 32px);
+    overflow-y: auto;
+  }
+  @media (max-width: 900px) {
+    .article { position: static; max-height: none; overflow-y: visible; }
+  }
+  .article h3 { margin-top: 0; }
+  .source { font-size: .85em; color: #666; margin-top: 12px; }
+  .vragen { min-width: 0; }
+
+  .options { list-style: none; padding-left: 0; }
+  .options li { margin: 6px 0; }
+  .option-btn {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 9px 12px;
+    font-size: .97em;
+    font-family: inherit;
+    border: 1.5px solid #999;
+    border-radius: 6px;
+    background: #fff;
+    cursor: pointer;
+    transition: background .15s, border-color .15s;
+  }
+  .option-btn:hover:not(:disabled) { background: #eef4fb; border-color: #4a7fb5; }
+  .option-btn:disabled { cursor: default; opacity: .95; }
+  .option-btn.correct { background: #d8f5d8; border-color: #2e8b2e; font-weight: bold; }
+  .option-btn.wrong { background: #fbdcdc; border-color: #c0392b; }
+
+  .feedback {
+    margin-top: 10px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    display: none;
+    font-size: .95em;
+  }
+  .feedback.show { display: block; }
+  .feedback.ok { background: #e3f6e3; border-left: 5px solid #2e8b2e; }
+  .feedback.nok { background: #fdeaea; border-left: 5px solid #c0392b; }
+  .feedback.info { background: #eaf2fb; border-left: 5px solid #4a7fb5; }
+  .feedback .uitleg { margin-top: 6px; }
+  .feedback .vertaling {
+    margin-top: 8px;
+    padding: 8px 10px;
+    background: rgba(255,255,255,.65);
+    border-left: 3px solid #888;
+    border-radius: 4px;
+    font-size: .93em;
+  }
+  .feedback .vertaling em { color: #333; }
+
+  mark {
+    background: transparent;
+    color: inherit;
+    padding: 0;
+    border-radius: 3px;
+    transition: background .3s;
+  }
+  mark.active {
+    background: #ffe680;
+    padding: 0 2px;
+    outline: 2px solid #ffb347;
+  }
+
+  .open-area { margin-top: 8px; }
+  .open-area textarea {
+    width: 100%;
+    min-height: 80px;
+    padding: 9px 11px;
+    font-family: inherit;
+    font-size: .97em;
+    line-height: 1.5;
+    border: 1.5px solid #999;
+    border-radius: 6px;
+    resize: vertical;
+    background: #fff;
+  }
+  .open-area textarea:focus {
+    outline: none;
+    border-color: #4a7fb5;
+    box-shadow: 0 0 0 2px rgba(74,127,181,.2);
+  }
+  .open-area textarea:disabled { background: #f4f4f4; }
+  .open-btn {
+    margin-top: 6px;
+    padding: 7px 14px;
+    font-family: inherit;
+    font-size: .95em;
+    border: 1.5px solid #4a7fb5;
+    background: #eef4fb;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .open-btn:hover:not(:disabled) { background: #dce8f7; }
+  .open-btn:disabled { cursor: default; opacity: .8; }
+
+  .reset {
+    margin-top: 24px;
+    padding: 8px 16px;
+    font-family: inherit;
+    font-size: .95em;
+    border: 1.5px solid #555;
+    background: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .reset:hover { background: #eee; }
+</style>
+</head>
+<body>
+
+<p class="examen-header">Examen vmbo gl/tl 2026 Tijdvak 1</p>
+<h1>Tekst 7 – Müllsammeln unter Wasser</h1>
+
+<div class="layout">
+
+  <!-- ================= TEKST (links) ================= -->
+  <div class="article">
+    <h3>Müllsammeln unter Wasser</h3>
+    <p><em>Bei Übungseinsätzen holen Polizeitaucher kiloweise Schrott aus
+    Gewässern.</em></p>
+
+    <p><strong>(1)</strong> Immer wieder tauchen sie ab, hinterlassen nur ein paar Luftblasen an
+    der Oberfläche und tauchen nach wenigen Minuten wieder auf.
+    <mark id="m24-muell">Lange am
+    Stück sind sie nicht unter Wasser, denn immer wieder finden sie etwas,
+    das nicht auf den Grund des Lankower Sees gehört.</mark>
+    Die Polizeitaucher
+    sind zum Südufer des Sees gekommen, um das Gewässer von Müll zu
+    befreien. Und das war offenbar dringend nötig, denn in wenigen Stunden
+    holten sie kiloweise Schrott vom Grund des Lankower Sees.</p>
+
+    <p><strong>(2)</strong> Während drei Taucher unter Wasser sind, warten mehrere Einsatz-
+    kräfte am Ufer, um den Schrott entgegenzunehmen. Wie am laufenden
+    Band holen die Einsatzkräfte Metallstühle, Tische, Gläser und Flaschen
+    aus dem Gewässer.
+    <mark id="m25-muscheln">An jedem einzelnen Teil hatten sich schon Muscheln
+    festgesetzt. „Da sieht man, dass das schon ziemlich lange hier liegen
+    muss“, sagt Polizeisprecherin Juliane Zgonine.</mark>
+    <mark id="m26-sicht">Die Polizeitaucher haben
+    es hier im Lankower See besonders schwer, da Algen und andere
+    Wasserpflanzen die Sicht trüben.</mark></p>
+
+    <p><strong>(3)</strong> Die Wasserschutzpolizei ist ebenfalls vor Ort und sichert den Bereich
+    von der Wasserseite ab. In der Zwischenzeit kommt wieder ein Taucher
+    an die Wasseroberfläche.
+    <mark id="m27-muehe">Mit großer Mühe zieht er gleich zwei Metall-
+    stühle hinter sich her und übergibt sie an die Einsatzkräfte am Ufer, wo
+    der Müll in zwei Containern gesammelt wird, die die Stadt zur Verfügung
+    stellt.</mark></p>
+
+    <p><strong>(4)</strong> Diese Tauchgänge der Polizei finden in der Stadt Schwerin statt. So
+    sollen routinemäßige Übungstauchgänge der Polizeitaucher noch einen
+    weiteren <mark id="m28-effect"><strong>28</strong></mark> haben: Während die Taucher in Übung bleiben und ihre
+    Ausrüstung einsatzfähig halten, befreien sie gleichzeitig die Gewässer
+    von Müll. Bereits vor rund drei Wochen tauchten sie als Übung im
+    Ziegelinnensee. Dabei hatten sie unter anderem zwei Fahrräder, ein
+    Verkehrsschild und viel Metallschrott entdeckt.
+    <mark id="m29-entfernt">Auch das soll vermutlich
+    bald aus dem See entfernt werden.</mark></p>
+
+    <p><strong>(5)</strong> Auch heute und in der kommenden Woche werden die Taucher weiter
+    nach Müll suchen. Laut Juliane Zgonine gebe es noch einiges unter der
+    Wasseroberfläche zu sammeln und die beiden zur Verfügung gestellten
+    Container sind noch nicht ganz voll.
+    <mark id="m30-fortsetzung">In Zukunft stehen zudem noch der
+    Burgsee und der Ostorfer See für Tauchgänge auf dem Plan.</mark></p>
+
+    <p class="source">Schweriner Volkszeitung, 8.8.2023</p>
+  </div>
+
+  <!-- ================= VRAGEN (rechts) ================= -->
+  <div class="vragen">
+
+    <h2>1p 24 &nbsp;Warum bleiben die Taucher nicht lange am Stück unter Wasser? (1. Absatz)</h2>
+    <ul class="options" id="q24-options">
+      <li><button class="option-btn" data-q="24" data-opt="A">A&nbsp; weil sie an dieser Stelle im See kaum Müll finden können</button></li>
+      <li><button class="option-btn" data-q="24" data-opt="B">B&nbsp; weil sie die Sauerstoffflaschen regelmäßig wechseln müssen</button></li>
+      <li><button class="option-btn" data-q="24" data-opt="C">C&nbsp; weil sie jedes Mal den gefundenen Müll nach oben bringen</button></li>
+      <li><button class="option-btn" data-q="24" data-opt="D">D&nbsp; weil sie noch nicht so geübt sind</button></li>
+    </ul>
+    <div class="feedback" id="fb24"></div>
+
+    <h2>1p 25 &nbsp;Juliane Zgonine zegt dat de aan land gebrachte spullen al lange tijd op de bodem van het meer hebben gelegen. (alinea 2) Waaraan kan zij dat zien? Beantwoord in het Nederlands.</h2>
+    <div class="open-area">
+      <textarea id="input25" placeholder="Typ hier je antwoord in het Nederlands…"></textarea>
+      <button class="open-btn" id="open25" onclick="checkOpen('25')">Controleer</button>
+    </div>
+    <div class="feedback" id="fb25"></div>
+
+    <h2>1p 26 &nbsp;Was macht die Arbeit für die Taucher im Lankower See so schwer? (2. Absatz)</h2>
+    <ul class="options" id="q26-options">
+      <li><button class="option-btn" data-q="26" data-opt="A">A&nbsp; Der Lankower See ist ziemlich tief.</button></li>
+      <li><button class="option-btn" data-q="26" data-opt="B">B&nbsp; Die Müllteile sind manchmal sehr groß.</button></li>
+      <li><button class="option-btn" data-q="26" data-opt="C">C&nbsp; Sie können da unter Wasser nicht so gut sehen.</button></li>
+      <li><button class="option-btn" data-q="26" data-opt="D">D&nbsp; Sie verstricken sich immer wieder in Pflanzen.</button></li>
+    </ul>
+    <div class="feedback" id="fb26"></div>
+
+    <h2>1p 27 &nbsp;Auf welche Frage gibt der 3. Absatz eine Antwort?</h2>
+    <ul class="options" id="q27-options">
+      <li><button class="option-btn" data-q="27" data-opt="A">A&nbsp; Wie funktioniert die Mülleinsammlung am Lankower See?</button></li>
+      <li><button class="option-btn" data-q="27" data-opt="B">B&nbsp; Wie oft sind bei den Taucharbeiten schon Unfälle passiert?</button></li>
+      <li><button class="option-btn" data-q="27" data-opt="C">C&nbsp; Wie sieht es mit der Mülltrennung aus?</button></li>
+      <li><button class="option-btn" data-q="27" data-opt="D">D&nbsp; Wie viel Kilogramm Schrott sind aus dem See geholt worden?</button></li>
+    </ul>
+    <div class="feedback" id="fb27"></div>
+
+    <h2>1p 28 &nbsp;Welches Wort passt im Sinne des Textes in die Lücke im 4. Absatz?</h2>
+    <ul class="options" id="q28-options">
+      <li><button class="option-btn" data-q="28" data-opt="A">A&nbsp; Effekt</button></li>
+      <li><button class="option-btn" data-q="28" data-opt="B">B&nbsp; Kollegen</button></li>
+      <li><button class="option-btn" data-q="28" data-opt="C">C&nbsp; Zugang</button></li>
+    </ul>
+    <div class="feedback" id="fb28"></div>
+
+    <h2>1p 29 &nbsp;Welche Aussage ist richtig? (4. Absatz)</h2>
+    <ul class="options" id="q29-options">
+      <li><button class="option-btn" data-q="29" data-opt="A">A&nbsp; Der Ziegelinnensee wird wahrscheinlich demnächst von Müll befreit.</button></li>
+      <li><button class="option-btn" data-q="29" data-opt="B">B&nbsp; Die im Ziegelinnensee gefundenen Metalle werden noch verkauft.</button></li>
+      <li><button class="option-btn" data-q="29" data-opt="C">C&nbsp; In Schwerin gibt es eine spezielle Tauchschule.</button></li>
+      <li><button class="option-btn" data-q="29" data-opt="D">D&nbsp; Wie groß der vom Müll verursachte Naturschaden ist, muss noch untersucht werden.</button></li>
+    </ul>
+    <div class="feedback" id="fb29"></div>
+
+    <h2>1p 30 &nbsp;Was stimmt mit dem 5. Absatz überein?</h2>
+    <ul class="options" id="q30-options">
+      <li><button class="option-btn" data-q="30" data-opt="A">A&nbsp; Die Aufräumaktion ist nur ein Experiment.</button></li>
+      <li><button class="option-btn" data-q="30" data-opt="B">B&nbsp; Die Tauchgänge werden fortgesetzt.</button></li>
+      <li><button class="option-btn" data-q="30" data-opt="C">C&nbsp; Nach dem Aufräumen liegt in kürzester Zeit wieder alles voller Müll.</button></li>
+    </ul>
+    <div class="feedback" id="fb30"></div>
+
+  </div>
+</div>
+
+<button class="reset" onclick="resetAll()">Alles opnieuw proberen</button>
+
+<script>
+const answers = {
+  "24": {
+    correct: "C",
+    uitleg:
+      "Juist is C. De directe zin is: <em>„Lange am Stück sind sie nicht unter Wasser, denn immer wieder finden sie etwas, das nicht auf den Grund des Lankower Sees gehört.“</em> Ze komen dus steeds boven omdat ze gevonden spullen naar boven brengen. " +
+      "A is onjuist (er is juist veel afval), B (zuurstofflessen wisselen) en D (nog niet geoefend) worden niet genoemd.",
+    vertaling:
+      "<strong>Lange am Stück sind sie nicht unter Wasser, denn immer wieder finden sie etwas, das nicht auf den Grund des Lankower Sees gehört.</strong> = <em>Lang achter elkaar zijn ze niet onder water, want steeds weer vinden ze iets dat niet op de bodem van de Lankower See hoort.</em> " +
+      "„am Stück“ = achter elkaar; „immer wieder“ = steeds weer; „der Grund“ = de bodem. Ze komen dus telkens boven met gevonden afval → C.",
+    markIds: ["m24-muell"]
+  },
+  "26": {
+    correct: "C",
+    uitleg:
+      "Juist is C. De directe zin is: <em>„Die Polizeitaucher haben es hier im Lankower See besonders schwer, da Algen und andere Wasserpflanzen die Sicht trüben.“</em> Door algen en waterplanten is het zicht slecht; daarom kunnen ze onder water niet goed zien. " +
+      "A (te diep), B (te grote stukken) en D (verstrikken in planten) worden niet als reden genoemd.",
+    vertaling:
+      "<strong>Die Polizeitaucher haben es hier im Lankower See besonders schwer, da Algen und andere Wasserpflanzen die Sicht trüben.</strong> = <em>De politieduikers hebben het hier in de Lankower See bijzonder moeilijk, omdat algen en andere waterplanten het zicht vertroebelen.</em> " +
+      "„die Sicht trüben“ = het zicht vertroebelen; „die Algen“ = de algen. Het probleem is dus het slechte zicht → C.",
+    markIds: ["m26-sicht"]
+  },
+  "27": {
+    correct: "A",
+    uitleg:
+      "Juist is A. Alinea 3 beschrijft hoe de opruiming in zijn werk gaat: de waterpolitie zet het gebied af, een duiker komt boven met twee stoelen, hij geeft ze aan de hulpverleners aan de oever, en de rommel wordt in twee containers verzameld. Dat antwoordt op de vraag <em>hoe</em> de inzameling werkt. " +
+      "B (ongevallen), C (afvalscheiding) en D (hoeveel kilo) komen in deze alinea niet aan bod.",
+    vertaling:
+      "<strong>Mit großer Mühe zieht er gleich zwei Metallstühle hinter sich her und übergibt sie an die Einsatzkräfte am Ufer, wo der Müll in zwei Containern gesammelt wird, die die Stadt zur Verfügung stellt.</strong> = <em>Met grote moeite sleept hij meteen twee metalen stoelen achter zich aan en overhandigt ze aan de hulpverleners op de oever, waar het afval in twee containers wordt verzameld die de stad ter beschikking stelt.</em> " +
+      "„hinter sich herziehen“ = achter zich aanslepen; „übergeben“ = overhandigen; „zur Verfügung stellen“ = ter beschikking stellen. Dit beschrijft de gang van zaken → A.",
+    markIds: ["m27-muehe"]
+  },
+  "28": {
+    correct: "A",
+    uitleg:
+      "Juist is A. De zin luidt: <em>„So sollen routinemäßige Übungstauchgänge der Polizeitaucher noch einen weiteren Effekt haben: Während die Taucher in Übung bleiben …, befreien sie gleichzeitig die Gewässer von Müll.“</em> De oefenduiken hebben dus nog een <em>extra effect</em>: naast oefenen ruimen ze ook afval op. " +
+      "B (collega's) en C (toegang) passen niet in de zin.",
+    vertaling:
+      "<strong>So sollen routinemäßige Übungstauchgänge der Polizeitaucher noch einen weiteren <strong>Effekt</strong> haben: Während die Taucher in Übung bleiben und ihre Ausrüstung einsatzfähig halten, befreien sie gleichzeitig die Gewässer von Müll.</strong> = <em>Zo zouden de routinematige oefenduiken van de politieduikers nog een ander effect hebben: terwijl de duikers in oefening blijven en hun uitrusting inzetbaar houden, bevrijden ze tegelijkertijd de wateren van afval.</em> " +
+      "„der Effekt“ = het effect; „routinemäßig“ = routinematig; „einsatzfähig halten“ = inzetbaar houden. Het gaat dus om een bijkomend effect → A.",
+    markIds: ["m28-effect"]
+  },
+  "29": {
+    correct: "A",
+    uitleg:
+      "Juist is A. In alinea 4 staat dat de duikers in de Ziegelinnensee twee fietsen, een verkeersbord en veel metaalschroot hebben gevonden, en: <em>„Auch das soll vermutlich bald aus dem See entfernt werden.“</em> Die spullen worden dus waarschijnlijk binnenkort uit het meer gehaald. " +
+      "B (metaal wordt verkocht) staat er niet; C (duikschool in Schwerin) niet; D (natuurschade moet nog worden onderzocht) niet.",
+    vertaling:
+      "<strong>Auch das soll vermutlich bald aus dem See entfernt werden.</strong> = <em>Ook dat zal vermoedelijk binnenkort uit het meer worden verwijderd.</em> " +
+      "„vermutlich“ = vermoedelijk; „bald“ = binnenkort; „entfernen“ = verwijderen. De Ziegelinnensee wordt dus waarschijnlijk binnenkort van afval bevrijd → A.",
+    markIds: ["m29-entfernt"]
+  },
+  "30": {
+    correct: "B",
+    uitleg:
+      "Juist is B. In alinea 5 staat: <em>„Auch heute und in der kommenden Woche werden die Taucher weiter nach Müll suchen“</em> en <em>„In Zukunft stehen zudem noch der Burgsee und der Ostorfer See für Tauchgänge auf dem Plan.“</em> De duikacties worden dus voortgezet. " +
+      "A (alleen een experiment) en C (snel weer vol afval) worden niet gezegd.",
+    vertaling:
+      "<strong>Auch heute und in der kommenden Woche werden die Taucher weiter nach Müll suchen. … In Zukunft stehen zudem noch der Burgsee und der Ostorfer See für Tauchgänge auf dem Plan.</strong> = <em>Ook vandaag en in de komende week zullen de duikers verder naar afval zoeken. … In de toekomst staan bovendien nog de Burgsee en de Ostorfer See voor duiken op het programma.</em> " +
+      "„weiter“ = verder/doorgaan; „in Zukunft“ = in de toekomst; „auf dem Plan stehen“ = op het programma staan. De duiken worden dus voortgezet → B.",
+    markIds: ["m30-fortsetzung"]
+  }
+};
+
+const openAnswers = {
+  "25": {
+    kernwoorden: ["mossel", "muschel", "schelpen", "schelp", "aangroeisel", "vastzaten", "vast", "festgesetzt"],
+    uitleg:
+      "Modelantwoord: Aan de voorwerpen zaten al mosselen vastgegroeid. Dat laat zien dat ze al behoorlijk lang op de bodem hebben gelegen: <em>„An jedem einzelnen Teil hatten sich schon Muscheln festgesetzt. ‚Da sieht man, dass das schon ziemlich lange hier liegen muss‘, sagt Polizeisprecherin Juliane Zgonine.“</em>",
+    vertaling:
+      "<strong>An jedem einzelnen Teil hatten sich schon Muscheln festgesetzt.</strong> = <em>Aan elk afzonderlijk stuk hadden zich al mosselen vastgezet.</em> " +
+      "<strong>„Da sieht man, dass das schon ziemlich lange hier liegen muss“</strong> = <em>„Daaraan zie je dat dit hier al behoorlijk lang moet liggen“</em> " +
+      "„sich festsetzen“ = zich vastzetten; „ziemlich lange“ = behoorlijk lang. Het aangroeisel van mosselen verraadt dus dat de spullen er al lang liggen.",
+    markIds: ["m25-muscheln"]
+  }
+};
+
+function showFeedback(q, isCorrect) {
+  const data = answers[q];
+  const fb = document.getElementById("fb" + q);
+  fb.className = "feedback show " + (isCorrect ? "ok" : "nok");
+  fb.innerHTML =
+    (isCorrect ? "✅ <strong>Juist!</strong> " : "❌ <strong>Onjuist.</strong> Het juiste antwoord is <strong>" + data.correct + "</strong>. ") +
+    '<div class="uitleg">' + data.uitleg + "</div>" +
+    '<div class="vertaling"><strong>Uitleg van de Duitse zin(nen):</strong><br>' + data.vertaling + "</div>";
+  data.markIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add("active");
+  });
+}
+
+function handleClick(e) {
+  const btn = e.target.closest(".option-btn");
+  if (!btn || btn.disabled) return;
+
+  const q = btn.dataset.q;
+  const opt = btn.dataset.opt;
+  const data = answers[q];
+  const isCorrect = opt === data.correct;
+
+  const buttons = document.querySelectorAll('#q' + q + '-options .option-btn');
+  buttons.forEach(b => {
+    b.disabled = true;
+    if (b.dataset.opt === opt) {
+      b.classList.add(isCorrect ? "correct" : "wrong");
+    }
+    if (!isCorrect && b.dataset.opt === data.correct) {
+      b.classList.add("correct");
+    }
+  });
+
+  showFeedback(q, isCorrect);
+}
+
+function checkOpen(q) {
+  const data = openAnswers[q];
+  const input = document.getElementById("input" + q);
+  const fb = document.getElementById("fb" + q);
+  const btn = document.getElementById("open" + q);
+  const tekst = input.value.trim();
+
+  let beoordeling;
+  if (tekst === "") {
+    beoordeling = "⚠️ Je hebt nog niets ingevuld. Vergelijk je antwoord hieronder met het modelantwoord.";
+  } else {
+    const lower = tekst.toLowerCase();
+    const raak = data.kernwoorden.some(k => lower.includes(k));
+    beoordeling = raak
+      ? "👍 Je antwoord bevat de juiste kern (<em>raak!</em>). Vergelijk het hieronder met het volledige modelantwoord."
+      : "🤔 Je antwoord lijkt niet direct de juiste kern te bevatten. Vergelijk het hieronder met het modelantwoord.";
+  }
+
+  fb.className = "feedback show info";
+  fb.innerHTML =
+    '<div class="uitleg">' + beoordeling + "</div>" +
+    '<div class="uitleg"><strong>Modelantwoord:</strong> ' + data.uitleg + "</div>" +
+    '<div class="vertaling"><strong>Uitleg van de Duitse zin(nen):</strong><br>' + data.vertaling + "</div>";
+
+  input.disabled = true;
+  btn.disabled = true;
+  data.markIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add("active");
+  });
+}
+
+document.querySelectorAll(".option-btn").forEach(btn => {
+  btn.addEventListener("click", handleClick);
+});
+
+function resetAll() {
+  document.querySelectorAll(".option-btn").forEach(b => {
+    b.disabled = false;
+    b.classList.remove("correct", "wrong");
+  });
+  document.querySelectorAll(".feedback").forEach(f => {
+    f.className = "feedback";
+    f.innerHTML = "";
+  });
+  document.querySelectorAll(".open-btn").forEach(b => { b.disabled = false; });
+  document.querySelectorAll(".open-area textarea").forEach(t => {
+    t.value = "";
+    t.disabled = false;
+  });
+  document.querySelectorAll("mark").forEach(m => m.classList.remove("active"));
+}
+</script>
+
+</body>
+</html>

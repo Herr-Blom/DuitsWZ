@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Auftritt für Wiener Studenten – oefening</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    max-width: 1280px;
+    margin: 30px auto;
+    padding: 0 16px;
+    line-height: 1.6;
+    color: #222;
+    background: #fafafa;
+  }
+  h1 { font-size: 1.4em; border-bottom: 2px solid #333; padding-bottom: 6px; }
+  h2 { font-size: 1.05em; margin-top: 1.6em; }
+  .examen-header {
+    font-size: 1.05em;
+    font-weight: bold;
+    color: #444;
+    letter-spacing: .3px;
+  }
+  .layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    align-items: start;
+    margin-top: 24px;
+  }
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+  }
+  .article {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px 20px;
+    position: sticky;
+    top: 16px;
+    max-height: calc(100vh - 32px);
+    overflow-y: auto;
+  }
+  @media (max-width: 900px) {
+    .article { position: static; max-height: none; overflow-y: visible; }
+  }
+  .article h3 { margin-top: 0; }
+  .source { font-size: .85em; color: #666; margin-top: 12px; }
+  .note { font-size: .85em; color: #555; border-top: 1px dashed #bbb; padding-top: 8px; margin-top: 12px;}
+  .vragen { min-width: 0; }
+
+  .options { list-style: none; padding-left: 0; }
+  .options li { margin: 6px 0; }
+  .option-btn {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 9px 12px;
+    font-size: .97em;
+    font-family: inherit;
+    border: 1.5px solid #999;
+    border-radius: 6px;
+    background: #fff;
+    cursor: pointer;
+    transition: background .15s, border-color .15s;
+  }
+  .option-btn:hover:not(:disabled) { background: #eef4fb; border-color: #4a7fb5; }
+  .option-btn:disabled { cursor: default; opacity: .95; }
+  .option-btn.correct { background: #d8f5d8; border-color: #2e8b2e; font-weight: bold; }
+  .option-btn.wrong { background: #fbdcdc; border-color: #c0392b; }
+
+  .feedback {
+    margin-top: 10px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    display: none;
+    font-size: .95em;
+  }
+  .feedback.show { display: block; }
+  .feedback.ok { background: #e3f6e3; border-left: 5px solid #2e8b2e; }
+  .feedback.nok { background: #fdeaea; border-left: 5px solid #c0392b; }
+  .feedback .uitleg { margin-top: 6px; }
+  .feedback .vertaling {
+    margin-top: 8px;
+    padding: 8px 10px;
+    background: rgba(255,255,255,.65);
+    border-left: 3px solid #888;
+    border-radius: 4px;
+    font-size: .93em;
+  }
+  .feedback .vertaling em { color: #333; }
+
+  mark {
+    background: transparent;
+    color: inherit;
+    padding: 0;
+    border-radius: 3px;
+    transition: background .3s;
+  }
+  mark.active {
+    background: #ffe680;
+    padding: 0 2px;
+    outline: 2px solid #ffb347;
+  }
+
+  .reset {
+    margin-top: 24px;
+    padding: 8px 16px;
+    font-family: inherit;
+    font-size: .95em;
+    border: 1.5px solid #555;
+    background: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .reset:hover { background: #eee; }
+</style>
+</head>
+<body>
+
+<p class="examen-header">Examen vmbo gl/tl 2026 Tijdvak 1</p>
+<h1>Tekst 1 – Auftritt für Wiener Studenten</h1>
+
+<div class="layout">
+
+  <!-- ================= TEKST (links) ================= -->
+  <div class="article">
+    <h3>Auftritt für Wiener Studenten</h3>
+    <p>
+      Selbst eine Rolle in einem Micky-Maus-Heft<sup>1)</sup> spielen?
+      Davon träumen wahrscheinlich viele.
+      Drei Studenten aus Wien haben das jetzt geschafft.
+      <mark id="m-personage">Sie kommen in einer Geschichte vor, die am 27. Mai erscheint.</mark>
+      In der Geschichte geht es darum, dass der Geldspeicher von Dagobert Duck
+      neu gestaltet werden soll.
+      Die drei Wiener, die Architektur studieren,
+      sollen Dagobert Duck in der Geschichte von ihrem Entwurf überzeugen.
+      Als angehende Architekten planen sie Wohnungen, Häuser und andere
+      Gebäude. In der Geschichte sollen sie auch den Geldspeicher umplanen.
+      In ihren Plänen verwenden sie viel Glas und nachhaltige Energie.
+      Nachhaltige Energie wird vor allem aus Sonne, Wasser und Wind
+      gewonnen.
+    </p>
+    <p>
+      <mark id="m-wettbewerb">Im echten Leben haben sie mit diesem Plan bei einem Wettbewerb
+      überzeugt.</mark> Deshalb sind sie jetzt auch Teil des Comics.
+      Ob sie auch Dagobert Duck überzeugen können, kannst du ab 27. Mai im Heft
+      nachlesen.
+    </p>
+    <p class="source">kleinezeitung.at, 27.5.2022</p>
+    <p class="note"><sup>1)</sup> Micky-Maus-Heft: tijdschrift vergelijkbaar met de Donald Duck</p>
+  </div>
+
+  <!-- ================= VRAGEN (rechts) ================= -->
+  <div class="vragen">
+
+    <!-- VRAAG 1 -->
+    <h2>1p 1 &nbsp;Welke uitspraak over drie Weense studenten is juist?</h2>
+    <ul class="options" id="q1-options">
+      <li><button class="option-btn" data-q="1" data-opt="A">A&nbsp; Ze gaan de stemmen van tekenfilmfiguren inspreken.</button></li>
+      <li><button class="option-btn" data-q="1" data-opt="B">B&nbsp; Ze mogen de tekeningen voor een stripverhaal gaan maken.</button></li>
+      <li><button class="option-btn" data-q="1" data-opt="C">C&nbsp; Ze mogen een gebouw uit een strip in het echt gaan bouwen.</button></li>
+      <li><button class="option-btn" data-q="1" data-opt="D">D&nbsp; Ze worden als personages in een stripverhaal opgenomen.</button></li>
+    </ul>
+    <div class="feedback" id="fb1"></div>
+
+    <!-- VRAAG 2 -->
+    <h2>1p 2 &nbsp;Waarom zijn juist deze studenten geselecteerd?</h2>
+    <ul class="options" id="q2-options">
+      <li><button class="option-btn" data-q="2" data-opt="A">A&nbsp; Ze hebben bij Disney gesolliciteerd.</button></li>
+      <li><button class="option-btn" data-q="2" data-opt="B">B&nbsp; Ze hebben een prijsvraag gewonnen.</button></li>
+      <li><button class="option-btn" data-q="2" data-opt="C">C&nbsp; Ze zijn al jarenlang trouw abonnee van de Micky-Maus.</button></li>
+    </ul>
+    <div class="feedback" id="fb2"></div>
+
+  </div>
+</div>
+
+<button class="reset" onclick="resetAll()">Alles opnieuw proberen</button>
+
+<script>
+const answers = {
+  "1": {
+    correct: "D",
+    uitleg:
+      "Juist is D. De directe zin is: <em>„Sie kommen in einer Geschichte vor“</em> en even verderop <em>„Deshalb sind sie jetzt auch Teil des Comics.“</em> De studenten worden dus zélf personages in het stripverhaal. " +
+      "A (stemmen inspreken) en B (tekeningen maken) komen niet in de tekst voor. C is onjuist: ze <em>ontwerpen/plannen</em> de Geldspeicher in het verhaal, maar ze bouwen hem niet in het echt.",
+    vertaling:
+      "<strong>Sie kommen in einer Geschichte vor, die am 27. Mai erscheint.</strong> = <em>Ze komen voor in een verhaal dat op 27 mei verschijnt.</em> " +
+      "„vorkommen“ = voorkomen/erin zitten; „die erscheint“ = dat verschijnt. " +
+      "<strong>Deshalb sind sie jetzt auch Teil des Comics.</strong> = <em>Daarom zijn ze nu ook deel van de strip.</em> " +
+      "Ze worden dus als personages in het stripverhaal opgenomen → D.",
+    markIds: ["m-personage"]
+  },
+  "2": {
+    correct: "B",
+    uitleg:
+      "Juist is B. De directe zin is: <em>„Im echten Leben haben sie mit diesem Plan bei einem Wettbewerb überzeugt.“</em> Een <em>Wettbewerb</em> is een wedstrijd/prijsvraag; door die te winnen zijn ze in het stripverhaal terechtgekomen. " +
+      "A (solliciteren bij Disney) en C (abonnee zijn) worden nergens genoemd.",
+    vertaling:
+      "<strong>Im echten Leben haben sie mit diesem Plan bei einem Wettbewerb überzeugt.</strong> = <em>In het echt hebben ze met dit plan bij een wedstrijd overtuigd.</em> " +
+      "„im echten Leben“ = in het echt; „überzeugen“ = overtuigen; „der Wettbewerb“ = de wedstrijd/prijsvraag. Dat komt overeen met optie B.",
+    markIds: ["m-wettbewerb"]
+  }
+};
+
+function showFeedback(q, isCorrect) {
+  const data = answers[q];
+  const fb = document.getElementById("fb" + q);
+  fb.className = "feedback show " + (isCorrect ? "ok" : "nok");
+  fb.innerHTML =
+    (isCorrect ? "✅ <strong>Juist!</strong> " : "❌ <strong>Onjuist.</strong> Het juiste antwoord is <strong>" + data.correct + "</strong>. ") +
+    '<div class="uitleg">' + data.uitleg + "</div>" +
+    '<div class="vertaling"><strong>Uitleg van de Duitse zin(nen):</strong><br>' + data.vertaling + "</div>";
+  data.markIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add("active");
+  });
+}
+
+function handleClick(e) {
+  const btn = e.target.closest(".option-btn");
+  if (!btn || btn.disabled) return;
+
+  const q = btn.dataset.q;
+  const opt = btn.dataset.opt;
+  const data = answers[q];
+  const isCorrect = opt === data.correct;
+
+  const buttons = document.querySelectorAll('#q' + q + '-options .option-btn');
+  buttons.forEach(b => {
+    b.disabled = true;
+    if (b.dataset.opt === opt) {
+      b.classList.add(isCorrect ? "correct" : "wrong");
+    }
+    if (!isCorrect && b.dataset.opt === data.correct) {
+      b.classList.add("correct");
+    }
+  });
+
+  showFeedback(q, isCorrect);
+}
+
+document.querySelectorAll(".option-btn").forEach(btn => {
+  btn.addEventListener("click", handleClick);
+});
+
+function resetAll() {
+  document.querySelectorAll(".option-btn").forEach(b => {
+    b.disabled = false;
+    b.classList.remove("correct", "wrong");
+  });
+  document.querySelectorAll(".feedback").forEach(f => {
+    f.className = "feedback";
+    f.innerHTML = "";
+  });
+  document.querySelectorAll("mark").forEach(m => m.classList.remove("active"));
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Saure Superkräfte – oefening</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    max-width: 1280px;
+    margin: 30px auto;
+    padding: 0 16px;
+    line-height: 1.6;
+    color: #222;
+    background: #fafafa;
+  }
+  h1 { font-size: 1.4em; border-bottom: 2px solid #333; padding-bottom: 6px; }
+  h2 { font-size: 1.05em; margin-top: 1.6em; }
+  .examen-header {
+    font-size: 1.05em;
+    font-weight: bold;
+    color: #444;
+    letter-spacing: .3px;
+  }
+  .layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    align-items: start;
+    margin-top: 24px;
+  }
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+  }
+  .article {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px 20px;
+    position: sticky;
+    top: 16px;
+    max-height: calc(100vh - 32px);
+    overflow-y: auto;
+  }
+  @media (max-width: 900px) {
+    .article { position: static; max-height: none; overflow-y: visible; }
+  }
+  .article h3 { margin-top: 0; }
+  .source { font-size: .85em; color: #666; margin-top: 12px; }
+  .vragen { min-width: 0; }
+
+  .feedback {
+    margin-top: 10px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    display: none;
+    font-size: .95em;
+  }
+  .feedback.show { display: block; }
+  .feedback.ok { background: #e3f6e3; border-left: 5px solid #2e8b2e; }
+  .feedback.nok { background: #fdeaea; border-left: 5px solid #c0392b; }
+  .feedback.info { background: #eaf2fb; border-left: 5px solid #4a7fb5; }
+  .feedback .uitleg { margin-top: 6px; }
+  .feedback .vertaling {
+    margin-top: 8px;
+    padding: 8px 10px;
+    background: rgba(255,255,255,.65);
+    border-left: 3px solid #888;
+    border-radius: 4px;
+    font-size: .93em;
+  }
+  .feedback .vertaling em { color: #333; }
+
+  mark {
+    background: transparent;
+    color: inherit;
+    padding: 0;
+    border-radius: 3px;
+    transition: background .3s;
+  }
+  mark.active {
+    background: #ffe680;
+    padding: 0 2px;
+    outline: 2px solid #ffb347;
+  }
+
+  /* Combineertabel */
+  .combineer-tabel {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 8px;
+    font-size: .95em;
+  }
+  .combineer-tabel th, .combineer-tabel td {
+    border: 1px solid #bbb;
+    padding: 8px 10px;
+    vertical-align: middle;
+  }
+  .combineer-tabel th {
+    background: #f0f0f0;
+    font-weight: bold;
+    text-align: left;
+  }
+  .combineer-tabel td.alinea { font-weight: bold; width: 90px; text-align: center; }
+  .combineer-tabel td.keuze { width: 220px; }
+  .combineer-tabel select {
+    width: 100%;
+    padding: 6px 8px;
+    font-family: inherit;
+    font-size: .95em;
+    border: 1.5px solid #999;
+    border-radius: 5px;
+    background: #fff;
+    cursor: pointer;
+  }
+  .combineer-tabel select:disabled { background: #f4f4f4; cursor: default; }
+  .combineer-tabel select.correct { background: #d8f5d8; border-color: #2e8b2e; font-weight: bold; }
+  .combineer-tabel select.wrong { background: #fbdcdc; border-color: #c0392b; }
+  .combineer-tabel td.status { text-align: center; width: 90px; font-weight: bold; }
+  .status-ok { color: #2e8b2e; }
+  .status-nok { color: #c0392b; }
+
+  .titel-lijst {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 14px;
+    font-size: .95em;
+  }
+  .titel-lijst ul { list-style: none; padding-left: 0; margin: 6px 0 0; }
+  .titel-lijst li { margin: 3px 0; }
+
+  .check-btn {
+    margin-top: 12px;
+    padding: 8px 18px;
+    font-family: inherit;
+    font-size: .97em;
+    border: 1.5px solid #4a7fb5;
+    background: #eef4fb;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .check-btn:hover:not(:disabled) { background: #dce8f7; }
+  .check-btn:disabled { cursor: default; opacity: .8; }
+
+  .reset {
+    margin-top: 24px;
+    padding: 8px 16px;
+    font-family: inherit;
+    font-size: .95em;
+    border: 1.5px solid #555;
+    background: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .reset:hover { background: #eee; }
+</style>
+</head>
+<body>
+
+<p class="examen-header">Examen vmbo gl/tl 2026 Tijdvak 1</p>
+<h1>Tekst 6 – Saure Superkräfte</h1>
+
+<div class="layout">
+
+  <!-- ================= TEKST (links) ================= -->
+  <div class="article">
+    <h3>Saure Superkräfte</h3>
+    <p><em>Fünf Zitronen-Tricks, die den Haushalt erleichtern</em></p>
+    <p>
+      Gerüche und Schmutzreste verlieren ihre Hartnäckigkeit, sobald die
+      gelbe Zitrusfrucht ins Spiel kommt. Wir zeigen euch, wo ihr die
+      Vitamin-C-Bombe überall verwenden könnt.
+    </p>
+
+    <p><strong>(1)</strong> Einmal eine Zwiebel darauf zerhackt und der beißende Geruch der
+    Knolle haftet für immer am Brett – und allen Früchten, die man später
+    auf demselben Brett schneidet.
+    <mark id="m23-1">Reibt es einfach mit einer
+    angeschnittenen Zitrone ein und es riecht wieder frisch.</mark></p>
+
+    <p><strong>(2)</strong> Käse, Fisch, Salami – wenn sich die verschiedenen Aromen zu einem
+    Geruchs-Wirrwarr vereinen, duftet es meist unangenehm.
+    <mark id="m23-2">Mit einer
+    Zitrone bringt ihr das wieder in Ordnung: Legt zwei bis drei Wattepads in
+    eine kleine Schale, tränkt sie großzügig mit Zitronensaft und stellt das
+    Ganze in den Eiskasten, damit die Säure ihre Wirkung entfalten kann.</mark></p>
+
+    <p><strong>(3)</strong> Es ist nicht zu verhindern: Irgendwann hat sich so viel Kalk abgesetzt,
+    dass es richtig eklig wird.
+    <mark id="m23-3">Sollte das bei euch der Fall sein, könnt ihr
+    anstelle von Wasser frischen Zitronensaft erhitzen, damit sich die Rück-
+    stände auflösen und die Innenseite des Kochers wieder blitzblank wird.</mark></p>
+
+    <p><strong>(4)</strong> Kennt ihr das, wenn die Spülmaschine mal ein paar Tage nicht
+    gelaufen ist und anfängt, etwas unangenehm zu riechen? Ja, nervig. Das
+    gelbe Früchtchen bringt aber auch dieses Problem wieder in Ordnung:
+    <mark id="m23-4">Legt eine ausgepresste Zitronenhälfte in die Maschine und lasst sie wie
+    gewohnt laufen. Das sorgt für einen angenehmen Duft und bringt
+    gleichzeitig das Essgeschirr zum Strahlen!</mark></p>
+
+    <p><strong>(5)</strong> Gläser gekauft – und dann wollen die lästigen Aufkleber nicht
+    abgehen.
+    <mark id="m23-5">So geht’s: Mit Zitronensaft darüber wischen, kurz warten und
+    abziehen!</mark></p>
+
+    <p class="source">www.schweizer-illustierte.ch, 20.12.2023</p>
+  </div>
+
+  <!-- ================= VRAGEN (rechts) ================= -->
+  <div class="vragen">
+
+    <h2>3p 23 &nbsp;Combineer de titels (a tot en met g) met de alinea’s 1 tot en met 5. Let op: je mag een letter maar één keer gebruiken en er blijven twee letters over.</h2>
+
+    <div class="titel-lijst">
+      <strong>Kies uit:</strong>
+      <ul>
+        <li><strong>a</strong> Hände säubern</li>
+        <li><strong>b</strong> Etiketten lösen</li>
+        <li><strong>c</strong> Glänzendes Geschirr</li>
+        <li><strong>d</strong> Wasserkocher reinigen</li>
+        <li><strong>e</strong> Natürlicher Weißmacher</li>
+        <li><strong>f</strong> Kühlschrank erfrischen</li>
+        <li><strong>g</strong> Schneidebrett neutralisieren</li>
+      </ul>
+    </div>
+
+    <table class="combineer-tabel" id="q23-table">
+      <thead>
+        <tr>
+          <th style="text-align:center;">Alinea</th>
+          <th>Jouw keuze</th>
+          <th style="text-align:center;">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr data-alinea="1">
+          <td class="alinea">1</td>
+          <td class="keuze">
+            <select data-q="23" data-a="1">
+              <option value="">— kies —</option>
+              <option value="a">a Hände säubern</option>
+              <option value="b">b Etiketten lösen</option>
+              <option value="c">c Glänzendes Geschirr</option>
+              <option value="d">d Wasserkocher reinigen</option>
+              <option value="e">e Natürlicher Weißmacher</option>
+              <option value="f">f Kühlschrank erfrischen</option>
+              <option value="g">g Schneidebrett neutralisieren</option>
+            </select>
+          </td>
+          <td class="status"></td>
+        </tr>
+        <tr data-alinea="2">
+          <td class="alinea">2</td>
+          <td class="keuze">
+            <select data-q="23" data-a="2">
+              <option value="">— kies —</option>
+              <option value="a">a Hände säubern</option>
+              <option value="b">b Etiketten lösen</option>
+              <option value="c">c Glänzendes Geschirr</option>
+              <option value="d">d Wasserkocher reinigen</option>
+              <option value="e">e Natürlicher Weißmacher</option>
+              <option value="f">f Kühlschrank erfrischen</option>
+              <option value="g">g Schneidebrett neutralisieren</option>
+            </select>
+          </td>
+          <td class="status"></td>
+        </tr>
+        <tr data-alinea="3">
+          <td class="alinea">3</td>
+          <td class="keuze">
+            <select data-q="23" data-a="3">
+              <option value="">— kies —</option>
+              <option value="a">a Hände säubern</option>
+              <option value="b">b Etiketten lösen</option>
+              <option value="c">c Glänzendes Geschirr</option>
+              <option value="d">d Wasserkocher reinigen</option>
+              <option value="e">e Natürlicher Weißmacher</option>
+              <option value="f">f Kühlschrank erfrischen</option>
+              <option value="g">g Schneidebrett neutralisieren</option>
+            </select>
+          </td>
+          <td class="status"></td>
+        </tr>
+        <tr data-alinea="4">
+          <td class="alinea">4</td>
+          <td class="keuze">
+            <select data-q="23" data-a="4">
+              <option value="">— kies —</option>
+              <option value="a">a Hände säubern</option>
+              <option value="b">b Etiketten lösen</option>
+              <option value="c">c Glänzendes Geschirr</option>
+              <option value="d">d Wasserkocher reinigen</option>
+              <option value="e">e Natürlicher Weißmacher</option>
+              <option value="f">f Kühlschrank erfrischen</option>
+              <option value="g">g Schneidebrett neutralisieren</option>
+            </select>
+          </td>
+          <td class="status"></td>
+        </tr>
+        <tr data-alinea="5">
+          <td class="alinea">5</td>
+          <td class="keuze">
+            <select data-q="23" data-a="5">
+              <option value="">— kies —</option>
+              <option value="a">a Hände säubern</option>
+              <option value="b">b Etiketten lösen</option>
+              <option value="c">c Glänzendes Geschirr</option>
+              <option value="d">d Wasserkocher reinigen</option>
+              <option value="e">e Natürlicher Weißmacher</option>
+              <option value="f">f Kühlschrank erfrischen</option>
+              <option value="g">g Schneidebrett neutralisieren</option>
+            </select>
+          </td>
+          <td class="status"></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <button class="check-btn" id="check23" onclick="checkCombineer()">Controleer</button>
+    <div class="feedback" id="fb23"></div>
+
+  </div>
+</div>
+
+<button class="reset" onclick="resetAll()">Alles opnieuw proberen</button>
+
+<script>
+const combineer = {
+  "1": { correct: "g", titel: "Schneidebrett neutralisieren" },
+  "2": { correct: "f", titel: "Kühlschrank erfrischen" },
+  "3": { correct: "d", titel: "Wasserkocher reinigen" },
+  "4": { correct: "c", titel: "Glänzendes Geschirr" },
+  "5": { correct: "b", titel: "Etiketten lösen" }
+};
+
+const uitleg23 =
+  "Juiste combinatie: 1g, 2f, 3d, 4c, 5b. " +
+  "<strong>1 → g (Schneidebrett neutralisieren):</strong> het gaat over een snijplank waarop ui is gesneden; de geur verdwijnt door er een aangesneden citroen over te wrijven. " +
+  "<strong>2 → f (Kühlschrank erfrischen):</strong> de citroen met wattenpad gaat in de <em>Eiskasten</em> (koelkast) om nare geuren te verdrijven. " +
+  "<strong>3 → d (Wasserkocher reinigen):</strong> het gaat over kalkaanslag in de <em>Kocher</em> (waterkoker); citroensap verwarmd lost de resten op. " +
+  "<strong>4 → c (Glänzendes Geschirr):</strong> een uitgeperste citroen in de vaatwasser zorgt voor een frisse geur én laat het servies stralen. " +
+  "<strong>5 → b (Etiketten lösen):</strong> met citroensap wrijf je over de sticker, even wachten en lostrekken. " +
+  "De letters <strong>a</strong> (Hände säubern) en <strong>e</strong> (Natürlicher Weißmacher) blijven over.";
+
+const vertaling23 =
+  "<strong>1 → g:</strong> <em>„Reibt es einfach mit einer angeschnittenen Zitrone ein und es riecht wieder frisch.“</em> = <em>Wrijf het gewoon in met een aangesneden citroen en het ruikt weer fris.</em> " +
+  "„einreiben“ = inwrijven; „angeschnitten“ = aangesneden. De geur van de ui op de snijplank wordt geneutraliseerd → g. " +
+  "<strong>2 → f:</strong> <em>„… stellt das Ganze in den Eiskasten, damit die Säure ihre Wirkung entfalten kann.“</em> = <em>… zet het geheel in de koelkast, zodat het zuur zijn werking kan ontplooien.</em> " +
+  "„der Eiskasten“ = de koelkast (Zuid-Duits/Oostenrijks); „die Säure“ = het zuur. Het gaat om de koelkast → f. " +
+  "<strong>3 → d:</strong> <em>„… könnt ihr anstelle von Wasser frischen Zitronensaft erhitzen, damit sich die Rückstände auflösen und die Innenseite des Kochers wieder blitzblank wird.“</em> = <em>… kunnen jullie in plaats van water vers citroensap verhitten, zodat de resten oplossen en de binnenkant van de waterkoker weer glanzend schoon wordt.</em> " +
+  "„der Kocher“ = de waterkoker; „die Rückstände“ = de resten (kalk). → d. " +
+  "<strong>4 → c:</strong> <em>„Das sorgt für einen angenehmen Duft und bringt gleichzeitig das Essgeschirr zum Strahlen!“</em> = <em>Dat zorgt voor een aangename geur en laat tegelijkertijd het servies stralen!</em> " +
+  "„das Essgeschirr“ = het servies; „zum Strahlen bringen“ = laten stralen. → c. " +
+  "<strong>5 → b:</strong> <em>„So geht’s: Mit Zitronensaft darüber wischen, kurz warten und abziehen!“</em> = <em>Zo gaat het: met citroensap erover wrijven, even wachten en lostrekken!</em> " +
+  "„darüber wischen“ = erover wrijven; „abziehen“ = lostrekken. Het gaat om het losmaken van etiketten → b.";
+
+function checkCombineer() {
+  const selects = document.querySelectorAll('#q23-table select');
+  let allesIngevuld = true;
+  let aantalJuist = 0;
+
+  selects.forEach(sel => {
+    const a = sel.dataset.a;
+    const gekozen = sel.value;
+    const correct = combineer[a].correct;
+    const statusCel = sel.closest("tr").querySelector(".status");
+
+    if (gekozen === "") allesIngevuld = false;
+
+    sel.classList.remove("correct", "wrong");
+    statusCel.textContent = "";
+    statusCel.className = "status";
+
+    if (gekozen === "") return;
+
+    if (gekozen === correct) {
+      sel.classList.add("correct");
+      statusCel.textContent = "✓";
+      statusCel.classList.add("status-ok");
+      aantalJuist++;
+    } else {
+      sel.classList.add("wrong");
+      statusCel.textContent = "✗ (" + correct + ")";
+      statusCel.classList.add("status-nok");
+    }
+  });
+
+  const fb = document.getElementById("fb23");
+  fb.className = "feedback show " + (aantalJuist === 5 ? "ok" : "nok");
+
+  let kop;
+  if (!allesIngevuld) {
+    kop = "⚠️ Je hebt nog niet bij alle alinea's een titel gekozen. Je hebt er nu <strong>" + aantalJuist + " van 5</strong> goed. Kies bij elke alinea een letter en controleer opnieuw.";
+  } else if (aantalJuist === 5) {
+    kop = "✅ <strong>Helemaal juist!</strong> Alle vijf alinea's zijn goed gecombineerd.";
+  } else {
+    kop = "❌ <strong>" + aantalJuist + " van 5 goed.</strong> Bij de foute alinea's zie je tussen haakjes de juiste letter.";
+  }
+
+  fb.innerHTML =
+    '<div class="uitleg">' + kop + "</div>" +
+    '<div class="uitleg"><strong>Uitleg:</strong> ' + uitleg23 + "</div>" +
+    '<div class="vertaling"><strong>Uitleg van de Duitse zin(nen):</strong><br>' + vertaling23 + "</div>";
+
+  // markeer alle relevante zinnen
+  ["1","2","3","4","5"].forEach(a => {
+    const el = document.getElementById("m23-" + a);
+    if (el) el.classList.add("active");
+  });
+}
+
+function resetAll() {
+  document.querySelectorAll('#q23-table select').forEach(sel => {
+    sel.value = "";
+    sel.disabled = false;
+    sel.classList.remove("correct", "wrong");
+  });
+  document.querySelectorAll('#q23-table .status').forEach(s => {
+    s.textContent = "";
+    s.className = "status";
+  });
+  document.querySelectorAll(".feedback").forEach(f => {
+    f.className = "feedback";
+    f.innerHTML = "";
+  });
+  document.getElementById("check23").disabled = false;
+  document.querySelectorAll("mark").forEach(m => m.classList.remove("active"));
+}
+</script>
+
+</body>
+</html>

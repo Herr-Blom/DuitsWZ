@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>E-Kiosk – oefening</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    max-width: 1280px;
+    margin: 30px auto;
+    padding: 0 16px;
+    line-height: 1.6;
+    color: #222;
+    background: #fafafa;
+  }
+  h1 { font-size: 1.4em; border-bottom: 2px solid #333; padding-bottom: 6px; }
+  h2 { font-size: 1.05em; margin-top: 1.6em; }
+  .examen-header {
+    font-size: 1.05em;
+    font-weight: bold;
+    color: #444;
+    letter-spacing: .3px;
+  }
+  .layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    align-items: start;
+    margin-top: 24px;
+  }
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+  }
+  .article {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px 20px;
+    position: sticky;
+    top: 16px;
+    max-height: calc(100vh - 32px);
+    overflow-y: auto;
+  }
+  @media (max-width: 900px) {
+    .article { position: static; max-height: none; overflow-y: visible; }
+  }
+  .article h3 { margin-top: 0; }
+  .source { font-size: .85em; color: #666; margin-top: 12px; }
+  .note { font-size: .85em; color: #555; border-top: 1px dashed #bbb; padding-top: 8px; margin-top: 12px;}
+  .vragen { min-width: 0; }
+
+  .options { list-style: none; padding-left: 0; }
+  .options li { margin: 6px 0; }
+  .option-btn {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 9px 12px;
+    font-size: .97em;
+    font-family: inherit;
+    border: 1.5px solid #999;
+    border-radius: 6px;
+    background: #fff;
+    cursor: pointer;
+    transition: background .15s, border-color .15s;
+  }
+  .option-btn:hover:not(:disabled) { background: #eef4fb; border-color: #4a7fb5; }
+  .option-btn:disabled { cursor: default; opacity: .95; }
+  .option-btn.correct { background: #d8f5d8; border-color: #2e8b2e; font-weight: bold; }
+  .option-btn.wrong { background: #fbdcdc; border-color: #c0392b; }
+
+  .feedback {
+    margin-top: 10px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    display: none;
+    font-size: .95em;
+  }
+  .feedback.show { display: block; }
+  .feedback.ok { background: #e3f6e3; border-left: 5px solid #2e8b2e; }
+  .feedback.nok { background: #fdeaea; border-left: 5px solid #c0392b; }
+  .feedback .uitleg { margin-top: 6px; }
+  .feedback .vertaling {
+    margin-top: 8px;
+    padding: 8px 10px;
+    background: rgba(255,255,255,.65);
+    border-left: 3px solid #888;
+    border-radius: 4px;
+    font-size: .93em;
+  }
+  .feedback .vertaling em { color: #333; }
+
+  mark {
+    background: transparent;
+    color: inherit;
+    padding: 0;
+    border-radius: 3px;
+    transition: background .3s;
+  }
+  mark.active {
+    background: #ffe680;
+    padding: 0 2px;
+    outline: 2px solid #ffb347;
+  }
+
+  .reset {
+    margin-top: 24px;
+    padding: 8px 16px;
+    font-family: inherit;
+    font-size: .95em;
+    border: 1.5px solid #555;
+    background: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .reset:hover { background: #eee; }
+</style>
+</head>
+<body>
+
+<p class="examen-header">Examen vmbo gl/tl 2026 Tijdvak 1</p>
+<h1>Tekst 1 – E-Kiosk</h1>
+
+<div class="layout">
+
+  <!-- ================= TEKST (links) ================= -->
+  <div class="article">
+    <h3>E-Kiosk</h3>
+    <p>
+      (1) Eier, Wurst und Schokolade – all das gab es früher im Tante-Emma-Laden<sup>1)</sup> ums Eck. Und den neuesten Klatsch gratis dazu. Kaufen als
+      Lebens-Mittel. Durch die Supermärkte starben die kleinen Läden aus, und
+      heute ist es für lokale Händler in allen Branchen schwer geworden.
+      Internet und Versandhandel haben eine neue Konsumwelt geschaffen.
+      <mark id="m-ausnahme">Ausnahme: Kiosk!</mark>
+    </p>
+    <p>
+      (2) <mark id="m-ausbreitung">Diese Mini-Läden breiten sich aus.</mark> Als E-Kiosk brauchen einige nicht
+      mal Personal, die Ware wird nach Kartenzahlung vom Automaten
+      ausgespuckt. Haben diese Läden Zukunft? Nein, glaubt Traudl Meier. Mit
+      ihrem originalen Tante-Emma-Laden hat sie in München als wohl Einzige
+      überlebt. <mark id="m-nachteile">Von ihren Lieferanten weiß sie, dass bei den Automaten viel
+      geklaut wird und andauernd was kaputtgeht.</mark> Und außerdem: „Der
+      persönliche Kontakt ist das, was meine Kunden schätzen und an mich
+      bindet.“ Ihr Erfolgsrezept: harte Arbeit und viel Herzblut! Geöffnet ist
+      montags bis samstags von 6 bis 19 Uhr.
+    </p>
+    <p class="source">Münchner Tageszeitung, 7.12.2024</p>
+    <p class="note"><sup>1)</sup> Tante-Emma-Laden: buurtwinkeltje voor levensmiddelen</p>
+  </div>
+
+  <!-- ================= VRAGEN (rechts) ================= -->
+  <div class="vragen">
+
+    <!-- VRAAG 1 -->
+    <h2>1p 1 &nbsp;„Ausnahme: Kiosk!“ (laatste zin alinea 1)<br>Waarom is de kiosk volgens de tekst een uitzondering?</h2>
+    <ul class="options" id="q1-options">
+      <li><button class="option-btn" data-q="1" data-opt="A">A&nbsp; Omdat deze winkels klanten trekken die moeite hebben met bestellen via internet.</button></li>
+      <li><button class="option-btn" data-q="1" data-opt="B">B&nbsp; Omdat deze winkels specifieke producten verkopen, die moeilijk via internet te krijgen zijn.</button></li>
+      <li><button class="option-btn" data-q="1" data-opt="C">C&nbsp; Omdat het met deze winkels heel goed gaat.</button></li>
+      <li><button class="option-btn" data-q="1" data-opt="D">D&nbsp; Omdat voor deze winkels makkelijk personeel te vinden is.</button></li>
+    </ul>
+    <div class="feedback" id="fb1"></div>
+
+    <!-- VRAAG 2 -->
+    <h2>3p 2 &nbsp;Noem drie nadelen van de „E-Kiosk“. (alinea 2)<br>Beantwoord deze vraag in het Nederlands.</h2>
+    <p style="font-size:.95em; color:#444;">Typ je antwoord hieronder (drie nadelen, gescheiden door een puntkomma of op aparte regels):</p>
+    <textarea id="q2-input" rows="4" style="width:100%; font-family:inherit; font-size:.97em; padding:9px 12px; border:1.5px solid #999; border-radius:6px; resize:vertical;" placeholder="Nadeel 1: ...&#10;Nadeel 2: ...&#10;Nadeel 3: ..."></textarea>
+    <div style="margin-top:10px;">
+      <button class="option-btn" id="q2-check" style="width:auto; display:inline-block;">Controleer antwoord</button>
+    </div>
+    <div class="feedback" id="fb2"></div>
+
+  </div>
+</div>
+
+<button class="reset" onclick="resetAll()">Alles opnieuw proberen</button>
+
+<script>
+const answers = {
+  "1": {
+    correct: "C",
+    uitleg:
+      "Juist is C. De tekst zegt in alinea 1 dat kleine winkels door supermarkten zijn verdwenen en dat het voor lokale handelaars in alle branches moeilijk is geworden door internet en postorder. Daarna volgt <em>„Ausnahme: Kiosk!“</em> en in alinea 2: <em>„Diese Mini-Läden breiten sich aus.“</em> Met kiosken gaat het dus juist heel goed; zij vormen de uitzondering op de neergang. " +
+      "A (klanten die moeite hebben met internetbestellen), B (specifieke producten) en D (makkelijk personeel) worden niet als reden genoemd.",
+    vertaling:
+      "<strong>Ausnahme: Kiosk!</strong> = <em>Uitzondering: kiosk!</em> " +
+      "„die Ausnahme“ = de uitzondering. " +
+      "<strong>Diese Mini-Läden breiten sich aus.</strong> = <em>Deze miniladen breiden zich uit.</em> " +
+      "„sich ausbreiten“ = zich uitbreiden/verspreiden. Dat past bij optie C: het gaat goed met deze winkels.",
+    markIds: ["m-ausnahme", "m-ausbreitung"]
+  },
+  "2": {
+    correct: "—",
+    uitleg:
+      "De drie nadelen die in alinea 2 genoemd worden, zijn: " +
+      "(1) <em>bij de automaten wordt veel gestolen</em> (<em>„bei den Automaten viel geklaut wird“</em>); " +
+      "(2) <em>er gaat voortdurend iets kapot</em> (<em>„andauernd was kaputtgeht“</em>); " +
+      "(3) <em>er is geen persoonlijk contact</em> — de eigenaresse noemt het persoonlijke contact juist als dat wat haar klanten waarderen en aan haar bindt, wat impliceert dat de E-Kiosk dat mist. " +
+      "Goed gerekend als je de eerste twee noemt en het derde als „geen persoonlijk contact“ of „klanten missen persoonlijk contact“ formuleert.",
+    vertaling:
+      "<strong>Von ihren Lieferanten weiß sie, dass bei den Automaten viel geklaut wird und andauernd was kaputtgeht.</strong> = <em>Van haar leveranciers weet zij dat bij de automaten veel gestolen wordt en er voortdurend iets kapotgaat.</em> " +
+      "„klauen“ = stelen; „andauernd“ = voortdurend/steeds; „kaputtgehen“ = kapotgaan. " +
+      "<strong>Der persönliche Kontakt ist das, was meine Kunden schätzen und an mich bindet.</strong> = <em>Het persoonlijke contact is wat mijn klanten waarderen en aan mij bindt.</em> " +
+      "„der persönliche Kontakt“ = het persoonlijke contact; „schätzen“ = waarderen; „binden“ = binden. Dit benadrukt dat de E-Kiosk juist géén persoonlijk contact biedt.",
+    markIds: ["m-nachteile"]
+  }
+};
+
+// Vraag 2 is een open vraag: we controleren op sleutelwoorden.
+const q2Keywords = [
+  ["gestolen", "geklaut", "diefstal", "steelt", "stelen"],
+  ["kapot", "kaputt", "defect", "stuk"],
+  ["persoonlijk contact", "persoonlijke contact", "geen contact", "persoonlijk"]
+];
+
+function checkQ2() {
+  const input = document.getElementById("q2-input").value.toLowerCase();
+  const fb = document.getElementById("fb2");
+  let score = 0;
+  const gevonden = [];
+  q2Keywords.forEach(( groep, i) => {
+    const hit = groep.some(k => input.includes(k));
+    if (hit) { score++; gevonden.push(i + 1); }
+  });
+
+  const data = answers["2"];
+  let ok = score >= 2; // ten minste twee van de drie nadelen goed
+  fb.className = "feedback show " + (ok ? "ok" : "nok");
+  fb.innerHTML =
+    (ok
+      ? "✅ <strong>Goed!</strong> Je hebt " + score + " van de 3 nadelen genoemd. "
+      : "❌ <strong>Nog niet helemaal.</strong> Je hebt " + score + " van de 3 nadelen genoemd. ") +
+    '<div class="uitleg">' + data.uitleg + "</div>" +
+    '<div class="vertaling"><strong>Uitleg van de Duitse zin(nen):</strong><br>' + data.vertaling + "</div>";
+
+  data.markIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add("active");
+  });
+}
+
+function showFeedback(q, isCorrect) {
+  const data = answers[q];
+  const fb = document.getElementById("fb" + q);
+  fb.className = "feedback show " + (isCorrect ? "ok" : "nok");
+  fb.innerHTML =
+    (isCorrect ? "✅ <strong>Juist!</strong> " : "❌ <strong>Onjuist.</strong> Het juiste antwoord is <strong>" + data.correct + "</strong>. ") +
+    '<div class="uitleg">' + data.uitleg + "</div>" +
+    '<div class="vertaling"><strong>Uitleg van de Duitse zin(nen):</strong><br>' + data.vertaling + "</div>";
+  data.markIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add("active");
+  });
+}
+
+function handleClick(e) {
+  const btn = e.target.closest(".option-btn");
+  if (!btn || btn.disabled || btn.id === "q2-check") return;
+
+  const q = btn.dataset.q;
+  const opt = btn.dataset.opt;
+  const data = answers[q];
+  const isCorrect = opt === data.correct;
+
+  const buttons = document.querySelectorAll('#q' + q + '-options .option-btn');
+  buttons.forEach(b => {
+    b.disabled = true;
+    if (b.dataset.opt === opt) {
+      b.classList.add(isCorrect ? "correct" : "wrong");
+    }
+    if (!isCorrect && b.dataset.opt === data.correct) {
+      b.classList.add("correct");
+    }
+  });
+
+  showFeedback(q, isCorrect);
+}
+
+document.querySelectorAll(".option-btn").forEach(btn => {
+  btn.addEventListener("click", handleClick);
+});
+
+document.getElementById("q2-check").addEventListener("click", function(e) {
+  e.stopPropagation();
+  checkQ2();
+});
+
+function resetAll() {
+  document.querySelectorAll(".option-btn").forEach(b => {
+    b.disabled = false;
+    b.classList.remove("correct", "wrong");
+  });
+  document.querySelectorAll(".feedback").forEach(f => {
+    f.className = "feedback";
+    f.innerHTML = "";
+  });
+  document.querySelectorAll("mark").forEach(m => m.classList.remove("active"));
+  const ta = document.getElementById("q2-input");
+  if (ta) ta.value = "";
+}
+</script>
+
+</body>
+</html>

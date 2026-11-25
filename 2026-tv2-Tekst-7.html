@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ein Vater-Tochter-Team in geheimer Mission – oefening</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    max-width: 1280px;
+    margin: 30px auto;
+    padding: 0 16px;
+    line-height: 1.6;
+    color: #222;
+    background: #fafafa;
+  }
+  h1 { font-size: 1.4em; border-bottom: 2px solid #333; padding-bottom: 6px; }
+  h2 { font-size: 1.05em; margin-top: 1.6em; }
+  .examen-header {
+    font-size: 1.05em;
+    font-weight: bold;
+    color: #444;
+    letter-spacing: .3px;
+  }
+  .layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    align-items: start;
+    margin-top: 24px;
+  }
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+  }
+  .article {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px 20px;
+    position: sticky;
+    top: 16px;
+    max-height: calc(100vh - 32px);
+    overflow-y: auto;
+  }
+  @media (max-width: 900px) {
+    .article { position: static; max-height: none; overflow-y: visible; }
+  }
+  .article h3 { margin-top: 0; }
+  .source { font-size: .85em; color: #666; margin-top: 12px; }
+  .note { font-size: .85em; color: #555; border-top: 1px dashed #bbb; padding-top: 8px; margin-top: 12px;}
+  .vragen { min-width: 0; }
+
+  .options { list-style: none; padding-left: 0; }
+  .options li { margin: 6px 0; }
+  .option-btn {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 9px 12px;
+    font-size: .97em;
+    font-family: inherit;
+    border: 1.5px solid #999;
+    border-radius: 6px;
+    background: #fff;
+    cursor: pointer;
+    transition: background .15s, border-color .15s;
+  }
+  .option-btn:hover:not(:disabled) { background: #eef4fb; border-color: #4a7fb5; }
+  .option-btn:disabled { cursor: default; opacity: .95; }
+  .option-btn.correct { background: #d8f5d8; border-color: #2e8b2e; font-weight: bold; }
+  .option-btn.wrong { background: #fbdcdc; border-color: #c0392b; }
+
+  .feedback {
+    margin-top: 10px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    display: none;
+    font-size: .95em;
+  }
+  .feedback.show { display: block; }
+  .feedback.ok { background: #e3f6e3; border-left: 5px solid #2e8b2e; }
+  .feedback.nok { background: #fdeaea; border-left: 5px solid #c0392b; }
+  .feedback .uitleg { margin-top: 6px; }
+  .feedback .vertaling {
+    margin-top: 8px;
+    padding: 8px 10px;
+    background: rgba(255,255,255,.65);
+    border-left: 3px solid #888;
+    border-radius: 4px;
+    font-size: .93em;
+  }
+  .feedback .vertaling em { color: #333; }
+
+  mark {
+    background: transparent;
+    color: inherit;
+    padding: 0;
+    border-radius: 3px;
+    transition: background .3s;
+  }
+  mark.active {
+    background: #ffe680;
+    padding: 0 2px;
+    outline: 2px solid #ffb347;
+  }
+
+  .reset {
+    margin-top: 24px;
+    padding: 8px 16px;
+    font-family: inherit;
+    font-size: .95em;
+    border: 1.5px solid #555;
+    background: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .reset:hover { background: #eee; }
+
+  .check-btn {
+    display: inline-block;
+    width: auto;
+    margin-top: 10px;
+    padding: 9px 18px;
+    font-family: inherit;
+    font-size: .97em;
+    border: 1.5px solid #4a7fb5;
+    background: #eef4fb;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .check-btn:hover { background: #dbe8f6; }
+  .check-btn:disabled { opacity: .6; cursor: default; }
+
+  textarea {
+    width: 100%;
+    font-family: inherit;
+    font-size: .97em;
+    padding: 9px 12px;
+    border: 1.5px solid #999;
+    border-radius: 6px;
+    resize: vertical;
+  }
+  textarea:disabled { background: #f4f4f4; }
+</style>
+</head>
+<body>
+
+<p class="examen-header">Examen vmbo gl/tl 2026 Tijdvak 1</p>
+<h1>Tekst 7 – Ein Vater-Tochter-Team in geheimer Mission</h1>
+
+<div class="layout">
+
+  <!-- ================= TEKST (links) ================= -->
+  <div class="article">
+    <h3>Ein Vater-Tochter-Team in geheimer Mission</h3>
+
+    <p>
+      (1) Ein Mädchen, neun Jahre alt, in einer belebten Straße in Hamburg.
+      Ein Bus rauscht vorbei, Leute plaudern im Café, die Sonne brennt – so
+      weit, so gewöhnlich. Doch dann biegt das Mädchen in eine Seitenstraße
+      ein, bleibt stehen, zieht ein gerahmtes Bild<sup>1)</sup> aus dem Rucksack. Jetzt
+      geht es schnell: Klebeband auf die Rückseite, das Bild an eine Hauswand
+      halten – und fest andrücken. <mark id="m-bild">So wird es hängen bleiben, bis es jemand
+      bemerkt, sich darüber freut und es mitnimmt. Denn im Rahmen klemmt
+      ein Zettel mit einer Botschaft: „Du hast mein Bild gefunden. Du darfst es
+      behalten. Es ist mein Geschenk an dich.“</mark>
+    </p>
+    <p>
+      (2) Die Künstlerin, die nach dem Festkleben schnell verschwunden ist,
+      nennt sich „kleine Mithelferin“. <mark id="m-idee">Ihr Vater Paul hat sich die Aktion
+      ausgedacht. Er ist sozusagen der Haupttäter. Oder besser: der Wohltäter.</mark>
+      <mark id="m-anzahl">Mehr als 700 Kunstwerke haben der 48-Jährige und seine Tochter in vier
+      Jahren schon aufgehängt. An Häuserwänden, Stromkästen,
+      Fahrradhäuschen. In Deutschland, Österreich, Italien oder Portugal –
+      denn auch im Urlaub haben sie welche im Gepäck.</mark>
+    </p>
+    <p>
+      (3) Auf ihren Missionen wollen sie lieber anonym bleiben. „Ich war mir erst
+      mal nicht sicher, ob man das überhaupt darf“, erklärt Paul, „und außerdem
+      geht es ja gar nicht um uns.“ <mark id="m-ziel">Worum dann? „Wir wollen zeigen, dass es
+      sich lohnt, mit offenen Augen durch die Gegend zu gehen, dass man sich
+      dann über kleine Dinge freuen kann.“</mark> Seine Tochter findet: „Es macht
+      total Spaß, Sachen zu verschenken.“ Ungefähr 100 eigene Bilder hat sie
+      schon zu dem Vater-Tochter-Projekt beigesteuert, das die beiden
+      Framespotting getauft haben (übersetzt etwa: Rahmen entdecken).
+    </p>
+    <p>
+      (4) Sie hat schon öfter mit ihrem Papa Paul unauffällig die Menschen
+      beobachtet, die an ihren Bildern vorbeilaufen. Wie sie staunen, nicken,
+      lächeln – und sich verwundert umschauen. <mark id="m-zweifel">„Viele denken, ‚Das kann nicht
+      stimmen‘, dass sie die Bilder einfach mitnehmen können“, erzählt Paul
+      lachend.</mark> <mark id="m-geheim">Dass sie bei ihrem Projekt im Verborgenen bleiben, gefällt der
+      kleinen Mithelferin besonders. Nur eine einzige Freundin weiß, dass sie
+      hinter der bunten Straßenkunst steckt: „Das ist mein größtes Geheimnis“,
+      sagt die Neunjährige.</mark>
+    </p>
+    <p>
+      (5) <mark id="m-rueckmeldung">Auch wenn sie und ihr Vater anderen eine Freude machen, ohne eine
+      Gegenleistung zu erwarten – eines wünschen sie sich schon: dass die
+      Finder sich bei ihnen melden. Auf dem kleinen Zettel am Rahmen steht,
+      wie sie Kontakt aufnehmen können. Und tatsächlich: Viele haben Paul
+      bereits geschrieben und ihre Geschichten erzählt. So wissen er und die
+      kleine Mithelferin inzwischen, dass ihre Kunstwerke an miesen Tagen
+      gute Laune machen, bei Heimweh trösten oder sogar der Grund sind,
+      überhaupt vor die Tür zu gehen.</mark> Jedes Mal, wenn sie ein neues Bild
+      aufgehängt haben, veröffentlichen sie einen Hinweis darauf auf ihrem
+      Instagram-Kanal – und die Suche kann beginnen.
+    </p>
+    <p class="source">www.geo.de, 4.12.2023</p>
+    <p class="note"><sup>1)</sup> ein gerahmtes Bild: een ingelijst(e) schilderij, foto, afbeelding, tekening</p>
+  </div>
+
+  <!-- ================= VRAGEN (rechts) ================= -->
+  <div class="vragen">
+
+    <!-- VRAAG 23 -->
+    <h2>1p 23 &nbsp;Was sagt der 1. Absatz über ein neunjähriges Mädchen aus?</h2>
+    <ul class="options" id="q23-options">
+      <li><button class="option-btn" data-q="23" data-opt="A">A&nbsp; Es ist auf der Suche nach Ideen zum Malen.</button></li>
+      <li><button class="option-btn" data-q="23" data-opt="B">B&nbsp; Es macht Wandmalereien im Zentrum von Hamburg.</button></li>
+      <li><button class="option-btn" data-q="23" data-opt="C">C&nbsp; Es verteilt Bilder zum Mitnehmen.</button></li>
+      <li><button class="option-btn" data-q="23" data-opt="D">D&nbsp; Es zieht herum, um ihre Gemälde zu verkaufen.</button></li>
+    </ul>
+    <div class="feedback" id="fb23"></div>
+
+    <!-- VRAAG 24 -->
+    <h2>1p 24 &nbsp;Welche Frage passt zum 2. Absatz?</h2>
+    <ul class="options" id="q24-options">
+      <li><button class="option-btn" data-q="24" data-opt="A">A&nbsp; In welchen Städten sind sie aktiv?</button></li>
+      <li><button class="option-btn" data-q="24" data-opt="B">B&nbsp; Von wem stammt die Idee?</button></li>
+      <li><button class="option-btn" data-q="24" data-opt="C">C&nbsp; Wie oft ziehen sie los?</button></li>
+      <li><button class="option-btn" data-q="24" data-opt="D">D&nbsp; Wieso wollen sie anonym bleiben?</button></li>
+    </ul>
+    <div class="feedback" id="fb24"></div>
+
+    <!-- VRAAG 25 -->
+    <h2>1p 25 &nbsp;Welche Aussage zum Projekt Framespotting ist richtig? (3. Absatz)</h2>
+    <ul class="options" id="q25-options">
+      <li><button class="option-btn" data-q="25" data-opt="A">A&nbsp; Es hat Nachfolger in anderen Städten bekommen.</button></li>
+      <li><button class="option-btn" data-q="25" data-opt="B">B&nbsp; Es ist eine illegale Aktivität.</button></li>
+      <li><button class="option-btn" data-q="25" data-opt="C">C&nbsp; Es soll die Aufmerksamkeit für die Umgebung verbessern.</button></li>
+      <li><button class="option-btn" data-q="25" data-opt="D">D&nbsp; Es stärkt das Verhältnis zwischen Vater und Tochter.</button></li>
+    </ul>
+    <div class="feedback" id="fb25"></div>
+
+    <!-- VRAAG 26 -->
+    <h2>1p 26 &nbsp;Waaraan twijfelen voorbijgangers volgens Paul nogal eens? (alinea 4)<br>Beantwoord deze vraag in het Nederlands.</h2>
+    <textarea id="q26-input" rows="3" placeholder="Voorbijgangers twijfelen eraan of ..."></textarea>
+    <div style="margin-top:10px;">
+      <button class="check-btn" id="q26-check">Controleer antwoord</button>
+    </div>
+    <div class="feedback" id="fb26"></div>
+
+    <!-- VRAAG 27 -->
+    <h2>1p 27 &nbsp;Waaraan beleeft het 9-jarige meisje bij Framespotting vooral plezier volgens alinea 4?<br>Beantwoord deze vraag in het Nederlands.</h2>
+    <textarea id="q27-input" rows="3" placeholder="Zij vindt het vooral leuk dat ..."></textarea>
+    <div style="margin-top:10px;">
+      <button class="check-btn" id="q27-check">Controleer antwoord</button>
+    </div>
+    <div class="feedback" id="fb27"></div>
+
+    <!-- VRAAG 28 -->
+    <h2>1p 28 &nbsp;Welche Aussage über Paul und seine Tochter ist dem 5. Absatz nach richtig?</h2>
+    <ul class="options" id="q28-options">
+      <li><button class="option-btn" data-q="28" data-opt="A">A&nbsp; Sie hängen ihre Bilder manchmal an schwer erreichbaren Stellen auf.</button></li>
+      <li><button class="option-btn" data-q="28" data-opt="B">B&nbsp; Sie hoffen auf Rückmeldungen von Leuten, die ihre Bilder mitgenommen haben.</button></li>
+      <li><button class="option-btn" data-q="28" data-opt="C">C&nbsp; Sie teilen in den sozialen Medien, wie viele Bilder mitgenommen worden sind.</button></li>
+    </ul>
+    <div class="feedback" id="fb28"></div>
+
+  </div>
+</div>
+
+<button class="reset" onclick="resetAll()">Alles opnieuw proberen</button>
+
+<script>
+const answers = {
+  "23": {
+    correct: "C",
+    uitleg:
+      "Juist is C. In alinea 1 hangt het meisje een ingelijst beeld op een huiswand met een briefje eraan: <em>„Du hast mein Bild gefunden. Du darfst es behalten. Es ist mein Geschenk an dich.“</em> Ze laat het beeld dus achter zodat iemand het kan meenemen — ze 'deelt' haar beeld uit als geschenk. " +
+      "A (op zoek naar schilderideeën) klopt niet. B (wandschilderingen maken) is te sterk: ze hangt kant-en-klare ingelijste beelden op, ze schildert niet op de muur. D (rondtrekken om haar schilderijen te verkopen) is onjuist: het is een geschenk, ze verkoopt niets.",
+    vertaling:
+      "<strong>So wird es hängen bleiben, bis es jemand bemerkt, sich darüber freut und es mitnimmt.</strong> = <em>Zo zal het blijven hangen tot iemand het opmerkt, zich erover verheugt en het meeneemt.</em> " +
+      "<strong>Denn im Rahmen klemmt ein Zettel mit einer Botschaft: „Du hast mein Bild gefunden. Du darfst es behalten. Es ist mein Geschenk an dich.“</strong> = <em>Want in de lijst zit een briefje met een boodschap: „Je hebt mijn beeld gevonden. Je mag het houden. Het is mijn geschenk aan jou.“</em> " +
+      "„behalten“ = houden; „das Geschenk“ = het geschenk → optie C.",
+    markIds: ["m-bild"]
+  },
+  "24": {
+    correct: "B",
+    uitleg:
+      "Juist is B. Alinea 2 opent met: <em>„Die Künstlerin … nennt sich ‚kleine Mithelferin‘. Ihr Vater Paul hat sich die Aktion ausgedacht.“</em> De vraag die daarbij past is dus: van wie is het idee afkomstig? " +
+      "A (in welke steden zijn ze actief) komt ook in de alinea voor, maar is niet de hoofdvraag van de alinea. C (hoe vaak gaan ze op pad) staat er niet als vraag centraal. D (waarom anoniem) hoort bij alinea 3, niet bij alinea 2.",
+    vertaling:
+      "<strong>Die Künstlerin, die nach dem Festkleben schnell verschwunden ist, nennt sich „kleine Mithelferin“.</strong> = <em>De kunstenares, die na het vastplakken snel verdwenen is, noemt zich „kleine hulpje“.</em> " +
+      "<strong>Ihr Vater Paul hat sich die Aktion ausgedacht.</strong> = <em>Haar vader Paul heeft de actie bedacht.</em> " +
+      "„sich etwas ausdenken“ = iets bedenken → de vraag „Von wem stammt die Idee?“ past hierbij → optie B.",
+    markIds: ["m-idee", "m-anzahl"]
+  },
+  "25": {
+    correct: "C",
+    uitleg:
+      "Juist is C. Paul zegt in alinea 3: <em>„Wir wollen zeigen, dass es sich lohnt, mit offenen Augen durch die Gegend zu gehen, dass man sich dann über kleine Dinge freuen kann.“</em> Het project wil dus de aandacht voor de omgeving verbeteren: met open ogen rondkijken en genieten van kleine dingen. " +
+      "A (navolging in andere steden) wordt niet gezegd. B (illegaal) is onjuist: Paul twijfelt alleen of het mag, maar het project wordt niet als illegaal bestempeld. D (versterkt band vader-dochter) is niet de kern van de uitspraak in alinea 3.",
+    vertaling:
+      "<strong>Worum dann? „Wir wollen zeigen, dass es sich lohnt, mit offenen Augen durch die Gegend zu gehen, dass man sich dann über kleine Dinge freuen kann.“</strong> = <em>Waarom dan? „Wij willen laten zien dat het de moeite loont met open ogen door de omgeving te lopen, dat je je dan over kleine dingen kunt verheugen.“</em> " +
+      "„mit offenen Augen“ = met open ogen; „sich über etwas freuen“ = zich over iets verheugen; „die Gegend“ = de omgeving → optie C.",
+    markIds: ["m-ziel"]
+  },
+  "26": {
+    correct: "—",
+    uitleg:
+      "Juist is: voorbijgangers twijfelen eraan <strong>of het wel kan dat ze de beelden zomaar mogen meenemen</strong> (of het wel klopt dat de beelden gratis zijn). Paul zegt: <em>„Viele denken, ‚Das kann nicht stimmen‘, dass sie die Bilder einfach mitnehmen können.“</em> " +
+      "Goed gerekend als je zegt: of je het beeld zomaar mee mag nemen / of het echt gratis is / of het wel klopt dat het beeld voor hen is.",
+    vertaling:
+      "<strong>„Viele denken, ‚Das kann nicht stimmen‘, dass sie die Bilder einfach mitnehmen können“, erzählt Paul lachend.</strong> = <em>„Velen denken: ‚Dat kan niet kloppen‘, dat ze de beelden zomaar kunnen meenemen“, vertelt Paul lachend.</em> " +
+      "„stimmen“ = kloppen/juist zijn; „einfach mitnehmen“ = gewoon meenemen. De twijfel gaat dus over de vraag of het echt mag dat ze het beeld gratis meenemen.",
+    markIds: ["m-zweifel"]
+  },
+  "27": {
+    correct: "—",
+    uitleg:
+      "Juist is: zij vindt het vooral leuk <strong>dat ze bij het project in het verborgene blijft / dat het een geheim is</strong>. In alinea 4 staat: <em>„Dass sie bei ihrem Projekt im Verborgenen bleiben, gefällt der kleinen Mithelferin besonders. Nur eine einzige Freundin weiß, dass sie hinter der bunten Straßenkunst steckt: ‚Das ist mein größtes Geheimnis‘.“</em> " +
+      "Goed gerekend als je zegt: dat het geheim blijft / dat niemand weet dat zij erachter zit / dat het haar grote geheim is.",
+    vertaling:
+      "<strong>Dass sie bei ihrem Projekt im Verborgenen bleiben, gefällt der kleinen Mithelferin besonders.</strong> = <em>Dat ze bij hun project in het verborgene blijven, bevalt het kleine hulpje bijzonder.</em> " +
+      "<strong>Nur eine einzige Freundin weiß, dass sie hinter der bunten Straßenkunst steckt: „Das ist mein größtes Geheimnis“.</strong> = <em>Slechts één vriendin weet dat zij achter de kleurrijke straatkunst zit: „Dat is mijn grootste geheim.“</em> " +
+      "„im Verborgenen bleiben“ = in het verborgene blijven; „das Geheimnis“ = het geheim. Ze geniet dus vooral van het geheimhouden → anoniem blijven.",
+    markIds: ["m-geheim"]
+  },
+  "28": {
+    correct: "B",
+    uitleg:
+      "Juist is B. Alinea 5 zegt: <em>„eines wünschen sie sich schon: dass die Finder sich bei ihnen melden. … Und tatsächlich: Viele haben Paul bereits geschrieben und ihre Geschichten erzählt.“</em> Ze hopen dus op reacties van mensen die hun beelden hebben meegenomen. " +
+      "A (moeilijk bereikbare plekken) wordt niet genoemd. C (delen hoeveel beelden zijn meegenomen) is onjuist: ze delen op Instagram alleen een hint dat er een nieuw beeld hangt, niet hoeveel er zijn meegenomen.",
+    vertaling:
+      "<strong>Auch wenn sie und ihr Vater anderen eine Freude machen, ohne eine Gegenleistung zu erwarten – eines wünschen sie sich schon: dass die Finder sich bei ihnen melden.</strong> = <em>Ook al doen zij en haar vader anderen een plezier zonder een tegenprestatie te verwachten – één ding wensen ze wel: dat de vinders zich bij hen melden.</em> " +
+      "<strong>Und tatsächlich: Viele haben Paul bereits geschrieben und ihre Geschichten erzählt.</strong> = <em>En inderdaad: velen hebben Paul al geschreven en hun verhalen verteld.</em> " +
+      "„sich melden“ = zich melden; „die Rückmeldung“ = de reactie → optie B.",
+    markIds: ["m-rueckmeldung"]
+  }
+};
+
+// ===== Vraag 26: open vraag =====
+function checkQ26() {
+  const fb = document.getElementById("fb26");
+  const data = answers["26"];
+  const tekst = document.getElementById("q26-input").value.toLowerCase();
+
+  const mag =
+    tekst.includes("mag") ||
+    tekst.includes("mogen") ||
+    tekst.includes("gratis") ||
+    tekst.includes("meenemen") ||
+    tekst.includes("klopt") ||
+    tekst.includes("kan niet") ||
+    tekst.includes("zomaar");
+
+  const beeld =
+    tekst.includes("beeld") ||
+    tekst.includes("schilderij") ||
+    tekst.includes("foto") ||
+    tekst.includes("kunstwerk") ||
+    tekst.includes("kader") ||
+    tekst.includes("lijst");
+
+  const ok = mag && beeld;
+
+  fb.className = "feedback show " + (ok ? "ok" : "nok");
+  fb.innerHTML =
+    (ok
+      ? "✅ <strong>Goed!</strong> Je hebt de twijfel goed verwoord. "
+      : "❌ <strong>Nog niet helemaal.</strong> Voorbijgangers twijfelen eraan of het wel kan dat ze het beeld <strong>zomaar mogen meenemen</strong> (of het echt gratis is). ") +
+    '<div class="uitleg">' + data.uitleg + "</div>" +
+    '<div class="vertaling"><strong>Uitleg van de Duitse zin(nen):</strong><br>' + data.vertaling + "</div>";
+
+  data.markIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add("active");
+  });
+
+  document.getElementById("q26-input").disabled = true;
+  document.getElementById("q26-check").disabled = true;
+}
+
+document.getElementById("q26-check").addEventListener("click", function(e) {
+  e.stopPropagation();
+  checkQ26();
+});
+
+// ===== Vraag 27: open vraag =====
+function checkQ27() {
+  const fb = document.getElementById("fb27");
+  const data = answers["27"];
+  const tekst = document.getElementById("q27-input").value.toLowerCase();
+
+  const geheim =
+    tekst.includes("geheim") ||
+    tekst.includes("anoniem") ||
+    tekst.includes("verborgen") ||
+    tekst.includes("verborgene") ||
+    tekst.includes("niemand weet") ||
+    tekst.includes("stiekem") ||
+    tekst.includes("niet bekend");
+
+  const ok = geheim;
+
+  fb.className = "feedback show " + (ok ? "ok" : "nok");
+  fb.innerHTML =
+    (ok
+      ? "✅ <strong>Goed!</strong> Je hebt het juiste plezier genoemd. "
+      : "❌ <strong>Nog niet helemaal.</strong> Het meisje vindt het vooral leuk dat ze <strong>in het verborgene blijft / dat het een geheim is</strong> dat zij achter de straatkunst zit. ") +
+    '<div class="uitleg">' + data.uitleg + "</div>" +
+    '<div class="vertaling"><strong>Uitleg van de Duitse zin(nen):</strong><br>' + data.vertaling + "</div>";
+
+  data.markIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add("active");
+  });
+
+  document.getElementById("q27-input").disabled = true;
+  document.getElementById("q27-check").disabled = true;
+}
+
+document.getElementById("q27-check").addEventListener("click", function(e) {
+  e.stopPropagation();
+  checkQ27();
+});
+
+// ===== Meerkeuzevragen =====
+function showFeedback(q, isCorrect) {
+  const data = answers[q];
+  const fb = document.getElementById("fb" + q);
+  fb.className = "feedback show " + (isCorrect ? "ok" : "nok");
+  fb.innerHTML =
+    (isCorrect ? "✅ <strong>Juist!</strong> " : "❌ <strong>Onjuist.</strong> Het juiste antwoord is <strong>" + data.correct + "</strong>. ") +
+    '<div class="uitleg">' + data.uitleg + "</div>" +
+    '<div class="vertaling"><strong>Uitleg van de Duitse zin(nen):</strong><br>' + data.vertaling + "</div>";
+  data.markIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add("active");
+  });
+}
+
+function handleClick(e) {
+  const btn = e.target.closest(".option-btn");
+  if (!btn || btn.disabled || !btn.dataset.q) return;
+
+  const q = btn.dataset.q;
+  const opt = btn.dataset.opt;
+  const data = answers[q];
+  if (!data) return;
+  const isCorrect = opt === data.correct;
+
+  const buttons = document.querySelectorAll('#q' + q + '-options .option-btn');
+  buttons.forEach(b => {
+    b.disabled = true;
+    if (b.dataset.opt === opt) {
+      b.classList.add(isCorrect ? "correct" : "wrong");
+    }
+    if (!isCorrect && b.dataset.opt === data.correct) {
+      b.classList.add("correct");
+    }
+  });
+
+  showFeedback(q, isCorrect);
+}
+
+document.querySelectorAll(".option-btn").forEach(btn => {
+  btn.addEventListener("click", handleClick);
+});
+
+function resetAll() {
+  document.querySelectorAll(".option-btn").forEach(b => {
+    b.disabled = false;
+    b.classList.remove("correct", "wrong");
+  });
+  document.querySelectorAll(".feedback").forEach(f => {
+    f.className = "feedback";
+    f.innerHTML = "";
+  });
+  document.querySelectorAll("mark").forEach(m => m.classList.remove("active"));
+
+  // open vragen resetten
+  ["q26", "q27"].forEach(id => {
+    const input = document.getElementById(id + "-input");
+    if (input) {
+      input.value = "";
+      input.disabled = false;
+    }
+    const check = document.getElementById(id + "-check");
+    if (check) check.disabled = false;
+  });
+}
+</script>
+
+</body>
+</html>

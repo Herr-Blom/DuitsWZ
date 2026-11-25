@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ein menschlicher Korkenzieher – oefening</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    max-width: 1280px;
+    margin: 30px auto;
+    padding: 0 16px;
+    line-height: 1.6;
+    color: #222;
+    background: #fafafa;
+  }
+  h1 { font-size: 1.4em; border-bottom: 2px solid #333; padding-bottom: 6px; }
+  h2 { font-size: 1.05em; margin-top: 1.6em; }
+  .examen-header {
+    font-size: 1.05em;
+    font-weight: bold;
+    color: #444;
+    letter-spacing: .3px;
+  }
+  /* Twee kolommen: tekst links, vragen rechts */
+  .layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    align-items: start;
+    margin-top: 24px;
+  }
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+  }
+  .article {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px 20px;
+    position: sticky;
+    top: 16px;
+    max-height: calc(100vh - 32px);
+    overflow-y: auto;
+  }
+  @media (max-width: 900px) {
+    .article { position: static; max-height: none; overflow-y: visible; }
+  }
+  .article h3 { margin-top: 0; }
+  .source { font-size: .85em; color: #666; margin-top: 12px; }
+  .vragen { min-width: 0; }
+
+  .options { list-style: none; padding-left: 0; }
+  .options li { margin: 6px 0; }
+  .option-btn {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 9px 12px;
+    font-size: .97em;
+    font-family: inherit;
+    border: 1.5px solid #999;
+    border-radius: 6px;
+    background: #fff;
+    cursor: pointer;
+    transition: background .15s, border-color .15s;
+  }
+  .option-btn:hover:not(:disabled) { background: #eef4fb; border-color: #4a7fb5; }
+  .option-btn:disabled { cursor: default; opacity: .95; }
+  .option-btn.correct { background: #d8f5d8; border-color: #2e8b2e; font-weight: bold; }
+  .option-btn.wrong { background: #fbdcdc; border-color: #c0392b; }
+
+  .feedback {
+    margin-top: 10px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    display: none;
+    font-size: .95em;
+  }
+  .feedback.show { display: block; }
+  .feedback.ok { background: #e3f6e3; border-left: 5px solid #2e8b2e; }
+  .feedback.nok { background: #fdeaea; border-left: 5px solid #c0392b; }
+  .feedback.info { background: #eaf2fb; border-left: 5px solid #4a7fb5; }
+  .feedback .uitleg { margin-top: 6px; }
+  .feedback .vertaling {
+    margin-top: 8px;
+    padding: 8px 10px;
+    background: rgba(255,255,255,.65);
+    border-left: 3px solid #888;
+    border-radius: 4px;
+    font-size: .93em;
+  }
+  .feedback .vertaling em { color: #333; }
+
+  mark {
+    background: transparent;
+    color: inherit;
+    padding: 0;
+    border-radius: 3px;
+    transition: background .3s;
+  }
+  mark.active {
+    background: #ffe680;
+    padding: 0 2px;
+    outline: 2px solid #ffb347;
+  }
+
+  /* Open vraag: tekstvak */
+  .open-area { margin-top: 8px; }
+  .open-area textarea {
+    width: 100%;
+    min-height: 80px;
+    padding: 9px 11px;
+    font-family: inherit;
+    font-size: .97em;
+    line-height: 1.5;
+    border: 1.5px solid #999;
+    border-radius: 6px;
+    resize: vertical;
+    background: #fff;
+  }
+  .open-area textarea:focus {
+    outline: none;
+    border-color: #4a7fb5;
+    box-shadow: 0 0 0 2px rgba(74,127,181,.2);
+  }
+  .open-area textarea:disabled { background: #f4f4f4; }
+  .open-btn {
+    margin-top: 6px;
+    padding: 7px 14px;
+    font-family: inherit;
+    font-size: .95em;
+    border: 1.5px solid #4a7fb5;
+    background: #eef4fb;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .open-btn:hover:not(:disabled) { background: #dce8f7; }
+  .open-btn:disabled { cursor: default; opacity: .8; }
+
+  .reset {
+    margin-top: 24px;
+    padding: 8px 16px;
+    font-family: inherit;
+    font-size: .95em;
+    border: 1.5px solid #555;
+    background: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .reset:hover { background: #eee; }
+</style>
+</head>
+<body>
+
+<p class="examen-header">Examen vmbo gl/tl 2026 Tijdvak 1</p>
+<h1>Tekst 3 – Ein menschlicher Korkenzieher</h1>
+
+<div class="layout">
+
+  <!-- ================= TEKST (links) ================= -->
+  <div class="article">
+    <h3>Ein menschlicher Korkenzieher</h3>
+    <p><em>Muriel Mohr, 17, ist eine der besten Freestyle-Skifahrerinnen der
+    Welt. Hier erzählt sie, was ihren Sport so spannend macht.</em></p>
+
+    <p><strong>(1)</strong> Zum ersten Mal stand ich mit zwei oder drei Jahren auf Skiern. Da bin
+    ich eher auf den Babypisten gefahren. Erst als ich etwas älter war, bin ich
+    mit meinem Vater immer mal wieder neben der Piste gefahren und habe
+    gemerkt, wie viel Spaß mir kleine Tricks und Sprünge machen. So richtig
+    ‚klick‘ gemacht hat es dann bei mir, als ich neun Jahre alt war. Meine
+    Eltern haben mich im Camp eines Reiseveranstalters angemeldet. Dort
+    sind wir in einem Snowpark mit Schanzen und Hindernissen gefahren.</p>
+
+    <p><strong>(2)</strong> Ich mag das Individuelle an dem Sport. Wir denken uns Tricks und
+    Kombinationen aus. Jede Fahrt ist anders. Meine Lieblingsdisziplin ist
+    Slopestyle, da fahren wir durch eine Art Skatepark, aber auf Schnee.
+    <mark id="m9-konzentration">Während eines Wettkampfs muss ich lange aufmerksam bleiben, damit
+    jeder Sprung und jeder Trick sitzt.</mark> Ich habe zwölf Jahre Ballett gemacht,
+    das ist eine perfekte Vorbereitung fürs Freestyle-Skifahren. In beiden
+    Disziplinen kommt es auf Fokussierung und Körperspannung an.</p>
+
+    <p><strong>(3)</strong> <mark id="m10-schule">An allen Weltcups kann ich leider nicht teilnehmen. Ich gehe nämlich
+    in die zwölfte Klasse, im Mai mache ich das Abitur.</mark>
+    <mark id="m11-direktor">Zum Glück habe ich
+    den besten Direktor, den es gibt: Ich bekomme regelmäßig einen
+    Urlaubsantrag genehmigt und werde jederzeit unterstützt.</mark>
+    Aber natürlich
+    bin ich nicht nur auf dem Berg. Wettkämpfe in den USA oder in China
+    muss ich wegen der Schule noch auslassen. Nach dem Abitur möchte ich
+    aber auch dort antreten.</p>
+
+    <p><strong>(4)</strong> Im vergangenen August bin ich während der Ferien nach Neuseeland
+    geflogen, zur Weltmeisterschaft der Junioren. Meine Eltern waren nicht
+    dabei, haben aber den Wettkampf mitten in der Nacht im Livestream
+    verfolgt. Ich war vor allem mit Jungs unterwegs. Das bin ich gewohnt,
+    <mark id="m12-maedchen">leider machen nur wenige Mädchen und Frauen unseren Sport.</mark>
+    Früher habe ich mir gewünscht, dass mehr Mädels dabei sind. Aber ich verstehe
+    mich auch mit den Jungs. Manche haben mich am Anfang unterschätzt –
+    aber das ist mittlerweile vorbei. Die wissen, was ich kann.</p>
+
+    <p><strong>(5)</strong> Mein Lieblingstrick ist der „Switch Bio 9 Tail“. In der Luft sieht die
+    Bewegung aus wie ein Korkenzieher. Womöglich zeige ich den Trick auch
+    bei den nächsten Olympischen Jugendspielen. Dort will ich weit vorne
+    landen. Unser Sport ist in Deutschland ziemlich klein und unbekannt.
+    <mark id="m13-erfolg">Ich
+    bin mir sicher: Das ändert sich, wenn mal eine oder einer von uns einen
+    großen Erfolg feiert.</mark></p>
+
+    <p class="source">Dein Spiegel 1.2024. Protocol: Jonas Kraus</p>
+  </div>
+
+  <!-- ================= VRAGEN (rechts) ================= -->
+  <div class="vragen">
+
+    <!-- VRAAG 8 -->
+    <h2>1p 8 &nbsp;Welcher Titel passt zum 1. Absatz?</h2>
+    <ul class="options" id="q8-options">
+      <li><button class="option-btn" data-q="8" data-opt="A">A&nbsp; Ein großes Talent</button></li>
+      <li><button class="option-btn" data-q="8" data-opt="B">B&nbsp; Eltern als Vorbild</button></li>
+      <li><button class="option-btn" data-q="8" data-opt="C">C&nbsp; Jedes Jahr in den Wintersport</button></li>
+      <li><button class="option-btn" data-q="8" data-opt="D">D&nbsp; Wie alles angefangen hat</button></li>
+    </ul>
+    <div class="feedback" id="fb8"></div>
+
+    <!-- VRAAG 9 -->
+    <h2>1p 9 &nbsp;Was sagt Muriel im 2. Absatz aus?</h2>
+    <ul class="options" id="q9-options">
+      <li><button class="option-btn" data-q="9" data-opt="A">A&nbsp; dass Ballettunterricht für Slopestyle-Fahrer Pflicht ist</button></li>
+      <li><button class="option-btn" data-q="9" data-opt="B">B&nbsp; dass bei ihrem Sport eine gute Konzentration wichtig ist</button></li>
+      <li><button class="option-btn" data-q="9" data-opt="C">C&nbsp; dass die Sprünge im Wettbewerb vorgegeben sind</button></li>
+      <li><button class="option-btn" data-q="9" data-opt="D">D&nbsp; dass sie früher mit dem Skateboard im Skatepark geübt hat</button></li>
+    </ul>
+    <div class="feedback" id="fb9"></div>
+
+    <!-- VRAAG 10 -->
+    <h2>1p 10 &nbsp;Wieso kann Muriel nicht an allen Weltcups teilnehmen? (3. Absatz)</h2>
+    <ul class="options" id="q10-options">
+      <li><button class="option-btn" data-q="10" data-opt="A">A&nbsp; weil das Niveau von manchen Weltcups noch zu hoch für sie ist</button></li>
+      <li><button class="option-btn" data-q="10" data-opt="B">B&nbsp; weil die Reisen zu teuer sind</button></li>
+      <li><button class="option-btn" data-q="10" data-opt="C">C&nbsp; weil manche Weltcups ein Mindestalter vorschreiben</button></li>
+      <li><button class="option-btn" data-q="10" data-opt="D">D&nbsp; weil sie den Unterricht nicht immer verpassen kann</button></li>
+    </ul>
+    <div class="feedback" id="fb10"></div>
+
+    <!-- VRAAG 11 (open, met tekstvak) -->
+    <h2>1p 11 &nbsp;Muriel is erg blij met haar schooldirecteur. Welke reden geeft zij daarvoor in alinea 3? Beantwoord in het Nederlands.</h2>
+    <div class="open-area">
+      <textarea id="input11" placeholder="Typ hier je antwoord in het Nederlands…"></textarea>
+      <button class="open-btn" id="open11" onclick="checkOpen('11')">Controleer</button>
+    </div>
+    <div class="feedback" id="fb11"></div>
+
+    <!-- VRAAG 12 (open, met tekstvak) -->
+    <h2>1p 12 &nbsp;Muriel geeft in alinea 4 aan dat zij iets jammer vindt. Wat precies vindt ze jammer? Beantwoord in het Nederlands.</h2>
+    <div class="open-area">
+      <textarea id="input12" placeholder="Typ hier je antwoord in het Nederlands…"></textarea>
+      <button class="open-btn" id="open12" onclick="checkOpen('12')">Controleer</button>
+    </div>
+    <div class="feedback" id="fb12"></div>
+
+    <!-- VRAAG 13 -->
+    <h2>1p 13 &nbsp;Wann wird das Freestyle-Skifahren in Deutschland an Popularität gewinnen laut Muriel? (5. Absatz)</h2>
+    <ul class="options" id="q13-options">
+      <li><button class="option-btn" data-q="13" data-opt="A">A&nbsp; wenn Deutschland mehr Teilnehmer zu wichtigen Sportevents schickt</button></li>
+      <li><button class="option-btn" data-q="13" data-opt="B">B&nbsp; wenn in den Medien mehr Werbung für den Sport zu sehen oder zu hören ist</button></li>
+      <li><button class="option-btn" data-q="13" data-opt="C">C&nbsp; wenn jüngere Freestyle-Skifahrer bessere Unterstützung bekommen</button></li>
+      <li><button class="option-btn" data-q="13" data-opt="D">D&nbsp; wenn sie oder ein Freestyle-Kollege bei einem Wettbewerb besonders gut leistet</button></li>
+    </ul>
+    <div class="feedback" id="fb13"></div>
+
+  </div>
+</div>
+
+<button class="reset" onclick="resetAll()">Alles opnieuw proberen</button>
+
+<script>
+const answers = {
+  "8": {
+    correct: "D",
+    uitleg:
+      "Juist is D. In alinea 1 vertelt Muriel chronologisch hoe ze met skiën begon: eerst op haar tweeënhalf/derde, daarna met haar vader naast de piste, en uiteindelijk het kamp op haar negende. Dat is precies het verhaal van <em>het begin</em>. " +
+      "A (groot talent) wordt niet genoemd, B (ouders als voorbeeld) slechts zijdelings, C (elk jaar op wintersport) staat er niet.",
+    vertaling:
+      "<strong>Zum ersten Mal stand ich mit zwei oder drei Jahren auf Skiern.</strong> = <em>Voor het eerst stond ik op mijn twee of drie jaar op ski's.</em> " +
+      "<strong>Erst als ich etwas älter war, bin ich mit meinem Vater immer mal wieder neben der Piste gefahren …</strong> = <em>Pas toen ik wat ouder was, ben ik met mijn vader af en toe naast de piste gaan skiën …</em> " +
+      "„zum ersten Mal“ = voor het eerst; „erst als“ = pas toen; „neben der Piste“ = naast de piste. De alinea beschrijft dus het ontstaan/begin van haar sportcarrière → D.",
+    markIds: []
+  },
+  "9": {
+    correct: "B",
+    uitleg:
+      "Juist is B. De directe zin is: <em>„Während eines Wettkampfs muss ich lange aufmerksam bleiben, damit jeder Sprung und jeder Trick sitzt.“</em> Ze moet dus lang geconcentreerd blijven → concentratie is belangrijk. " +
+      "A is onjuist: ballet is haar eigen ervaring, geen verplichting. C is onjuist: ze bedenken juist zélf tricks (<em>„Wir denken uns Tricks und Kombinationen aus“</em>). D staat er niet.",
+    vertaling:
+      "<strong>Während eines Wettkampfs muss ich lange aufmerksam bleiben, damit jeder Sprung und jeder Trick sitzt.</strong> = <em>Tijdens een wedstrijd moet ik lang aandachtig blijven, zodat elke sprong en elke truc lukt.</em> " +
+      "„aufmerksam bleiben“ = aandachtig/concentratie vasthouden; „damit … sitzt“ = zodat … lukt. Dit wijst op het belang van concentratie (B).",
+    markIds: ["m9-konzentration"]
+  },
+  "10": {
+    correct: "D",
+    uitleg:
+      "Juist is D. De directe zinnen zijn: <em>„An allen Weltcups kann ich leider nicht teilnehmen. Ich gehe nämlich in die zwölfte Klasse, im Mai mache ich das Abitur.“</em> Ze zit dus nog op school (examenjaar) en kan niet altijd weg. " +
+      "A (niveau te hoog), B (reizen te duur) en C (minimumleeftijd) worden niet genoemd.",
+    vertaling:
+      "<strong>An allen Weltcups kann ich leider nicht teilnehmen. Ich gehe nämlich in die zwölfte Klasse, im Mai mache ich das Abitur.</strong> = <em>Ik kan helaas niet aan alle wereldbekers meedoen. Ik zit namelijk in de twaalfde klas, in mei doe ik eindexamen.</em> " +
+      "„nämlich“ = namelijk; „das Abitur machen“ = eindexamen doen. De reden is dus haar school/het onderwijs → D.",
+    markIds: ["m10-schule"]
+  },
+  "13": {
+    correct: "D",
+    uitleg:
+      "Juist is D. De directe zin is: <em>„Das ändert sich, wenn mal eine oder einer von uns einen großen Erfolg feiert.“</em> De populariteit zal dus toenemen als zij of een collega een groot succes behaalt. " +
+      "A, B en C worden niet in alinea 5 genoemd.",
+    vertaling:
+      "<strong>Ich bin mir sicher: Das ändert sich, wenn mal eine oder einer von uns einen großen Erfolg feiert.</strong> = <em>Ik weet zeker: dat verandert als eens een van ons (een jongen of meisje) een groot succes viert.</em> " +
+      "„sich ändern“ = veranderen; „einen Erfolg feiern“ = een succes vieren/behalen. Dat komt overeen met optie D.",
+    markIds: ["m13-erfolg"]
+  }
+};
+
+const openAnswers = {
+  "11": {
+    kernwoorden: ["vakantie", "vrij", "verlof", "goedkeur", "toestemming", "steun", "ondersteun", "urlaub", "unterstütz"],
+    uitleg:
+      "Modelantwoord: Muriel noemt twee redenen. Ten eerste krijgt ze van hem regelmatig een vakantieaanvraag goedgekeurd (<em>„Ich bekomme regelmäßig einen Urlaubsantrag genehmigt“</em>). Ten tweede wordt ze altijd door hem gesteund (<em>„und werde jederzeit unterstützt“</em>). Ze noemt hem zelfs <em>„den besten Direktor, den es gibt“</em>.",
+    vertaling:
+      "<strong>Zum Glück habe ich den besten Direktor, den es gibt:</strong> = <em>Gelukkig heb ik de beste directeur die er bestaat:</em> " +
+      "<strong>Ich bekomme regelmäßig einen Urlaubsantrag genehmigt und werde jederzeit unterstützt.</strong> = <em>Ik krijg regelmatig een vakantieaanvraag goedgekeurd en word altijd gesteund.</em> " +
+      "„genehmigt bekommen“ = goedgekeurd krijgen; „jederzeit unterstützt werden“ = altijd gesteund worden.",
+    markIds: ["m11-direktor"]
+  },
+  "12": {
+    kernwoorden: ["weinig", "meisjes", "vrouwen", "meiden", "mädchen", "frauen"],
+    uitleg:
+      "Modelantwoord: Ze vindt het jammer dat er maar weinig meisjes en vrouwen haar sport doen (<em>„leider machen nur wenige Mädchen und Frauen unseren Sport“</em>). Vroeger wenste ze daarom dat er meer meiden bij waren.",
+    vertaling:
+      "<strong>leider machen nur wenige Mädchen und Frauen unseren Sport.</strong> = <em>helaas doen maar weinig meisjes en vrouwen onze sport.</em> " +
+      "„leider“ = helaas; „nur wenige“ = maar weinig. Dat is precies wat ze jammer vindt.",
+    markIds: ["m12-maedchen"]
+  }
+};
+
+function showFeedback(q, isCorrect) {
+  const data = answers[q];
+  const fb = document.getElementById("fb" + q);
+  fb.className = "feedback show " + (isCorrect ? "ok" : "nok");
+  fb.innerHTML =
+    (isCorrect ? "✅ <strong>Juist!</strong> " : "❌ <strong>Onjuist.</strong> Het juiste antwoord is <strong>" + data.correct + "</strong>. ") +
+    '<div class="uitleg">' + data.uitleg + "</div>" +
+    '<div class="vertaling"><strong>Uitleg van de Duitse zin(nen):</strong><br>' + data.vertaling + "</div>";
+  data.markIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add("active");
+  });
+}
+
+function handleClick(e) {
+  const btn = e.target.closest(".option-btn");
+  if (!btn || btn.disabled) return;
+
+  const q = btn.dataset.q;
+  const opt = btn.dataset.opt;
+  const data = answers[q];
+  const isCorrect = opt === data.correct;
+
+  const buttons = document.querySelectorAll('#q' + q + '-options .option-btn');
+  buttons.forEach(b => {
+    b.disabled = true;
+    if (b.dataset.opt === opt) {
+      b.classList.add(isCorrect ? "correct" : "wrong");
+    }
+    if (!isCorrect && b.dataset.opt === data.correct) {
+      b.classList.add("correct");
+    }
+  });
+
+  showFeedback(q, isCorrect);
+}
+
+/* Open vraag: controleer het getypte antwoord en toon modelantwoord */
+function checkOpen(q) {
+  const data = openAnswers[q];
+  const input = document.getElementById("input" + q);
+  const fb = document.getElementById("fb" + q);
+  const btn = document.getElementById("open" + q);
+  const tekst = input.value.trim();
+
+  let beoordeling;
+  if (tekst === "") {
+    beoordeling = "⚠️ Je hebt nog niets ingevuld. Vergelijk je antwoord hieronder met het modelantwoord.";
+  } else {
+    const lower = tekst.toLowerCase();
+    const raak = data.kernwoorden.some(k => lower.includes(k));
+    beoordeling = raak
+      ? "👍 Je antwoord bevat de juiste kern (<em>raak!</em>). Vergelijk het hieronder met het volledige modelantwoord."
+      : "🤔 Je antwoord lijkt niet direct de juiste kern te bevatten. Vergelijk het hieronder met het modelantwoord.";
+  }
+
+  fb.className = "feedback show info";
+  fb.innerHTML =
+    '<div class="uitleg">' + beoordeling + "</div>" +
+    '<div class="uitleg"><strong>Modelantwoord:</strong> ' + data.uitleg + "</div>" +
+    '<div class="vertaling"><strong>Uitleg van de Duitse zin(nen):</strong><br>' + data.vertaling + "</div>";
+
+  input.disabled = true;
+  btn.disabled = true;
+  data.markIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add("active");
+  });
+}
+
+document.querySelectorAll(".option-btn").forEach(btn => {
+  btn.addEventListener("click", handleClick);
+});
+
+function resetAll() {
+  document.querySelectorAll(".option-btn").forEach(b => {
+    b.disabled = false;
+    b.classList.remove("correct", "wrong");
+  });
+  document.querySelectorAll(".feedback").forEach(f => {
+    f.className = "feedback";
+    f.innerHTML = "";
+  });
+  document.querySelectorAll(".open-btn").forEach(b => { b.disabled = false; });
+  document.querySelectorAll(".open-area textarea").forEach(t => {
+    t.value = "";
+    t.disabled = false;
+  });
+  document.querySelectorAll("mark").forEach(m => m.classList.remove("active"));
+}
+</script>
+
+</body>
+</html>

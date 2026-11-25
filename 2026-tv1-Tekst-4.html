@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lauter bunte Bändchen – oefening</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    max-width: 1280px;
+    margin: 30px auto;
+    padding: 0 16px;
+    line-height: 1.6;
+    color: #222;
+    background: #fafafa;
+  }
+  h1 { font-size: 1.4em; border-bottom: 2px solid #333; padding-bottom: 6px; }
+  h2 { font-size: 1.05em; margin-top: 1.6em; }
+  .examen-header {
+    font-size: 1.05em;
+    font-weight: bold;
+    color: #444;
+    letter-spacing: .3px;
+  }
+  .layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    align-items: start;
+    margin-top: 24px;
+  }
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+  }
+  .article {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px 20px;
+    position: sticky;
+    top: 16px;
+    max-height: calc(100vh - 32px);
+    overflow-y: auto;
+  }
+  @media (max-width: 900px) {
+    .article { position: static; max-height: none; overflow-y: visible; }
+  }
+  .article h3 { margin-top: 0; }
+  .source { font-size: .85em; color: #666; margin-top: 12px; }
+  .vragen { min-width: 0; }
+
+  .options { list-style: none; padding-left: 0; }
+  .options li { margin: 6px 0; }
+  .option-btn {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 9px 12px;
+    font-size: .97em;
+    font-family: inherit;
+    border: 1.5px solid #999;
+    border-radius: 6px;
+    background: #fff;
+    cursor: pointer;
+    transition: background .15s, border-color .15s;
+  }
+  .option-btn:hover:not(:disabled) { background: #eef4fb; border-color: #4a7fb5; }
+  .option-btn:disabled { cursor: default; opacity: .95; }
+  .option-btn.correct { background: #d8f5d8; border-color: #2e8b2e; font-weight: bold; }
+  .option-btn.wrong { background: #fbdcdc; border-color: #c0392b; }
+
+  .feedback {
+    margin-top: 10px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    display: none;
+    font-size: .95em;
+  }
+  .feedback.show { display: block; }
+  .feedback.ok { background: #e3f6e3; border-left: 5px solid #2e8b2e; }
+  .feedback.nok { background: #fdeaea; border-left: 5px solid #c0392b; }
+  .feedback.info { background: #eaf2fb; border-left: 5px solid #4a7fb5; }
+  .feedback .uitleg { margin-top: 6px; }
+  .feedback .vertaling {
+    margin-top: 8px;
+    padding: 8px 10px;
+    background: rgba(255,255,255,.65);
+    border-left: 3px solid #888;
+    border-radius: 4px;
+    font-size: .93em;
+  }
+  .feedback .vertaling em { color: #333; }
+
+  mark {
+    background: transparent;
+    color: inherit;
+    padding: 0;
+    border-radius: 3px;
+    transition: background .3s;
+  }
+  mark.active {
+    background: #ffe680;
+    padding: 0 2px;
+    outline: 2px solid #ffb347;
+  }
+
+  .open-area { margin-top: 8px; }
+  .open-area textarea {
+    width: 100%;
+    min-height: 80px;
+    padding: 9px 11px;
+    font-family: inherit;
+    font-size: .97em;
+    line-height: 1.5;
+    border: 1.5px solid #999;
+    border-radius: 6px;
+    resize: vertical;
+    background: #fff;
+  }
+  .open-area textarea:focus {
+    outline: none;
+    border-color: #4a7fb5;
+    box-shadow: 0 0 0 2px rgba(74,127,181,.2);
+  }
+  .open-area textarea:disabled { background: #f4f4f4; }
+  .open-btn {
+    margin-top: 6px;
+    padding: 7px 14px;
+    font-family: inherit;
+    font-size: .95em;
+    border: 1.5px solid #4a7fb5;
+    background: #eef4fb;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .open-btn:hover:not(:disabled) { background: #dce8f7; }
+  .open-btn:disabled { cursor: default; opacity: .8; }
+
+  .reset {
+    margin-top: 24px;
+    padding: 8px 16px;
+    font-family: inherit;
+    font-size: .95em;
+    border: 1.5px solid #555;
+    background: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .reset:hover { background: #eee; }
+</style>
+</head>
+<body>
+
+<p class="examen-header">Examen vmbo gl/tl 2026 Tijdvak 1</p>
+<h1>Tekst 4 – Lauter bunte Bändchen</h1>
+
+<div class="layout">
+
+  <!-- ================= TEKST (links) ================= -->
+  <div class="article">
+    <h3>Lauter bunte Bändchen</h3>
+    <p><em>Freundschaftsarmbänder liegen durch die US-amerikanische
+    Sängerin Taylor Swift wieder im Trend. Viele Fans basteln und
+    tauschen mit – für Schmuckhersteller und Perlenläden ein gutes Geschäft.</em></p>
+
+    <p><strong>(1)</strong> Tiana ist Profi. Sie braucht nur
+    zehn Minuten, um Wörter in
+    Schmuck zu verwandeln. Ein
+    Buchstabe, eine Schnur – und
+    schon wird aus einem Songtitel
+    ein Armband. Hunderte solcher
+    Armbänder hat Tiana in den
+    vergangenen Monaten gebastelt.
+    Und das, obwohl sie Basteln
+    eigentlich gar nicht so mag:
+    <mark id="m14-motiviert">„Dass
+    ich jetzt so motiviert bin, hat eher
+    mit Taylor Swift zu tun“, sagt sie.</mark></p>
+
+    <p><strong>(2)</strong> Die 14-Jährige ist „Swiftie“, so nennen sich die Taylor Swift-Fans.
+    „Swifties“ gelten als besonders treue Fangruppe – und sie haben so etwas
+    wie ein Erkennungszeichen: Freundschaftsarmbänder aus Perlen, die sie
+    vor den Konzerten der Sängerin basteln und mit anderen Fans tauschen.
+    Seinen Ursprung hat der Trend in dem Lied „You’re on Your Own, Kid“.
+    <mark id="m15-bastelt">Taylor Swift singt darin: „So make the friendship bracelets“, was so viel
+    bedeutet wie: „Also bastelt die Freundschaftsarmbänder“.</mark></p>
+
+    <p><strong>(3)</strong> <mark id="m16-aufforderung">Viele Fans auf der ganzen Welt haben diese Zeile seitdem als
+    Aufforderung verstanden und sich mit Bastelsets und Perlenschmuck
+    eingedeckt – so viel, dass die <strong>16</strong> auch in Deutschland stark
+    angestiegen sind, wie etwa Daten aus dem Online-Handel aus dem Jahr
+    2023 zeigen.</mark> In Deutschland war die Sängerin mit ihrer „Eras“-Tour zu
+    diesem Zeitpunkt noch gar nicht zu Gast. <mark id="m17-vorher">Die Konzerte in Gelsenkirchen,
+    Hamburg und München fanden erst 2024 statt.</mark> Im Kino konnte man
+    allerdings schon vorher eine Konzertaufnahme und auf TikTok zahlreiche
+    Videos von Fans aus anderen Ländern sehen.</p>
+
+    <p><strong>(4)</strong> Auch Tiana hat diese Videos gesehen und daraufhin angefangen,
+    Bändchen zu basteln. Nicht nur zwei oder drei, sondern gleich 250 Stück.
+    Auch ihre Mutter und ihre 13-jährige Schwester Elina machten mit.
+    <mark id="m18-geschaeft">Zusammen eröffneten sie ein paar Monate später einen Online-Shop für
+    besondere Exemplare. Vor allem vor den Konzerten in Deutschland lief
+    das Geschäft gut, an manchen Tagen gab es gleich fünf Bestellungen auf
+    einmal, nach einem halben Jahr waren es rund 500 insgesamt.</mark></p>
+
+    <p><strong>(5)</strong> Auch Perlengeschäfte profitieren von dem Trend. Yvonne Demirdögen
+    besitzt ein Perlengeschäft in Hamburg, wo die Sängerin im Juli an zwei
+    Abenden aufgetreten ist. „Dass Taylor Swift in der Stadt war, haben wir
+    deutlich gemerkt“, sagt sie.
+    <mark id="m19-ausnahme">„An den Tagen vor den Konzerten standen die
+    Fans von früh bis spät bei uns an, wir haben so viele Buchstabenperlen
+    verkauft wie sonst in drei Monaten. Das war für uns schon ein Ausnahme-
+    zustand.“</mark></p>
+
+    <p><strong>(6)</strong> Tiana ist für eines der Konzerte extra nach Hamburg gefahren. Den
+    Auftritt von Taylor Swift konnte sie zwar nicht sehen, die Musik jedoch
+    immerhin mit ihrer Familie vor dem Stadion hören.
+    <mark id="m20-besser">„So war es vielleicht
+    noch besser, weil ich zeitgleich alle meine Bändchen tauschen konnte“,
+    sagt Tiana.</mark> 250 Armbänder hatte sie zum Tauschen dabei. Die gehören
+    nun anderen Fans und auch Tiana ist mit 250 neuen Bändchen nach
+    Hause gefahren.</p>
+
+    <p class="source">Dein Spiegel, 2.2025</p>
+  </div>
+
+  <!-- ================= VRAGEN (rechts) ================= -->
+  <div class="vragen">
+
+    <h2>1p 14 &nbsp;Was ist dem 1. Absatz nach besonders an Tiana?</h2>
+    <ul class="options" id="q14-options">
+      <li><button class="option-btn" data-q="14" data-opt="A">A&nbsp; dass sie mit ihrem Geschäft in kurzer Zeit schon viel Geld verdient hat</button></li>
+      <li><button class="option-btn" data-q="14" data-opt="B">B&nbsp; dass sie sich fast nur noch mit der Produktion von Schmuckwaren beschäftigt</button></li>
+      <li><button class="option-btn" data-q="14" data-opt="C">C&nbsp; dass sie superschnell erlernt hat, wie man Freundschaftsarmbänder macht</button></li>
+      <li><button class="option-btn" data-q="14" data-opt="D">D&nbsp; dass sie von einem Star dazu angeregt wurde, etwas zu tun, was sie sonst nicht so schnell tun würde</button></li>
+    </ul>
+    <div class="feedback" id="fb14"></div>
+
+    <h2>1p 15 &nbsp;Was sagt der 2. Absatz über Taylor Swift aus?</h2>
+    <ul class="options" id="q15-options">
+      <li><button class="option-btn" data-q="15" data-opt="A">A&nbsp; Sie hat einen sehr engen Kontakt zu ihren Fans.</button></li>
+      <li><button class="option-btn" data-q="15" data-opt="B">B&nbsp; Sie hat ihre Fans zu Kreativität angeregt.</button></li>
+      <li><button class="option-btn" data-q="15" data-opt="C">C&nbsp; Sie möchte mit ihren Liedern die Welt verbessern.</button></li>
+    </ul>
+    <div class="feedback" id="fb15"></div>
+
+    <h2>1p 16 &nbsp;Welches Wort passt im Sinne des Textes in die Lücke im 3. Absatz?</h2>
+    <ul class="options" id="q16-options">
+      <li><button class="option-btn" data-q="16" data-opt="A">A&nbsp; Besucherzahlen</button></li>
+      <li><button class="option-btn" data-q="16" data-opt="B">B&nbsp; Ticketpreise</button></li>
+      <li><button class="option-btn" data-q="16" data-opt="C">C&nbsp; Verkaufszahlen</button></li>
+    </ul>
+    <div class="feedback" id="fb16"></div>
+
+    <h2>1p 17 &nbsp;Was kann man aus dem 3. Absatz schließen?</h2>
+    <ul class="options" id="q17-options">
+      <li><button class="option-btn" data-q="17" data-opt="A">A&nbsp; Die Materialien für die Produktion von Armbändern sind nur online erhältlich.</button></li>
+      <li><button class="option-btn" data-q="17" data-opt="B">B&nbsp; Schon vor dem ersten Auftritt von Taylor Swift in Deutschland waren die Swift-Armbänder dort beliebt.</button></li>
+      <li><button class="option-btn" data-q="17" data-opt="C">C&nbsp; Taylor Swift hat auch eine große Karriere als Filmschauspielerin gemacht.</button></li>
+      <li><button class="option-btn" data-q="17" data-opt="D">D&nbsp; Vor dem Jahr 2024 hatte Taylor Swift noch kaum Fans in Deutschland.</button></li>
+    </ul>
+    <div class="feedback" id="fb17"></div>
+
+    <h2>1p 18 &nbsp;Welcher Titel passt zum 4. Absatz?</h2>
+    <ul class="options" id="q18-options">
+      <li><button class="option-btn" data-q="18" data-opt="A">A&nbsp; Anzahl der Konzerte erweitert</button></li>
+      <li><button class="option-btn" data-q="18" data-opt="B">B&nbsp; Nachfrage kaum noch zu erfüllen</button></li>
+      <li><button class="option-btn" data-q="18" data-opt="C">C&nbsp; Professionell angepackt</button></li>
+      <li><button class="option-btn" data-q="18" data-opt="D">D&nbsp; Zukunftsträume</button></li>
+    </ul>
+    <div class="feedback" id="fb18"></div>
+
+    <h2>1p 19 &nbsp;Was sagt Yvonne Demirdögen aus? (5. Absatz)</h2>
+    <ul class="options" id="q19-options">
+      <li><button class="option-btn" data-q="19" data-opt="A">A&nbsp; Sie hat gut an den Taylor Swift-Fans verdient.</button></li>
+      <li><button class="option-btn" data-q="19" data-opt="B">B&nbsp; Sie hat sich an den Konzerten von Taylor Swift in ihrer Stadt gestört.</button></li>
+      <li><button class="option-btn" data-q="19" data-opt="C">C&nbsp; Sie war nicht auf die große Kundenzahl vorbereitet.</button></li>
+      <li><button class="option-btn" data-q="19" data-opt="D">D&nbsp; Sie war über die Medienaufmerksamkeit für ihr Perlengeschäft erfreut.</button></li>
+    </ul>
+    <div class="feedback" id="fb19"></div>
+
+    <h2>1p 20 &nbsp;Tiana kon het optreden van Taylor Swift in Hamburg niet zien, alleen horen vanaf een plek buiten het stadion. (alinea 6) Waarom was ze hier tevredener mee dan met een plek in het stadion? Beantwoord in het Nederlands.</h2>
+    <div class="open-area">
+      <textarea id="input20" placeholder="Typ hier je antwoord in het Nederlands…"></textarea>
+      <button class="open-btn" id="open20" onclick="checkOpen('20')">Controleer</button>
+    </div>
+    <div class="feedback" id="fb20"></div>
+
+  </div>
+</div>
+
+<button class="reset" onclick="resetAll()">Alles opnieuw proberen</button>
+
+<script>
+const answers = {
+  "14": {
+    correct: "D",
+    uitleg:
+      "Juist is D. Tiana is juist bijzonder gemotiveerd om te knutselen, terwijl ze dat eigenlijk niet zo leuk vindt. Dat komt door Taylor Swift: <em>„Dass ich jetzt so motiviert bin, hat eher mit Taylor Swift zu tun“</em>. Een ster heeft haar dus aangezet tot iets wat ze normaal niet snel zou doen. " +
+      "A (veel geld verdiend) staat niet in alinea 1, B (bijna alleen nog maar sieraden maken) wordt niet gezegd, C (supersnel geleerd) gaat over de tien minuten, niet over het leren.",
+    vertaling:
+      "<strong>Und das, obwohl sie Basteln eigentlich gar nicht so mag:</strong> = <em>En dat terwijl ze knutselen eigenlijk helemaal niet zo leuk vindt:</em> " +
+      "<strong>„Dass ich jetzt so motiviert bin, hat eher mit Taylor Swift zu tun“, sagt sie.</strong> = <em>„Dat ik nu zo gemotiveerd ben, heeft eerder met Taylor Swift te maken“, zegt ze.</em> " +
+      "„obwohl“ = hoewel; „eigentlich“ = eigenlijk; „eher“ = eerder. Ze doet dus iets wat ze normaal niet snel zou doen, dankzij een ster → D.",
+    markIds: ["m14-motiviert"]
+  },
+  "15": {
+    correct: "B",
+    uitleg:
+      "Juist is B. In alinea 2 staat dat het liedje <em>„So make the friendship bracelets“</em> als aansporing is opgevat: fans zijn daardoor zelf armbandjes gaan maken. Taylor Swift heeft haar fans dus tot creativiteit aangezet. " +
+      "A (nauw contact met fans) wordt niet gezegd; C (de wereld verbeteren) staat er niet.",
+    vertaling:
+      "<strong>Taylor Swift singt darin: „So make the friendship bracelets“, was so viel bedeutet wie: „Also bastelt die Freundschaftsarmbänder“.</strong> = <em>Taylor Swift zingt daarin: „So make the friendship bracelets“, wat zoveel betekent als: „Dus knutsel de vriendschapsarmbandjes“.</em> " +
+      "„bedeuten“ = betekenen; „basteln“ = knutselen. De fans hebben dit als aansporing opgevat en zijn zelf gaan knutselen → B.",
+    markIds: ["m15-bastelt"]
+  },
+  "16": {
+    correct: "C",
+    uitleg:
+      "Juist is C. Het gaat om de cijfers uit de onlinehandel: <em>„Daten aus dem Online-Handel“</em>. Wat daar sterk steeg, zijn de <em>Verkaufszahlen</em> (verkoopcijfers) van knutselsets en parelsieraden. " +
+      "A (bezoekersaantallen) en B (ticketprijzen) passen niet bij „Daten aus dem Online-Handel“.",
+    vertaling:
+      "<strong>… so viel, dass die <strong>Verkaufszahlen</strong> auch in Deutschland stark angestiegen sind, wie etwa Daten aus dem Online-Handel aus dem Jahr 2023 zeigen.</strong> = <em>… zoveel, dat de verkoopcijfers ook in Duitsland sterk zijn gestegen, zoals bijvoorbeeld gegevens uit de onlinehandel uit 2023 laten zien.</em> " +
+      "„die Verkaufszahlen“ = de verkoopcijfers; „ansteigen“ = stijgen; „Daten aus dem Online-Handel“ = gegevens uit de onlinehandel. Daarom past C.",
+    markIds: ["m16-aufforderung"]
+  },
+  "17": {
+    correct: "B",
+    uitleg:
+      "Juist is B. Uit alinea 3 blijkt dat de verkoopcijfers in Duitsland in 2023 al sterk stegen, terwijl de concerten pas in 2024 plaatsvonden. De armbandjes waren dus al vóór het eerste optreden in Duitsland populair. " +
+      "A (materialen alleen online) wordt niet gezegd; C (filmcarrière) niet; D (nauwelijks fans vóór 2024) is onjuist, want er waren juist veel fans.",
+    vertaling:
+      "<strong>In Deutschland war die Sängerin mit ihrer „Eras“-Tour zu diesem Zeitpunkt noch gar nicht zu Gast. Die Konzerte in Gelsenkirchen, Hamburg und München fanden erst 2024 statt.</strong> = <em>In Duitsland was de zangeres met haar „Eras“-tour op dat moment nog helemaal niet te gast. De concerten in Gelsenkirchen, Hamburg en München vonden pas in 2024 plaats.</em> " +
+      "„zu Gast sein“ = te gast zijn; „erst 2024“ = pas in 2024. De stijging was dus al vóór de concerten → B.",
+    markIds: ["m17-vorher"]
+  },
+  "18": {
+    correct: "C",
+    uitleg:
+      "Juist is C. In alinea 4 lees je dat Tiana, haar moeder en zus samen een onlinewinkel openden en dat het bedrijf goed liep, met soms vijf bestellingen per dag en in een half jaar zo'n 500 bestellingen. Ze hebben het dus <em>professioneel aangepakt</em>. " +
+      "A (meer concerten) gaat over Taylor Swift, niet over Tiana; B (vraag nauwelijks te vervullen) wordt niet gezegd; D (toekomstdromen) staat er niet.",
+    vertaling:
+      "<strong>Zusammen eröffneten sie ein paar Monate später einen Online-Shop für besondere Exemplare. Vor allem vor den Konzerten in Deutschland lief das Geschäft gut …</strong> = <em>Samen openden ze een paar maanden later een onlinewinkel voor bijzondere exemplaren. Vooral vóór de concerten in Duitsland liep de zaak goed …</em> " +
+      "„eröffnen“ = openen; „das Geschäft lief gut“ = de zaak liep goed. Ze hebben het dus professioneel aangepakt → C.",
+    markIds: ["m18-geschaeft"]
+  },
+  "19": {
+    correct: "A",
+    uitleg:
+      "Juist is A. Yvonne zegt: <em>„wir haben so viele Buchstabenperlen verkauft wie sonst in drei Monaten“</em> — ze verkocht dus in een paar dagen evenveel als normaal in drie maanden. Ze heeft dus goed verdiend aan de Swift-fans. " +
+      "B (stoorde zich aan de concerten) is onjuist; C (niet voorbereid op de klantenaantallen) zegt ze niet; D (blij met media-aandacht) staat er niet.",
+    vertaling:
+      "<strong>„An den Tagen vor den Konzerten standen die Fans von früh bis spät bei uns an, wir haben so viele Buchstabenperlen verkauft wie sonst in drei Monaten.“</strong> = <em>„Op de dagen voor de concerten stonden de fans van vroeg tot laat bij ons in de rij, we hebben zoveel letterparels verkocht als anders in drie maanden.“</em> " +
+      "„anstehen“ = in de rij staan; „sonst“ = anders/normaal. Ze verdiende dus goed aan de fans → A.",
+    markIds: ["m19-ausnahme"]
+  }
+};
+
+const openAnswers = {
+  "20": {
+    kernwoorden: ["tauschen", "ruilen", "armband", "bändchen", "alle", "tegelijk", "zeitgleich"],
+    uitleg:
+      "Modelantwoord: Buiten het stadion kon ze op hetzelfde moment al haar armbandjes ruilen met andere fans. Dat maakte het voor haar juist bijzonder: <em>„So war es vielleicht noch besser, weil ich zeitgleich alle meine Bändchen tauschen konnte.“</em>",
+    vertaling:
+      "<strong>„So war es vielleicht noch besser, weil ich zeitgleich alle meine Bändchen tauschen konnte“, sagt Tiana.</strong> = <em>„Zo was het misschien nog wel beter, omdat ik tegelijk al mijn bandjes kon ruilen“, zegt Tiana.</em> " +
+      "„zeitgleich“ = tegelijkertijd; „tauschen“ = ruilen. Ze vond het dus juist fijner dat ze tegelijk al haar bandjes kon ruilen → dat is het voordeel ten opzichte van een plek in het stadion.",
+    markIds: ["m20-besser"]
+  }
+};
+
+function showFeedback(q, isCorrect) {
+  const data = answers[q];
+  const fb = document.getElementById("fb" + q);
+  fb.className = "feedback show " + (isCorrect ? "ok" : "nok");
+  fb.innerHTML =
+    (isCorrect ? "✅ <strong>Juist!</strong> " : "❌ <strong>Onjuist.</strong> Het juiste antwoord is <strong>" + data.correct + "</strong>. ") +
+    '<div class="uitleg">' + data.uitleg + "</div>" +
+    '<div class="vertaling"><strong>Uitleg van de Duitse zin(nen):</strong><br>' + data.vertaling + "</div>";
+  data.markIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add("active");
+  });
+}
+
+function handleClick(e) {
+  const btn = e.target.closest(".option-btn");
+  if (!btn || btn.disabled) return;
+
+  const q = btn.dataset.q;
+  const opt = btn.dataset.opt;
+  const data = answers[q];
+  const isCorrect = opt === data.correct;
+
+  const buttons = document.querySelectorAll('#q' + q + '-options .option-btn');
+  buttons.forEach(b => {
+    b.disabled = true;
+    if (b.dataset.opt === opt) {
+      b.classList.add(isCorrect ? "correct" : "wrong");
+    }
+    if (!isCorrect && b.dataset.opt === data.correct) {
+      b.classList.add("correct");
+    }
+  });
+
+  showFeedback(q, isCorrect);
+}
+
+function checkOpen(q) {
+  const data = openAnswers[q];
+  const input = document.getElementById("input" + q);
+  const fb = document.getElementById("fb" + q);
+  const btn = document.getElementById("open" + q);
+  const tekst = input.value.trim();
+
+  let beoordeling;
+  if (tekst === "") {
+    beoordeling = "⚠️ Je hebt nog niets ingevuld. Vergelijk je antwoord hieronder met het modelantwoord.";
+  } else {
+    const lower = tekst.toLowerCase();
+    const raak = data.kernwoorden.some(k => lower.includes(k));
+    beoordeling = raak
+      ? "👍 Je antwoord bevat de juiste kern (<em>raak!</em>). Vergelijk het hieronder met het volledige modelantwoord."
+      : "🤔 Je antwoord lijkt niet direct de juiste kern te bevatten. Vergelijk het hieronder met het modelantwoord.";
+  }
+
+  fb.className = "feedback show info";
+  fb.innerHTML =
+    '<div class="uitleg">' + beoordeling + "</div>" +
+    '<div class="uitleg"><strong>Modelantwoord:</strong> ' + data.uitleg + "</div>" +
+    '<div class="vertaling"><strong>Uitleg van de Duitse zin(nen):</strong><br>' + data.vertaling + "</div>";
+
+  input.disabled = true;
+  btn.disabled = true;
+  data.markIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add("active");
+  });
+}
+
+document.querySelectorAll(".option-btn").forEach(btn => {
+  btn.addEventListener("click", handleClick);
+});
+
+function resetAll() {
+  document.querySelectorAll(".option-btn").forEach(b => {
+    b.disabled = false;
+    b.classList.remove("correct", "wrong");
+  });
+  document.querySelectorAll(".feedback").forEach(f => {
+    f.className = "feedback";
+    f.innerHTML = "";
+  });
+  document.querySelectorAll(".open-btn").forEach(b => { b.disabled = false; });
+  document.querySelectorAll(".open-area textarea").forEach(t => {
+    t.value = "";
+    t.disabled = false;
+  });
+  document.querySelectorAll("mark").forEach(m => m.classList.remove("active"));
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jule, Nele und das Buchprojekt – oefening</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    max-width: 1280px;
+    margin: 30px auto;
+    padding: 0 16px;
+    line-height: 1.6;
+    color: #222;
+    background: #fafafa;
+  }
+  h1 { font-size: 1.4em; border-bottom: 2px solid #333; padding-bottom: 6px; }
+  h2 { font-size: 1.05em; margin-top: 1.6em; }
+  .examen-header {
+    font-size: 1.05em;
+    font-weight: bold;
+    color: #444;
+    letter-spacing: .3px;
+  }
+  .layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    align-items: start;
+    margin-top: 24px;
+  }
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+  }
+  .article {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px 20px;
+    position: sticky;
+    top: 16px;
+    max-height: calc(100vh - 32px);
+    overflow-y: auto;
+  }
+  @media (max-width: 900px) {
+    .article { position: static; max-height: none; overflow-y: visible; }
+  }
+  .article h3 { margin-top: 0; }
+  .source { font-size: .85em; color: #666; margin-top: 12px; }
+  .vragen { min-width: 0; }
+
+  .options { list-style: none; padding-left: 0; }
+  .options li { margin: 6px 0; }
+  .option-btn {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 9px 12px;
+    font-size: .97em;
+    font-family: inherit;
+    border: 1.5px solid #999;
+    border-radius: 6px;
+    background: #fff;
+    cursor: pointer;
+    transition: background .15s, border-color .15s;
+  }
+  .option-btn:hover:not(:disabled) { background: #eef4fb; border-color: #4a7fb5; }
+  .option-btn:disabled { cursor: default; opacity: .95; }
+  .option-btn.correct { background: #d8f5d8; border-color: #2e8b2e; font-weight: bold; }
+  .option-btn.wrong { background: #fbdcdc; border-color: #c0392b; }
+
+  .feedback {
+    margin-top: 10px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    display: none;
+    font-size: .95em;
+  }
+  .feedback.show { display: block; }
+  .feedback.ok { background: #e3f6e3; border-left: 5px solid #2e8b2e; }
+  .feedback.nok { background: #fdeaea; border-left: 5px solid #c0392b; }
+  .feedback.info { background: #eaf2fb; border-left: 5px solid #4a7fb5; }
+  .feedback .uitleg { margin-top: 6px; }
+  .feedback .vertaling {
+    margin-top: 8px;
+    padding: 8px 10px;
+    background: rgba(255,255,255,.65);
+    border-left: 3px solid #888;
+    border-radius: 4px;
+    font-size: .93em;
+  }
+  .feedback .vertaling em { color: #333; }
+
+  mark {
+    background: transparent;
+    color: inherit;
+    padding: 0;
+    border-radius: 3px;
+    transition: background .3s;
+  }
+  mark.active {
+    background: #ffe680;
+    padding: 0 2px;
+    outline: 2px solid #ffb347;
+  }
+
+  .open-area { margin-top: 8px; }
+  .open-area input[type="text"] {
+    width: 100%;
+    padding: 9px 11px;
+    font-family: inherit;
+    font-size: .97em;
+    line-height: 1.5;
+    border: 1.5px solid #999;
+    border-radius: 6px;
+    background: #fff;
+  }
+  .open-area input[type="text"]:focus {
+    outline: none;
+    border-color: #4a7fb5;
+    box-shadow: 0 0 0 2px rgba(74,127,181,.2);
+  }
+  .open-area input[type="text"]:disabled { background: #f4f4f4; }
+  .open-btn {
+    margin-top: 6px;
+    padding: 7px 14px;
+    font-family: inherit;
+    font-size: .95em;
+    border: 1.5px solid #4a7fb5;
+    background: #eef4fb;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .open-btn:hover:not(:disabled) { background: #dce8f7; }
+  .open-btn:disabled { cursor: default; opacity: .8; }
+
+  .reset {
+    margin-top: 24px;
+    padding: 8px 16px;
+    font-family: inherit;
+    font-size: .95em;
+    border: 1.5px solid #555;
+    background: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .reset:hover { background: #eee; }
+</style>
+</head>
+<body>
+
+<p class="examen-header">Examen vmbo gl/tl 2026 Tijdvak 1</p>
+<h1>Tekst 8 – Jule, Nele und das Buchprojekt</h1>
+
+<div class="layout">
+
+  <!-- ================= TEKST (links) ================= -->
+  <div class="article">
+    <h3>Jule, Nele und das Buchprojekt</h3>
+    <p><em>Jule und Nele aus Weikersheim haben ein Buch geschrieben,
+    gezeichnet und verkauft.</em></p>
+
+    <p><strong>(1)</strong> Manchmal genügt der Blick aus dem Fenster, und die Ideen sprudeln.
+    <mark id="m31-regenbogen">„Ehrlich gesagt hatten wir am Anfang keine Ahnung, was wir schreiben
+    sollen. Aber dann haben wir rausgeguckt und einen Regenbogen
+    entdeckt“, erzählt Jule.</mark> Ein magischer Moment! Nele nickt: „Wir haben uns
+    zusammen an den Schreibtisch gesetzt und gedacht: Jetzt haben wir
+    so einen schönen Regenbogen gesehen – wie machen wir weiter?“
+    <mark id="m31-plan">Schließlich hatten die beiden Freundinnen einen Plan gefasst: Sie wollten
+    eine Geschichte schreiben, ein richtiges Buch. Und nun war klar, wovon
+    die Geschichte handeln sollte. Von einem Regenbogen – einem
+    magischen Regenbogen!</mark></p>
+
+    <p><strong>(2)</strong> Beide kennen sich schon seit dem Kindergarten. Sie treffen sich oft,
+    zum Basteln, Quatschen, Schwimmen und Shoppen.
+    <mark id="m32-buch">Und als Nele vor
+    einigen Jahren schon mal eine Geschichte geschrieben hatte, diese
+    drucken und binden ließ, half Jule ihr, das Buch zu verkaufen.</mark>
+    <mark id="m32-spende">Die
+    Einnahmen – rund 2.500 Euro – spendete Nele damals für Kinder in Not.
+    Und auch diesmal war schnell klar: „Wir wollten das Buch schreiben, weil
+    wir anderen Kindern damit helfen wollen“, sagt Nele.</mark></p>
+
+    <p><strong>(3)</strong> Also haben sie losgelegt.
+    <mark id="m33-zusammen">Zusammen gegrübelt und „immer wieder
+    besprochen, was wir als Nächstes schreiben und wer im Buch was als
+    Nächstes sagt“, erklärt Nele.</mark> So haben die beiden Autorinnen Feen und
+    Trolle zum Leben erweckt und natürlich den magischen Regenbogen, der
+    die Feenkinder rettet.
+    <mark id="m33-kein-streit">„Manchmal haben unsere Ideen nicht zusammen-
+    gepasst. Dann haben wir sie uns gegenseitig erklärt und mal die eine, mal
+    die andere Idee ausgewählt“, sagt Nele. „Gestritten haben wir uns nie“,
+    ergänzt Jule.</mark></p>
+
+    <p><strong>(4)</strong> Nach rund drei Wochen war das Buch fertig, inklusive aller Bilder.
+    „Manche hat Nele allein gezeichnet, manche habe ich allein gezeichnet,
+    aber die meisten haben wir zusammen gemacht“, erzählt Jule.
+    <mark id="m34-mutter">Neles
+    Mutter half schließlich beim Abtippen und Einscannen der Zeichnungen.
+    Ihr Vater verwandelte die Vorlage in seiner Online-Druckerei in ein Buch,
+    auf dessen Cover, na klar, ein Regenbogen zu sehen ist.</mark>
+    <mark id="m34-verkaeuft">500 Exemplare
+    stapelten sich nun in Pappkartons. Und, wie erhofft: Die meisten davon
+    sind mittlerweile verkauft.</mark></p>
+
+    <p><strong>(5)</strong> Denn Nele und Jule haben sie an einem Stand im örtlichen Bioladen
+    angeboten oder auch bei einer Lesung in der Stadtbücherei. Vor allem
+    aber konnten Interessierte die Bücher online bestellen, über die Webseite
+    des Vereins „Herzenssache“.
+    <mark id="m35-plekken">Denn Nele und Jule haben sie an einem Stand im örtlichen Bioladen
+    angeboten oder auch bei einer Lesung in der Stadtbücherei. Vor allem
+    aber konnten Interessierte die Bücher online bestellen, über die Webseite
+    des Vereins „Herzenssache“.</mark>
+    Diesem Verein nämlich, der Projekte für
+    bedürftige Kinder unterstützt, spenden Jule und Nele ihre Einnahmen.
+    5,99 Euro kostet ein Exemplar; viele Menschen haben sogar ein bisschen
+    mehr überwiesen. So sind alles in allem knapp 4.000 Euro zusammen-
+    gekommen!</p>
+
+    <p class="source">GEOlino, 5.2024</p>
+  </div>
+
+  <!-- ================= VRAGEN (rechts) ================= -->
+  <div class="vragen">
+
+    <h2>1p 31 &nbsp;Was wird im 1. Absatz beschrieben?</h2>
+    <ul class="options" id="q31-options">
+      <li><button class="option-btn" data-q="31" data-opt="A">A&nbsp; wie das Thema für Jule und Neles Buch entstanden ist</button></li>
+      <li><button class="option-btn" data-q="31" data-opt="B">B&nbsp; wie Jule und Nele auf die Idee kamen zusammenzuarbeiten</button></li>
+      <li><button class="option-btn" data-q="31" data-opt="C">C&nbsp; wie Jule und Nele ihre Zusammenarbeit erlebt haben</button></li>
+      <li><button class="option-btn" data-q="31" data-opt="D">D&nbsp; wie sehr Jule und Nele geheimnisvolle Sachen lieben</button></li>
+    </ul>
+    <div class="feedback" id="fb31"></div>
+
+    <h2>1p 32 &nbsp;Welche Aussage ist richtig? (2. Absatz)</h2>
+    <ul class="options" id="q32-options">
+      <li><button class="option-btn" data-q="32" data-opt="A">A&nbsp; Es ist teuer, ein Buch drucken und binden zu lassen.</button></li>
+      <li><button class="option-btn" data-q="32" data-opt="B">B&nbsp; Jule und Nele haben schon einmal ein Buch geschrieben.</button></li>
+      <li><button class="option-btn" data-q="32" data-opt="C">C&nbsp; Jule und Nele wollen mit ihrem Buch Gutes tun.</button></li>
+      <li><button class="option-btn" data-q="32" data-opt="D">D&nbsp; Viele Leute helfen Jule und Nele mit dem Schreiben ihres Buches.</button></li>
+    </ul>
+    <div class="feedback" id="fb32"></div>
+
+    <h2>1p 33 &nbsp;Welcher Titel passt zum 3. Absatz?</h2>
+    <ul class="options" id="q33-options">
+      <li><button class="option-btn" data-q="33" data-opt="A">A&nbsp; Harmonische Zusammenarbeit</button></li>
+      <li><button class="option-btn" data-q="33" data-opt="B">B&nbsp; Lange Vorbereitung</button></li>
+      <li><button class="option-btn" data-q="33" data-opt="C">C&nbsp; Spontane Eingebung</button></li>
+      <li><button class="option-btn" data-q="33" data-opt="D">D&nbsp; Witzige Geschichte</button></li>
+    </ul>
+    <div class="feedback" id="fb33"></div>
+
+    <h2>1p 34 &nbsp;Was zeigt der 4. Absatz?</h2>
+    <ul class="options" id="q34-options">
+      <li><button class="option-btn" data-q="34" data-opt="A">A&nbsp; Die Zeichnungen in Jule und Neles Buch haben die meiste Zeit gekostet.</button></li>
+      <li><button class="option-btn" data-q="34" data-opt="B">B&nbsp; Es gibt mehr interessierte Käufer als Bücher vorhanden sind.</button></li>
+      <li><button class="option-btn" data-q="34" data-opt="C">C&nbsp; Jule und Nele fanden es toll, mit technischen Hilfsmitteln ihr Buch zu perfektionieren.</button></li>
+      <li><button class="option-btn" data-q="34" data-opt="D">D&nbsp; Jule und Nele haben elterliche Hilfe bekommen.</button></li>
+    </ul>
+    <div class="feedback" id="fb34"></div>
+
+    <h2>1p 35 &nbsp;Op hoeveel verschillende plekken hebben Jule en Nele hun boek verkocht? (alinea 5) Schrijf het juiste aantal in het vak.</h2>
+    <div class="open-area">
+      <input type="text" id="input35" placeholder="Typ hier het aantal…" inputmode="numeric">
+      <button class="open-btn" id="open35" onclick="checkOpen('35')">Controleer</button>
+    </div>
+    <div class="feedback" id="fb35"></div>
+
+  </div>
+</div>
+
+<button class="reset" onclick="resetAll()">Alles opnieuw proberen</button>
+
+<script>
+const answers = {
+  "31": {
+    correct: "A",
+    uitleg:
+      "Juist is A. Alinea 1 beschrijft hoe het onderwerp van het boek ontstond: de meisjes keken uit het raam, zagen een regenboog en besloten daar een verhaal over te schrijven. <em>„Und nun war klar, wovon die Geschichte handeln sollte. Von einem Regenbogen – einem magischen Regenbogen!“</em> " +
+      "B (hoe ze op het idee van samenwerken kwamen) staat er niet; C (hoe ze de samenwerking ervoeren) komt pas in alinea 3; D (hoeveel ze van mysterieuze dingen houden) wordt niet gezegd.",
+    vertaling:
+      "<strong>„Ehrlich gesagt hatten wir am Anfang keine Ahnung, was wir schreiben sollen. Aber dann haben wir rausgeguckt und einen Regenbogen entdeckt“</strong> = <em>„Eerlijk gezegd hadden we in het begin geen idee wat we moesten schrijven. Maar toen hebben we naar buiten gekeken en een regenboog ontdekt“</em> " +
+      "<strong>Und nun war klar, wovon die Geschichte handeln sollte. Von einem Regenbogen – einem magischen Regenbogen!</strong> = <em>En nu was duidelijk waarover het verhaal moest gaan. Over een regenboog – een magische regenboog!</em> " +
+      "„worüber … handeln“ = ergens over gaan; „rausgucken“ = naar buiten kijken. Het gaat dus om het ontstaan van het thema → A.",
+    markIds: ["m31-regenbogen", "m31-plan"]
+  },
+  "32": {
+    correct: "C",
+    uitleg:
+      "Juist is C. In alinea 2 staat: <em>„Wir wollten das Buch schreiben, weil wir anderen Kindern damit helfen wollen“</em> — ze willen met hun boek andere kinderen helpen, dus iets goeds doen. " +
+      "A (boeken drukken is duur) wordt niet gezegd; B is onjuist: alleen Nele had eerder een verhaal geschreven, niet samen met Jule; D (veel mensen helpen met schrijven) klopt niet — alleen haar ouders helpen bij het uittypen/scannen en drukken.",
+    vertaling:
+      "<strong>„Wir wollten das Buch schreiben, weil wir anderen Kindern damit helfen wollen“, sagt Nele.</strong> = <em>„We wilden het boek schrijven omdat we andere kinderen daarmee willen helpen“, zegt Nele.</em> " +
+      "„anderen Kindern helfen“ = andere kinderen helpen. Ze willen dus iets goeds doen met hun boek → C.",
+    markIds: ["m32-spende"]
+  },
+  "33": {
+    correct: "A",
+    uitleg:
+      "Juist is A. Alinea 3 laat zien hoe goed Jule en Nele samenwerkten: ze overlegden steeds, pasten ideeën op elkaar aan en <em>„Gestritten haben wir uns nie“</em> (we hebben nooit ruzie gehad). Dat past bij een harmonieuze samenwerking. " +
+      "B (lange voorbereiding) klopt niet (het boek was in drie weken klaar); C (spontane ingeving) past meer bij alinea 1; D (grappig verhaal) wordt niet gezegd.",
+    vertaling:
+      "<strong>„Gestritten haben wir uns nie“, ergänzt Jule.</strong> = <em>„We hebben nooit ruzie gehad“, vult Jule aan.</em> " +
+      "<strong>Zusammen gegrübelt und „immer wieder besprochen, was wir als Nächstes schreiben …“</strong> = <em>Samen gepiekerd en „steeds weer besproken wat we als volgende zouden schrijven …“</em> " +
+      "„sich streiten“ = ruzie maken; „zusammen“ = samen. Ze werkten dus harmonieus samen → A.",
+    markIds: ["m33-zusammen", "m33-kein-streit"]
+  },
+  "34": {
+    correct: "D",
+    uitleg:
+      "Juist is D. In alinea 4 staat dat Neles moeder hielp met het overtypen en inscannen van de tekeningen, en dat haar vader de voorlage in zijn online-drukkerij tot een boek maakte. Jule en Nele kregen dus hulp van hun ouders. " +
+      "A (tekeningen kostten de meeste tijd) wordt niet gezegd; B (meer kopers dan boeken) is onjuist: de meeste van de 500 exemplaren zijn verkocht, niet alle; C (technische hulpmiddelen om te perfectioneren) wordt niet genoemd.",
+    vertaling:
+      "<strong>Neles Mutter half schließlich beim Abtippen und Einscannen der Zeichnungen. Ihr Vater verwandelte die Vorlage in seiner Online-Druckerei in ein Buch …</strong> = <em>Neles moeder hielp uiteindelijk met het overtypen en inscannen van de tekeningen. Haar vader maakte van de voorlage in zijn online-drukkerij een boek …</em> " +
+      "„abtippen“ = overtypen; „einscannen“ = inscannen; „die Vorlage“ = de voorlage. Jule en Nele kregen dus ouderlijke hulp → D.",
+    markIds: ["m34-mutter"]
+  }
+};
+
+const openAnswers = {
+  "35": {
+    juist: ["3", "drie"],
+    uitleg:
+      "Modelantwoord: <strong>3</strong> plekken. In alinea 5 worden drie verkoopplekken genoemd: (1) een stand in de plaatselijke biowinkel, (2) een lezing in de stadsbibliotheek en (3) online via de website van de vereniging „Herzenssache“.",
+    vertaling:
+      "<strong>Denn Nele und Jule haben sie an einem Stand im örtlichen Bioladen angeboten oder auch bei einer Lesung in der Stadtbücherei. Vor allem aber konnten Interessierte die Bücher online bestellen, über die Webseite des Vereins „Herzenssache“.</strong> = <em>Want Nele en Jule hebben ze aangeboden aan een kraam in de plaatselijke biowinkel of ook bij een lezing in de stadsbibliotheek. Vooral maar konden geïnteresseerden de boeken online bestellen, via de website van de vereniging „Herzenssache“.</em> " +
+      "„der Stand“ = de kraam; „die Lesung“ = de lezing; „online bestellen“ = online bestellen. Dat zijn drie verkoopplekken.",
+    markIds: ["m35-plekken"]
+  }
+};
+
+function showFeedback(q, isCorrect) {
+  const data = answers[q];
+  const fb = document.getElementById("fb" + q);
+  fb.className = "feedback show " + (isCorrect ? "ok" : "nok");
+  fb.innerHTML =
+    (isCorrect ? "✅ <strong>Juist!</strong> " : "❌ <strong>Onjuist.</strong> Het juiste antwoord is <strong>" + data.correct + "</strong>. ") +
+    '<div class="uitleg">' + data.uitleg + "</div>" +
+    '<div class="vertaling"><strong>Uitleg van de Duitse zin(nen):</strong><br>' + data.vertaling + "</div>";
+  data.markIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add("active");
+  });
+}
+
+function handleClick(e) {
+  const btn = e.target.closest(".option-btn");
+  if (!btn || btn.disabled) return;
+
+  const q = btn.dataset.q;
+  const opt = btn.dataset.opt;
+  const data = answers[q];
+  const isCorrect = opt === data.correct;
+
+  const buttons = document.querySelectorAll('#q' + q + '-options .option-btn');
+  buttons.forEach(b => {
+    b.disabled = true;
+    if (b.dataset.opt === opt) {
+      b.classList.add(isCorrect ? "correct" : "wrong");
+    }
+    if (!isCorrect && b.dataset.opt === data.correct) {
+      b.classList.add("correct");
+    }
+  });
+
+  showFeedback(q, isCorrect);
+}
+
+function checkOpen(q) {
+  const data = openAnswers[q];
+  const input = document.getElementById("input" + q);
+  const fb = document.getElementById("fb" + q);
+  const btn = document.getElementById("open" + q);
+  const tekst = input.value.trim().toLowerCase();
+
+  let beoordeling;
+  if (tekst === "") {
+    beoordeling = "⚠️ Je hebt nog niets ingevuld. Vergelijk je antwoord hieronder met het modelantwoord.";
+  } else {
+    const raak = data.juist.some(j => tekst === j || tekst.includes(j));
+    beoordeling = raak
+      ? "👍 <strong>Juist!</strong> Het juiste aantal is 3. Vergelijk je antwoord hieronder met het modelantwoord."
+      : "🤔 <strong>Niet juist.</strong> Het juiste aantal is <strong>3</strong>. Vergelijk hieronder met het modelantwoord.";
+    fb.className = "feedback show " + (raak ? "ok" : "nok");
+  }
+  if (tekst === "") fb.className = "feedback show info";
+
+  fb.innerHTML =
+    '<div class="uitleg">' + beoordeling + "</div>" +
+    '<div class="uitleg"><strong>Modelantwoord:</strong> ' + data.uitleg + "</div>" +
+    '<div class="vertaling"><strong>Uitleg van de Duitse zin(nen):</strong><br>' + data.vertaling + "</div>";
+
+  input.disabled = true;
+  btn.disabled = true;
+  data.markIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add("active");
+  });
+}
+
+document.querySelectorAll(".option-btn").forEach(btn => {
+  btn.addEventListener("click", handleClick);
+});
+
+function resetAll() {
+  document.querySelectorAll(".option-btn").forEach(b => {
+    b.disabled = false;
+    b.classList.remove("correct", "wrong");
+  });
+  document.querySelectorAll(".feedback").forEach(f => {
+    f.className = "feedback";
+    f.innerHTML = "";
+  });
+  document.querySelectorAll(".open-btn").forEach(b => { b.disabled = false; });
+  document.querySelectorAll(".open-area input").forEach(t => {
+    t.value = "";
+    t.disabled = false;
+  });
+  document.querySelectorAll("mark").forEach(m => m.classList.remove("active"));
+}
+</script>
+
+</body>
+</html>

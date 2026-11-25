@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Warum meiden wir blaues Essen? – oefening</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    max-width: 1280px;
+    margin: 30px auto;
+    padding: 0 16px;
+    line-height: 1.6;
+    color: #222;
+    background: #fafafa;
+  }
+  h1 { font-size: 1.4em; border-bottom: 2px solid #333; padding-bottom: 6px; }
+  h2 { font-size: 1.05em; margin-top: 1.6em; }
+  .examen-header {
+    font-size: 1.05em;
+    font-weight: bold;
+    color: #444;
+    letter-spacing: .3px;
+  }
+  .layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    align-items: start;
+    margin-top: 24px;
+  }
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+  }
+  .article {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px 20px;
+    position: sticky;
+    top: 16px;
+    max-height: calc(100vh - 32px);
+    overflow-y: auto;
+  }
+  @media (max-width: 900px) {
+    .article { position: static; max-height: none; overflow-y: visible; }
+  }
+  .article h3 { margin-top: 0; }
+  .source { font-size: .85em; color: #666; margin-top: 12px; }
+  .vragen { min-width: 0; }
+
+  .options { list-style: none; padding-left: 0; }
+  .options li { margin: 6px 0; }
+  .option-btn {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 9px 12px;
+    font-size: .97em;
+    font-family: inherit;
+    border: 1.5px solid #999;
+    border-radius: 6px;
+    background: #fff;
+    cursor: pointer;
+    transition: background .15s, border-color .15s;
+  }
+  .option-btn:hover:not(:disabled) { background: #eef4fb; border-color: #4a7fb5; }
+  .option-btn:disabled { cursor: default; opacity: .95; }
+  .option-btn.correct { background: #d8f5d8; border-color: #2e8b2e; font-weight: bold; }
+  .option-btn.wrong { background: #fbdcdc; border-color: #c0392b; }
+
+  .feedback {
+    margin-top: 10px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    display: none;
+    font-size: .95em;
+  }
+  .feedback.show { display: block; }
+  .feedback.ok { background: #e3f6e3; border-left: 5px solid #2e8b2e; }
+  .feedback.nok { background: #fdeaea; border-left: 5px solid #c0392b; }
+  .feedback.info { background: #eaf2fb; border-left: 5px solid #4a7fb5; }
+  .feedback .uitleg { margin-top: 6px; }
+  .feedback .vertaling {
+    margin-top: 8px;
+    padding: 8px 10px;
+    background: rgba(255,255,255,.65);
+    border-left: 3px solid #888;
+    border-radius: 4px;
+    font-size: .93em;
+  }
+  .feedback .vertaling em { color: #333; }
+
+  mark {
+    background: transparent;
+    color: inherit;
+    padding: 0;
+    border-radius: 3px;
+    transition: background .3s;
+  }
+  mark.active {
+    background: #ffe680;
+    padding: 0 2px;
+    outline: 2px solid #ffb347;
+  }
+
+  .open-area { margin-top: 8px; }
+  .open-area textarea {
+    width: 100%;
+    min-height: 80px;
+    padding: 9px 11px;
+    font-family: inherit;
+    font-size: .97em;
+    line-height: 1.5;
+    border: 1.5px solid #999;
+    border-radius: 6px;
+    resize: vertical;
+    background: #fff;
+  }
+  .open-area textarea:focus {
+    outline: none;
+    border-color: #4a7fb5;
+    box-shadow: 0 0 0 2px rgba(74,127,181,.2);
+  }
+  .open-area textarea:disabled { background: #f4f4f4; }
+  .open-btn {
+    margin-top: 6px;
+    padding: 7px 14px;
+    font-family: inherit;
+    font-size: .95em;
+    border: 1.5px solid #4a7fb5;
+    background: #eef4fb;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .open-btn:hover:not(:disabled) { background: #dce8f7; }
+  .open-btn:disabled { cursor: default; opacity: .8; }
+
+  .reset {
+    margin-top: 24px;
+    padding: 8px 16px;
+    font-family: inherit;
+    font-size: .95em;
+    border: 1.5px solid #555;
+    background: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .reset:hover { background: #eee; }
+</style>
+</head>
+<body>
+
+<p class="examen-header">Examen vmbo gl/tl 2026 Tijdvak 1</p>
+<h1>Tekst 9 – Warum meiden wir blaues Essen?</h1>
+
+<div class="layout">
+
+  <!-- ================= TEKST (links) ================= -->
+  <div class="article">
+    <h3>Warum meiden wir blaues Essen?</h3>
+    <p><em>Es gibt orangene Möhren, gelbe Bananen, grünen Salat und rote
+    Tomaten. Aber blaue Lebensmittel? Die gibt es nicht so häufig – und
+    oft sind diese sogar chemisch hergestellt, zum Beispiel blaues Eis
+    oder Gummischlümpfe. Warum meiden wir blaues Essen?</em></p>
+
+    <p><strong>(1)</strong> Blau ist die Lieblingsfarbe vieler Menschen. Manche verbinden mit der
+    Farbe Entspannung, Frieden und Ruhe.
+    <mark id="m36-erwachsene">Doch trotzdem wenden sich die
+    meisten Erwachsenen schüttelnd ab, wenn sie blaues Eis in der Theke
+    liegen sehen, Kinder hingegen essen es begeistert.</mark> Grund genug, sich die
+    Frage zu stellen: Warum gibt es so wenig blaue Speisen und wieso
+    meiden sie so viele Erwachsene?</p>
+
+    <p><strong>(2)</strong> Blau gefärbte Nahrungsmittel kommen in der Natur fast gar nicht vor.
+    Es gibt zwar einige Obst- und Gemüsesorten, die das Wort „Blau“ im
+    Namen tragen (Blaubeeren, Blaukraut...) –
+    <mark id="m37-nicht-blau">doch betrachtet man diese
+    genauer, stellt man fest, dass die Sorten eher dunkelrot bis violett gefärbt
+    sind.</mark> Zudem sind intensiv blau gefärbte Pflanzen in der Natur häufig
+    gesundheitsschädlich.
+    <mark id="m38-pilze">Gefährliche Pilze besitzen zum Beispiel nicht
+    selten eine blaue oder blauschwarze Färbung und auch bei Schimmel
+    sind blau oder grün Signalfarben.</mark>
+    <mark id="m38-warnsignal">Die Evolution hat uns Menschen also
+    gelehrt, die Farbe Blau als Warnsignal zu betrachten.</mark></p>
+
+    <p><strong>(3)</strong> Wissenschaftlerinnen und Wissenschaftler haben herausgefunden,
+    dass man durch die blaue Farbe den Appetit verlieren kann.
+    <mark id="m39-abnehmen">Daher raten
+    Ernährungsberater auch manchen Menschen, die abnehmen möchten, in
+    einer blauen Umgebung zu essen oder blaues Geschirr zu benutzen.</mark></p>
+
+    <p><strong>(4)</strong> Kinder hingegen scheinen keine solch großen Vorbehalte gegen
+    blaues Essen zu haben. Das blaue „Kaugummi-Eis“ oder bunte Lollis,
+    welche die Zunge blau färben, sind bei Kindern absolute Renner.
+    <mark id="m40-essgewohnheiten">Forschende vermuten, dass bei Kindern die <strong>40</strong> noch nicht so
+    festliegen wie bei Erwachsenen.</mark> Daher sind Kinder ungewöhnlichen, auch
+    blauen, Speisen gegenüber generell aufgeschlossener als Erwachsene.</p>
+
+    <p class="source">www.geo.de, 25.9.2024</p>
+  </div>
+
+  <!-- ================= VRAGEN (rechts) ================= -->
+  <div class="vragen">
+
+    <h2>1p 36 &nbsp;Was ist dem 1. Absatz nach bemerkenswert?</h2>
+    <ul class="options" id="q36-options">
+      <li><button class="option-btn" data-q="36" data-opt="A">A&nbsp; Blau kann bei einem Menschen sowohl positive als auch negative Gefühle hervorrufen.</button></li>
+      <li><button class="option-btn" data-q="36" data-opt="B">B&nbsp; Blaues Eis wird zwar produziert, aber kaum konsumiert.</button></li>
+      <li><button class="option-btn" data-q="36" data-opt="C">C&nbsp; Kinder haben oft wenig Esslust, aber mit blau gefärbten Nahrungsmitteln haben sie kein Problem.</button></li>
+      <li><button class="option-btn" data-q="36" data-opt="D">D&nbsp; Obwohl beliebt, gibt es immer weniger blau gefärbte Nahrungsmittel.</button></li>
+    </ul>
+    <div class="feedback" id="fb36"></div>
+
+    <h2>1p 37 &nbsp;Was wird im 2. Absatz über Blaubeeren und Blaukraut ausgesagt?</h2>
+    <ul class="options" id="q37-options">
+      <li><button class="option-btn" data-q="37" data-opt="A">A&nbsp; Sie kommen in der Natur kaum noch vor.</button></li>
+      <li><button class="option-btn" data-q="37" data-opt="B">B&nbsp; Sie sind gar nicht blau.</button></li>
+      <li><button class="option-btn" data-q="37" data-opt="C">C&nbsp; Sie sind leicht giftig.</button></li>
+      <li><button class="option-btn" data-q="37" data-opt="D">D&nbsp; Sie werden oft künstlich blau gefärbt.</button></li>
+    </ul>
+    <div class="feedback" id="fb37"></div>
+
+    <h2>1p 38 &nbsp;“die Farbe Blau als Warnsignal zu betrachten” (alinea 2, laatste zin). Voor welk gevaar waarschuwt de natuur met de kleur blauw? Beantwoord in het Nederlands.</h2>
+    <div class="open-area">
+      <textarea id="input38" placeholder="Typ hier je antwoord in het Nederlands…"></textarea>
+      <button class="open-btn" id="open38" onclick="checkOpen('38')">Controleer</button>
+    </div>
+    <div class="feedback" id="fb38"></div>
+
+    <h2>1p 39 &nbsp;Wobei kann die Benutzung von blauem Geschirr helfen? (3. Absatz)</h2>
+    <ul class="options" id="q39-options">
+      <li><button class="option-btn" data-q="39" data-opt="A">A&nbsp; eine gesündere Essenswahl zu treffen</button></li>
+      <li><button class="option-btn" data-q="39" data-opt="B">B&nbsp; Gewicht zu verlieren</button></li>
+      <li><button class="option-btn" data-q="39" data-opt="C">C&nbsp; mehr Entspannung beim Essen</button></li>
+      <li><button class="option-btn" data-q="39" data-opt="D">D&nbsp; mehr Esslust zu bekommen</button></li>
+    </ul>
+    <div class="feedback" id="fb39"></div>
+
+    <h2>1p 40 &nbsp;Welches Wort passt im Sinne des Textes in die Lücke im 4. Absatz?</h2>
+    <ul class="options" id="q40-options">
+      <li><button class="option-btn" data-q="40" data-opt="A">A&nbsp; Essgewohnheiten</button></li>
+      <li><button class="option-btn" data-q="40" data-opt="B">B&nbsp; Fähigkeiten</button></li>
+      <li><button class="option-btn" data-q="40" data-opt="C">C&nbsp; Krankheitssymptome</button></li>
+    </ul>
+    <div class="feedback" id="fb40"></div>
+
+  </div>
+</div>
+
+<button class="reset" onclick="resetAll()">Alles opnieuw proberen</button>
+
+<script>
+const answers = {
+  "36": {
+    correct: "A",
+    uitleg:
+      "Juist is A. Alinea 1 zegt dat blauw de lievelingskleur van veel mensen is en dat sommigen er ontspanning, vrede en rust mee verbinden — dus positieve gevoelens. Maar tegelijk wenden de meeste volwassenen zich <em>schüttelnd</em> (afkeurend) af van blauw ijs. Blauw roept dus zowel positieve als negatieve reacties op. " +
+      "B is onjuist: kinderen eten het juist enthousiast; C (kinderen hebben weinig eetlust) staat er niet; D (steeds minder blauw voedsel) wordt niet gezegd.",
+    vertaling:
+      "<strong>Blau ist die Lieblingsfarbe vieler Menschen. Manche verbinden mit der Farbe Entspannung, Frieden und Ruhe.</strong> = <em>Blauw is de lievelingskleur van veel mensen. Sommigen verbinden met de kleur ontspanning, vrede en rust.</em> " +
+      "<strong>Doch trotzdem wenden sich die meisten Erwachsenen schüttelnd ab, wenn sie blaues Eis in der Theke liegen sehen, Kinder hingegen essen es begeistert.</strong> = <em>Maar toch wenden de meeste volwassenen zich afkeurend af wanneer ze blauw ijs in de vitrine zien liggen, kinderen daarentegen eten het enthousiast.</em> " +
+      "„sich abwenden“ = zich afwenden; „schüttelnd“ = hoofdschuddend/afkeurend; „begeistert“ = enthousiast. Positief én negatief dus → A.",
+    markIds: ["m36-erwachsene"]
+  },
+  "37": {
+    correct: "B",
+    uitleg:
+      "Juist is B. In alinea 2 staat: <em>„… doch betrachtet man diese genauer, stellt man fest, dass die Sorten eher dunkelrot bis violett gefärbt sind.“</em> Bosbessen en roodkool heten wel „blau“, maar zijn in werkelijkheid donkerrood tot violet — dus niet echt blauw. " +
+      "A (komen bijna niet meer voor in de natuur) gaat over blauw gekleurde voedingsmiddelen in het algemeen, niet over deze soorten; C (licht giftig) wordt niet van deze soorten gezegd; D (kunstmatig blauw geverfd) staat er niet.",
+    vertaling:
+      "<strong>… doch betrachtet man diese genauer, stellt man fest, dass die Sorten eher dunkelrot bis violett gefärbt sind.</strong> = <em>… maar als je deze nauwkeuriger bekijkt, stel je vast dat de soorten eerder donkerrood tot violet gekleurd zijn.</em> " +
+      "„betrachten“ = bekijken; „eher“ = eerder; „gefärbt“ = gekleurd. Ze zijn dus niet echt blauw → B.",
+    markIds: ["m37-nicht-blau"]
+  },
+  "39": {
+    correct: "B",
+    uitleg:
+      "Juist is B. In alinea 3 staat: <em>„Daher raten Ernährungsberater auch manchen Menschen, die abnehmen möchten, in einer blauen Umgebung zu essen oder blaues Geschirr zu benutzen.“</em> Blau servies kan dus helpen bij het afvallen, omdat blauw de eetlust vermindert. " +
+      "A (gezondere voedselkeuze), C (meer ontspanning bij het eten) en D (meer eetlust) worden niet genoemd.",
+    vertaling:
+      "<strong>Daher raten Ernährungsberater auch manchen Menschen, die abnehmen möchten, in einer blauen Umgebung zu essen oder blaues Geschirr zu benutzen.</strong> = <em>Daarom raden voedingsdeskundigen ook sommige mensen die willen afvallen aan om in een blauwe omgeving te eten of blauw servies te gebruiken.</em> " +
+      "„abnehmen“ = afvallen; „das Geschirr“ = het servies; „die Umgebung“ = de omgeving. Blauw servies helpt dus bij gewichtsverlies → B.",
+    markIds: ["m39-abnehmen"]
+  },
+  "40": {
+    correct: "A",
+    uitleg:
+      "Juist is A. De zin luidt: <em>„Forschende vermuten, dass bei Kindern die Essgewohnheiten noch nicht so festliegen wie bei Erwachsenen.“</em> Kinder zijn dus nog niet zo vastgeroest in hun eetgewoonten, waardoor ze openstaan voor ongewone (blauwe) gerechten. " +
+      "B (vaardigheden) en C (ziektesymptomen) passen niet in de context.",
+    vertaling:
+      "<strong>Forschende vermuten, dass bei Kindern die <strong>Essgewohnheiten</strong> noch nicht so festliegen wie bei Erwachsenen.</strong> = <em>Onderzoekers vermoeden dat bij kinderen de eetgewoonten nog niet zo vastliggen als bij volwassenen.</em> " +
+      "„die Essgewohnheiten“ = de eetgewoonten; „festliegen“ = vastliggen. Daarom past A.",
+    markIds: ["m40-essgewohnheiten"]
+  }
+};
+
+const openAnswers = {
+  "38": {
+    kernwoorden: ["giftig", "gevaarlijk", "giftige", "schimmel", "pilz", "pilze", "paddenstoel", "zwam", "schadelijk"],
+    uitleg:
+      "Modelantwoord: De natuur waarschuwt met blauw voor <strong>gevaar/vergiftiging</strong>: gevaarlijke paddenstoelen hebben vaak een blauwe of blauwzwarte kleur, en ook bij schimmel zijn blauw of groen signaalkleuren. Kortom: blauw signaleert iets giftigs/gevaarlijks om niet te eten.",
+    vertaling:
+      "<strong>Gefährliche Pilze besitzen zum Beispiel nicht selten eine blaue oder blauschwarze Färbung und auch bei Schimmel sind blau oder grün Signalfarben.</strong> = <em>Gevaarlijke paddenstoelen hebben bijvoorbeeld niet zelden een blauwe of blauwzwarte kleur en ook bij schimmel zijn blauw of groen signaalkleuren.</em> " +
+      "<strong>Die Evolution hat uns Menschen also gelehrt, die Farbe Blau als Warnsignal zu betrachten.</strong> = <em>De evolutie heeft ons mensen dus geleerd de kleur blauw als waarschuwingssignaal te beschouwen.</em> " +
+      "„gefährlich“ = gevaarlijk; „der Schimmel“ = de schimmel; „das Warnsignal“ = het waarschuwingssignaal. Blauw waarschuwt dus voor giftig/gevaarlijk voedsel.",
+    markIds: ["m38-pilze", "m38-warnsignal"]
+  }
+};
+
+function showFeedback(q, isCorrect) {
+  const data = answers[q];
+  const fb = document.getElementById("fb" + q);
+  fb.className = "feedback show " + (isCorrect ? "ok" : "nok");
+  fb.innerHTML =
+    (isCorrect ? "✅ <strong>Juist!</strong> " : "❌ <strong>Onjuist.</strong> Het juiste antwoord is <strong>" + data.correct + "</strong>. ") +
+    '<div class="uitleg">' + data.uitleg + "</div>" +
+    '<div class="vertaling"><strong>Uitleg van de Duitse zin(nen):</strong><br>' + data.vertaling + "</div>";
+  data.markIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add("active");
+  });
+}
+
+function handleClick(e) {
+  const btn = e.target.closest(".option-btn");
+  if (!btn || btn.disabled) return;
+
+  const q = btn.dataset.q;
+  const opt = btn.dataset.opt;
+  const data = answers[q];
+  const isCorrect = opt === data.correct;
+
+  const buttons = document.querySelectorAll('#q' + q + '-options .option-btn');
+  buttons.forEach(b => {
+    b.disabled = true;
+    if (b.dataset.opt === opt) {
+      b.classList.add(isCorrect ? "correct" : "wrong");
+    }
+    if (!isCorrect && b.dataset.opt === data.correct) {
+      b.classList.add("correct");
+    }
+  });
+
+  showFeedback(q, isCorrect);
+}
+
+function checkOpen(q) {
+  const data = openAnswers[q];
+  const input = document.getElementById("input" + q);
+  const fb = document.getElementById("fb" + q);
+  const btn = document.getElementById("open" + q);
+  const tekst = input.value.trim();
+
+  let beoordeling;
+  if (tekst === "") {
+    beoordeling = "⚠️ Je hebt nog niets ingevuld. Vergelijk je antwoord hieronder met het modelantwoord.";
+    fb.className = "feedback show info";
+  } else {
+    const lower = tekst.toLowerCase();
+    const raak = data.kernwoorden.some(k => lower.includes(k));
+    beoordeling = raak
+      ? "👍 Je antwoord bevat de juiste kern (<em>raak!</em>). Vergelijk het hieronder met het volledige modelantwoord."
+      : "🤔 Je antwoord lijkt niet direct de juiste kern te bevatten. Vergelijk het hieronder met het modelantwoord.";
+    fb.className = "feedback show " + (raak ? "ok" : "nok");
+  }
+
+  fb.innerHTML =
+    '<div class="uitleg">' + beoordeling + "</div>" +
+    '<div class="uitleg"><strong>Modelantwoord:</strong> ' + data.uitleg + "</div>" +
+    '<div class="vertaling"><strong>Uitleg van de Duitse zin(nen):</strong><br>' + data.vertaling + "</div>";
+
+  input.disabled = true;
+  btn.disabled = true;
+  data.markIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add("active");
+  });
+}
+
+document.querySelectorAll(".option-btn").forEach(btn => {
+  btn.addEventListener("click", handleClick);
+});
+
+function resetAll() {
+  document.querySelectorAll(".option-btn").forEach(b => {
+    b.disabled = false;
+    b.classList.remove("correct", "wrong");
+  });
+  document.querySelectorAll(".feedback").forEach(f => {
+    f.className = "feedback";
+    f.innerHTML = "";
+  });
+  document.querySelectorAll(".open-btn").forEach(b => { b.disabled = false; });
+  document.querySelectorAll(".open-area textarea").forEach(t => {
+    t.value = "";
+    t.disabled = false;
+  });
+  document.querySelectorAll("mark").forEach(m => m.classList.remove("active"));
+}
+</script>
+
+</body>
+</html>
