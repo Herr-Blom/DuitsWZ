@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bunter Blick – oefening</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    max-width: 1280px;
+    margin: 30px auto;
+    padding: 0 16px;
+    line-height: 1.6;
+    color: #222;
+    background: #fafafa;
+  }
+  h1 { font-size: 1.4em; border-bottom: 2px solid #333; padding-bottom: 6px; }
+  h2 { font-size: 1.05em; margin-top: 1.6em; }
+  .examen-header {
+    font-size: 1.05em;
+    font-weight: bold;
+    color: #444;
+    letter-spacing: .3px;
+  }
+  .layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    align-items: start;
+    margin-top: 24px;
+  }
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+  }
+  .article {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px 20px;
+    position: sticky;
+    top: 16px;
+    max-height: calc(100vh - 32px);
+    overflow-y: auto;
+  }
+  @media (max-width: 900px) {
+    .article { position: static; max-height: none; overflow-y: visible; }
+  }
+  .article h3 { margin-top: 0; }
+  .source { font-size: .85em; color: #666; margin-top: 12px; }
+  .vragen { min-width: 0; }
+
+  .options { list-style: none; padding-left: 0; }
+  .options li { margin: 6px 0; }
+  .option-btn {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 9px 12px;
+    font-size: .97em;
+    font-family: inherit;
+    border: 1.5px solid #999;
+    border-radius: 6px;
+    background: #fff;
+    cursor: pointer;
+    transition: background .15s, border-color .15s;
+  }
+  .option-btn:hover:not(:disabled) { background: #eef4fb; border-color: #4a7fb5; }
+  .option-btn:disabled { cursor: default; opacity: .95; }
+  .option-btn.correct { background: #d8f5d8; border-color: #2e8b2e; font-weight: bold; }
+  .option-btn.wrong { background: #fbdcdc; border-color: #c0392b; }
+
+  .feedback {
+    margin-top: 10px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    display: none;
+    font-size: .95em;
+  }
+  .feedback.show { display: block; }
+  .feedback.ok { background: #e3f6e3; border-left: 5px solid #2e8b2e; }
+  .feedback.nok { background: #fdeaea; border-left: 5px solid #c0392b; }
+  .feedback .uitleg { margin-top: 6px; }
+  .feedback .vertaling {
+    margin-top: 8px;
+    padding: 8px 10px;
+    background: rgba(255,255,255,.65);
+    border-left: 3px solid #888;
+    border-radius: 4px;
+    font-size: .93em;
+  }
+  .feedback .vertaling em { color: #333; }
+
+  mark {
+    background: transparent;
+    color: inherit;
+    padding: 0;
+    border-radius: 3px;
+    transition: background .3s;
+  }
+  mark.active {
+    background: #ffe680;
+    padding: 0 2px;
+    outline: 2px solid #ffb347;
+  }
+
+  /* invulveld */
+  .invul {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 8px;
+  }
+  .invul input, .invul textarea {
+    font-family: inherit;
+    font-size: .97em;
+    padding: 8px 10px;
+    border: 1.5px solid #999;
+    border-radius: 6px;
+    width: 100%;
+  }
+  .invul textarea { min-height: 70px; resize: vertical; }
+  .invul button, .check-btn {
+    align-self: flex-start;
+    padding: 8px 14px;
+    font-family: inherit;
+    font-size: .95em;
+    border: 1.5px solid #555;
+    background: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .invul button:hover, .check-btn:hover { background: #eee; }
+
+  .reset {
+    margin-top: 24px;
+    padding: 8px 16px;
+    font-family: inherit;
+    font-size: .95em;
+    border: 1.5px solid #555;
+    background: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .reset:hover { background: #eee; }
+</style>
+</head>
+<body>
+
+<p class="examen-header">Examen vmbo gl/tl 2025 Tijdvak 1</p>
+<h1>Tekst 3 – Bunter Blick</h1>
+
+<div class="layout">
+
+  <!-- ================= TEKST (links) ================= -->
+  <div class="article">
+    <h3>Bunter Blick</h3>
+    <p>
+      Der 15-jährige Silas aus Wedel bei Hamburg hat eine Sehschwäche: Er kann
+      Rot und Grün kaum unterscheiden. Weil ihm das Probleme im Alltag
+      bereitete, tüftelte er los – und erfand eine spezielle Brille.
+    </p>
+    <p>
+      <strong>(1)</strong> Stellt euch das mal vor: Ihr lasst den Blick über ein Kunstwerk schweifen,
+      seht strahlend blauen Himmel, eine bunte Blumenwiese und darauf grast: ein
+      knallgrünes Pferd. <mark id="m-pferd">„Genauso ein grünes Pferd habe ich als Achtjähriger im
+      Kunstunterricht gemalt“, erzählt der heute 15-jährige Silas.</mark> Aber nicht, weil er
+      besonders kreativ sein wollte, sondern <mark id="m-braun">weil er dachte, sein grüner Stift war
+      braun.</mark>
+    </p>
+    <p>
+      <strong>(2)</strong> Hat ein Mensch eine Farbsehschwäche, funktioniert das Auge nicht perfekt.
+      <mark id="m-schwierig">Silas hat Schwierigkeiten mit der Farbe Grün.</mark> Er nimmt statt Grün eher die Farbe
+      Rot wahr – weshalb er zum Beispiel auch kein Braun erkennen kann. Denn die
+      Farbe setzt sich aus Grün und Rot zusammen.
+    </p>
+    <p>
+      <strong>(3)</strong> Dem Jungen fällt es im Alltag deshalb schwer, manche Geldscheine
+      auseinanderzuhalten, Fahrpläne zu lesen – oder eben realitätsgetreue Pferde im
+      Unterricht zu malen. <mark id="m-ausgelacht">Weil Silas es satt hatte, von seinen Klassenkameradinnen
+      und -kameraden ausgelacht zu werden, suchte er eine Lösung für sein Problem.</mark>
+    </p>
+    <p>
+      <strong>(4)</strong> „Ich hatte zu Hause einige durchsichtige, bunte Plastikscheiben und merkte:
+      Die Welt sieht durch manche dieser Scheiben viel farbenfroher aus!“, erzählt
+      Silas. Mithilfe von verschiedenfarbigen Folien versuchte er, die Sache gründlich
+      zu untersuchen: Er hielt sich rosafarbene, grüne, blaue, gelbe, orangefarbene,
+      lilafarbene und rote Farbfolien vor die Augen – und <mark id="m-gelb">stellte auch hier fest, dass er
+      mit der gelben Folie seine Buntstifte auf einmal viel besser unterscheiden konnte
+      als vorher.</mark>
+    </p>
+    <p>
+      <strong>(5)</strong> Aus Pappe und bunten Folien bastelte er dann eine Brille: den ersten
+      Prototyp seiner Rot-Grün-Brille. <mark id="m-preis">„Ich habe dann beim Schülerwettbewerb ‚Jugend
+      forscht‘ den ersten Preis gewonnen“, erzählt er.</mark> <mark id="m-medien">Seine Idee kam so gut an, dass
+      er im Anschluss zu verschiedenen Medieninterviews eingeladen wurde.</mark>
+      <mark id="m-kaufen">Inzwischen kann man seine Brille auch kaufen.</mark>
+    </p>
+    <p class="source">GeoLino, 11.2022</p>
+  </div>
+
+  <!-- ================= VRAGEN (rechts) ================= -->
+  <div class="vragen">
+
+    <!-- VRAAG 8 -->
+    <h2>1p 8 &nbsp;Was macht das Beispiel vom grünen Pferd aus dem 1. Absatz deutlich?<br>
+    dass Silas durch sein Handicap</h2>
+    <ul class="options" id="q8-options">
+      <li><button class="option-btn" data-q="8" data-opt="A">A&nbsp; die Tier- und Pflanzenwelt umso mehr schätzt</button></li>
+      <li><button class="option-btn" data-q="8" data-opt="B">B&nbsp; ein starkes künstlerisches Talent entwickelt hat</button></li>
+      <li><button class="option-btn" data-q="8" data-opt="C">C&nbsp; im Alltag manchmal einen Irrtum begeht</button></li>
+      <li><button class="option-btn" data-q="8" data-opt="D">D&nbsp; originelle Lösungen für Probleme findet</button></li>
+    </ul>
+    <div class="feedback" id="fb8"></div>
+
+    <!-- VRAAG 9 -->
+    <h2>1p 9 &nbsp;Welche Frage wird mit dem 2. Absatz beantwortet?</h2>
+    <ul class="options" id="q9-options">
+      <li><button class="option-btn" data-q="9" data-opt="A">A&nbsp; Was ist das Problem von Silas?</button></li>
+      <li><button class="option-btn" data-q="9" data-opt="B">B&nbsp; Was kann Silas tun?</button></li>
+      <li><button class="option-btn" data-q="9" data-opt="C">C&nbsp; Wie erkennt man Farben?</button></li>
+      <li><button class="option-btn" data-q="9" data-opt="D">D&nbsp; Wie mischt man Farben am besten?</button></li>
+    </ul>
+    <div class="feedback" id="fb9"></div>
+
+    <!-- VRAAG 10 -->
+    <h2>1p 10 &nbsp;Waarom wilde Silas iets aan zijn probleem gaan doen? (alinea 3)<br>
+    Beantwoord deze vraag in het Nederlands.</h2>
+    <div class="invul">
+      <textarea id="q10-input" placeholder="Typ je antwoord in het Nederlands…"></textarea>
+      <button type="button" onclick="checkInvul(10)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb10"></div>
+
+    <!-- VRAAG 11 -->
+    <h2>1p 11 &nbsp;Welche Aussage über Silas ist richtig? (4. Absatz)</h2>
+    <ul class="options" id="q11-options">
+      <li><button class="option-btn" data-q="11" data-opt="A">A&nbsp; Er entdeckte beim Experimentieren eine Lösung für seine Sehschwäche.</button></li>
+      <li><button class="option-btn" data-q="11" data-opt="B">B&nbsp; Er hörte per Zufall von einer speziellen Brille für Sehbehinderte.</button></li>
+      <li><button class="option-btn" data-q="11" data-opt="C">C&nbsp; Er suchte sich Hilfe von einigen Spezialisten.</button></li>
+      <li><button class="option-btn" data-q="11" data-opt="D">D&nbsp; Er träumte von einer Welt ohne Augenkrankheiten.</button></li>
+    </ul>
+    <div class="feedback" id="fb11"></div>
+
+    <!-- VRAAG 12 -->
+    <h2>3p 12 &nbsp;„den ersten Prototyp seiner Rot-Grün-Brille“ (alinea 5)<br>
+    Noem drie dingen uit alinea 5 waaruit blijkt dat Silas succes had met deze bril.<br>
+    Beantwoord deze vraag in het Nederlands.</h2>
+    <div class="invul">
+      <textarea id="q12-input" placeholder="Typ hier je drie antwoorden (bijv. 1. … 2. … 3. …)"></textarea>
+      <button type="button" onclick="checkInvul(12)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb12"></div>
+
+  </div>
+</div>
+
+<button class="reset" onclick="resetAll()">Alles opnieuw proberen</button>
+
+<script>
+const answers = {
+  "8": {
+    correct: "C",
+    uitleg:
+      "Juist is C. Het voorbeeld van het groene paard maakt duidelijk dat Silas door zijn kleurenblindheid soms een vergissing begaat: hij dacht dat zijn groene stift bruin was en schilderde daardoor een groen paard in plaats van een bruin paard. " +
+      "A (meer waardering voor dieren/planten), B (sterk artistiek talent) en D (originele oplossingen) worden met dit voorbeeld niet bedoeld — D komt pas later in de tekst aan de orde.",
+    vertaling:
+      "<strong>„Genauso ein grünes Pferd habe ich als Achtjähriger im Kunstunterricht gemalt“</strong> = <em>Precies zo’n groen paard heb ik als achtjarige bij het vak kunst geschilderd.</em> " +
+      "<strong>…weil er dachte, sein grüner Stift war braun.</strong> = <em>…omdat hij dacht dat zijn groene stift bruin was.</em> " +
+      "„der Stift“ = de stift/potlood; „braun“ = bruin. Hij vergiste zich dus → C.",
+    markIds: ["m-pferd", "m-braun"]
+  },
+  "9": {
+    correct: "A",
+    uitleg:
+      "Juist is A. Alinea 2 legt uit wát het probleem van Silas is: <em>„Hat ein Mensch eine Farbsehschwäche, funktioniert das Auge nicht perfekt. Silas hat Schwierigkeiten mit der Farbe Grün.“</em> Er neemt groen eerder als rood waar en kan daardoor ook bruin niet herkennen. " +
+      "B (wat kan hij doen) komt pas in alinea 3–5; C (hoe herken je kleuren) en D (hoe meng je kleuren) zijn geen onderwerp van alinea 2.",
+    vertaling:
+      "<strong>Hat ein Mensch eine Farbsehschwäche, funktioniert das Auge nicht perfekt.</strong> = <em>Als een mens een kleurenzwakte heeft, werkt het oog niet perfect.</em> " +
+      "<strong>Silas hat Schwierigkeiten mit der Farbe Grün.</strong> = <em>Silas heeft moeite met de kleur groen.</em> " +
+      "„die Farbsehschwäche“ = de kleurenzwakte; „die Schwierigkeiten“ = de moeilijkheden. → A.",
+    markIds: ["m-schwierig"]
+  },
+  "10": {
+    correct: "Omdat hij het zat was om door zijn klasgenoten uitgelachen te worden.",
+    uitleg:
+      "De reden staat in alinea 3: <em>„Weil Silas es satt hatte, von seinen Klassenkameradinnen und -kameraden ausgelacht zu werden, suchte er eine Lösung für sein Problem.“</em> In het Nederlands: omdat hij het zat was om door zijn klasgenoten uitgelachen te worden (of: omdat hij niet meer uitgelachen wilde worden), zocht hij een oplossing voor zijn probleem.",
+    vertaling:
+      "<strong>Weil Silas es satt hatte, von seinen Klassenkameradinnen und -kameraden ausgelacht zu werden, suchte er eine Lösung für sein Problem.</strong> = <em>Omdat Silas het zat was om door zijn klasgenoten uitgelachen te worden, zocht hij een oplossing voor zijn probleem.</em> " +
+      "„es satt haben“ = het zat zijn; „auslachen“ = uitlachen; „eine Lösung suchen“ = een oplossing zoeken.",
+    markIds: ["m-ausgelacht"]
+  },
+  "11": {
+    correct: "A",
+    uitleg:
+      "Juist is A. In alinea 4 staat hoe Silas thuis met doorzichtige, gekleurde plastic schijfjes en gekleurde folies experimenteerde en ontdekte dat hij met de gele folie zijn kleurpotloden veel beter kon onderscheiden. Door te experimenteren vond hij dus een oplossing voor zijn kleurenzwakte. " +
+      "B (toevallig gehoord van een bril), C (hulp van specialisten) en D (droom van een wereld zonder oogziektes) staan niet in de tekst.",
+    vertaling:
+      "<strong>…stellte auch hier fest, dass er mit der gelben Folie seine Buntstifte auf einmal viel besser unterscheiden konnte als vorher.</strong> = <em>…stelde ook hier vast dat hij met de gele folie zijn kleurpotloden ineens veel beter kon onderscheiden dan voorheen.</em> " +
+      "„feststellen“ = vaststellen; „die Folie“ = de folie; „unterscheiden“ = onderscheiden. → A.",
+    markIds: ["m-gelb"]
+  },
+  "12": {
+    correct: "1. Hij won de eerste prijs bij de scholierenwedstrijd ‘Jugend forscht’. 2. Hij werd uitgenodigd voor verschillende media-interviews. 3. Zijn bril is inmiddels te koop.",
+    uitleg:
+      "De drie succesvolle gevolgen staan in alinea 5: " +
+      "(1) <em>„Ich habe dann beim Schülerwettbewerb ‚Jugend forscht‘ den ersten Preis gewonnen“</em> — hij won de eerste prijs bij de scholierenwedstrijd ‘Jugend forscht’. " +
+      "(2) <em>„Seine Idee kam so gut an, dass er im Anschluss zu verschiedenen Medieninterviews eingeladen wurde.“</em> — zijn idee sloeg zo aan dat hij werd uitgenodigd voor verschillende media-interviews. " +
+      "(3) <em>„Inzwischen kann man seine Brille auch kaufen.“</em> — inmiddels is zijn bril ook te koop.",
+    vertaling:
+      "<strong>„Ich habe dann beim Schülerwettbewerb ‚Jugend forscht‘ den ersten Preis gewonnen.“</strong> = <em>Ik heb toen bij de scholierenwedstrijd ‘Jugend forscht’ de eerste prijs gewonnen.</em> " +
+      "<strong>Seine Idee kam so gut an, dass er im Anschluss zu verschiedenen Medieninterviews eingeladen wurde.</strong> = <em>Zijn idee sloeg zo aan dat hij aansluitend voor verschillende media-interviews werd uitgenodigd.</em> " +
+      "<strong>Inzwischen kann man seine Brille auch kaufen.</strong> = <em>Intussen kun je zijn bril ook kopen.</em>",
+    markIds: ["m-preis", "m-medien", "m-kaufen"]
+  }
+};
+
+/* ---------- meerkeuze ---------- */
+function showFeedback(q, isCorrect) {
+  const data = answers[q];
+  const fb = document.getElementById("fb" + q);
+  fb.className = "feedback show " + (isCorrect ? "ok" : "nok");
+  fb.innerHTML =
+    (isCorrect ? "✅ <strong>Juist!</strong> " : "❌ <strong>Onjuist.</strong> Het juiste antwoord is <strong>" + data.correct + "</strong>. ") +
+    '<div class="uitleg">' + data.uitleg + "</div>" +
+    '<div class="vertaling"><strong>Uitleg van de Duitse zin(nen):</strong><br>' + data.vertaling + "</div>";
+  (data.markIds || []).forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add("active");
+  });
+}
+
+function handleClick(e) {
+  const btn = e.target.closest(".option-btn");
+  if (!btn || btn.disabled) return;
+
+  const q = btn.dataset.q;
+  const opt = btn.dataset.opt;
+  const data = answers[q];
+  const isCorrect = opt === data.correct;
+
+  document.querySelectorAll('#q' + q + '-options .option-btn').forEach(b => {
+    b.disabled = true;
+    if (b.dataset.opt === opt) b.classList.add(isCorrect ? "correct" : "wrong");
+    if (!isCorrect && b.dataset.opt === data.correct) b.classList.add("correct");
+  });
+
+  showFeedback(q, isCorrect);
+}
+
+document.querySelectorAll(".option-btn").forEach(btn => {
+  btn.addEventListener("click", handleClick);
+});
+
+/* ---------- invulvragen ---------- */
+function normalize(s) {
+  return s.toLowerCase().replace(/[.,!?"'’]/g, "").replace(/\s+/g, " ").trim();
+}
+
+function checkInvul(q) {
+  const input = document.getElementById("q" + q + "-input");
+  const val = input.value;
+  const data = answers[q];
+  const fb = document.getElementById("fb" + q);
+  let isCorrect = false;
+  let aanvulling = "";
+
+  if (q === 10) {
+    const v = normalize(val);
+    isCorrect = (v.includes("uitgelachen") || v.includes("lachen") || v.includes("gepest") || v.includes("pesten")) &&
+                (v.includes("zat") || v.includes("wilde") || v.includes("niet meer") || v.includes("oplossing"));
+    if (!isCorrect) {
+      aanvulling = "Let op: noem dat hij het zat was om door zijn klasgenoten uitgelachen te worden.";
+    }
+  } else if (q === 12) {
+    const v = normalize(val);
+    const punten = [
+      v.includes("prijs") || v.includes("gewonnen") || v.includes("j Jugend forscht"),
+      v.includes("interview") || v.includes("media"),
+      v.includes("te koop") || v.includes("kopen") || v.includes("verkocht")
+    ];
+    const aantal = punten.filter(Boolean).length;
+    isCorrect = aantal === 3;
+    if (!isCorrect) {
+      aanvulling = "Je noemde " + aantal + " van de 3 juiste punten. Kijk naar: prijs winnen, media-interviews, bril te koop.";
+    }
+  }
+
+  fb.className = "feedback show " + (isCorrect ? "ok" : "nok");
+  fb.innerHTML =
+    (isCorrect ? "✅ <strong>Juist!</strong> " : "❌ <strong>Onjuist of onvolledig.</strong> Het juiste antwoord is: <strong>" + data.correct + "</strong>. ") +
+    (aanvulling ? '<div class="uitleg">' + aanvulling + "</div>" : "") +
+    '<div class="uitleg">' + data.uitleg + "</div>" +
+    '<div class="vertaling"><strong>Uitleg van de Duitse zin(nen):</strong><br>' + data.vertaling + "</div>";
+  (data.markIds || []).forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add("active");
+  });
+}
+
+/* ---------- reset ---------- */
+function resetAll() {
+  document.querySelectorAll(".option-btn").forEach(b => {
+    b.disabled = false;
+    b.classList.remove("correct", "wrong");
+  });
+  document.querySelectorAll(".feedback").forEach(f => {
+    f.className = "feedback";
+    f.innerHTML = "";
+  });
+  document.querySelectorAll("mark").forEach(m => m.classList.remove("active"));
+  document.querySelectorAll('.invul input, .invul textarea').forEach(i => i.value = "");
+}
+</script>
+
+</body>
+</html>

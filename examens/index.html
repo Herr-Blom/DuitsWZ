@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Examens - Mijn Leeromgeving</title>
+<title>Tijdvak 1 - Examens</title>
 
 <style>
 * {
@@ -22,7 +22,7 @@ body {
 
 header {
     text-align: center;
-    margin-bottom: 35px;
+    margin-bottom: 30px;
 }
 
 header h1 {
@@ -49,51 +49,38 @@ header p {
     color: white;
 }
 
-.dashboard {
-    max-width: 800px;
+/* De lijst met horizontale knoppen */
+.list-container {
+    max-width: 700px;
     margin: auto;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 18px;
-}
-
-.tile {
-    border-radius: 22px;
-    padding: 25px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    gap: 12px;
+}
+
+.list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 18px 24px;
+    border-radius: 12px;
     text-decoration: none;
     color: white;
-    box-shadow: 0 7px 18px rgba(0,0,0,0.2);
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    font-size: clamp(16px, 2.5vw, 18px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.2s ease;
 }
 
-.tile:hover {
-    transform: translateY(-5px) scale(1.01);
-    box-shadow: 0 15px 30px rgba(0,0,0,0.35);
+.list-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateX(5px); /* Schuift iets naar rechts bij hover */
+    border-color: #F59E0B; /* Geeft een gele rand (matcht je examens-tegel) */
 }
 
-.tile h2 {
-    font-size: clamp(18px, 3vw, 24px);
-    margin: 0 0 5px 0;
-}
-
-.tile p {
-    margin: 0;
-    color: rgba(255, 255, 255, 0.8);
+.list-item span {
+    color: #b8c5df;
     font-size: 14px;
-}
-
-/* Kleuren voor de tijdvakken */
-.yellow { background: linear-gradient(135deg,#CA8A04,#F59E0B); }
-.orange { background: linear-gradient(135deg,#E76F51,#F4A261); }
-
-/* Tablet en desktop: 2 kolommen naast elkaar */
-@media (min-width: 600px) {
-    .dashboard {
-        grid-template-columns: repeat(2, 1fr);
-    }
 }
 </style>
 </head>
@@ -101,23 +88,62 @@ header p {
 <body>
 
 <header>
-    <a href="../index.html" class="back-btn">← Terug naar dashboard</a>
-    <h1>🎓 Examens</h1>
-    <p>Kies een examen om te oefenen</p>
+    <a href="../index.html" class="back-btn">← Terug naar overzicht</a>
+    <h1>📖 Tijdvak 1</h1>
+    <p>Kies een tekst om te maken</p>
 </header>
 
-<main class="dashboard">
+<main class="list-container">
 
-    <!-- Link naar Tijdvak 1 -->
-    <a href="Examen-vmbo-gl-tl-2026-tijdvak-1/" class="tile yellow">
-        <h2>Examen VMBO GL/TL 2026</h2>
-        <p>Tijdvak 1</p>
+    <!-- Als je bestanden anders heten, pas dan de href aan -->
+    <a href="2026-tv1-Tekst-1.html" class="list-item">
+        <strong>Tekst 1</strong>
+        <span>Openen →</span>
     </a>
 
-    <!-- Link naar Tijdvak 2 -->
-    <a href="Examen-vmbo-gl-tl-2026-tijdvak-2/" class="tile orange">
-        <h2>Examen VMBO GL/TL 2026</h2>
-        <p>Tijdvak 2</p>
+    <a href="2026-tv1-Tekst-2.html" class="list-item">
+        <strong>Tekst 2</strong>
+        <span>Openen →</span>
+    </a>
+
+    <a href="2026-tv1-Tekst-3.html" class="list-item">
+        <strong>Tekst 3</strong>
+        <span>Openen →</span>
+    </a>
+
+    <a href="2026-tv1-Tekst-4.html" class="list-item">
+        <strong>Tekst 4</strong>
+        <span>Openen →</span>
+    </a>
+
+    <a href="2026-tv1-Tekst-5.html" class="list-item">
+        <strong>Tekst 5</strong>
+        <span>Openen →</span>
+    </a>
+
+    <a href="2026-tv1-Tekst-6.html" class="list-item">
+        <strong>Tekst 6</strong>
+        <span>Openen →</span>
+    </a>
+
+    <a href="2026-tv1-Tekst-7.html" class="list-item">
+        <strong>Tekst 7</strong>
+        <span>Openen →</span>
+    </a>
+
+    <a href="2026-tv1-Tekst-8.html" class="list-item">
+        <strong>Tekst 8</strong>
+        <span>Openen →</span>
+    </a>
+
+    <a href="2026-tv1-Tekst-9.html" class="list-item">
+        <strong>Tekst 9</strong>
+        <span>Openen →</span>
+    </a>
+
+    <a href="2026-tv1-Tekst-10.html" class="list-item">
+        <strong>Tekst 10</strong>
+        <span>Openen →</span>
     </a>
 
 </main>

@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kicken für das Heimatdorf – oefening</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    max-width: 1280px;
+    margin: 30px auto;
+    padding: 0 16px;
+    line-height: 1.6;
+    color: #222;
+    background: #fafafa;
+  }
+  h1 { font-size: 1.4em; border-bottom: 2px solid #333; padding-bottom: 6px; }
+  h2 { font-size: 1.05em; margin-top: 1.6em; }
+  .examen-header {
+    font-size: 1.05em;
+    font-weight: bold;
+    color: #444;
+    letter-spacing: .3px;
+  }
+  .layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    align-items: start;
+    margin-top: 24px;
+  }
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+  }
+  .article {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px 20px;
+    position: sticky;
+    top: 16px;
+    max-height: calc(100vh - 32px);
+    overflow-y: auto;
+  }
+  @media (max-width: 900px) {
+    .article { position: static; max-height: none; overflow-y: visible; }
+  }
+  .article h3 { margin-top: 0; }
+  .source { font-size: .85em; color: #666; margin-top: 12px; }
+  .vragen { min-width: 0; }
+
+  .options { list-style: none; padding-left: 0; }
+  .options li { margin: 6px 0; }
+  .option-btn {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 9px 12px;
+    font-size: .97em;
+    font-family: inherit;
+    border: 1.5px solid #999;
+    border-radius: 6px;
+    background: #fff;
+    cursor: pointer;
+    transition: background .15s, border-color .15s;
+  }
+  .option-btn:hover:not(:disabled) { background: #eef4fb; border-color: #4a7fb5; }
+  .option-btn:disabled { cursor: default; opacity: .95; }
+  .option-btn.correct { background: #d8f5d8; border-color: #2e8b2e; font-weight: bold; }
+  .option-btn.wrong { background: #fbdcdc; border-color: #c0392b; }
+
+  .feedback {
+    margin-top: 10px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    display: none;
+    font-size: .95em;
+  }
+  .feedback.show { display: block; }
+  .feedback.ok { background: #e3f6e3; border-left: 5px solid #2e8b2e; }
+  .feedback.nok { background: #fdeaea; border-left: 5px solid #c0392b; }
+  .feedback .uitleg { margin-top: 6px; }
+  .feedback .vertaling {
+    margin-top: 8px;
+    padding: 8px 10px;
+    background: rgba(255,255,255,.65);
+    border-left: 3px solid #888;
+    border-radius: 4px;
+    font-size: .93em;
+  }
+  .feedback .vertaling em { color: #333; }
+
+  mark {
+    background: transparent;
+    color: inherit;
+    padding: 0;
+    border-radius: 3px;
+    transition: background .3s;
+  }
+  mark.active {
+    background: #ffe680;
+    padding: 0 2px;
+    outline: 2px solid #ffb347;
+  }
+
+  /* invulveld */
+  .invul {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 8px;
+  }
+  .invul input {
+    font-family: inherit;
+    font-size: .97em;
+    padding: 8px 10px;
+    border: 1.5px solid #999;
+    border-radius: 6px;
+    min-width: 240px;
+  }
+  .invul button, .check-btn {
+    padding: 8px 14px;
+    font-family: inherit;
+    font-size: .95em;
+    border: 1.5px solid #555;
+    background: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .invul button:hover, .check-btn:hover { background: #eee; }
+
+  /* tabel wel/niet */
+  .bewering-tabel {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+    font-size: .95em;
+  }
+  .bewering-tabel th, .bewering-tabel td {
+    border: 1px solid #ccc;
+    padding: 8px 10px;
+    text-align: left;
+    vertical-align: top;
+  }
+  .bewering-tabel th { background: #f0f0f0; }
+  .bewering-tabel td.keuze { text-align: center; white-space: nowrap; }
+  .bewering-tabel label { margin: 0 6px; cursor: pointer; }
+
+  .reset {
+    margin-top: 24px;
+    padding: 8px 16px;
+    font-family: inherit;
+    font-size: .95em;
+    border: 1.5px solid #555;
+    background: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .reset:hover { background: #eee; }
+</style>
+</head>
+<body>
+
+<p class="examen-header">Examen vmbo gl/tl 2026 Tijdvak 1</p>
+<h1>Tekst 2 – Kicken für das Heimatdorf</h1>
+
+<div class="layout">
+
+  <!-- ================= TEKST (links) ================= -->
+  <div class="article">
+    <h3>Kicken für das Heimatdorf</h3>
+    <p>
+      Der Fußballspieler Sadio Mané zeigt, dass es sich lohnt, für seinen Traum
+      zu kämpfen.
+    </p>
+    <p>
+      <strong>(1)</strong> Manche wünschen sich in ihrer Kindheit, einmal in den Weltraum zu fliegen,
+      andere wären gerne mal Koch oder Ärztin. Bei Sadio Mané war es so: Er träumte
+      davon, einmal ein bekannter Fußballspieler zu werden.
+      In dem kleinen Dorf Bambali im Senegal, wo er herkommt, schien es erst, als
+      würde es bei einem bloßen Traum bleiben. <mark id="m-heute">Heute spielt er beim FC Bayern und
+      in der senegalesischen Fußballnationalmannschaft.</mark> Er hat schon zahlreiche
+      nationale und internationale Siege in der Tasche. Manche sprechen sogar davon,
+      dass er ein „Weltklassespieler“ ist.
+    </p>
+    <p>
+      <strong>Familie war gegen die Fußballkarriere</strong><br>
+      <strong>(2)</strong> Doch wie kam es überhaupt dazu? Der Weg zum Profifußballer war alles
+      andere als leicht für den heute 30-Jährigen. <mark id="m-verboten">Seine Familie hat es ihm nicht
+      erlaubt, eine Fußballkarriere zu starten.</mark> Denn schließlich hatte es noch nie
+      jemand aus dem Dorf zum Profi geschafft. Also blieb dem damals 15-Jährigen
+      nichts anderes übrig, als wegzugehen! Er ging in die Hauptstadt Dakar, um bei
+      den Fußballclubs vorzuspielen. Nur sein bester Freund wusste von seinen
+      Plänen.
+    </p>
+    <p>
+      <strong>(3)</strong> Als seine Mutter endlich erfuhr, wo er sich herumtrieb, holte sie ihren Sohn
+      zurück. <mark id="m-schule">Er sollte noch ein Jahr zur Schule gehen, dann würde sie ihm erlauben,
+      es mit der Fußballkarriere zu versuchen.</mark> Über eine Jugendakademie kam er
+      2011 nach Frankreich zum FC Metz und 2012 nach Österreich zum FC Red Bull
+      Salzburg. <mark id="m-salzburg">Und dort wurde sein Talent richtig erkannt!</mark> Mané ist nämlich nicht nur
+      besonders schnell und zielstrebig, er schoss auch ein Tor nach dem anderen. Im
+      Verein FC Liverpool feierte er seine größten Erfolge: 2019 holte er den
+      Champions League Titel, außerdem wurde er 2020 englischer Meister.
+    </p>
+    <p>
+      <strong>Afrikas Fußballer des Jahres</strong><br>
+      <strong>(4)</strong> Der Profi trägt aber noch einen weiteren, ganz besonderen Titel: Er ist zum
+      zweiten Mal „Afrikas Fußballer des Jahres.“ <mark id="m-geehrt">„Ich fühle mich sehr geehrt, diesen
+      Preis zu bekommen.</mark> Ich widme diese Trophäe der Jugend meiner Heimat“, sagte
+      Mané, der in seiner Heimat als Nationalheld verehrt wird. <mark id="m-geld">Dorthin schickt er auch
+      regelmäßig Geld, um seinen Erfolg mit seinem Heimatdorf zu teilen.</mark> Mané hat in
+      Bambali zum Beispiel ein Krankenhaus und eine Schule bauen lassen. Er selbst
+      braucht keinen <mark id="m-luxus">Luxus</mark>, lieber hilft er anderen mit dem Geld, findet er. In einem
+      Interview sagte er dazu: „Was soll ich mit zehn Ferraris, zwanzig Diamant-Uhren
+      oder zwei Flugzeugen? Wie helfen diese Dinge mir oder der Welt weiter?“
+    </p>
+    <p class="source">Westdeutsche Allgemeine Zeitung, 15.08.2022</p>
+  </div>
+
+  <!-- ================= VRAGEN (rechts) ================= -->
+  <div class="vragen">
+
+    <!-- VRAAG 2 -->
+    <h2>1p 2 &nbsp;Welche Aussage über Sadio Mané ist richtig? (1. Absatz)</h2>
+    <ul class="options" id="q2-options">
+      <li><button class="option-btn" data-q="2" data-opt="A">A&nbsp; Er ist der Fußballspieler mit den meisten Toren.</button></li>
+      <li><button class="option-btn" data-q="2" data-opt="B">B&nbsp; Er war als kleiner Junge gar nicht so erfolgreich beim Fußball.</button></li>
+      <li><button class="option-btn" data-q="2" data-opt="C">C&nbsp; Sein Berufswunsch ist Wirklichkeit geworden.</button></li>
+      <li><button class="option-btn" data-q="2" data-opt="D">D&nbsp; Sein Ziel ist es, als Trainer im Ausland zu arbeiten.</button></li>
+    </ul>
+    <div class="feedback" id="fb2"></div>
+
+    <!-- VRAAG 3 -->
+    <h2>1p 3 &nbsp;„Familie war gegen die Fußballkarriere“ (titel alinea 2)<br>
+    Om welke reden was de familie tegen?<br>
+    Schrijf de eerste twee Duitse woorden op van de zin uit deze alinea waarin deze reden staat.</h2>
+    <div class="invul">
+      <input type="text" id="q3-input" placeholder="Typ de eerste twee Duitse woorden…" autocomplete="off">
+      <button type="button" onclick="checkInvul(3)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb3"></div>
+
+    <!-- VRAAG 4 -->
+    <h2>1p 4 &nbsp;Op een gegeven moment wilde Manés moeder hem toch toestaan een voetbalcarrière te starten. De moeder stelde wél een voorwaarde.<br>
+    Welke voorwaarde was dat? (alinea 3)<br>
+    Beantwoord deze vraag in het Nederlands.</h2>
+    <div class="invul">
+      <input type="text" id="q4-input" placeholder="Typ je antwoord in het Nederlands…" autocomplete="off">
+      <button type="button" onclick="checkInvul(4)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb4"></div>
+
+    <!-- VRAAG 5 -->
+    <h2>1p 5 &nbsp;Bei welchem Verein fiel zuerst richtig auf, wie toll Sadio Mané Fußball spielt? (3. Absatz)</h2>
+    <ul class="options" id="q5-options">
+      <li><button class="option-btn" data-q="5" data-opt="A">A&nbsp; FC Bayern</button></li>
+      <li><button class="option-btn" data-q="5" data-opt="B">B&nbsp; FC Liverpool</button></li>
+      <li><button class="option-btn" data-q="5" data-opt="C">C&nbsp; FC Metz</button></li>
+      <li><button class="option-btn" data-q="5" data-opt="D">D&nbsp; FC Red Bull Salzburg</button></li>
+    </ul>
+    <div class="feedback" id="fb5"></div>
+
+    <!-- VRAAG 6 -->
+    <h2>2p 6 &nbsp;Geef van elke bewering aan of die overeenkomt met alinea 4.<br>
+    Kruis ‘wel’ of ‘niet’ aan.</h2>
+    <table class="bewering-tabel">
+      <thead>
+        <tr><th>Bewering</th><th>wel</th><th>niet</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1 Afrika brengt de beste voetballers ter wereld voort.</td>
+          <td class="keuze"><label><input type="radio" name="b1" value="wel"> wel</label><label><input type="radio" name="b1" value="niet"> niet</label></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>2 Sadio Mané voelt zich ongemakkelijk door de prijs die hij ontving.</td>
+          <td class="keuze"><label><input type="radio" name="b2" value="wel"> wel</label><label><input type="radio" name="b2" value="niet"> niet</label></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>3 Sadio Mané heeft een standbeeld gekregen in zijn geboorteland.</td>
+          <td class="keuze"><label><input type="radio" name="b3" value="wel"> wel</label><label><input type="radio" name="b3" value="niet"> niet</label></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>4 Sadio Mané investeert in zijn geboortedorp.</td>
+          <td class="keuze"><label><input type="radio" name="b4" value="wel"> wel</label><label><input type="radio" name="b4" value="niet"> niet</label></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+    <button class="check-btn" type="button" onclick="checkBeweringen()">Controleer</button>
+    <div class="feedback" id="fb6"></div>
+
+    <!-- VRAAG 7 -->
+    <h2>1p 7 &nbsp;Was passt im Sinne des Textes in die Lücke im 4. Absatz?</h2>
+    <ul class="options" id="q7-options">
+      <li><button class="option-btn" data-q="7" data-opt="A">A&nbsp; Arzt</button></li>
+      <li><button class="option-btn" data-q="7" data-opt="B">B&nbsp; Luxus</button></li>
+      <li><button class="option-btn" data-q="7" data-opt="C">C&nbsp; Unterricht</button></li>
+    </ul>
+    <div class="feedback" id="fb7"></div>
+
+  </div>
+</div>
+
+<button class="reset" onclick="resetAll()">Alles opnieuw proberen</button>
+
+<script>
+const answers = {
+  "2": {
+    correct: "C",
+    uitleg:
+      "Juist is C. In alinea 1 staat: <em>„Er träumte davon, einmal ein bekannter Fußballspieler zu werden.“</em> En even later: <em>„Heute spielt er beim FC Bayern und in der senegalesischen Fußballnationalmannschaft.“</em> Zijn beroepswens (bekend voetballer worden) is dus werkelijkheid geworden. " +
+      "A (meeste goals) staat er niet; B (niet zo succesvol als kind) staat er niet — hij droomde ervan, maar dat zegt niets over succes; D (trainer in het buitenland) wordt nergens genoemd.",
+    vertaling:
+      "<strong>Er träumte davon, einmal ein bekannter Fußballspieler zu werden.</strong> = <em>Hij droomde ervan ooit een bekende voetballer te worden.</em> " +
+      "„träumen von“ = dromen van; „bekannt“ = bekend. " +
+      "<strong>Heute spielt er beim FC Bayern und in der senegalesischen Fußballnationalmannschaft.</strong> = <em>Vandaag speelt hij bij FC Bayern en in het Senegalese nationale voetbalelftal.</em> " +
+      "Zijn droom is dus uitgekomen → C.",
+    markIds: ["m-heute"]
+  },
+  "3": {
+    correct: "Denn schließlich",
+    uitleg:
+      "Het juiste antwoord is <strong>„Denn schließlich“</strong>. De reden staat in de zin: <em>„Denn schließlich hatte es noch nie jemand aus dem Dorf zum Profi geschafft.“</em> (Want uiteindelijk was het nog nooit iemand uit het dorp gelukt om prof te worden.) De eerste twee Duitse woorden van die zin zijn „Denn schließlich“.",
+    vertaling:
+      "<strong>Denn schließlich hatte es noch nie jemand aus dem Dorf zum Profi geschafft.</strong> = <em>Want uiteindelijk was het nog nooit iemand uit het dorp gelukt om prof te worden.</em> " +
+      "„denn“ = want; „schließlich“ = uiteindelijk/immers; „zum Profi schaffen“ = het tot prof schoppen.",
+    markIds: ["m-verboten"]
+  },
+  "4": {
+    correct: "Eerst nog een jaar naar school",
+    uitleg:
+      "De voorwaarde staat in alinea 3: <em>„Er sollte noch ein Jahr zur Schule gehen, dann würde sie ihm erlauben, es mit der Fußballkarriere zu versuchen.“</em> In het Nederlands: hij moest eerst nog een jaar naar school gaan; daarna mocht hij het met de voetbalcarrière proberen. Antwoorden als „nog een jaar naar school“ of „eerst zijn school afmaken“ zijn goed.",
+    vertaling:
+      "<strong>Er sollte noch ein Jahr zur Schule gehen, dann würde sie ihm erlauben, es mit der Fußballkarriere zu versuchen.</strong> = <em>Hij moest nog een jaar naar school gaan, dan zou zij hem toestaan het met de voetbalcarrière te proberen.</em> " +
+      "„zur Schule gehen“ = naar school gaan; „erlauben“ = toestaan; „versuchen“ = proberen.",
+    markIds: ["m-schule"]
+  },
+  "5": {
+    correct: "D",
+    uitleg:
+      "Juist is D. In alinea 3 staat: <em>„Über eine Jugendakademie kam er 2011 nach Frankreich zum FC Metz und 2012 nach Österreich zum FC Red Bull Salzburg. Und dort wurde sein Talent richtig erkannt!“</em> „Dort“ verwijst naar FC Red Bull Salzburg. Daar werd zijn talent voor het eerst echt opgemerkt.",
+    vertaling:
+      "<strong>Und dort wurde sein Talent richtig erkannt!</strong> = <em>En daar werd zijn talent echt (h)erkend!</em> " +
+      "„dort“ = daar (verwijst naar FC Red Bull Salzburg); „erkennen“ = erkennen/opmerken. → D.",
+    markIds: ["m-salzburg"]
+  },
+  "6": {
+    correct: "1 niet, 2 niet, 3 niet, 4 wel",
+    uitleg:
+      "1 <strong>niet</strong> — er staat niet dat Afrika de beste voetballers ter wereld voortbrengt; alleen dat Mané „Afrikas Fußballer des Jahres“ is. " +
+      "2 <strong>niet</strong> — hij voelt zich juist <em>„sehr geehrt“</em> (zeer vereerd), niet ongemakkelijk. " +
+      "3 <strong>niet</strong> — er staat dat hij als Nationalheld vereerd wordt, maar niet dat hij een standbeeld heeft gekregen. " +
+      "4 <strong>wel</strong> — hij stuurt geld naar zijn dorp en liet een ziekenhuis en een school bouwen: hij investeert dus in zijn geboortedorp.",
+    vertaling:
+      "<strong>„Ich fühle mich sehr geehrt, diesen Preis zu bekommen.“</strong> = <em>Ik voel me zeer vereerd deze prijs te krijgen.</em> " +
+      "<strong>Dorthin schickt er auch regelmäßig Geld, um seinen Erfolg mit seinem Heimatdorf zu teilen.</strong> = <em>Daarheen stuurt hij ook regelmatig geld om zijn succes met zijn geboortedorp te delen.</em> " +
+      "<strong>Mané hat in Bambali zum Beispiel ein Krankenhaus und eine Schule bauen lassen.</strong> = <em>Mané heeft in Bambali bijvoorbeeld een ziekenhuis en een school laten bouwen.</em>",
+    markIds: ["m-geehrt", "m-geld"]
+  },
+  "7": {
+    correct: "B",
+    uitleg:
+      "Juist is B (Luxus). Uit de context blijkt: hij heeft geen luxe nodig, hij helpt liever anderen met het geld. De volgende zin noemt precies luxe-artikelen: <em>„Was soll ich mit zehn Ferraris, zwanzig Diamant-Uhren oder zwei Flugzeugen?“</em> Dus in de leemte past „Luxus“.",
+    vertaling:
+      "<strong>Er selbst braucht keinen Luxus, lieber hilft er anderen mit dem Geld.</strong> = <em>Hijzelf heeft geen luxe nodig, liever helpt hij anderen met het geld.</em> " +
+      "„der Luxus“ = de luxe; „lieber“ = liever. → B.",
+    markIds: ["m-luxus"]
+  }
+};
+
+/* ---------- meerkeuze ---------- */
+function showFeedback(q, isCorrect) {
+  const data = answers[q];
+  const fb = document.getElementById("fb" + q);
+  fb.className = "feedback show " + (isCorrect ? "ok" : "nok");
+  fb.innerHTML =
+    (isCorrect ? "✅ <strong>Juist!</strong> " : "❌ <strong>Onjuist.</strong> Het juiste antwoord is <strong>" + data.correct + "</strong>. ") +
+    '<div class="uitleg">' + data.uitleg + "</div>" +
+    '<div class="vertaling"><strong>Uitleg van de Duitse zin(nen):</strong><br>' + data.vertaling + "</div>";
+  (data.markIds || []).forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add("active");
+  });
+}
+
+function handleClick(e) {
+  const btn = e.target.closest(".option-btn");
+  if (!btn || btn.disabled) return;
+
+  const q = btn.dataset.q;
+  const opt = btn.dataset.opt;
+  const data = answers[q];
+  const isCorrect = opt === data.correct;
+
+  document.querySelectorAll('#q' + q + '-options .option-btn').forEach(b => {
+    b.disabled = true;
+    if (b.dataset.opt === opt) b.classList.add(isCorrect ? "correct" : "wrong");
+    if (!isCorrect && b.dataset.opt === data.correct) b.classList.add("correct");
+  });
+
+  showFeedback(q, isCorrect);
+}
+
+document.querySelectorAll(".option-btn").forEach(btn => {
+  btn.addEventListener("click", handleClick);
+});
+
+/* ---------- invulvragen ---------- */
+function normalize(s) {
+  return s.toLowerCase().replace(/[.,!?"'’]/g, "").replace(/\s+/g, " ").trim();
+}
+
+function checkInvul(q) {
+  const input = document.getElementById("q" + q + "-input");
+  const val = input.value;
+  const data = answers[q];
+  const fb = document.getElementById("fb" + q);
+  let isCorrect = false;
+
+  if (q === 3) {
+    isCorrect = normalize(val) === normalize(data.correct);
+  } else if (q === 4) {
+    const v = normalize(val);
+    isCorrect = v.includes("jaar") && (v.includes("school") || v.includes("schoolgaan") || v.includes("school af") || v.includes("naar school"));
+  }
+
+  fb.className = "feedback show " + (isCorrect ? "ok" : "nok");
+  fb.innerHTML =
+    (isCorrect ? "✅ <strong>Juist!</strong> " : "❌ <strong>Onjuist.</strong> Het juiste antwoord is <strong>" + data.correct + "</strong>. ") +
+    '<div class="uitleg">' + data.uitleg + "</div>" +
+    '<div class="vertaling"><strong>Uitleg van de Duitse zin(nen):</strong><br>' + data.vertaling + "</div>";
+  (data.markIds || []).forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add("active");
+  });
+}
+
+/* ---------- wel/niet ---------- */
+function checkBeweringen() {
+  const juist = { b1: "niet", b2: "niet", b3: "niet", b4: "wel" };
+  let goed = 0;
+  let totaal = 4;
+  let details = [];
+
+  for (const naam in juist) {
+    const gekozen = document.querySelector('input[name="' + naam + '"]:checked');
+    const ok = gekozen && gekozen.value === juist[naam];
+    if (ok) goed++;
+    details.push((ok ? "✅" : "❌") + " bewering " + naam.replace("b", "") + ": " + juist[naam]);
+  }
+
+  const data = answers[6];
+  const fb = document.getElementById("fb6");
+  fb.className = "feedback show " + (goed === totaal ? "ok" : "nok");
+  fb.innerHTML =
+    (goed === totaal ? "✅ <strong>Alles juist!</strong> " : "❌ <strong>" + goed + " van " + totaal + " juist.</strong> ") +
+    '<div class="uitleg">' + details.join("<br>") + "<br><br>" + data.uitleg + "</div>" +
+    '<div class="vertaling"><strong>Uitleg van de Duitse zin(nen):</strong><br>' + data.vertaling + "</div>";
+  (data.markIds || []).forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add("active");
+  });
+}
+
+/* ---------- reset ---------- */
+function resetAll() {
+  document.querySelectorAll(".option-btn").forEach(b => {
+    b.disabled = false;
+    b.classList.remove("correct", "wrong");
+  });
+  document.querySelectorAll(".feedback").forEach(f => {
+    f.className = "feedback";
+    f.innerHTML = "";
+  });
+  document.querySelectorAll("mark").forEach(m => m.classList.remove("active"));
+  document.querySelectorAll('.invul input').forEach(i => i.value = "");
+  document.querySelectorAll('.bewering-tabel input[type="radio"]').forEach(r => r.checked = false);
+}
+</script>
+
+</body>
+</html>

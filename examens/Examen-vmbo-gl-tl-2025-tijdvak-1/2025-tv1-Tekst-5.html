@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Falschgeld – oefening</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    max-width: 1280px;
+    margin: 30px auto;
+    padding: 0 16px;
+    line-height: 1.6;
+    color: #222;
+    background: #fafafa;
+  }
+  h1 { font-size: 1.4em; border-bottom: 2px solid #333; padding-bottom: 6px; }
+  h2 { font-size: 1.05em; margin-top: 1.6em; }
+  .examen-header {
+    font-size: 1.05em;
+    font-weight: bold;
+    color: #444;
+    letter-spacing: .3px;
+  }
+  .layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    align-items: start;
+    margin-top: 24px;
+  }
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+  }
+  .article {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px 20px;
+    position: sticky;
+    top: 16px;
+    max-height: calc(100vh - 32px);
+    overflow-y: auto;
+  }
+  @media (max-width: 900px) {
+    .article { position: static; max-height: none; overflow-y: visible; }
+  }
+  .article h3 { margin-top: 0; }
+  .source { font-size: .85em; color: #666; margin-top: 12px; }
+  .vragen { min-width: 0; }
+
+  .options { list-style: none; padding-left: 0; }
+  .options li { margin: 6px 0; }
+  .option-btn {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 9px 12px;
+    font-size: .97em;
+    font-family: inherit;
+    border: 1.5px solid #999;
+    border-radius: 6px;
+    background: #fff;
+    cursor: pointer;
+    transition: background .15s, border-color .15s;
+  }
+  .option-btn:hover:not(:disabled) { background: #eef4fb; border-color: #4a7fb5; }
+  .option-btn:disabled { cursor: default; opacity: .95; }
+  .option-btn.correct { background: #d8f5d8; border-color: #2e8b2e; font-weight: bold; }
+  .option-btn.wrong { background: #fbdcdc; border-color: #c0392b; }
+
+  .feedback {
+    margin-top: 10px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    display: none;
+    font-size: .95em;
+  }
+  .feedback.show { display: block; }
+  .feedback.ok { background: #e3f6e3; border-left: 5px solid #2e8b2e; }
+  .feedback.nok { background: #fdeaea; border-left: 5px solid #c0392b; }
+  .feedback .uitleg { margin-top: 6px; }
+  .feedback .vertaling {
+    margin-top: 8px;
+    padding: 8px 10px;
+    background: rgba(255,255,255,.65);
+    border-left: 3px solid #888;
+    border-radius: 4px;
+    font-size: .93em;
+  }
+  .feedback .vertaling em { color: #333; }
+
+  mark {
+    background: transparent;
+    color: inherit;
+    padding: 0;
+    border-radius: 3px;
+    transition: background .3s;
+  }
+  mark.active {
+    background: #ffe680;
+    padding: 0 2px;
+    outline: 2px solid #ffb347;
+  }
+
+  .check-btn {
+    margin-top: 8px;
+    padding: 8px 14px;
+    font-family: inherit;
+    font-size: .95em;
+    border: 1.5px solid #555;
+    background: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .check-btn:hover { background: #eee; }
+
+  /* tabel wel/niet */
+  .bewering-tabel {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+    font-size: .95em;
+  }
+  .bewering-tabel th, .bewering-tabel td {
+    border: 1px solid #ccc;
+    padding: 8px 10px;
+    text-align: left;
+    vertical-align: top;
+  }
+  .bewering-tabel th { background: #f0f0f0; }
+  .bewering-tabel td.keuze { text-align: center; white-space: nowrap; }
+  .bewering-tabel label { margin: 0 6px; cursor: pointer; }
+
+  .reset {
+    margin-top: 24px;
+    padding: 8px 16px;
+    font-family: inherit;
+    font-size: .95em;
+    border: 1.5px solid #555;
+    background: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .reset:hover { background: #eee; }
+</style>
+</head>
+<body>
+
+<p class="examen-header">Examen vmbo gl/tl 2025 Tijdvak 1</p>
+<h1>Tekst 5 – Falschgeld</h1>
+
+<div class="layout">
+
+  <!-- ================= TEKST (links) ================= -->
+  <div class="article">
+    <h3>Falschgeld</h3>
+    <p>
+      <mark id="m-methode">Am einfachsten sind falsche Banknoten mit der Methode „fühlen, sehen,
+      schräg halten“ ausfindig zu machen.</mark>
+    </p>
+    <p>
+      <mark id="m-baumwolle">Echte Banknoten bestehen zu 90 Prozent aus Baumwolle, sie fühlen sich
+      also anders an als Papier.</mark> Auch die kleinen Striche an den Rändern der
+      Scheine kann man erfühlen. <mark id="m-licht">Hält man den Schein gegen das Licht,
+      werden das Wasserzeichen und der Sicherheitsfaden sichtbar.</mark> Und beim
+      schräg Halten <mark id="m-streifen">zeigt der silberne Streifen auf der Vorderseite rechts das
+      Porträt Europas und die Zahl unten links verändert die Farbe.</mark> <mark id="m-polizei">Wer
+      Falschgeld entdeckt, muss das der Polizei melden.</mark> <mark id="m-strafbar">Schon der Versuch, es
+      auszugeben, ist strafbar.</mark>
+    </p>
+    <p>
+      <mark id="m-ersatzlos">Bitter: Das Falschgeld wird ersatzlos eingezogen, man bleibt auf dem
+      Schaden sitzen.</mark>
+    </p>
+    <p class="source">Das Neue Blatt, 22.09.2021</p>
+  </div>
+
+  <!-- ================= VRAGEN (rechts) ================= -->
+  <div class="vragen">
+
+    <h2>2p 21 &nbsp;Geef van elke vraag aan of de tekst er antwoord op geeft.<br>
+    Kruis ‘wel’ of ‘niet’ aan.</h2>
+    <table class="bewering-tabel">
+      <thead>
+        <tr><th>Vraag</th><th>wel</th><th>niet</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1 Waaraan kun je echte bankbiljetten herkennen?</td>
+          <td class="keuze"><label><input type="radio" name="b1" value="wel"> wel</label><label><input type="radio" name="b1" value="niet"> niet</label></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>2 Welk bankbiljet wordt het vaakst vervalst?</td>
+          <td class="keuze"><label><input type="radio" name="b2" value="wel"> wel</label><label><input type="radio" name="b2" value="niet"> niet</label></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>3 Welke straf staat op het produceren van vals geld?</td>
+          <td class="keuze"><label><input type="radio" name="b3" value="wel"> wel</label><label><input type="radio" name="b3" value="niet"> niet</label></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>4 Wat moet je doen als je vals geld in handen krijgt?</td>
+          <td class="keuze"><label><input type="radio" name="b4" value="wel"> wel</label><label><input type="radio" name="b4" value="niet"> niet</label></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+    <button class="check-btn" type="button" onclick="checkBeweringen()">Controleer</button>
+    <div class="feedback" id="fb21"></div>
+
+  </div>
+</div>
+
+<button class="reset" onclick="resetAll()">Alles opnieuw proberen</button>
+
+<script>
+const answers = {
+  "21": {
+    correct: "1 wel, 2 niet, 3 niet, 4 wel",
+    uitleg:
+      "1 <strong>wel</strong> — de tekst legt precies uit waaraan je echte biljetten herkent: de methode <em>„fühlen, sehen, schräg halten“</em>, het katoenpapier, de randstreepjes, het watermerk en de veiligheidsdraad bij tegenlicht, en de zilveren strook en de kleurveranderende Zahl bij schuin houden. " +
+      "2 <strong>niet</strong> — welk biljet het vaakst vervalst wordt, staat nergens in de tekst. " +
+      "3 <strong>niet</strong> — er staat alleen dat het <em>uitgeven</em> (zelfs de poging daartoe) strafbaar is; welke straf precies op het <em>produceren</em> staat, wordt niet genoemd. " +
+      "4 <strong>wel</strong> — <em>„Wer Falschgeld entdeckt, muss das der Polizei melden.“</em> Je moet vals geld dus bij de politie melden.",
+    vertaling:
+      "<strong>Am einfachsten sind falsche Banknoten mit der Methode „fühlen, sehen, schräg halten“ ausfindig zu machen.</strong> = <em>Valse biljetten zijn het gemakkelijkst op te sporen met de methode „voelen, kijken, schuin houden“.</em> " +
+      "<strong>Echte Banknoten bestehen zu 90 Prozent aus Baumwolle, sie fühlen sich also anders an als Papier.</strong> = <em>Echte biljetten bestaan voor 90 procent uit katoen, ze voelen dus anders aan dan papier.</em> " +
+      "<strong>Hält man den Schein gegen das Licht, werden das Wasserzeichen und der Sicherheitsfaden sichtbar.</strong> = <em>Houd je het biljet tegen het licht, dan worden het watermerk en de veiligheidsdraad zichtbaar.</em> " +
+      "<strong>Wer Falschgeld entdeckt, muss das der Polizei melden.</strong> = <em>Wie vals geld ontdekt, moet dat bij de politie melden.</em> " +
+      "<strong>Schon der Versuch, es auszugeben, ist strafbar.</strong> = <em>Alleen al de poging het uit te geven is strafbaar.</em>",
+    markIds: ["m-methode", "m-baumwolle", "m-licht", "m-streifen", "m-polizei", "m-strafbar"]
+  }
+};
+
+/* ---------- wel/niet ---------- */
+function checkBeweringen() {
+  const juist = { b1: "wel", b2: "niet", b3: "niet", b4: "wel" };
+  let goed = 0;
+  let totaal = 4;
+  let details = [];
+
+  for (const naam in juist) {
+    const gekozen = document.querySelector('input[name="' + naam + '"]:checked');
+    const ok = gekozen && gekozen.value === juist[naam];
+    if (ok) goed++;
+    details.push((ok ? "✅" : "❌") + " vraag " + naam.replace("b", "") + ": " + juist[naam]);
+  }
+
+  const data = answers[21];
+  const fb = document.getElementById("fb21");
+  fb.className = "feedback show " + (goed === totaal ? "ok" : "nok");
+  fb.innerHTML =
+    (goed === totaal ? "✅ <strong>Alles juist!</strong> " : "❌ <strong>" + goed + " van " + totaal + " juist.</strong> ") +
+    '<div class="uitleg">' + details.join("<br>") + "<br><br>" + data.uitleg + "</div>" +
+    '<div class="vertaling"><strong>Uitleg van de Duitse zin(nen):</strong><br>' + data.vertaling + "</div>";
+  (data.markIds || []).forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add("active");
+  });
+}
+
+/* ---------- reset ---------- */
+function resetAll() {
+  document.querySelectorAll(".feedback").forEach(f => {
+    f.className = "feedback";
+    f.innerHTML = "";
+  });
+  document.querySelectorAll("mark").forEach(m => m.classList.remove("active"));
+  document.querySelectorAll('.bewering-tabel input[type="radio"]').forEach(r => r.checked = false);
+}
+</script>
+
+</body>
+</html>

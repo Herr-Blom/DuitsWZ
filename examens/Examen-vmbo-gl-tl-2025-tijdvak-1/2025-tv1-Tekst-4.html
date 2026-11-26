@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mit Flickflacks über das Parkett – oefening</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    max-width: 1280px;
+    margin: 30px auto;
+    padding: 0 16px;
+    line-height: 1.6;
+    color: #222;
+    background: #fafafa;
+  }
+  h1 { font-size: 1.4em; border-bottom: 2px solid #333; padding-bottom: 6px; }
+  h2 { font-size: 1.05em; margin-top: 1.6em; }
+  .examen-header {
+    font-size: 1.05em;
+    font-weight: bold;
+    color: #444;
+    letter-spacing: .3px;
+  }
+  .layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    align-items: start;
+    margin-top: 24px;
+  }
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+  }
+  .article {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px 20px;
+    position: sticky;
+    top: 16px;
+    max-height: calc(100vh - 32px);
+    overflow-y: auto;
+  }
+  @media (max-width: 900px) {
+    .article { position: static; max-height: none; overflow-y: visible; }
+  }
+  .article h3 { margin-top: 0; }
+  .source { font-size: .85em; color: #666; margin-top: 12px; }
+  .note { font-size: .85em; color: #555; border-top: 1px dashed #bbb; padding-top: 8px; margin-top: 12px;}
+  .vragen { min-width: 0; }
+
+  .options { list-style: none; padding-left: 0; }
+  .options li { margin: 6px 0; }
+  .option-btn {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 9px 12px;
+    font-size: .97em;
+    font-family: inherit;
+    border: 1.5px solid #999;
+    border-radius: 6px;
+    background: #fff;
+    cursor: pointer;
+    transition: background .15s, border-color .15s;
+  }
+  .option-btn:hover:not(:disabled) { background: #eef4fb; border-color: #4a7fb5; }
+  .option-btn:disabled { cursor: default; opacity: .95; }
+  .option-btn.correct { background: #d8f5d8; border-color: #2e8b2e; font-weight: bold; }
+  .option-btn.wrong { background: #fbdcdc; border-color: #c0392b; }
+
+  .feedback {
+    margin-top: 10px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    display: none;
+    font-size: .95em;
+  }
+  .feedback.show { display: block; }
+  .feedback.ok { background: #e3f6e3; border-left: 5px solid #2e8b2e; }
+  .feedback.nok { background: #fdeaea; border-left: 5px solid #c0392b; }
+  .feedback .uitleg { margin-top: 6px; }
+  .feedback .vertaling {
+    margin-top: 8px;
+    padding: 8px 10px;
+    background: rgba(255,255,255,.65);
+    border-left: 3px solid #888;
+    border-radius: 4px;
+    font-size: .93em;
+  }
+  .feedback .vertaling em { color: #333; }
+
+  mark {
+    background: transparent;
+    color: inherit;
+    padding: 0;
+    border-radius: 3px;
+    transition: background .3s;
+  }
+  mark.active {
+    background: #ffe680;
+    padding: 0 2px;
+    outline: 2px solid #ffb347;
+  }
+
+  /* invulveld */
+  .invul {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 8px;
+  }
+  .invul input, .invul textarea {
+    font-family: inherit;
+    font-size: .97em;
+    padding: 8px 10px;
+    border: 1.5px solid #999;
+    border-radius: 6px;
+    width: 100%;
+  }
+  .invul button, .check-btn {
+    align-self: flex-start;
+    padding: 8px 14px;
+    font-family: inherit;
+    font-size: .95em;
+    border: 1.5px solid #555;
+    background: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .invul button:hover, .check-btn:hover { background: #eee; }
+
+  /* tabel wel/niet */
+  .bewering-tabel {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+    font-size: .95em;
+  }
+  .bewering-tabel th, .bewering-tabel td {
+    border: 1px solid #ccc;
+    padding: 8px 10px;
+    text-align: left;
+    vertical-align: top;
+  }
+  .bewering-tabel th { background: #f0f0f0; }
+  .bewering-tabel td.keuze { text-align: center; white-space: nowrap; }
+  .bewering-tabel label { margin: 0 6px; cursor: pointer; }
+
+  .reset {
+    margin-top: 24px;
+    padding: 8px 16px;
+    font-family: inherit;
+    font-size: .95em;
+    border: 1.5px solid #555;
+    background: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .reset:hover { background: #eee; }
+</style>
+</head>
+<body>
+
+<p class="examen-header">Examen vmbo gl/tl 2025 Tijdvak 1</p>
+<h1>Tekst 4 – Mit Flickflacks über das Parkett</h1>
+
+<div class="layout">
+
+  <!-- ================= TEKST (links) ================= -->
+  <div class="article">
+    <h3>Mit Flickflacks über das Parkett</h3>
+    <p>
+      Schule, Leistungssport und Nebenjob: Lea Pauls (15) gibt Vollgas und
+      begeistert nicht nur auf der Bühne.
+    </p>
+    <p>
+      <strong>(1)</strong> Tanzmariechen<sup>1)</sup> betreiben keinen Leistungssport? Wer die 15-jährige Lea auf
+      der Bühne erlebt, ist schnell anderer Meinung. <mark id="m-tempo">Temporeich geht’s mit Flickflack,
+      Radschlag und Spagat über das Parkett</mark> – und nicht vergessen zu lächeln. Was
+      da so lockerleicht aussieht, kommt nicht von selbst. Dahinter steckt jahrelanges
+      Training. Und eine gehörige Portion Talent sollte man ebenfalls mitbringen.
+    </p>
+    <p>
+      <strong>(2)</strong> „Mit fünf Jahren hat sie bei der Tanzgarde angefangen“, erzählt ihre Mutter
+      Nina. Der Gruppe ist Lea bis heute treu geblieben. Sie trainiert dort einmal pro
+      Woche. Zusätzlich geht es für den Teenie jeden Samstag zu Jana Pearce, die
+      selbst norddeutsche Meisterin ist. Für die Mama ist es „wie ein Hauptpreis im
+      Lotto“. Vor kurzem ging nämlich Leas größter Wunsch in Erfüllung: ein
+      Solomariechen-Probespiel. <mark id="m-probe">„Die Trainerin hat gleich danach angerufen und
+      gesagt, sie würde mit Lea arbeiten“, sagt die stolze Mama dazu.</mark>
+    </p>
+    <p>
+      <strong>(3)</strong> Neben dem Tanzsport geht Lea zweimal pro Woche zum Rettungsschwimmer-
+      training. Mit drei Jahren hat sie schon mit dem Schwimmen angefangen. Heute hat
+      sie das Rettungsschwimmerabzeichen in Silber, schwimmt in der Wettkampfgruppe
+      mit und hilft beim Training der Kleinen. <mark id="m-wache">„Im Sommer halte ich auch Wache am
+      Badesee.“</mark> Das Schwimmen ist neben dem Tanzen Leas zweite große Leidenschaft.
+      Für andere Hobbys bleibt da wenig Zeit. <mark id="m-tanzkurs">In der Schule leitet Lea einen Tanzkurs
+      für Schüler der Unterstufe.</mark> Leiden unter so viel Engagement die Noten? <mark id="m-noten">In Leas
+      Fall nicht. Lea hat einen sehr guten Notendurchschnitt.</mark>
+    </p>
+    <p>
+      <strong>(4)</strong> „Ich möchte später Lehrerin werden“, sagt sie. Mathe und Sport. Das dürfte
+      wohl kein Problem sein. Bis dahin bessert sie ihr Taschengeld mit ihrem
+      Nebenjob auf und trägt jeden Mittwoch um 5 Uhr morgens eine Zeitung aus. <mark id="m-energie">„Ich
+      weiß auch nicht, woher sie die ganze Energie nimmt“, fragt sich Nina immer
+      wieder.</mark> Auch weil die Tanz-Turniere in ganz Deutschland stattfinden und so eine
+      Teilnahme ganz schön viel Zeit kosten kann.
+    </p>
+    <p>
+      <strong>(5)</strong> Die vollste Zeit des Jahres ist der Karneval. <mark id="m-karneval">So richtig mag Lea den eigentlich
+      nicht: „Das ist nicht so meins“, gibt sie zu.</mark> Nur das Tanzen, das fand sie schon
+      immer toll. Es sind auch nicht unbedingt Karnevalslieder, die bei den
+      Tanzmariechen-Choreografien zum Einsatz kommen. <mark id="m-hauptsache">Hauptsache Tempo.</mark>
+      Deshalb stehen neben dem Tanzen auch Kraft und Kondition auf Leas
+      Trainingsprogramm. „Wir trainieren mit vier Mädchen“, erklärt sie. Vor dem
+      Auftritt steht ein einstündiges Aufwärmprogramm. Und Schminken. „Das
+      übernimmt meine Trainerin“, sagt Lea.
+    </p>
+    <p>
+      <strong>(6)</strong> Was sie und ihre Mutter <mark id="m-luecke">nicht beeindruckt</mark>: Wenn die Leute meinen, das sei doch nur
+      „ein bisschen Herumspringen“ auf der Bühne. „Das ist schon ein richtiger
+      Leistungssport, der leider oft zu wenig Anerkennung erfährt“, weiß Nina. Mit Mitte
+      20 ist für die meisten Solomariechen Schluss. Da hat Lea noch ein paar Jahre
+      Zeit. Jetzt gibt es erstmal einige Wettbewerbe. <mark id="m-klappt">Wer Lea kennt, weiß: Das klappt
+      bestimmt!</mark>
+    </p>
+    <p class="source">www.niederrhein-nachrichten.de, 11.02.2023</p>
+    <p class="note"><sup>1)</sup> Tanzmariechen: meisje in kostuum dat danst/turnt, aan showballet doet en hiermee in het carnavalsseizoen optreedt.</p>
+  </div>
+
+  <!-- ================= VRAGEN (rechts) ================= -->
+  <div class="vragen">
+
+    <!-- VRAAG 13 -->
+    <h2>1p 13 &nbsp;„Tanzmariechen betreiben keinen Leistungssport?“ (1. Absatz)<br>
+    Wie äußert sich der Autor des Textes zu dieser Aussage?</h2>
+    <ul class="options" id="q13-options">
+      <li><button class="option-btn" data-q="13" data-opt="A">A&nbsp; Er hat dazu keine klare Meinung.</button></li>
+      <li><button class="option-btn" data-q="13" data-opt="B">B&nbsp; Er ist nicht damit einverstanden.</button></li>
+      <li><button class="option-btn" data-q="13" data-opt="C">C&nbsp; Er kann der Aussage zustimmen.</button></li>
+    </ul>
+    <div class="feedback" id="fb13"></div>
+
+    <!-- VRAAG 14 -->
+    <h2>1p 14 &nbsp;„sagt die stolze Mama dazu.“ (2. Absatz, letzter Satz)<br>
+    Worauf ist Leas Mutter hier stolz?<br>
+    darauf, dass Lea</h2>
+    <ul class="options" id="q14-options">
+      <li><button class="option-btn" data-q="14" data-opt="A">A&nbsp; als sehr junges Mädchen mit dem Tanzen angefangen hat</button></li>
+      <li><button class="option-btn" data-q="14" data-opt="B">B&nbsp; bei den Deutschen Meisterschaften dabei ist</button></li>
+      <li><button class="option-btn" data-q="14" data-opt="C">C&nbsp; jetzt mit Jana Pearce trainieren darf</button></li>
+      <li><button class="option-btn" data-q="14" data-opt="D">D&nbsp; schon so lange Mitglied der Tanzgarde ist</button></li>
+    </ul>
+    <div class="feedback" id="fb14"></div>
+
+    <!-- VRAAG 15 -->
+    <h2>2p 15 &nbsp;Geef van elke bewering over Lea aan of die overeenkomt met alinea 3.<br>
+    Kruis ‘wel’ of ‘niet’ aan.</h2>
+    <table class="bewering-tabel">
+      <thead>
+        <tr><th>Bewering</th><th>wel</th><th>niet</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1 Lea is al meerdere keren kampioen in reddingszwemmen geweest.</td>
+          <td class="keuze"><label><input type="radio" name="b1" value="wel"> wel</label><label><input type="radio" name="b1" value="niet"> niet</label></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>2 Lea houdt in de zomer toezicht bij een recreatieplas.</td>
+          <td class="keuze"><label><input type="radio" name="b2" value="wel"> wel</label><label><input type="radio" name="b2" value="niet"> niet</label></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>3 Lea geeft dansles aan leerlingen van haar school.</td>
+          <td class="keuze"><label><input type="radio" name="b3" value="wel"> wel</label><label><input type="radio" name="b3" value="niet"> niet</label></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>4 Lea’s schoolprestaties lijden onder haar vele hobby’s.</td>
+          <td class="keuze"><label><input type="radio" name="b4" value="wel"> wel</label><label><input type="radio" name="b4" value="niet"> niet</label></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+    <button class="check-btn" type="button" onclick="checkBeweringen()">Controleer</button>
+    <div class="feedback" id="fb15"></div>
+
+    <!-- VRAAG 16 -->
+    <h2>1p 16 &nbsp;Worüber ist Mutter Nina erstaunt? (4. Absatz)</h2>
+    <ul class="options" id="q16-options">
+      <li><button class="option-btn" data-q="16" data-opt="A">A&nbsp; über Leas Ausdauer</button></li>
+      <li><button class="option-btn" data-q="16" data-opt="B">B&nbsp; über Leas Berufswunsch</button></li>
+      <li><button class="option-btn" data-q="16" data-opt="C">C&nbsp; über Leas Nebenverdienst</button></li>
+      <li><button class="option-btn" data-q="16" data-opt="D">D&nbsp; über Leas Trainingsprogramm</button></li>
+    </ul>
+    <div class="feedback" id="fb16"></div>
+
+    <!-- VRAAG 17 -->
+    <h2>1p 17 &nbsp;Wie denkt Lea über Karneval? (5. Absatz)</h2>
+    <ul class="options" id="q17-options">
+      <li><button class="option-btn" data-q="17" data-opt="A">A&nbsp; Er gefällt ihr nicht so gut.</button></li>
+      <li><button class="option-btn" data-q="17" data-opt="B">B&nbsp; Er macht ihr schon seit ihrer Kindheit Spaß.</button></li>
+      <li><button class="option-btn" data-q="17" data-opt="C">C&nbsp; Sie ist nur von der Musik begeistert.</button></li>
+      <li><button class="option-btn" data-q="17" data-opt="D">D&nbsp; Sie mag das Schminken und Verkleiden.</button></li>
+    </ul>
+    <div class="feedback" id="fb17"></div>
+
+    <!-- VRAAG 18 -->
+    <h2>1p 18 &nbsp;„Hauptsache Tempo.“ (5. Absatz)<br>
+    Was ist damit gemeint?</h2>
+    <ul class="options" id="q18-options">
+      <li><button class="option-btn" data-q="18" data-opt="A">A&nbsp; Beim Training steht viel auf dem Programm.</button></li>
+      <li><button class="option-btn" data-q="18" data-opt="B">B&nbsp; Lea macht am liebsten alles ohne Pause.</button></li>
+      <li><button class="option-btn" data-q="18" data-opt="C">C&nbsp; Tanzmariechen tanzen zu schnellen Liedern.</button></li>
+    </ul>
+    <div class="feedback" id="fb18"></div>
+
+    <!-- VRAAG 19 -->
+    <h2>1p 19 &nbsp;Was passt im Sinne des Textes in die Lücke im 6. Absatz?</h2>
+    <ul class="options" id="q19-options">
+      <li><button class="option-btn" data-q="19" data-opt="A">A&nbsp; erfreut</button></li>
+      <li><button class="option-btn" data-q="19" data-opt="B">B&nbsp; interessiert</button></li>
+      <li><button class="option-btn" data-q="19" data-opt="C">C&nbsp; nicht beeindruckt</button></li>
+      <li><button class="option-btn" data-q="19" data-opt="D">D&nbsp; stört</button></li>
+    </ul>
+    <div class="feedback" id="fb19"></div>
+
+    <!-- VRAAG 20 -->
+    <h2>1p 20 &nbsp;„Wer Lea … klappt bestimmt!“ (letzter Satz des Textes)<br>
+    Was wird hier zum Ausdruck gebracht?</h2>
+    <ul class="options" id="q20-options">
+      <li><button class="option-btn" data-q="20" data-opt="A">A&nbsp; Mitleid</button></li>
+      <li><button class="option-btn" data-q="20" data-opt="B">B&nbsp; Vertrauen</button></li>
+      <li><button class="option-btn" data-q="20" data-opt="C">C&nbsp; Zweifel</button></li>
+    </ul>
+    <div class="feedback" id="fb20"></div>
+
+  </div>
+</div>
+
+<button class="reset" onclick="resetAll()">Alles opnieuw proberen</button>
+
+<script>
+const answers = {
+  "13": {
+    correct: "B",
+    uitleg:
+      "Juist is B. De auteur stelt de bewering „Tanzmariechen betreiben keinen Leistungssport?“ als vraag en weerlegt die direct: <em>„Wer die 15-jährige Lea auf der Bühne erlebt, ist schnell anderer Meinung.“</em> Hij is het dus níet eens met de bewering dat het geen topsport zou zijn; hij benadrukt het jarenlange training en het talent dat nodig is.",
+    vertaling:
+      "<strong>Tanzmariechen betreiben keinen Leistungssport?</strong> = <em>Doen Tanzmariechen geen topsport?</em> " +
+      "<strong>Wer die 15-jährige Lea auf der Bühne erlebt, ist schnell anderer Meinung.</strong> = <em>Wie de 15-jarige Lea op het podium meemaakt, is snel anders van mening.</em> " +
+      "„anderer Meinung sein“ = een andere mening hebben. De auteur is het dus oneens → B.",
+    markIds: ["m-tempo"]
+  },
+  "14": {
+    correct: "C",
+    uitleg:
+      "Juist is C. Vlak vóór de uitspraak van de trotse moeder staat: Leas grootste wens ging in vervulling, een Solomariechen-Probespiel, en <em>„Die Trainerin hat gleich danach angerufen und gesagt, sie würde mit Lea arbeiten“</em>. De moeder is er trots op dat Lea nu met (top)trainer Jana Pearce mag werken. " +
+      "A (jong begonnen) en D (lang lid) worden wel genoemd, maar zijn niet de reden voor trots op dít moment; B (Duitse kampioenschappen) staat er niet.",
+    vertaling:
+      "<strong>„Die Trainerin hat gleich danach angerufen und gesagt, sie würde mit Lea arbeiten“, sagt die stolze Mama dazu.</strong> = <em>„De trainster belde meteen daarna en zei dat ze met Lea zou werken“, zegt de trotse mama daarbij.</em> " +
+      "„die Trainerin“ = de trainster; „stolz“ = trots. → C.",
+    markIds: ["m-probe"]
+  },
+  "15": {
+    correct: "1 niet, 2 wel, 3 wel, 4 niet",
+    uitleg:
+      "1 <strong>niet</strong> — er staat alleen dat ze het reddingszwemmerdiploma in zilver heeft en in de wedstrijdgroep zwemt; niet dat ze al meerdere keren kampioen is geworden. " +
+      "2 <strong>wel</strong> — <em>„Im Sommer halte ich auch Wache am Badesee.“</em> Ze houdt dus in de zomer toezicht bij een plas. " +
+      "3 <strong>wel</strong> — <em>„In der Schule leitet Lea einen Tanzkurs für Schüler der Unterstufe.“</em> Ze geeft dus dansles aan leerlingen van haar school. " +
+      "4 <strong>niet</strong> — <em>„Leiden unter so viel Engagement die Noten? In Leas Fall nicht. Lea hat einen sehr guten Notendurchschnitt.“</em> Haar cijfers lijden er dus níet onder.",
+    vertaling:
+      "<strong>Im Sommer halte ich auch Wache am Badesee.</strong> = <em>In de zomer houd ik ook de wacht bij het meer.</em> " +
+      "<strong>In der Schule leitet Lea einen Tanzkurs für Schüler der Unterstufe.</strong> = <em>Op school leidt Lea een danscursus voor leerlingen van de onderbouw.</em> " +
+      "<strong>Leiden unter so viel Engagement die Noten? In Leas Fall nicht.</strong> = <em>Lijden de cijfers onder zoveel inzet? In Leas geval niet.</em>",
+    markIds: ["m-wache", "m-tanzkurs", "m-noten"]
+  },
+  "16": {
+    correct: "A",
+    uitleg:
+      "Juist is A. In alinea 4 zegt moeder Nina: <em>„Ich weiß auch nicht, woher sie die ganze Energie nimmt“</em> — ze is verbaasd over Leas (energie en) uithoudingsvermogen. " +
+      "B (beroepswens), C (bijverdienste) en D (trainingsprogramma) zijn wel onderwerpen in de alinea, maar niet waarover Nina zich verbaast.",
+    vertaling:
+      "<strong>„Ich weiß auch nicht, woher sie die ganze Energie nimmt“, fragt sich Nina immer wieder.</strong> = <em>„Ik weet ook niet waar ze al die energie vandaan haalt“, vraagt Nina zich steeds weer af.</em> " +
+      "„die Energie“ = de energie; „woher“ = waar vandaan. → A (uitdauer/uithoudingsvermogen).",
+    markIds: ["m-energie"]
+  },
+  "17": {
+    correct: "A",
+    uitleg:
+      "Juist is A. Lea zegt in alinea 5: <em>„So richtig mag Lea den eigentlich nicht: ‚Das ist nicht so meins‘, gibt sie zu.“</em> Ze houdt dus niet zo van carnaval. " +
+      "B (plezier sinds kindsheid) klopt niet — alleen het dansen vindt ze altijd al geweldig; C (alleen van muziek) en D (schminken/verkleden) worden niet als haar voorkeur genoemd.",
+    vertaling:
+      "<strong>So richtig mag Lea den eigentlich nicht: „Das ist nicht so meins“, gibt sie zu.</strong> = <em>Echt leuk vindt Lea het eigenlijk niet: „Dat is niet zo mijn ding“, geeft ze toe.</em> " +
+      "„mögen“ = leuk vinden; „nicht so meins“ = niet zo mijn ding. → A.",
+    markIds: ["m-karneval"]
+  },
+  "18": {
+    correct: "C",
+    uitleg:
+      "Juist is C. Met <em>„Hauptsache Tempo“</em> wordt bedoeld dat het bij de choreografieën van de Tanzmariechen vooral om snelheid gaat: er worden niet per se carnavalsliedjes gebruikt, het belangrijkste is een hoog tempo. " +
+      "A (veel op het programma) en B (alles zonder pauze) zijn interpretaties die niet direct uit de zin volgen.",
+    vertaling:
+      "<strong>Es sind auch nicht unbedingt Karnevalslieder, die bei den Tanzmariechen-Choreografien zum Einsatz kommen. Hauptsache Tempo.</strong> = <em>Het zijn ook niet per se carnavalsliedjes die bij de choreografieën van de Tanzmariechen gebruikt worden. Hoofdzaak is tempo.</em> " +
+      "„zum Einsatz kommen“ = gebruikt worden; „das Tempo“ = het tempo. → C.",
+    markIds: ["m-hauptsache"]
+  },
+  "19": {
+    correct: "C",
+    uitleg:
+      "Juist is C (nicht beeindruckt). In de leemte staat: <em>„Was sie und ihre Mutter nicht beeindruckt: Wenn die Leute meinen, das sei doch nur ‚ein bisschen Herumspringen‘ auf der Bühne.“</em> Moeder en dochter zijn dus niet onder de indruk van (of: trekken zich niets aan van) de opmerking dat het maar „een beetje rondspringen“ zou zijn. Daarna volgt de weerlegging: het is echte topsport. " +
+      "A (verheugd), B (geïnteresseerd) en D (stoort) passen niet in de zin en de logica van de tekst.",
+    vertaling:
+      "<strong>Was sie und ihre Mutter nicht beeindruckt: Wenn die Leute meinen, das sei doch nur „ein bisschen Herumspringen“ auf der Bühne.</strong> = <em>Wat haar en haar moeder niet imponeert: als de mensen menen dat het toch maar „een beetje rondspringen“ op het podium is.</em> " +
+      "„beeindrucken“ = imponeren/onder de indruk brengen; „herumspringen“ = rondspringen. → C.",
+    markIds: ["m-luecke"]
+  },
+  "20": {
+    correct: "B",
+    uitleg:
+      "Juist is B (vertrouwen). Met <em>„Wer Lea kennt, weiß: Das klappt bestimmt!“</em> drukt de schrijver vertrouwen uit: wie Lea kent, weet zeker dat het gaat lukken. " +
+      "Mitleid (medelijden) en Zweifel (twijfel) passen niet bij deze positieve, bemoedigende slotzin.",
+    vertaling:
+      "<strong>Wer Lea kennt, weiß: Das klappt bestimmt!</strong> = <em>Wie Lea kent, weet: dat lukt zeker!</em> " +
+      "„klappen“ = lukken; „bestimmt“ = zeker. → B (vertrouwen).",
+    markIds: ["m-klappt"]
+  }
+};
+
+/* ---------- meerkeuze ---------- */
+function showFeedback(q, isCorrect) {
+  const data = answers[q];
+  const fb = document.getElementById("fb" + q);
+  fb.className = "feedback show " + (isCorrect ? "ok" : "nok");
+  fb.innerHTML =
+    (isCorrect ? "✅ <strong>Juist!</strong> " : "❌ <strong>Onjuist.</strong> Het juiste antwoord is <strong>" + data.correct + "</strong>. ") +
+    '<div class="uitleg">' + data.uitleg + "</div>" +
+    '<div class="vertaling"><strong>Uitleg van de Duitse zin(nen):</strong><br>' + data.vertaling + "</div>";
+  (data.markIds || []).forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add("active");
+  });
+}
+
+function handleClick(e) {
+  const btn = e.target.closest(".option-btn");
+  if (!btn || btn.disabled) return;
+
+  const q = btn.dataset.q;
+  const opt = btn.dataset.opt;
+  const data = answers[q];
+  const isCorrect = opt === data.correct;
+
+  document.querySelectorAll('#q' + q + '-options .option-btn').forEach(b => {
+    b.disabled = true;
+    if (b.dataset.opt === opt) b.classList.add(isCorrect ? "correct" : "wrong");
+    if (!isCorrect && b.dataset.opt === data.correct) b.classList.add("correct");
+  });
+
+  showFeedback(q, isCorrect);
+}
+
+document.querySelectorAll(".option-btn").forEach(btn => {
+  btn.addEventListener("click", handleClick);
+});
+
+/* ---------- wel/niet ---------- */
+function checkBeweringen() {
+  const juist = { b1: "niet", b2: "wel", b3: "wel", b4: "niet" };
+  let goed = 0;
+  let totaal = 4;
+  let details = [];
+
+  for (const naam in juist) {
+    const gekozen = document.querySelector('input[name="' + naam + '"]:checked');
+    const ok = gekozen && gekozen.value === juist[naam];
+    if (ok) goed++;
+    details.push((ok ? "✅" : "❌") + " bewering " + naam.replace("b", "") + ": " + juist[naam]);
+  }
+
+  const data = answers[15];
+  const fb = document.getElementById("fb15");
+  fb.className = "feedback show " + (goed === totaal ? "ok" : "nok");
+  fb.innerHTML =
+    (goed === totaal ? "✅ <strong>Alles juist!</strong> " : "❌ <strong>" + goed + " van " + totaal + " juist.</strong> ") +
+    '<div class="uitleg">' + details.join("<br>") + "<br><br>" + data.uitleg + "</div>" +
+    '<div class="vertaling"><strong>Uitleg van de Duitse zin(nen):</strong><br>' + data.vertaling + "</div>";
+  (data.markIds || []).forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add("active");
+  });
+}
+
+/* ---------- reset ---------- */
+function resetAll() {
+  document.querySelectorAll(".option-btn").forEach(b => {
+    b.disabled = false;
+    b.classList.remove("correct", "wrong");
+  });
+  document.querySelectorAll(".feedback").forEach(f => {
+    f.className = "feedback";
+    f.innerHTML = "";
+  });
+  document.querySelectorAll("mark").forEach(m => m.classList.remove("active"));
+  document.querySelectorAll('.bewering-tabel input[type="radio"]').forEach(r => r.checked = false);
+}
+</script>
+
+</body>
+</html>
