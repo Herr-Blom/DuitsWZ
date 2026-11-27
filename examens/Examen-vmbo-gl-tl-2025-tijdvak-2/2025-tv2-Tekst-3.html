@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neugier ist mein Motor – oefening</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    max-width: 1280px;
+    margin: 30px auto;
+    padding: 0 16px;
+    line-height: 1.6;
+    color: #222;
+    background: #fafafa;
+  }
+  h1 { font-size: 1.4em; border-bottom: 2px solid #333; padding-bottom: 6px; }
+  h2 { font-size: 1.05em; margin-top: 1.6em; }
+  .examen-header {
+    font-size: 1.05em;
+    font-weight: bold;
+    color: #444;
+    letter-spacing: .3px;
+  }
+  .layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    align-items: start;
+    margin-top: 24px;
+  }
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+  }
+  .article {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px 20px;
+    position: sticky;
+    top: 16px;
+    max-height: calc(100vh - 32px);
+    overflow-y: auto;
+  }
+  @media (max-width: 900px) {
+    .article { position: static; max-height: none; overflow-y: visible; }
+  }
+  .article h3 { margin-top: 0; }
+  .source { font-size: .85em; color: #666; margin-top: 12px; }
+  .vragen { min-width: 0; }
+
+  .options { list-style: none; padding-left: 0; }
+  .options li { margin: 6px 0; }
+  .option-btn {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 9px 12px;
+    font-size: .97em;
+    font-family: inherit;
+    border: 1.5px solid #999;
+    border-radius: 6px;
+    background: #fff;
+    cursor: pointer;
+    transition: background .15s, border-color .15s;
+  }
+  .option-btn:hover:not(:disabled) { background: #eef4fb; border-color: #4a7fb5; }
+  .option-btn:disabled { cursor: default; opacity: .95; }
+  .option-btn.correct { background: #d8f5d8; border-color: #2e8b2e; font-weight: bold; }
+  .option-btn.wrong { background: #fbdcdc; border-color: #c0392b; }
+
+  .feedback {
+    margin-top: 10px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    display: none;
+    font-size: .95em;
+  }
+  .feedback.show { display: block; }
+  .feedback.ok { background: #e3f6e3; border-left: 5px solid #2e8b2e; }
+  .feedback.nok { background: #fdeaea; border-left: 5px solid #c0392b; }
+  .feedback .uitleg { margin-top: 6px; }
+  .feedback .vertaling {
+    margin-top: 8px;
+    padding: 8px 10px;
+    background: rgba(255,255,255,.65);
+    border-left: 3px solid #888;
+    border-radius: 4px;
+    font-size: .93em;
+  }
+  .feedback .vertaling em { color: #333; }
+
+  mark {
+    background: transparent;
+    color: inherit;
+    padding: 0;
+    border-radius: 3px;
+    transition: background .3s;
+  }
+  mark.active {
+    background: #ffe680;
+    padding: 0 2px;
+    outline: 2px solid #ffb347;
+  }
+
+  .reset {
+    margin-top: 24px;
+    padding: 8px 16px;
+    font-family: inherit;
+    font-size: .95em;
+    border: 1.5px solid #555;
+    background: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .reset:hover { background: #eee; }
+</style>
+</head>
+<body>
+
+<p class="examen-header">Examen vmbo gl/tl 2025 Tijdvak 2</p>
+<h1>Tekst 3 – Neugier ist mein Motor</h1>
+
+<div class="layout">
+
+  <!-- ================= TEKST (links) ================= -->
+  <div class="article">
+    <h3>Neugier ist mein Motor</h3>
+    <p>
+      <mark id="m-inleiding">In der TV-Sendung Checker Tobi checkt Tobi Krell unterschiedliche Themen: Das können Sportarten sein ebenso wie politische oder historische Themen, aber auch Plastik, Trinkwasser oder Handy. Seit 2013 ist der 37-Jährige der Moderator in der Checker-Welt des Kinderkanals KiKa. Morgen startet ein zweiter Kinofilm mit dem TV-Star, der hier im Interview über die Dreharbeiten und seinen Wohnort München spricht.</mark>
+    </p>
+    <p>
+      <strong>(1)</strong> Was ist so schön daran, Kindern die Welt zu erklären? Tobi: <mark id="m-neugierig">Ich bin selbst sehr neugierig und habe Spaß daran, die Welt zu entdecken und Neues herauszufinden. Vielleicht bin ich sogar fast ein bisschen süchtig nach Wissen. Ich fand es als Kind toll, Wissenssendungen zu gucken, wie zum Beispiel Die Sendung mit der Maus und Löwenzahn. Und ich liebe es, solche Sendungen nun selbst machen zu dürfen.</mark>
+    </p>
+    <p>
+      <strong>(2)</strong> Sie zeigen dem Publikum Vietnam, Brasilien, die Mongolei und so sieht man, dass die Menschen dort ein ganz anderes Leben führen. Was hat Sie am meisten zum Nachdenken gebracht? <mark id="m-brazilie">Ich glaube, für mich war das gerodete Feld in Brasilien die heftigste Erfahrung, zumal wir über Tage mit der Bevölkerung vor Ort gedreht haben und ihnen dabei nähergekommen sind. Das hat mich sehr betroffen gemacht. Nachgewirkt hat aber vor allem die Tatsache, dass dort Menschen sind, deren Lebensraum wir mitbedrohen. Das sind Erfahrungen, die mich nicht mehr loslassen.</mark>
+    </p>
+    <p>
+      <strong>(3)</strong> Im Film machen Sie ganz verrückte Dinge, klettern in 300 Metern Höhe über dem Regenwald. Was war für Sie die größte Überwindung? Tatsächlich fällt mir die Höhe wie auf dem Turm in Brasilien überhaupt nicht mehr schwer, seitdem ich in der ersten Checker-Sendung meine Höhenangst <strong>6</strong> habe. <mark id="m-grot">Was für mich am härtesten war, war die Kälte in der Mongolei und die Bleibe in einer Grotte: Wir waren vier Tage dort und alles war feucht – das war das körperlich Anstrengendste.</mark>
+    </p>
+    <p>
+      <strong>(4)</strong> Mag man da nicht manchmal auch auf Pause drücken? Ja, nach der Grotte schon. Wir waren drei Nächte dort, haben dort auch übernachtet mit viel zu wenig Schlaf; außerdem träumt man jede Nacht vom Film. Ich komme dann meist gar nicht mehr aus dieser Situation raus, und da war ich danach wirklich platt. <mark id="m-team">Aber ich habe das Glück, dass im Team nur Freunde sind. Wir hatten viel Spaß die ganze Zeit, deshalb kommt man gut durch.</mark>
+    </p>
+    <p>
+      <strong>(5)</strong> Wie viel Tobias Krell steckt denn in Checker Tobi? Auf der Straße werde ich natürlich als Checker Tobi wahrgenommen, auch wenn da Tobias Krell herumläuft, aber die Trennung von dieser Figur und mir selbst, die ist gar nicht so groß. <mark id="m-figuur">Wenn ich nicht als Tobias Krell wahnsinnig neugierig wäre, dann könnte ich gar nicht glaubhaft Checker Tobi sein.</mark>
+    </p>
+    <p>
+      <strong>(6)</strong> Du lebst seit vielen Jahren in München. Warum, und was gefällt dir hier besonders? <mark id="m-munchen">Ich bin hier vor zehn Jahren gelandet, weil ich Checker Tobi wurde. Ich habe mich am Anfang echt schwergetan mit München im Kontrast zu Berlin, wo ich davor gewohnt hatte. Mittlerweile lebe ich sehr gern hier. Ich mag es, in der Stadt unterwegs zu sein. Die Stadt München ist groß genug, um sie jeden Tag neu zu entdecken.</mark>
+    </p>
+    <p class="source">Tageszeitung München, 4 oktober 2023</p>
+  </div>
+
+  <!-- ================= VRAGEN (rechts) ================= -->
+  <div class="vragen">
+
+    <!-- VRAAG 3 -->
+    <h2>1p 3 &nbsp;Was wird in der Einleitung über Tobi Krell ausgesagt?</h2>
+    <ul class="options" id="q3-options">
+      <li><button class="option-btn" data-q="3" data-opt="A">A&nbsp; Er arbeitet ab und zu als Kameramann.</button></li>
+      <li><button class="option-btn" data-q="3" data-opt="B">B&nbsp; Er beendet demnächst seine Fernseh-Arbeit als Checker Tobi.</button></li>
+      <li><button class="option-btn" data-q="3" data-opt="C">C&nbsp; Er ist eine bekannte Person im deutschen Fernsehen.</button></li>
+      <li><button class="option-btn" data-q="3" data-opt="D">D&nbsp; Er prüft, ob Filme für Kinder geeignet sind.</button></li>
+    </ul>
+    <div class="feedback" id="fb3"></div>
+
+    <!-- VRAAG 4 -->
+    <h2>1p 4 &nbsp;Worüber spricht Tobi im 1. Absatz?</h2>
+    <ul class="options" id="q4-options">
+      <li><button class="option-btn" data-q="4" data-opt="A">A&nbsp; dass er bestimmte Vorbildsendungen hat</button></li>
+      <li><button class="option-btn" data-q="4" data-opt="B">B&nbsp; dass er Tiersendungen liebt</button></li>
+      <li><button class="option-btn" data-q="4" data-opt="C">C&nbsp; welche Sendungen er gemacht hat</button></li>
+      <li><button class="option-btn" data-q="4" data-opt="D">D&nbsp; wie er Themen für seine Sendungen findet</button></li>
+    </ul>
+    <div class="feedback" id="fb4"></div>
+
+    <!-- VRAAG 5 -->
+    <h2>1p 5 &nbsp;Was machen die Worte von Tobi im 2. Absatz deutlich?</h2>
+    <ul class="options" id="q5-options">
+      <li><button class="option-btn" data-q="5" data-opt="A">A&nbsp; Er war sehr beeindruckt davon, wie es Menschen in bestimmten Ländern geht.</button></li>
+      <li><button class="option-btn" data-q="5" data-opt="B">B&nbsp; Er hat Mitleid mit den Menschen in Brasilien, da sie so arm sind.</button></li>
+      <li><button class="option-btn" data-q="5" data-opt="C">C&nbsp; Er hat sich gewundert, wie nett die Menschen in den von ihm besuchten Ländern waren.</button></li>
+    </ul>
+    <div class="feedback" id="fb5"></div>
+
+    <!-- VRAAG 6 -->
+    <h2>1p 6 &nbsp;Welches Wort passt im Sinne des Textes in die Lücke im 3. Absatz?</h2>
+    <ul class="options" id="q6-options">
+      <li><button class="option-btn" data-q="6" data-opt="A">A&nbsp; bekommen</button></li>
+      <li><button class="option-btn" data-q="6" data-opt="B">B&nbsp; besiegt</button></li>
+      <li><button class="option-btn" data-q="6" data-opt="C">C&nbsp; vergessen</button></li>
+    </ul>
+    <div class="feedback" id="fb6"></div>
+
+    <!-- VRAAG 7 -->
+    <h2>1p 7 &nbsp;Was sagt Tobi im 4. Absatz über seine Bleibe in einer Grotte?</h2>
+    <ul class="options" id="q7-options">
+      <li><button class="option-btn" data-q="7" data-opt="A">A&nbsp; Er hat dadurch sehr viele Kilos abgenommen.</button></li>
+      <li><button class="option-btn" data-q="7" data-opt="B">B&nbsp; Er hat dank seiner Kollegen die Zeit dort gut überstanden.</button></li>
+      <li><button class="option-btn" data-q="7" data-opt="C">C&nbsp; Er hat dort viele Angstträume gehabt.</button></li>
+      <li><button class="option-btn" data-q="7" data-opt="D">D&nbsp; Er ist durch seine Erfahrungen dort mit seiner Arbeit aufgehört.</button></li>
+    </ul>
+    <div class="feedback" id="fb7"></div>
+
+    <!-- VRAAG 8 -->
+    <h2>1p 8 &nbsp;Was macht der 5. Absatz deutlich?</h2>
+    <ul class="options" id="q8-options">
+      <li><button class="option-btn" data-q="8" data-opt="A">A&nbsp; Es stört Tobi, dass er auf der Straße nicht mit seinem echten Namen angesprochen wird.</button></li>
+      <li><button class="option-btn" data-q="8" data-opt="B">B&nbsp; Tobi findet es manchmal schwierig, kein Privatleben mehr zu haben.</button></li>
+      <li><button class="option-btn" data-q="8" data-opt="C">C&nbsp; Tobi hat daran gezweifelt, ob er für die Rolle von Checker Tobi überhaupt geeignet war.</button></li>
+      <li><button class="option-btn" data-q="8" data-opt="D">D&nbsp; Tobis Charaktereigenschaften helfen ihm gut dabei, die Rolle von Checker Tobi zu spielen.</button></li>
+    </ul>
+    <div class="feedback" id="fb8"></div>
+
+    <!-- VRAAG 9 -->
+    <h2>1p 9 &nbsp;Welche Aussage über Tobi ist dem 6. Absatz nach richtig?</h2>
+    <ul class="options" id="q9-options">
+      <li><button class="option-btn" data-q="9" data-opt="A">A&nbsp; Er findet München mittlerweile viel schöner als Berlin.</button></li>
+      <li><button class="option-btn" data-q="9" data-opt="B">B&nbsp; Er hat in München bereits viele neue Leute kennengelernt.</button></li>
+      <li><button class="option-btn" data-q="9" data-opt="C">C&nbsp; Er ist wegen seiner Arbeit nach München gezogen.</button></li>
+      <li><button class="option-btn" data-q="9" data-opt="D">D&nbsp; Er verirrt sich noch jeden Tag in München.</button></li>
+    </ul>
+    <div class="feedback" id="fb9"></div>
+
+  </div>
+</div>
+
+<button class="reset" onclick="resetAll()">Alles opnieuw proberen</button>
+
+<script>
+const answers = {
+  "3": {
+    correct: "C",
+    uitleg:
+      "Juist is C. In de inleiding staat: <em>„Seit 2013 ist der 37-Jährige der Moderator in der Checker-Welt des Kinderkanals KiKa. Morgen startet ein zweiter Kinofilm mit dem TV-Star...“</em> Hij is presentator en er komt een bioscoopfilm met hem — hij is dus een bekende persoon op de Duitse televisie. " +
+      "A (af en toe cameraman) staat er niet; B (stopt binnenkort als Checker Tobi) staat er niet; D (keurt films voor kinderen) staat er niet — hij presenteert een programma waarin hij onderwerpen checkt, niet films.",
+    vertaling:
+      "<strong>Seit 2013 ist der 37-Jährige der Moderator in der Checker-Welt des Kinderkanals KiKa.</strong> = <em>Sinds 2013 is de 37-jarige de presentator in de Checker-wereld van de kinderzender KiKa.</em> " +
+      "<strong>Morgen startet ein zweiter Kinofilm mit dem TV-Star.</strong> = <em>Morgen gaat een tweede bioscoopfilm met de tv-ster in première.</em> → C.",
+    markIds: ["m-inleiding"]
+  },
+  "4": {
+    correct: "A",
+    uitleg:
+      "Juist is A. In alinea 1 zegt Tobi: <em>„Ich fand es als Kind toll, Wissenssendungen zu gucken, wie zum Beispiel Die Sendung mit der Maus und Löwenzahn. Und ich liebe es, solche Sendungen nun selbst machen zu dürfen.“</em> Hij noemt dus voorbeeldsendungen (Vorbildsendungen) die hij vroeger graag keek. " +
+      "B (diersendungen) staat er niet; C (welke programma's hij heeft gemaakt) is te breed — hij noemt juist programma's die hij als kind keek; D (hoe hij onderwerpen vindt) staat er niet.",
+    vertaling:
+      "<strong>Ich fand es als Kind toll, Wissenssendungen zu gucken, wie zum Beispiel Die Sendung mit der Maus und Löwenzahn.</strong> = <em>Ik vond het als kind geweldig om kennisprogramma's te kijken, zoals bijvoorbeeld Die Sendung mit der Maus en Löwenzahn.</em> → A.",
+    markIds: ["m-neugierig"]
+  },
+  "5": {
+    correct: "A",
+    uitleg:
+      "Juist is A. In alinea 2 zegt Tobi over het gekapte veld in Brazilië: <em>„Das hat mich sehr betroffen gemacht. Nachgewirkt hat aber vor allem die Tatsache, dass dort Menschen sind, deren Lebensraum wir mitbedrohen.“</em> Hij was dus diep onder de indruk van hoe het de mensen daar vergaat. " +
+      "B (medelijden omdat ze zo arm zijn) staat er niet — het gaat om hun leefruimte die bedreigd wordt, niet om armoede; C (verbaasd over hoe aardig de mensen waren) staat er niet.",
+    vertaling:
+      "<strong>Das hat mich sehr betroffen gemacht.</strong> = <em>Dat heeft me diep geraakt.</em> " +
+      "<strong>Nachgewirkt hat aber vor allem die Tatsache, dass dort Menschen sind, deren Lebensraum wir mitbedrohen.</strong> = <em>Maar vooral het feit dat daar mensen zijn wier leefruimte wij mede bedreigen, heeft doorgewerkt.</em> → A.",
+    markIds: ["m-brazilie"]
+  },
+  "6": {
+    correct: "B",
+    uitleg:
+      "Juist is B (besiegt). In alinea 3 staat: <em>„Tatsächlich fällt mir die Höhe wie auf dem Turm in Brasilien überhaupt nicht mehr schwer, seitdem ich in der ersten Checker-Sendung meine Höhenangst besiegt habe.“</em> Hij heeft zijn hoogtevrees dus overwonnen (verslagen). " +
+      "„bekommen“ (gekregen) en „vergessen“ (vergeten) passen niet: je kunt je hoogtevrees niet 'krijgen' als je er al last van had, en 'vergeten' is iets anders dan overwinnen.",
+    vertaling:
+      "<strong>... seitdem ich in der ersten Checker-Sendung meine Höhenangst besiegt habe.</strong> = <em>... sinds ik in de eerste Checker-uitzending mijn hoogtevrees heb overwonnen.</em> " +
+      "„besiegen“ = verslaan/overwinnen; „die Höhenangst“ = de hoogtevrees. → B.",
+    markIds: ["m-grot"]
+  },
+  "7": {
+    correct: "B",
+    uitleg:
+      "Juist is B. In alinea 4 zegt Tobi: <em>„Aber ich habe das Glück, dass im Team nur Freunde sind. Wir hatten viel Spaß die ganze Zeit, deshalb kommt man gut durch.“</em> Dank zijn collega's (het team van vrienden) kwam hij er dus goed doorheen. " +
+      "A (veel kilo's afgevallen) staat er niet; C (veel angstdromen) staat er niet — hij droomt van de film, niet per se angstdromen; D (gestopt met zijn werk) staat er niet.",
+    vertaling:
+      "<strong>Aber ich habe das Glück, dass im Team nur Freunde sind. Wir hatten viel Spaß die ganze Zeit, deshalb kommt man gut durch.</strong> = <em>Maar ik heb het geluk dat er in het team alleen maar vrienden zijn. We hadden de hele tijd veel plezier, daarom kom je er goed doorheen.</em> → B.",
+    markIds: ["m-team"]
+  },
+  "8": {
+    correct: "D",
+    uitleg:
+      "Juist is D. In alinea 5 zegt Tobi: <em>„Wenn ich nicht als Tobias Krell wahnsinnig neugierig wäre, dann könnte ich gar nicht glaubhaft Checker Tobi sein.“</em> Zijn eigen karaktereigenschap (enorme nieuwsgierigheid) helpt hem dus om de rol van Checker Tobi overtuigend te spelen. " +
+      "A (stoort zich eraan niet met echte naam aangesproken te worden) staat er niet — hij legt juist uit dat het verschil klein is; B (moeilijk geen privéleven) staat er niet; C (twijfelde of hij geschikt was) staat er niet.",
+    vertaling:
+      "<strong>Wenn ich nicht als Tobias Krell wahnsinnig neugierig wäre, dann könnte ich gar nicht glaubhaft Checker Tobi sein.</strong> = <em>Als ik als Tobias Krell niet waanzinnig nieuwsgierig zou zijn, dan zou ik helemaal niet geloofwaardig Checker Tobi kunnen zijn.</em> → D.",
+    markIds: ["m-figuur"]
+  },
+  "9": {
+    correct: "C",
+    uitleg:
+      "Juist is C. In alinea 6 zegt Tobi: <em>„Ich bin hier vor zehn Jahren gelandet, weil ich Checker Tobi wurde.“</em> Hij is dus naar München verhuisd vanwege zijn werk (hij werd Checker Tobi). " +
+      "A (München veel mooier dan Berlijn) klopt niet — hij zegt juist dat hij het in het begin moeilijk had in vergelijking met Berlijn; B (veel nieuwe mensen leren kennen) staat er niet; D (verdwaalt nog elke dag) staat er niet — hij zegt dat de stad groot genoeg is om elke dag opnieuw te ontdekken.",
+    vertaling:
+      "<strong>Ich bin hier vor zehn Jahren gelandet, weil ich Checker Tobi wurde.</strong> = <em>Ik ben hier tien jaar geleden beland, omdat ik Checker Tobi werd.</em> → C.",
+    markIds: ["m-munchen"]
+  }
+};
+
+/* ---------- meerkeuze ---------- */
+function showFeedback(q, isCorrect) {
+  const data = answers[q];
+  const fb = document.getElementById("fb" + q);
+  fb.className = "feedback show " + (isCorrect ? "ok" : "nok");
+  fb.innerHTML =
+    (isCorrect ? "✅ <strong>Juist!</strong> " : "❌ <strong>Onjuist.</strong> Het juiste antwoord is <strong>" + data.correct + "</strong>. ") +
+    '<div class="uitleg">' + data.uitleg + "</div>" +
+    '<div class="vertaling"><strong>Uitleg van de Duitse zin(nen):</strong><br>' + data.vertaling + "</div>";
+  (data.markIds || []).forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add("active");
+  });
+}
+
+function handleClick(e) {
+  const btn = e.target.closest(".option-btn");
+  if (!btn || btn.disabled) return;
+
+  const q = btn.dataset.q;
+  const opt = btn.dataset.opt;
+  const data = answers[q];
+  const isCorrect = opt === data.correct;
+
+  document.querySelectorAll('#q' + q + '-options .option-btn').forEach(b => {
+    b.disabled = true;
+    if (b.dataset.opt === opt) b.classList.add(isCorrect ? "correct" : "wrong");
+    if (!isCorrect && b.dataset.opt === data.correct) b.classList.add("correct");
+  });
+
+  showFeedback(q, isCorrect);
+}
+
+document.querySelectorAll(".option-btn").forEach(btn => {
+  btn.addEventListener("click", handleClick);
+});
+
+/* ---------- reset ---------- */
+function resetAll() {
+  document.querySelectorAll(".option-btn").forEach(b => {
+    b.disabled = false;
+    b.classList.remove("correct", "wrong");
+  });
+  document.querySelectorAll(".feedback").forEach(f => {
+    f.className = "feedback";
+    f.innerHTML = "";
+  });
+  document.querySelectorAll("mark").forEach(m => m.classList.remove("active"));
+}
+</script>
+
+</body>
+</html>

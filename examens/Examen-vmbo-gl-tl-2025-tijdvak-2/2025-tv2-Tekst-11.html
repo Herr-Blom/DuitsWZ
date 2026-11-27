@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fahnder mit kalten Schnauzen – oefening</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    max-width: 1280px;
+    margin: 30px auto;
+    padding: 0 16px;
+    line-height: 1.6;
+    color: #222;
+    background: #fafafa;
+  }
+  h1 { font-size: 1.4em; border-bottom: 2px solid #333; padding-bottom: 6px; }
+  h2 { font-size: 1.05em; margin-top: 1.6em; }
+  .examen-header {
+    font-size: 1.05em;
+    font-weight: bold;
+    color: #444;
+    letter-spacing: .3px;
+  }
+  .layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    align-items: start;
+    margin-top: 24px;
+  }
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+  }
+  .article {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px 20px;
+    position: sticky;
+    top: 16px;
+    max-height: calc(100vh - 32px);
+    overflow-y: auto;
+  }
+  @media (max-width: 900px) {
+    .article { position: static; max-height: none; overflow-y: visible; }
+  }
+  .article h3 { margin-top: 0; }
+  .source { font-size: .85em; color: #666; margin-top: 12px; }
+  .vragen { min-width: 0; }
+
+  .options { list-style: none; padding-left: 0; }
+  .options li { margin: 6px 0; }
+  .option-btn {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 9px 12px;
+    font-size: .97em;
+    font-family: inherit;
+    border: 1.5px solid #999;
+    border-radius: 6px;
+    background: #fff;
+    cursor: pointer;
+    transition: background .15s, border-color .15s;
+  }
+  .option-btn:hover:not(:disabled) { background: #eef4fb; border-color: #4a7fb5; }
+  .option-btn:disabled { cursor: default; opacity: .95; }
+  .option-btn.correct { background: #d8f5d8; border-color: #2e8b2e; font-weight: bold; }
+  .option-btn.wrong { background: #fbdcdc; border-color: #c0392b; }
+
+  .feedback {
+    margin-top: 10px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    display: none;
+    font-size: .95em;
+  }
+  .feedback.show { display: block; }
+  .feedback.ok { background: #e3f6e3; border-left: 5px solid #2e8b2e; }
+  .feedback.nok { background: #fdeaea; border-left: 5px solid #c0392b; }
+  .feedback .uitleg { margin-top: 6px; }
+  .feedback .vertaling {
+    margin-top: 8px;
+    padding: 8px 10px;
+    background: rgba(255,255,255,.65);
+    border-left: 3px solid #888;
+    border-radius: 4px;
+    font-size: .93em;
+  }
+  .feedback .vertaling em { color: #333; }
+
+  mark {
+    background: transparent;
+    color: inherit;
+    padding: 0;
+    border-radius: 3px;
+    transition: background .3s;
+  }
+  mark.active {
+    background: #ffe680;
+    padding: 0 2px;
+    outline: 2px solid #ffb347;
+  }
+
+  .reset {
+    margin-top: 24px;
+    padding: 8px 16px;
+    font-family: inherit;
+    font-size: .95em;
+    border: 1.5px solid #555;
+    background: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .reset:hover { background: #eee; }
+</style>
+</head>
+<body>
+
+<p class="examen-header">Examen vmbo gl/tl 2025 Tijdvak 2</p>
+<h1>Tekst 11 – Fahnder mit kalten Schnauzen</h1>
+
+<div class="layout">
+
+  <!-- ================= TEKST (links) ================= -->
+  <div class="article">
+    <h3>Fahnder mit kalten Schnauzen</h3>
+    <p>
+      <strong>Vierbeiner erschnüffelten Hunderte Kilo an Schmuggelwaren</strong>
+    </p>
+    <p>
+      <mark id="m-inleiding">Ob Suchtgift, Zigaretten, Bargeld oder geschützte Tierarten – den 26
+      Zollspürhunden entgeht nichts.</mark>
+    </p>
+    <p>
+      <mark id="m-record">Rekordfund erst vor wenigen Wochen in Tirol: Drogenspürhund „Crack“
+      erschnüffelt in einem LKW 261 Kilo Haschisch im Gesamtwert von
+      2,5 Millionen Euro.</mark> Nur einer der vielen Erfolge der aktuell 26
+      Zollspürhunde in diesem Jahr. <mark id="m-cijfers">Ihre Halbjahresbilanz: Bei etwa 1 500
+      Einsätzen stellten die Fellnasen nicht weniger als 318 Kg an Drogen und
+      Rauchwaren und 70.390 Euro an Bargeld sicher.</mark>
+    </p>
+    <p>
+      Ihr oberster Chef und Finanzminister Gernot Blümel: <mark id="m-riecher">„Viele Erfolge des
+      Zolls verdanken wir nur dem Einsatz der Hundeführer und ihren vierbeinigen Kollegen. Sie haben den richtigen Riecher.“</mark> Was aber nur dank
+      modernster Ausbildungsmethoden möglich ist. <mark id="m-opleiding">Spürhunde werden auf bis
+      zu 20 verschiedene Gerüche konditioniert.</mark>
+    </p>
+    <p class="source">Kronen Zeitung, 13 augustus 2023</p>
+  </div>
+
+  <!-- ================= VRAGEN (rechts) ================= -->
+  <div class="vragen">
+
+    <!-- VRAAG 40 -->
+    <h2>1p 40 &nbsp;Wat maakt deze tekst duidelijk?</h2>
+    <ul class="options" id="q40-options">
+      <li><button class="option-btn" data-q="40" data-opt="A">A&nbsp; De opleiding van speurhonden is succesvol gebleken.</button></li>
+      <li><button class="option-btn" data-q="40" data-opt="B">B&nbsp; Het aantal speurhonden wordt binnenkort uitgebreid.</button></li>
+      <li><button class="option-btn" data-q="40" data-opt="C">C&nbsp; Speurhonden zijn vooral gespecialiseerd in het vinden van sigaretten.</button></li>
+    </ul>
+    <div class="feedback" id="fb40"></div>
+
+  </div>
+</div>
+
+<button class="reset" onclick="resetAll()">Alles opnieuw proberen</button>
+
+<script>
+const answers = {
+  "40": {
+    correct: "A",
+    uitleg:
+      "Juist is A. De tekst laat zien hoeveel succes de 26 douanespeurhonden hebben: een recordvangst van 261 kilo hasj, en in een half jaar bij etwa 1.500 inzetten 318 kg drugs en rookwaren en 70.390 euro contant geld. Dat succes is mogelijk dankzij moderne trainingsmethoden: <em>„Was aber nur dank modernster Ausbildungsmethoden möglich ist. Spürhunde werden auf bis zu 20 verschiedene Gerüche konditioniert.“</em> De opleiding is dus succesvol gebleken. " +
+      "B (aantal speurhonden wordt binnenkort uitgebreid) staat er niet. " +
+      "C (vooral gespecialiseerd in sigaretten) klopt niet — ze zijn op vele geuren getraind (tot 20 verschillende), niet alleen sigaretten.",
+    vertaling:
+      "<strong>Was aber nur dank modernster Ausbildungsmethoden möglich ist. Spürhunde werden auf bis zu 20 verschiedene Gerüche konditioniert.</strong> = <em>Wat echter alleen mogelijk is dankzij de modernste opleidingsmethoden. Speurhonden worden op tot 20 verschillende geuren geconditioneerd.</em> " +
+      "<strong>Ihre Halbjahresbilanz: Bei etwa 1 500 Einsätzen stellten die Fellnasen nicht weniger als 318 Kg an Drogen und Rauchwaren und 70.390 Euro an Bargeld sicher.</strong> = <em>Hun halfjaarcijfers: bij ongeveer 1.500 inzetten namen de viervoeters niet minder dan 318 kg drugs en rookwaren en 70.390 euro contant geld in beslag.</em> → A.",
+    markIds: ["m-opleiding", "m-cijfers"]
+  }
+};
+
+/* ---------- meerkeuze ---------- */
+function showFeedback(q, isCorrect) {
+  const data = answers[q];
+  const fb = document.getElementById("fb" + q);
+  fb.className = "feedback show " + (isCorrect ? "ok" : "nok");
+  fb.innerHTML =
+    (isCorrect ? "✅ <strong>Juist!</strong> " : "❌ <strong>Onjuist.</strong> Het juiste antwoord is <strong>" + data.correct + "</strong>. ") +
+    '<div class="uitleg">' + data.uitleg + "</div>" +
+    '<div class="vertaling"><strong>Uitleg van de Duitse zin(nen):</strong><br>' + data.vertaling + "</div>";
+  (data.markIds || []).forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add("active");
+  });
+}
+
+function handleClick(e) {
+  const btn = e.target.closest(".option-btn");
+  if (!btn || btn.disabled) return;
+
+  const q = btn.dataset.q;
+  const opt = btn.dataset.opt;
+  const data = answers[q];
+  const isCorrect = opt === data.correct;
+
+  document.querySelectorAll('#q' + q + '-options .option-btn').forEach(b => {
+    b.disabled = true;
+    if (b.dataset.opt === opt) b.classList.add(isCorrect ? "correct" : "wrong");
+    if (!isCorrect && b.dataset.opt === data.correct) b.classList.add("correct");
+  });
+
+  showFeedback(q, isCorrect);
+}
+
+document.querySelectorAll(".option-btn").forEach(btn => {
+  btn.addEventListener("click", handleClick);
+});
+
+/* ---------- reset ---------- */
+function resetAll() {
+  document.querySelectorAll(".option-btn").forEach(b => {
+    b.disabled = false;
+    b.classList.remove("correct", "wrong");
+  });
+  document.querySelectorAll(".feedback").forEach(f => {
+    f.className = "feedback";
+    f.innerHTML = "";
+  });
+  document.querySelectorAll("mark").forEach(m => m.classList.remove("active"));
+}
+</script>
+
+</body>
+</html>

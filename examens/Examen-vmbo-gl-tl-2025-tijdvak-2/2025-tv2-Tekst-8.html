@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wertsachen im Meer vor Mallorca verloren? – oefening</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    max-width: 1280px;
+    margin: 30px auto;
+    padding: 0 16px;
+    line-height: 1.6;
+    color: #222;
+    background: #fafafa;
+  }
+  h1 { font-size: 1.4em; border-bottom: 2px solid #333; padding-bottom: 6px; }
+  h2 { font-size: 1.05em; margin-top: 1.6em; }
+  .examen-header {
+    font-size: 1.05em;
+    font-weight: bold;
+    color: #444;
+    letter-spacing: .3px;
+  }
+  .layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    align-items: start;
+    margin-top: 24px;
+  }
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+  }
+  .article {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px 20px;
+    position: sticky;
+    top: 16px;
+    max-height: calc(100vh - 32px);
+    overflow-y: auto;
+  }
+  @media (max-width: 900px) {
+    .article { position: static; max-height: none; overflow-y: visible; }
+  }
+  .article h3 { margin-top: 0; }
+  .source { font-size: .85em; color: #666; margin-top: 12px; }
+  .vragen { min-width: 0; }
+
+  .options { list-style: none; padding-left: 0; }
+  .options li { margin: 6px 0; }
+  .option-btn {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 9px 12px;
+    font-size: .97em;
+    font-family: inherit;
+    border: 1.5px solid #999;
+    border-radius: 6px;
+    background: #fff;
+    cursor: pointer;
+    transition: background .15s, border-color .15s;
+  }
+  .option-btn:hover:not(:disabled) { background: #eef4fb; border-color: #4a7fb5; }
+  .option-btn:disabled { cursor: default; opacity: .95; }
+  .option-btn.correct { background: #d8f5d8; border-color: #2e8b2e; font-weight: bold; }
+  .option-btn.wrong { background: #fbdcdc; border-color: #c0392b; }
+
+  .feedback {
+    margin-top: 10px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    display: none;
+    font-size: .95em;
+  }
+  .feedback.show { display: block; }
+  .feedback.ok { background: #e3f6e3; border-left: 5px solid #2e8b2e; }
+  .feedback.nok { background: #fdeaea; border-left: 5px solid #c0392b; }
+  .feedback .uitleg { margin-top: 6px; }
+  .feedback .vertaling {
+    margin-top: 8px;
+    padding: 8px 10px;
+    background: rgba(255,255,255,.65);
+    border-left: 3px solid #888;
+    border-radius: 4px;
+    font-size: .93em;
+  }
+  .feedback .vertaling em { color: #333; }
+
+  mark {
+    background: transparent;
+    color: inherit;
+    padding: 0;
+    border-radius: 3px;
+    transition: background .3s;
+  }
+  mark.active {
+    background: #ffe680;
+    padding: 0 2px;
+    outline: 2px solid #ffb347;
+  }
+
+  .invul {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 8px;
+  }
+  .invul input {
+    font-family: inherit;
+    font-size: .97em;
+    padding: 8px 10px;
+    border: 1.5px solid #999;
+    border-radius: 6px;
+    min-width: 260px;
+  }
+  .invul button {
+    padding: 8px 14px;
+    font-family: inherit;
+    font-size: .95em;
+    border: 1.5px solid #555;
+    background: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .invul button:hover { background: #eee; }
+
+  .reset {
+    margin-top: 24px;
+    padding: 8px 16px;
+    font-family: inherit;
+    font-size: .95em;
+    border: 1.5px solid #555;
+    background: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .reset:hover { background: #eee; }
+</style>
+</head>
+<body>
+
+<p class="examen-header">Examen vmbo gl/tl 2025 Tijdvak 2</p>
+<h1>Tekst 8 – Wertsachen im Meer vor Mallorca verloren?</h1>
+
+<div class="layout">
+
+  <!-- ================= TEKST (links) ================= -->
+  <div class="article">
+    <h3>Wertsachen im Meer vor Mallorca verloren?</h3>
+    <p>
+      Giorgio bietet dafür einen Ausweg an. Der gebürtige Berliner begibt
+      sich ehrenamtlich mit dem Metalldetektor auf die Suche.
+    </p>
+    <p>
+      <strong>(1)</strong> Seit drei Jahren geht Giorgio in seiner Freizeit auf Schatzsuche. <mark id="m-tv">„Es
+      hat als Hobby angefangen. Ich habe mal eine Fernsehsendung darüber
+      gesehen und mir einen Metalldetektor zugelegt. Der stand dann erstmal
+      zwei Jahre lang in der Ecke, ehe ich tatsächlich mit der Schatzsuche
+      begonnen habe.“</mark> Freundin Caro, mit der er seit einem Jahr zusammen ist,
+      hat er mit der Leidenschaft angesteckt.
+    </p>
+    <p>
+      <mark id="m-strand">An den Stränden Mallorcas sieht man immer wieder Leute auf- und
+      ablaufen, die den Metalldetektor bei ihrer Suche über den Sand
+      schwenken. Die Geräte werden mitunter schon für kleines Geld im
+      Supermarkt verkauft. Giorgio hat sich aber auf die Suche im Wasser
+      spezialisiert.</mark> Allein 2.000 Euro hat sein großer Detektor gekostet. <mark id="m-duur">„Es ist
+      ein teures Hobby, denn ständig geht etwas durch das Salzwasser kaputt.“</mark>
+      Neben dem großen Gerät hat er noch einen kleinen Detektor dabei.
+      Zudem braucht er eine komplette Taucherausrüstung.
+    </p>
+    <p>
+      <strong>(2)</strong> <mark id="m-werking">Die Suche startet mit dem großen Detektor. Bis zu 50 Zentimeter tief
+      können die Objekte im Sand liegen, damit das Gerät sie aufspürt. „Die
+      meisten liegen aber direkt an der Oberfläche oder sind nur 10 bis
+      20 Zentimeter im Sand vergraben“, sagt Giorgio. Für die genaue
+      Standortbestimmung kommt der kleine Detektor zum Einsatz, der auf
+      wenige Zentimeter die Objekte orten kann.</mark>
+      Je nach Metall wird ein unterschiedlicher Ton erzeugt. Der Schatzsucher
+      weiß so meist schon vorher, was vergraben liegt. „Ein rostiger Nagel lässt
+      sich einfach von Aluminiumfolie unterscheiden.“ <mark id="m-mull">Die Detektoren lassen
+      sich sogar einstellen, damit Müll akustisch ausgeblendet wird.</mark>
+    </p>
+    <p>
+      <strong>(3)</strong> <mark id="m-meer">„Ich habe das nicht eingestellt, da ich auch das Meer säubern will und
+      alles mitnehme, was ich finde“</mark>, sagt Giorgio. Die Ausbeute beim Müll
+      heißt meist: Kronkorken, Angelhaken, Handys, alte Sonnenbrillen. <mark id="m-munze">Wenn
+      er Glück hat, ist auch mal eine Münze dabei.</mark> „Fundstücke, die mehr als
+      400 Euro wert sind, müssen im Fundbüro abgegeben werden“, sagt der
+      Berliner. Nur einmal war das bei ihm der Fall. „Bei einem Ring vermutete
+      ich, dass er wertvoll sei. Die Mitarbeiter im Fundbüro schüttelten aber den
+      Kopf und wollten ihn nicht annehmen.“
+    </p>
+    <p>
+      <strong>(4)</strong> Während viele Schatzsuchende sich ein kleines Zubrot verdienen
+      wollen, <mark id="m-redenen">geht es Giorgio um das Abenteuer und die Anerkennung.</mark> „Die
+      Fundstücke haben meist einen enormen emotionalen Wert für den
+      Besitzer.“ So wie unlängst ein Urlauber-Ehepaar: „Ein Opa meldete sich
+      bei mir. Er hatte den Ring verloren, den ihm seine Frau vor 47 Jahren
+      geschenkt hatte.“ Nach einer Stunde suchen im Meer hatte Giorgio ihn
+      ausfindig gemacht. „Die Freude in seinem Gesicht werde ich im Leben
+      nicht vergessen.“
+    </p>
+    <p class="source">Mallorca Zeitung, 22 juni 2023</p>
+  </div>
+
+  <!-- ================= VRAGEN (rechts) ================= -->
+  <div class="vragen">
+
+    <!-- VRAAG 23 -->
+    <h2>1p 23 &nbsp;Wie kam Giorgio auf die Idee seines Hobbys? (1. Absatz)</h2>
+    <ul class="options" id="q23-options">
+      <li><button class="option-btn" data-q="23" data-opt="A">A&nbsp; über ein Angebot eines Detektors im Geschäft</button></li>
+      <li><button class="option-btn" data-q="23" data-opt="B">B&nbsp; über einen TV-Beitrag</button></li>
+      <li><button class="option-btn" data-q="23" data-opt="C">C&nbsp; über einen Zeitungsbericht</button></li>
+      <li><button class="option-btn" data-q="23" data-opt="D">D&nbsp; über seine Partnerin</button></li>
+    </ul>
+    <div class="feedback" id="fb23"></div>
+
+    <!-- VRAAG 24 -->
+    <h2>1p 24 &nbsp;„An den … Sand schwenken.” (alinea 1)<br>
+    Wat doet Giorgio anders dan deze mensen?<br>
+    Beantwoord deze vraag in het Nederlands.</h2>
+    <div class="invul">
+      <input type="text" id="q24-input" placeholder="Typ je antwoord in het Nederlands…" autocomplete="off">
+      <button type="button" onclick="checkInvul(24)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb24"></div>
+
+    <!-- VRAAG 25 -->
+    <h2>1p 25 &nbsp;Wat is volgens Giorgio de oorzaak van het feit dat zijn hobby duur is? (alinea 1)<br>
+    Beantwoord deze vraag in het Nederlands.</h2>
+    <div class="invul">
+      <input type="text" id="q25-input" placeholder="Typ je antwoord in het Nederlands…" autocomplete="off">
+      <button type="button" onclick="checkInvul(25)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb25"></div>
+
+    <!-- VRAAG 26 -->
+    <h2>1p 26 &nbsp;Welcher Titel passt zum 2. Absatz?</h2>
+    <ul class="options" id="q26-options">
+      <li><button class="option-btn" data-q="26" data-opt="A">A&nbsp; Auf welche technische Probleme stößt Giorgio bei seiner Suche?</button></li>
+      <li><button class="option-btn" data-q="26" data-opt="B">B&nbsp; Findet Giorgio bei der Suche am Strand auch viel Wertloses?</button></li>
+      <li><button class="option-btn" data-q="26" data-opt="C">C&nbsp; Hat Giorgio mittlerweile Konkurrenz bekommen?</button></li>
+      <li><button class="option-btn" data-q="26" data-opt="D">D&nbsp; Wie funktioniert Giorgios Suche nach verlorenen Objekten?</button></li>
+    </ul>
+    <div class="feedback" id="fb26"></div>
+
+    <!-- VRAAG 27 -->
+    <h2>1p 27 &nbsp;„Die Detektoren … ausgeblendet wird.” (alinea 2)<br>
+    Giorgio legt in alinea 3 uit waarom hij géén gebruik maakt van deze functie.<br>
+    Wat geeft hij als reden?<br>
+    Beantwoord deze vraag in het Nederlands.</h2>
+    <div class="invul">
+      <input type="text" id="q27-input" placeholder="Typ je antwoord in het Nederlands…" autocomplete="off">
+      <button type="button" onclick="checkInvul(27)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb27"></div>
+
+    <!-- VRAAG 28 -->
+    <h2>1p 28 &nbsp;Welche Aussage ist dem 3. Absatz nach richtig?</h2>
+    <ul class="options" id="q28-options">
+      <li><button class="option-btn" data-q="28" data-opt="A">A&nbsp; Beamte sind meist sehr eigensinnig.</button></li>
+      <li><button class="option-btn" data-q="28" data-opt="B">B&nbsp; Ehrliche Finder gibt es leider nur selten.</button></li>
+      <li><button class="option-btn" data-q="28" data-opt="C">C&nbsp; Plastikmüll im Meer gefährdet die Tierwelt.</button></li>
+      <li><button class="option-btn" data-q="28" data-opt="D">D&nbsp; Wertvolles beim Müll ist eher Ausnahme.</button></li>
+    </ul>
+    <div class="feedback" id="fb28"></div>
+
+    <!-- VRAAG 29 -->
+    <h2>2p 29 &nbsp;Om welke twee redenen doet Giorgio dit werk volgens alinea 4?<br>
+    Beantwoord deze vraag in het Nederlands.</h2>
+    <div class="invul">
+      <input type="text" id="q29-input" placeholder="Typ je antwoord in het Nederlands…" autocomplete="off">
+      <button type="button" onclick="checkInvul(29)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb29"></div>
+
+  </div>
+</div>
+
+<button class="reset" onclick="resetAll()">Alles opnieuw proberen</button>
+
+<script>
+const answers = {
+  "23": {
+    correct: "B",
+    uitleg:
+      "Juist is B. In alinea 1 zegt Giorgio: <em>„Ich habe mal eine Fernsehsendung darüber gesehen und mir einen Metalldetektor zugelegt.“</em> Hij zag dus een tv-uitzending over schatzoeken en kocht daarna een metaaldetector. " +
+      "A (aanbieding in de winkel) staat er niet; C (krantenbericht) staat er niet; D (zijn vriendin) klopt niet — hij heeft háár juist aangestoken met zijn passie, niet andersom.",
+    vertaling:
+      "<strong>Ich habe mal eine Fernsehsendung darüber gesehen und mir einen Metalldetektor zugelegt.</strong> = <em>Ik heb ooit een tv-uitzending erover gezien en een metaaldetector aangeschaft.</em> → B.",
+    markIds: ["m-tv"]
+  },
+  "24": {
+    correct: "Hij zoekt (ook) in het water",
+    uitleg:
+      "Giorgio doet iets anders dan de mensen die met hun detector over het strand lopen: hij heeft zich gespecialiseerd in <strong>zoeken in het water</strong>. In de tekst staat: <em>„Giorgio hat sich aber auf die Suche im Wasser spezialisiert.“</em> Antwoorden als „hij zoekt in het water“ of „hij zoekt onder water“ zijn goed.",
+    vertaling:
+      "<strong>Giorgio hat sich aber auf die Suche im Wasser spezialisiert.</strong> = <em>Giorgio heeft zich echter gespecialiseerd in het zoeken in het water.</em> " +
+      "„im Wasser“ = in het water; „sich spezialisieren auf“ = zich specialiseren in. → Hij zoekt in het water.",
+    markIds: ["m-strand"]
+  },
+  "25": {
+    correct: "Doordat er door het zoute water steeds iets kapotgaat",
+    uitleg:
+      "Volgens Giorgio is zijn hobby duur omdat er door het zoute water steeds iets kapotgaat. In de tekst staat: <em>„Es ist ein teures Hobby, denn ständig geht etwas durch das Salzwasser kaputt.“</em> Antwoorden als „er gaat steeds iets kapot door het zoute water“ of „het zoute water beschadigt de apparatuur“ zijn goed.",
+    vertaling:
+      "<strong>„Es ist ein teures Hobby, denn ständig geht etwas durch das Salzwasser kaputt.“</strong> = <em>„Het is een dure hobby, want er gaat steeds iets kapot door het zoute water.“</em> " +
+      "„das Salzwasser“ = het zoute water; „kaputtgehen“ = kapotgaan. → Oorzaak: het zoute water beschadigt de apparatuur.",
+    markIds: ["m-duur"]
+  },
+  "26": {
+    correct: "D",
+    uitleg:
+      "Juist is D (Wie funktioniert Giorgios Suche nach verlorenen Objekten?). In alinea 2 wordt uitgelegd <em>hoe</em> Giorgio te werk gaat: eerst met de grote detector (tot 50 cm diep), dan met de kleine detector voor de exacte locatie, en elk metaal geeft een ander geluid. " +
+      "A (technische problemen) staat er niet; B (veel waardeloos materiaal) komt pas in alinea 3; C (concurrentie) staat er niet.",
+    vertaling:
+      "<strong>Die Suche startet mit dem großen Detektor. Bis zu 50 Zentimeter tief können die Objekte im Sand liegen, damit das Gerät sie aufspürt.</strong> = <em>De zoektocht begint met de grote detector. De objecten kunnen tot 50 centimeter diep in het zand liggen wil het apparaat ze opsporen.</em> " +
+      "<strong>Für die genaue Standortbestimmung kommt der kleine Detektor zum Einsatz.</strong> = <em>Voor de exacte locatiebepaling wordt de kleine detector ingezet.</em> → D.",
+    markIds: ["m-werking"]
+  },
+  "27": {
+    correct: "Hij wil ook de zee schoonmaken en alles meenemen wat hij vindt",
+    uitleg:
+      "Giorgio gebruikt de functie om afval weg te filteren niet, omdat hij ook de zee wil schoonmaken en alles wil meenemen wat hij vindt. In de tekst staat: <em>„Ich habe das nicht eingestellt, da ich auch das Meer säubern will und alles mitnehme, was ich finde.“</em> Antwoorden als „hij wil de zee schoonmaken“ of „hij neemt alles mee wat hij vindt“ zijn goed.",
+    vertaling:
+      "<strong>„Ich habe das nicht eingestellt, da ich auch das Meer säubern will und alles mitnehme, was ich finde.“</strong> = <em>„Ik heb dat niet ingesteld, omdat ik ook de zee wil schoonmaken en alles meeneem wat ik vind.“</em> " +
+      "„einstellen“ = instellen; „säubern“ = schoonmaken; „mitnehmen“ = meenemen. → Hij wil de zee schoonmaken en alles meenemen.",
+    markIds: ["m-meer"]
+  },
+  "28": {
+    correct: "D",
+    uitleg:
+      "Juist is D. In alinea 3 staat: <em>„Die Ausbeute beim Müll heißt meist: Kronkorken, Angelhaken, Handys, alte Sonnenbrillen. Wenn er Glück hat, ist auch mal eine Münze dabei.“</em> Meestal vindt hij dus afval; iets waardevols (zoals een munt) is een uitzondering. " +
+      "A (ambtenaren zijn eigenzinnig) klopt niet — het gaat om één specifiek voorval bij het gevonden-voorwerpenbureau; B (eerlijke vinders zijn zeldzaam) staat er niet; C (plastic afval bedreigt dieren) staat er niet.",
+    vertaling:
+      "<strong>Die Ausbeute beim Müll heißt meist: Kronkorken, Angelhaken, Handys, alte Sonnenbrillen. Wenn er Glück hat, ist auch mal eine Münze dabei.</strong> = <em>De opbrengst aan afval is meestal: kroonkurken, vishaken, mobieltjes, oude zonnebrillen. Als hij geluk heeft, zit er ook wel eens een munt bij.</em> → D.",
+    markIds: ["m-munze"]
+  },
+  "29": {
+    correct: "Het avontuur en de waardering (erkentelijkheid)",
+    uitleg:
+      "In alinea 4 staat: <em>„Während viele Schatzsuchende sich ein kleines Zubrot verdienen wollen, geht es Giorgio um das Abenteuer und die Anerkennung.“</em> Giorgio doet het dus om het <strong>avontuur</strong> en de <strong>waardering/erkentelijkheid</strong> (van de mensen die hun spullen terugkrijgen). Antwoorden die beide noemen zijn goed.",
+    vertaling:
+      "<strong>Während viele Schatzsuchende sich ein kleines Zubrot verdienen wollen, geht es Giorgio um das Abenteuer und die Anerkennung.</strong> = <em>Terwijl veel schatzoekers een kleine bijverdienste willen, gaat het Giorgio om het avontuur en de erkenning.</em> " +
+      "„das Abenteuer“ = het avontuur; „die Anerkennung“ = de erkenning/waardering. → Avontuur en erkenning.",
+    markIds: ["m-redenen"]
+  }
+};
+
+/* ---------- meerkeuze ---------- */
+function showFeedback(q, isCorrect) {
+  const data = answers[q];
+  const fb = document.getElementById("fb" + q);
+  fb.className = "feedback show " + (isCorrect ? "ok" : "nok");
+  fb.innerHTML =
+    (isCorrect ? "✅ <strong>Juist!</strong> " : "❌ <strong>Onjuist.</strong> Het juiste antwoord is <strong>" + data.correct + "</strong>. ") +
+    '<div class="uitleg">' + data.uitleg + "</div>" +
+    '<div class="vertaling"><strong>Uitleg van de Duitse zin(nen):</strong><br>' + data.vertaling + "</div>";
+  (data.markIds || []).forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add("active");
+  });
+}
+
+function handleClick(e) {
+  const btn = e.target.closest(".option-btn");
+  if (!btn || btn.disabled) return;
+
+  const q = btn.dataset.q;
+  const opt = btn.dataset.opt;
+  const data = answers[q];
+  const isCorrect = opt === data.correct;
+
+  document.querySelectorAll('#q' + q + '-options .option-btn').forEach(b => {
+    b.disabled = true;
+    if (b.dataset.opt === opt) b.classList.add(isCorrect ? "correct" : "wrong");
+    if (!isCorrect && b.dataset.opt === data.correct) b.classList.add("correct");
+  });
+
+  showFeedback(q, isCorrect);
+}
+
+document.querySelectorAll(".option-btn").forEach(btn => {
+  btn.addEventListener("click", handleClick);
+});
+
+/* ---------- invulvragen ---------- */
+function normalize(s) {
+  return s.toLowerCase().replace(/[.,!?"'’]/g, "").replace(/\s+/g, " ").trim();
+}
+
+function checkInvul(q) {
+  const input = document.getElementById("q" + q + "-input");
+  const val = input.value;
+  const data = answers[q];
+  const fb = document.getElementById("fb" + q);
+  let isCorrect = false;
+  const v = normalize(val);
+
+  if (q === 24) {
+    isCorrect = v.includes("water") || v.includes("zee") || v.includes("onder");
+  } else if (q === 25) {
+    isCorrect = (v.includes("zout") || v.includes("water")) && (v.includes("kapot") || v.includes("beschadig") || v.includes("gaat"));
+  } else if (q === 27) {
+    isCorrect = v.includes("schoon") || v.includes("meer") || v.includes("zee") || v.includes("alles");
+  } else if (q === 29) {
+    isCorrect = (v.includes("avontuur") && (v.includes("erkenn") || v.includes("waarder") || v.includes("dankbaar"))) ||
+                (v.includes("avontuur") && v.includes("blij")) ||
+                (v.includes("avontuur") && v.includes("waardering"));
+  }
+
+  fb.className = "feedback show " + (isCorrect ? "ok" : "nok");
+  fb.innerHTML =
+    (isCorrect ? "✅ <strong>Juist!</strong> " : "❌ <strong>Onjuist.</strong> Het juiste antwoord is: <strong>" + data.correct + "</strong>. ") +
+    '<div class="uitleg">' + data.uitleg + "</div>" +
+    '<div class="vertaling"><strong>Uitleg van de Duitse zin(nen):</strong><br>' + data.vertaling + "</div>";
+  (data.markIds || []).forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add("active");
+  });
+}
+
+/* ---------- reset ---------- */
+function resetAll() {
+  document.querySelectorAll(".option-btn").forEach(b => {
+    b.disabled = false;
+    b.classList.remove("correct", "wrong");
+  });
+  document.querySelectorAll(".feedback").forEach(f => {
+    f.className = "feedback";
+    f.innerHTML = "";

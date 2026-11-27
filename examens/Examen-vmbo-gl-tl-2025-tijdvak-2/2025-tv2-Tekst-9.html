@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Die Kippensammler aus Bad Dürrheim – oefening</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    max-width: 1280px;
+    margin: 30px auto;
+    padding: 0 16px;
+    line-height: 1.6;
+    color: #222;
+    background: #fafafa;
+  }
+  h1 { font-size: 1.4em; border-bottom: 2px solid #333; padding-bottom: 6px; }
+  h2 { font-size: 1.05em; margin-top: 1.6em; }
+  .examen-header {
+    font-size: 1.05em;
+    font-weight: bold;
+    color: #444;
+    letter-spacing: .3px;
+  }
+  .layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    align-items: start;
+    margin-top: 24px;
+  }
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+  }
+  .article {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px 20px;
+    position: sticky;
+    top: 16px;
+    max-height: calc(100vh - 32px);
+    overflow-y: auto;
+  }
+  @media (max-width: 900px) {
+    .article { position: static; max-height: none; overflow-y: visible; }
+  }
+  .article h3 { margin-top: 0; }
+  .source { font-size: .85em; color: #666; margin-top: 12px; }
+  .vragen { min-width: 0; }
+
+  .options { list-style: none; padding-left: 0; }
+  .options li { margin: 6px 0; }
+  .option-btn {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 9px 12px;
+    font-size: .97em;
+    font-family: inherit;
+    border: 1.5px solid #999;
+    border-radius: 6px;
+    background: #fff;
+    cursor: pointer;
+    transition: background .15s, border-color .15s;
+  }
+  .option-btn:hover:not(:disabled) { background: #eef4fb; border-color: #4a7fb5; }
+  .option-btn:disabled { cursor: default; opacity: .95; }
+  .option-btn.correct { background: #d8f5d8; border-color: #2e8b2e; font-weight: bold; }
+  .option-btn.wrong { background: #fbdcdc; border-color: #c0392b; }
+
+  .feedback {
+    margin-top: 10px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    display: none;
+    font-size: .95em;
+  }
+  .feedback.show { display: block; }
+  .feedback.ok { background: #e3f6e3; border-left: 5px solid #2e8b2e; }
+  .feedback.nok { background: #fdeaea; border-left: 5px solid #c0392b; }
+  .feedback .uitleg { margin-top: 6px; }
+  .feedback .vertaling {
+    margin-top: 8px;
+    padding: 8px 10px;
+    background: rgba(255,255,255,.65);
+    border-left: 3px solid #888;
+    border-radius: 4px;
+    font-size: .93em;
+  }
+  .feedback .vertaling em { color: #333; }
+
+  mark {
+    background: transparent;
+    color: inherit;
+    padding: 0;
+    border-radius: 3px;
+    transition: background .3s;
+  }
+  mark.active {
+    background: #ffe680;
+    padding: 0 2px;
+    outline: 2px solid #ffb347;
+  }
+
+  .invul {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 8px;
+  }
+  .invul input {
+    font-family: inherit;
+    font-size: .97em;
+    padding: 8px 10px;
+    border: 1.5px solid #999;
+    border-radius: 6px;
+    min-width: 240px;
+  }
+  .invul button, .check-btn {
+    padding: 8px 14px;
+    font-family: inherit;
+    font-size: .95em;
+    border: 1.5px solid #555;
+    background: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .invul button:hover, .check-btn:hover { background: #eee; }
+
+  .bewering-tabel {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+    font-size: .95em;
+  }
+  .bewering-tabel th, .bewering-tabel td {
+    border: 1px solid #ccc;
+    padding: 8px 10px;
+    text-align: left;
+    vertical-align: top;
+  }
+  .bewering-tabel th { background: #f0f0f0; }
+  .bewering-tabel td.keuze { text-align: center; white-space: nowrap; }
+  .bewering-tabel label { margin: 0 6px; cursor: pointer; }
+
+  .reset {
+    margin-top: 24px;
+    padding: 8px 16px;
+    font-family: inherit;
+    font-size: .95em;
+    border: 1.5px solid #555;
+    background: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .reset:hover { background: #eee; }
+</style>
+</head>
+<body>
+
+<p class="examen-header">Examen vmbo gl/tl 2025 Tijdvak 2</p>
+<h1>Tekst 9 – Die Kippensammler aus Bad Dürrheim</h1>
+
+<div class="layout">
+
+  <!-- ================= TEKST (links) ================= -->
+  <div class="article">
+    <h3>Die Kippensammler aus Bad Dürrheim</h3>
+    <p>
+      <strong>(1)</strong> <mark id="m-afval">Zigarettenkippen liegen überall – an der Haltestelle, im Park, im Sand
+      am Strand oder neben Mülleimern. Nicht nur, dass sie die Gegend
+      verdrecken und in trockenen Sommern eine Brandgefahr sind, die kleinen
+      Dinger enthalten auch Kunststoff und Schwermetalle.</mark> Das ist der Grund,
+      warum einmal im Monat eine Gruppe Bad Dürrheimer loszieht, mit Zangen
+      und Behältern, und Kippen aufsammelt. <mark id="m-water">„Die Schadstoffe gelangen ins
+      Wasser, in Seen, Flüsse oder Meer und auch ins Grundwasser“</mark>, erklärt
+      Miriam Steup.
+    </p>
+    <p>
+      <strong>(2)</strong> Sie ist aktives Mitglied von “Kippenfrei – sei dabei”, und engagiert sich
+      auch bei den City-Cleaners Deutschland. <mark id="m-keuze">„Wir sind nicht gegen das
+      Rauchen, das muss jeder selbst entscheiden“</mark>, betont Miriam Steup, <mark id="m-wegwerp">„aber
+      wenn jemand die Kippe wegwirft, verschmutzt er auch meine Umwelt.“</mark> Die
+      Sorgen der Gruppe sind durchaus berechtigt: In Kippen finden sich unter
+      anderem Arsen, Blei, Chrom, und natürlich Nikotin – ein Nervengift.
+    </p>
+    <p>
+      <strong>(3)</strong> <mark id="m-idee">Die Idee mit den Zigarettenkippen kam vor einigen Jahren auf, als vom
+      Mehrgenerationenhaus in Bad Dürrheim Aktionen gesucht wurden, bei
+      denen Jung und Alt mitmachen können. Einige der Mitglieder hatten zuvor
+      schon privat gesammelt. Nun zieht die Gruppe einmal im Monat los.</mark> Am
+      Ende jeder Sammelaktion wird ein symbolträchtiges Foto von den Kippen
+      gemacht, bevor die Kippen im Müll entsorgt werden. Die Stadt unterstützt
+      die Initiative, hat selbst auch neue Entsorgungsbehälter aufgestellt. <mark id="m-boete">Das
+      illegale Entsorgen von Kippen ist in Bad Dürrheim sogar eine Ordnungswidrigkeit, kann mit 35 Euro Strafe belegt werden. Doch es ist schwer, die
+      Taten zu beweisen.</mark>
+    </p>
+    <p>
+      <strong>(4)</strong> <mark id="m-sponsor">Mineralbrunnenbetrieb Bad Dürrheim, dem das Thema Wasserqualität
+      natürlich am Herzen liegt, unterstützt die Gruppe als Sponsor.</mark> Für die
+      Koordination von “Kippenfrei – sei dabei” ist Angelika Strittmatter
+      zuständig: <mark id="m-scholen">„Wir arbeiten etwa auch mit der Stadtjugendpflege oder
+      Schulen zusammen, haben Sammelaktionen mit Jugendlichen organisiert.
+      Die sind sehr interessiert an Themen, die mit Umwelt zu tun haben.“</mark>
+      <mark id="m-gesprek">Wenn die Kippensammler und -sammlerinnen unterwegs sind, ergeben
+      sich oft Gespräche mit Passanten. „Auch Raucher sind offen fürs
+      Umdenken,“ sagt Angelika Strittmatter, „kaum einer ist uneinsichtig.“</mark> An
+      sie verteilt die Gruppe kleine Aschenbecher – für einen symbolischen
+      Euro.
+    </p>
+    <p class="source">Neue Post, 6 september 2023</p>
+  </div>
+
+  <!-- ================= VRAGEN (rechts) ================= -->
+  <div class="vragen">
+
+    <!-- VRAAG 30 -->
+    <h2>1p 30 &nbsp;Was ist für die Kippensammler aus Bad Dürrheim der Hauptgrund für das Aufsammeln von Zigarettenkippen? (1. Absatz)</h2>
+    <ul class="options" id="q30-options">
+      <li><button class="option-btn" data-q="30" data-opt="A">A&nbsp; das Verhindern von Naturbränden</button></li>
+      <li><button class="option-btn" data-q="30" data-opt="B">B&nbsp; für einen sauberen Anblick der Wohngegend sorgen</button></li>
+      <li><button class="option-btn" data-q="30" data-opt="C">C&nbsp; Umweltverschmutzung vermeiden</button></li>
+    </ul>
+    <div class="feedback" id="fb30"></div>
+
+    <!-- VRAAG 31 -->
+    <h2>1p 31 &nbsp;Wie denkt Miriam Steup über rauchen? (2. Absatz)</h2>
+    <ul class="options" id="q31-options">
+      <li><button class="option-btn" data-q="31" data-opt="A">A&nbsp; Es ist die Pflicht der Raucher, darauf zu achten, dass andere den Rauch nicht einatmen.</button></li>
+      <li><button class="option-btn" data-q="31" data-opt="B">B&nbsp; Es ist jedermanns eigene Wahl.</button></li>
+      <li><button class="option-btn" data-q="31" data-opt="C">C&nbsp; Es sollte sowohl aus Umwelt-, als auch aus Gesundheitsgründen verboten werden.</button></li>
+    </ul>
+    <div class="feedback" id="fb31"></div>
+
+    <!-- VRAAG 32 -->
+    <h2>1p 32 &nbsp;Auf welche Frage über das Kippensammeln gibt der 3. Absatz eine Antwort?</h2>
+    <ul class="options" id="q32-options">
+      <li><button class="option-btn" data-q="32" data-opt="A">A&nbsp; Wie hat es begonnen?</button></li>
+      <li><button class="option-btn" data-q="32" data-opt="B">B&nbsp; Wie wird alles finanziert?</button></li>
+      <li><button class="option-btn" data-q="32" data-opt="C">C&nbsp; Wie wird Werbung gemacht?</button></li>
+      <li><button class="option-btn" data-q="32" data-opt="D">D&nbsp; Wieso überhaupt aufräumen?</button></li>
+    </ul>
+    <div class="feedback" id="fb32"></div>
+
+    <!-- VRAAG 33 -->
+    <h2>1p 33 &nbsp;Iemand die in Bad Dürrheim een peuk op de grond gooit, kan daarvoor een boete van 35 euro krijgen. (alinea 3)<br>
+    Waarom worden er hiervoor in de praktijk weinig boetes uitgedeeld?<br>
+    Beantwoord deze vraag in het Nederlands.</h2>
+    <div class="invul">
+      <input type="text" id="q33-input" placeholder="Typ je antwoord in het Nederlands…" autocomplete="off">
+      <button type="button" onclick="checkInvul(33)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb33"></div>
+
+    <!-- VRAAG 34 -->
+    <h2>2p 34 &nbsp;Geef van elk van de onderstaande beweringen aan of deze wel of niet overeenkomt met alinea 4.<br>
+    Kruis ‘wel’ of ‘niet’ aan.</h2>
+    <table class="bewering-tabel">
+      <thead>
+        <tr><th>Bewering</th><th>wel</th><th>niet</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1 “Kippenfrei - sei dabei” ontvangt steun van een mineraalwatermaatschappij.</td>
+          <td class="keuze"><label><input type="radio" name="b1" value="wel"> wel</label><label><input type="radio" name="b1" value="niet"> niet</label></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>2 Het is lastig om mensen te vinden, die willen meehelpen bij het opruimen.</td>
+          <td class="keuze"><label><input type="radio" name="b2" value="wel"> wel</label><label><input type="radio" name="b2" value="niet"> niet</label></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>3 De “Kippensammler” hebben een collectebus bij zich.</td>
+          <td class="keuze"><label><input type="radio" name="b3" value="wel"> wel</label><label><input type="radio" name="b3" value="niet"> niet</label></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+    <button class="check-btn" type="button" onclick="checkBeweringen()">Controleer</button>
+    <div class="feedback" id="fb34"></div>
+
+  </div>
+</div>
+
+<button class="reset" onclick="resetAll()">Alles opnieuw proberen</button>
+
+<script>
+const answers = {
+  "30": {
+    correct: "C",
+    uitleg:
+      "Juist is C. In alinea 1 staat dat peuken niet alleen de omgeving vervuilen en in droge zomers brandgevaar opleveren, maar ook <strong>plastic en zware metalen</strong> bevatten: <em>„die kleinen Dinger enthalten auch Kunststoff und Schwermetalle. Das ist der Grund, warum einmal im Monat eine Gruppe Bad Dürrheimer loszieht...“</em> Het belangrijkste doel is dus het voorkomen van milieuvervuiling. " +
+      "A (natuurbranden voorkomen) is wel genoemd, maar als bijkomend probleem, niet als hoofdreden. B (schone woonomgeving) staat er wel, maar is ondergeschikt aan de milieuvervuiling.",
+    vertaling:
+      "<strong>Nicht nur, dass sie die Gegend verdrecken und in trockenen Sommern eine Brandgefahr sind, die kleinen Dinger enthalten auch Kunststoff und Schwermetalle.</strong> = <em>Niet alleen dat ze de omgeving vervuilen en in droge zomers een brandgevaar zijn, de kleine dingen bevatten ook plastic en zware metalen.</em> " +
+      "<strong>Das ist der Grund, warum einmal im Monat eine Gruppe Bad Dürrheimer loszieht.</strong> = <em>Dat is de reden waarom er eens per maand een groep Bad Dürrheimers op pad gaat.</em> → C.",
+    markIds: ["m-afval", "m-water"]
+  },
+  "31": {
+    correct: "B",
+    uitleg:
+      "Juist is B. In alinea 2 zegt Miriam Steup: <em>„Wir sind nicht gegen das Rauchen, das muss jeder selbst entscheiden“</em> — roken is ieders eigen keuze. " +
+      "A (plicht om mee te roken) staat er niet; C (zowel om milieu- als gezondheidsredenen verboden) klopt niet — ze zegt juist niet tegen roken te zijn, alleen tegen het weggooien van peuken.",
+    vertaling:
+      "<strong>„Wir sind nicht gegen das Rauchen, das muss jeder selbst entscheiden“</strong> = <em>„Wij zijn niet tegen het roken, dat moet iedereen zelf beslissen.“</em> " +
+      "<strong>„aber wenn jemand die Kippe wegwirft, verschmutzt er auch meine Umwelt.“</strong> = <em>„maar als iemand de peuk weggooit, vervuilt hij ook mijn omgeving.“</em> → B.",
+    markIds: ["m-keuze", "m-wegwerp"]
+  },
+  "32": {
+    correct: "A",
+    uitleg:
+      "Juist is A (Wie hat es begonnen?). In alinea 3 staat hoe het initiatief is ontstaan: <em>„Die Idee mit den Zigarettenkippen kam vor einigen Jahren auf, als vom Mehrgenerationenhaus in Bad Dürrheim Aktionen gesucht wurden, bei denen Jung und Alt mitmachen können.“</em> " +
+      "B (financiering) staat er niet — dat komt pas in alinea 4 (sponsor). C (reclame) staat er niet. D (waarom opruimen) staat juist in alinea 1.",
+    vertaling:
+      "<strong>Die Idee mit den Zigarettenkippen kam vor einigen Jahren auf, als vom Mehrgenerationenhaus in Bad Dürrheim Aktionen gesucht wurden, bei denen Jung und Alt mitmachen können.</strong> = <em>Het idee met de sigarettenpeuken ontstond een paar jaar geleden, toen het Meer-generationenhuis in Bad Dürrheim acties zocht waarbij jong en oud konden meedoen.</em> → A.",
+    markIds: ["m-idee"]
+  },
+  "33": {
+    correct: "Het is moeilijk om de overtredingen te bewijzen",
+    uitleg:
+      "In alinea 3 staat: <em>„Doch es ist schwer, die Taten zu beweisen.“</em> — het is moeilijk om de daden te bewijzen. Daarom worden er in de praktijk weinig boetes uitgedeeld. Antwoorden als „omdat het lastig is om te bewijzen“ of „omdat je het niet kunt bewijzen“ zijn goed.",
+    vertaling:
+      "<strong>Das illegale Entsorgen von Kippen ist in Bad Dürrheim sogar eine Ordnungswidrigkeit, kann mit 35 Euro Strafe belegt werden. Doch es ist schwer, die Taten zu beweisen.</strong> = <em>Het illegaal weggooien van peuken is in Bad Dürrheim zelfs een overtreding, kan met 35 euro boete worden bestraft. Maar het is moeilijk om de daden te bewijzen.</em>",
+    markIds: ["m-boete"]
+  },
+  "34": {
+    correct: "1 wel, 2 niet, 3 niet",
+    uitleg:
+      "1 <strong>wel</strong> — <em>„Mineralbrunnenbetrieb Bad Dürrheim ... unterstützt die Gruppe als Sponsor.“</em> Een mineraalwaterbedrijf steunt de groep dus als sponsor. " +
+      "2 <strong>niet</strong> — er staat juist dat ze met scholen en jongeren samenwerken en dat die zeer geïnteresseerd zijn: <em>„Die sind sehr interessiert an Themen, die mit Umwelt zu tun haben.“</em> Het is dus niet lastig om mensen te vinden. " +
+      "3 <strong>niet</strong> — de groep deelt kleine asbakjes uit voor een symbolische euro, maar er is geen collectebus. Dat staat niet in de tekst.",
+    vertaling:
+      "<strong>Mineralbrunnenbetrieb Bad Dürrheim, dem das Thema Wasserqualität natürlich am Herzen liegt, unterstützt die Gruppe als Sponsor.</strong> = <em>Mineraalwaterbedrijf Bad Dürrheim, dat het thema waterkwaliteit natuurlijk na aan het hart ligt, steunt de groep als sponsor.</em> " +
+      "<strong>Die sind sehr interessiert an Themen, die mit Umwelt zu tun haben.</strong> = <em>Zij zijn zeer geïnteresseerd in onderwerpen die met milieu te maken hebben.</em> " +
+      "<strong>An sie verteilt die Gruppe kleine Aschenbecher – für einen symbolischen Euro.</strong> = <em>Aan hen deelt de groep kleine asbakjes uit – voor een symbolische euro.</em>",
+    markIds: ["m-sponsor", "m-scholen", "m-gesprek"]
+  }
+};
+
+/* ---------- meerkeuze ---------- */
+function showFeedback(q, isCorrect) {
+  const data = answers[q];
+  const fb = document.getElementById("fb" + q);
+  fb.className = "feedback show " + (isCorrect ? "ok" : "nok");
+  fb.innerHTML =
+    (isCorrect ? "✅ <strong>Juist!</strong> " : "❌ <strong>Onjuist.</strong> Het juiste antwoord is <strong>" + data.correct + "</strong>. ") +
+    '<div class="uitleg">' + data.uitleg + "</div>" +
+    '<div class="vertaling"><strong>Uitleg van de Duitse zin(nen):</strong><br>' + data.vertaling + "</div>";
+  (data.markIds || []).forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add("active");
+  });
+}
+
+function handleClick(e) {
+  const btn = e.target.closest(".option-btn");
+  if (!btn || btn.disabled) return;
+
+  const q = btn.dataset.q;
+  const opt = btn.dataset.opt;
+  const data = answers[q];
+  const isCorrect = opt === data.correct;
+
+  document.querySelectorAll('#q' + q + '-options .option-btn').forEach(b => {
+    b.disabled = true;
+    if (b.dataset.opt === opt) b.classList.add(isCorrect ? "correct" : "wrong");
+    if (!isCorrect && b.dataset.opt === data.correct) b.classList.add("correct");
+  });
+
+  showFeedback(q, isCorrect);
+}
+
+document.querySelectorAll(".option-btn").forEach(btn => {
+  btn.addEventListener("click", handleClick);
+});
+
+/* ---------- invulvraag ---------- */
+function normalize(s) {
+  return s.toLowerCase().replace(/[.,!?"'’]/g, "").replace(/\s+/g, " ").trim();
+}
+
+function checkInvul(q) {
+  const input = document.getElementById("q" + q + "-input");
+  const val = input.value;
+  const data = answers[q];
+  const fb = document.getElementById("fb" + q);
+  const v = normalize(val);
+  const isCorrect = v.includes("moeilijk") || v.includes("bewijzen") || v.includes("lastig") || v.includes("niet te bewijzen");
+
+  fb.className = "feedback show " + (isCorrect ? "ok" : "nok");
+  fb.innerHTML =
+    (isCorrect ? "✅ <strong>Juist!</strong> " : "❌ <strong>Onjuist.</strong> Het juiste antwoord is: <strong>" + data.correct + "</strong>. ") +
+    '<div class="uitleg">' + data.uitleg + "</div>" +
+    '<div class="vertaling"><strong>Uitleg van de Duitse zin(nen):</strong><br>' + data.vertaling + "</div>";
+  (data.markIds || []).forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add("active");
+  });
+}
+
+/* ---------- wel/niet ---------- */
+function checkBeweringen() {
+  const juist = { b1: "wel", b2: "niet", b3: "niet" };
+  let goed = 0;
+  let totaal = 3;
+  let details = [];
+
+  for (const naam in juist) {
+    const gekozen = document.querySelector('input[name="' + naam + '"]:checked');
+    const ok = gekozen && gekozen.value === juist[naam];
+    if (ok) goed++;
+    details.push((ok ? "✅" : "❌") + " bewering " + naam.replace("b", "") + ": " + juist[naam]);
+  }
+
+  const data = answers[34];
+  const fb = document.getElementById("fb34");
+  fb.className = "feedback show " + (goed === totaal ? "ok" : "nok");
+  fb.innerHTML =
+    (goed === totaal ? "✅ <strong>Alles juist!</strong> " : "❌ <strong>" + goed + " van " + totaal + " juist.</strong> ") +
+    '<div class="uitleg">' + details.join("<br>") + "<br><br>" + data.uitleg + "</div>" +
+    '<div class="vertaling"><strong>Uitleg van de Duitse zin(nen):</strong><br>' + data.vertaling + "</div>";
+  (data.markIds || []).forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add("active");
+  });
+}
+
+/* ---------- reset ---------- */
+function resetAll() {
+  document.querySelectorAll(".option-btn").forEach(b => {
+    b.disabled = false;
+    b.classList.remove("correct", "wrong");
+  });
+  document.querySelectorAll(".feedback").forEach(f => {
+    f.className = "feedback";
+    f.innerHTML = "";
+  });
+  document.querySelectorAll("mark").forEach(m => m.classList.remove("active"));
+  document.querySelectorAll('.invul input').forEach(i => i.value = "");
+  document.querySelectorAll('.bewering-tabel input[type="radio"]').forEach(r => r.checked = false);
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nanny in England – oefening</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    max-width: 1280px;
+    margin: 30px auto;
+    padding: 0 16px;
+    line-height: 1.6;
+    color: #222;
+    background: #fafafa;
+  }
+  h1 { font-size: 1.4em; border-bottom: 2px solid #333; padding-bottom: 6px; }
+  h2 { font-size: 1.05em; margin-top: 1.6em; }
+  .examen-header {
+    font-size: 1.05em;
+    font-weight: bold;
+    color: #444;
+    letter-spacing: .3px;
+  }
+  .layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    align-items: start;
+    margin-top: 24px;
+  }
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+  }
+  .article {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px 20px;
+    position: sticky;
+    top: 16px;
+    max-height: calc(100vh - 32px);
+    overflow-y: auto;
+  }
+  @media (max-width: 900px) {
+    .article { position: static; max-height: none; overflow-y: visible; }
+  }
+  .article h3 { margin-top: 0; }
+  .source { font-size: .85em; color: #666; margin-top: 12px; }
+  .vragen { min-width: 0; }
+
+  .options { list-style: none; padding-left: 0; }
+  .options li { margin: 6px 0; }
+  .option-btn {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 9px 12px;
+    font-size: .97em;
+    font-family: inherit;
+    border: 1.5px solid #999;
+    border-radius: 6px;
+    background: #fff;
+    cursor: pointer;
+    transition: background .15s, border-color .15s;
+  }
+  .option-btn:hover:not(:disabled) { background: #eef4fb; border-color: #4a7fb5; }
+  .option-btn:disabled { cursor: default; opacity: .95; }
+  .option-btn.correct { background: #d8f5d8; border-color: #2e8b2e; font-weight: bold; }
+  .option-btn.wrong { background: #fbdcdc; border-color: #c0392b; }
+
+  .feedback {
+    margin-top: 10px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    display: none;
+    font-size: .95em;
+  }
+  .feedback.show { display: block; }
+  .feedback.ok { background: #e3f6e3; border-left: 5px solid #2e8b2e; }
+  .feedback.nok { background: #fdeaea; border-left: 5px solid #c0392b; }
+  .feedback .uitleg { margin-top: 6px; }
+  .feedback .vertaling {
+    margin-top: 8px;
+    padding: 8px 10px;
+    background: rgba(255,255,255,.65);
+    border-left: 3px solid #888;
+    border-radius: 4px;
+    font-size: .93em;
+  }
+  .feedback .vertaling em { color: #333; }
+
+  mark {
+    background: transparent;
+    color: inherit;
+    padding: 0;
+    border-radius: 3px;
+    transition: background .3s;
+  }
+  mark.active {
+    background: #ffe680;
+    padding: 0 2px;
+    outline: 2px solid #ffb347;
+  }
+
+  .invul {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 8px;
+  }
+  .invul input {
+    font-family: inherit;
+    font-size: .97em;
+    padding: 8px 10px;
+    border: 1.5px solid #999;
+    border-radius: 6px;
+    min-width: 240px;
+  }
+  .invul button, .check-btn {
+    padding: 8px 14px;
+    font-family: inherit;
+    font-size: .95em;
+    border: 1.5px solid #555;
+    background: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .invul button:hover, .check-btn:hover { background: #eee; }
+
+  .reset {
+    margin-top: 24px;
+    padding: 8px 16px;
+    font-family: inherit;
+    font-size: .95em;
+    border: 1.5px solid #555;
+    background: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .reset:hover { background: #eee; }
+</style>
+</head>
+<body>
+
+<p class="examen-header">Examen vmbo gl/tl 2025 Tijdvak 2</p>
+<h1>Tekst 5 – Nanny in England</h1>
+
+<div class="layout">
+
+  <!-- ================= TEKST (links) ================= -->
+  <div class="article">
+    <h3>Nanny in England</h3>
+    <p>
+      Handschuhe, Hut und ein braunes Kleid. So geht Marie E. aus Bad
+      Schönborn morgens aus dem Haus, wenn sie zur Schule geht. Dabei
+      ist das nicht ihr eigener Stil, sondern die Uniform des Norland
+      Colleges in der englischen Stadt Bath. Dort studiert sie und wird in
+      zwei Jahren ihren Abschluss machen.
+    </p>
+    <p>
+      <strong>(1)</strong> <mark id="m-privatsphare">Da die Nannys des Norland Colleges nach ihrem Abschluss oft in
+      Königshäusern und den reichsten Familien der Welt arbeiten, ist das
+      Respektieren der Privatsphäre besonders wichtig. Daher möchte Marie E.
+      ihren vollständigen Namen auch nicht in der Zeitung lesen.</mark>
+    </p>
+    <p>
+      <strong>(2)</strong> 2017 half sie ein Jahr lang als Au-pair im Alltag einer Familie in den
+      USA. <mark id="m-beruflich">Dass sie dies einmal beruflich machen werde, war ihr damals nicht
+      klar:</mark> „Ich habe immer einen Job beschrieben, in dem ich überall auf der
+      Welt arbeiten, reisen und intensiv mit Kindern arbeiten kann. <mark id="m-nanny">Nanny zu
+      sein, hatte ich aber nie vor Augen gehabt. In Deutschland haben wir
+      nämlich keine richtige Nanny-Kultur“</mark>, erzählt Marie.
+    </p>
+    <p>
+      <mark id="m-schers">Von Norland erfahren hat sie durch ihre Mutter, die ihr einen Artikel über
+      das Kindermädchen von Prinz George, auch eine „Norland Nanny“, als
+      Job-Vorschlag schickte. Was eher im Scherz gemeint war, entpuppte sich
+      als Maries Traumjob.</mark>
+    </p>
+    <p>
+      <strong>(3)</strong> Das Studium kostet umgerechnet über 66.000 Euro. Dazu kommen
+      noch die Kosten für die Uniform und Unterkunft. „Ich fühle mich hier schon
+      sehr zu Hause“, meint sie mit einem Lächeln. Auch wenn die neue Stadt
+      auf den ersten Blick nicht überzeugte. „Ich dachte erst einmal: Wow, das
+      ist viel braun hier in Bath. Weil alles aus Sandstein gebaut ist“, erzählt
+      Marie lachend. Die Uniformen der Norlanderinnen fügen sich farblich ins
+      Stadtbild ein. „Mittlerweile mag ich es sehr“, erzählt Marie über die
+      Uniform. <mark id="m-uniform">„Aber manchmal fühlt es sich immer noch außergewöhnlich an,
+      wenn man durch Bath läuft und Leute fragen, ob sie ein Bild machen
+      dürfen.“</mark>
+    </p>
+    <p>
+      <mark id="m-kleid">Das braune Kleid tragen die Studentinnen jedoch nur, wenn sie
+      theoretischen Unterricht haben. An zwei Tagen in der Woche stehen aber
+      auch praktische Dinge auf dem Stundenplan.</mark>
+    </p>
+    <p>
+      <strong>(4)</strong> Von der Schule ist Marie begeistert. Natürlich gehören auch
+      Alltagsstress und Abgaben zum Alltag als Studentin, aber Freizeit kommt
+      sie auch nicht zu kurz. „Auch wenn unser Studium ein bisschen
+      außergewöhnlich ist, haben wir trotzdem das normale Studentenleben in
+      Bath“, erzählt die 24-Jährige. <mark id="m-arbeitsgeber">Außergewöhnlich sind jedoch auch die
+      potenziellen Arbeitgeber und Arbeitgeberinnen der Nannys, die von
+      Hollywood-Stars bis zu Königsfamilien reichen. Auch auf solche
+      Arbeitsplätze werden die Studierenden vorbereitet. So stehen auch
+      Selbstverteidigung mit einem Kinderwagen und Fahrtraining auf dem
+      Stundenplan, um sich gegen Angreifer schützen zu können.</mark>
+    </p>
+    <p>
+      <strong>(5)</strong> Marie sieht die Arbeit mit Kindern als große Verantwortung und
+      Privileg. „Es ist auch anstrengend“, gibt sie zu, „aber trotzdem immer
+      schön und lustig. Das zu schätzen, macht eine gute Nanny aus.“ <mark id="m-zukunft">Wo ihre
+      berufliche Reise hingeht, weiß sie bisher nicht. Erst einmal möchte sie als
+      Nanny arbeiten, später vielleicht auch als Tagesmutter oder Schlafcoach.
+      Nur eines ist klar: Kinder werden immer im Mittelpunkt ihrer Arbeit stehen.</mark>
+    </p>
+    <p class="source">bnn.de, 22 augustus 2023</p>
+  </div>
+
+  <!-- ================= VRAGEN (rechts) ================= -->
+  <div class="vragen">
+
+    <!-- VRAAG 15 -->
+    <h2>1p 15 &nbsp;Warum wird Maries Nachname nicht in der Zeitung genannt? (1. Absatz)</h2>
+    <ul class="options" id="q15-options">
+      <li><button class="option-btn" data-q="15" data-opt="A">A&nbsp; Das Norland College hat dafür keine Zustimmung gegeben.</button></li>
+      <li><button class="option-btn" data-q="15" data-opt="B">B&nbsp; Die Zeitung hat sich aus Sicherheitsgründen dafür entschieden.</button></li>
+      <li><button class="option-btn" data-q="15" data-opt="C">C&nbsp; Maries Familie möchte lieber anonym bleiben.</button></li>
+      <li><button class="option-btn" data-q="15" data-opt="D">D&nbsp; Zum Schutz von eventuellen Arbeitgebern.</button></li>
+    </ul>
+    <div class="feedback" id="fb15"></div>
+
+    <!-- VRAAG 16 -->
+    <h2>1p 16 &nbsp;„Dass sie dies einmal beruflich machen werde, war ihr damals nicht klar“ (alinea 2)<br>
+    Hoe zegt Marie ditzelfde in haar eigen woorden?<br>
+    Schrijf de eerste twee Duitse woorden van de zin uit alinea 2 over.</h2>
+    <div class="invul">
+      <input type="text" id="q16-input" placeholder="Typ de eerste twee Duitse woorden…" autocomplete="off">
+      <button type="button" onclick="checkInvul(16)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb16"></div>
+
+    <!-- VRAAG 17 -->
+    <h2>1p 17 &nbsp;„Was eher im Scherz gemeint war“ (2. Absatz)<br>
+    Was war hier im Scherz gemeint?</h2>
+    <ul class="options" id="q17-options">
+      <li><button class="option-btn" data-q="17" data-opt="A">A&nbsp; ein Job-Vorschlag</button></li>
+      <li><button class="option-btn" data-q="17" data-opt="B">B&nbsp; eine Geschichte über Prinz George</button></li>
+      <li><button class="option-btn" data-q="17" data-opt="C">C&nbsp; um sehr viel zu reisen</button></li>
+      <li><button class="option-btn" data-q="17" data-opt="D">D&nbsp; um überall auf der Welt zu arbeiten</button></li>
+    </ul>
+    <div class="feedback" id="fb17"></div>
+
+    <!-- VRAAG 18 -->
+    <h2>1p 18 &nbsp;Was wird aus dem 3. Absatz über die Nanny-Uniform deutlich?</h2>
+    <ul class="options" id="q18-options">
+      <li><button class="option-btn" data-q="18" data-opt="A">A&nbsp; Die Studentinnen sind dazu verpflichtet, ihre Uniform jeden Tag während des Studiums zu tragen.</button></li>
+      <li><button class="option-btn" data-q="18" data-opt="B">B&nbsp; Die Uniformen werden den Studentinnen vom Norland College umsonst zur Verfügung gestellt.</button></li>
+      <li><button class="option-btn" data-q="18" data-opt="C">C&nbsp; Wegen Beschwerden der Studentinnen wird demnächst die Farbe der Uniformen geändert.</button></li>
+      <li><button class="option-btn" data-q="18" data-opt="D">D&nbsp; Wenn die Uniformen in der Öffentlichkeit getragen werden, sorgt das manchmal für Aufmerksamkeit.</button></li>
+    </ul>
+    <div class="feedback" id="fb18"></div>
+
+    <!-- VRAAG 19 -->
+    <h2>1p 19 &nbsp;Was geht aus dem 4. Absatz hervor?</h2>
+    <ul class="options" id="q19-options">
+      <li><button class="option-btn" data-q="19" data-opt="A">A&nbsp; Gute Jobs sind nach dem Studium schnell vergeben.</button></li>
+      <li><button class="option-btn" data-q="19" data-opt="B">B&nbsp; Im Unterricht lernt man mit schwierigen Situationen umzugehen.</button></li>
+      <li><button class="option-btn" data-q="19" data-opt="C">C&nbsp; Manche wollen nur Nanny werden, damit sie für berühmte Leute arbeiten dürfen.</button></li>
+      <li><button class="option-btn" data-q="19" data-opt="D">D&nbsp; Neben dem Studium bleibt kaum Zeit für Erholung.</button></li>
+    </ul>
+    <div class="feedback" id="fb19"></div>
+
+    <!-- VRAAG 20 -->
+    <h2>1p 20 &nbsp;Was macht der 5. Absatz über Marie deutlich?</h2>
+    <ul class="options" id="q20-options">
+      <li><button class="option-btn" data-q="20" data-opt="A">A&nbsp; Sie hat ihre Zukunft schon längst bis ins Detail geplant.</button></li>
+      <li><button class="option-btn" data-q="20" data-opt="B">B&nbsp; Sie möchte bald eigene Kinder haben.</button></li>
+      <li><button class="option-btn" data-q="20" data-opt="C">C&nbsp; Sie weiß noch nicht genau, wie die Zukunft aussieht.</button></li>
+      <li><button class="option-btn" data-q="20" data-opt="D">D&nbsp; Sie will nach dem Studium zuerst mal reisen.</button></li>
+    </ul>
+    <div class="feedback" id="fb20"></div>
+
+  </div>
+</div>
+
+<button class="reset" onclick="resetAll()">Alles opnieuw proberen</button>
+
+<script>
+const answers = {
+  "15": {
+    correct: "B",
+    uitleg:
+      "Juist is B. In alinea 1 staat: <em>„Da die Nannys des Norland Colleges nach ihrem Abschluss oft in Königshäusern und den reichsten Familien der Welt arbeiten, ist das Respektieren der Privatsphäre besonders wichtig. Daher möchte Marie E. ihren vollständigen Namen auch nicht in der Zeitung lesen.“</em> Marie wil haar volledige naam niet in de krant vanwege de privacy — de krant respecteert dat dus uit veiligheidsoverwegingen (voor haar toekomstige werkgevers). " +
+      "A (Norland College gaf geen toestemming) staat er niet; C (familie wil anoniem blijven) staat er niet — het is Maries eigen wens; D (bescherming van werkgevers) is niet de reden die genoemd wordt.",
+    vertaling:
+      "<strong>Da die Nannys des Norland Colleges nach ihrem Abschluss oft in Königshäusern und den reichsten Familien der Welt arbeiten, ist das Respektieren der Privatsphäre besonders wichtig.</strong> = <em>Omdat de nanny's van het Norland College na hun afstuderen vaak in koningshuizen en de rijkste families ter wereld werken, is het respecteren van de privacy bijzonder belangrijk.</em> " +
+      "<strong>Daher möchte Marie E. ihren vollständigen Namen auch nicht in der Zeitung lesen.</strong> = <em>Daarom wil Marie E. haar volledige naam ook niet in de krant lezen.</em> → B.",
+    markIds: ["m-privatsphare"]
+  },
+  "16": {
+    correct: "Nanny zu",
+    uitleg:
+      "Het juiste antwoord is <strong>„Nanny zu“</strong>. Marie zegt in haar eigen woorden: <em>„Nanny zu sein, hatte ich aber nie vor Augen gehabt.“</em> (Nanny zijn, dat had ik echter nooit voor ogen gehad.) De eerste twee Duitse woorden van die zin zijn „Nanny zu“.",
+    vertaling:
+      "<strong>Nanny zu sein, hatte ich aber nie vor Augen gehabt.</strong> = <em>Nanny zijn, dat had ik echter nooit voor ogen gehad.</em> " +
+      "„vor Augen haben“ = voor ogen hebben; „nie“ = nooit. → „Nanny zu“.",
+    markIds: ["m-nanny"]
+  },
+  "17": {
+    correct: "A",
+    uitleg:
+      "Juist is A. In alinea 2 staat: <em>„Von Norland erfahren hat sie durch ihre Mutter, die ihr einen Artikel über das Kindermädchen von Prinz George, auch eine ‚Norland Nanny‘, als Job-Vorschlag schickte. Was eher im Scherz gemeint war, entpuppte sich als Maries Traumjob.“</em> De moeder stuurde het artikel dus als <strong>job-suggestie</strong> (Job-Vorschlag), en dat was eerder als grapje bedoeld. " +
+      "B (verhaal over prins George) is de inhoud van het artikel, niet het grapje; C (veel reizen) en D (overal ter wereld werken) staan er niet.",
+    vertaling:
+      "<strong>... die ihr einen Artikel über das Kindermädchen von Prinz George, auch eine „Norland Nanny“, als Job-Vorschlag schickte.</strong> = <em>... die haar een artikel over het kindermeisje van prins George, ook een „Norland Nanny“, als job-suggestie stuurde.</em> " +
+      "<strong>Was eher im Scherz gemeint war, entpuppte sich als Maries Traumjob.</strong> = <em>Wat eerder als grapje bedoeld was, ontpopte zich als Marie's droombaan.</em> → A.",
+    markIds: ["m-schers"]
+  },
+  "18": {
+    correct: "D",
+    uitleg:
+      "Juist is D. In alinea 3 staat: <em>„Aber manchmal fühlt es sich immer noch außergewöhnlich an, wenn man durch Bath läuft und Leute fragen, ob sie ein Bild machen dürfen.“</em> Als ze in uniform door Bath loopt, vragen mensen soms of ze een foto mogen maken — dat trekt dus aandacht. " +
+      "A (elke dag verplicht dragen) klopt niet — uit de tekst blijkt juist dat ze het bruine jurkje alleen dragen bij theorielessen; B (gratis uniformen) staat er niet — de kosten voor de uniform komen er juist bovenop; C (kleur wordt binnenkort veranderd) staat er niet.",
+    vertaling:
+      "<strong>Aber manchmal fühlt es sich immer noch außergewöhnlich an, wenn man durch Bath läuft und Leute fragen, ob sie ein Bild machen dürfen.</strong> = <em>Maar soms voelt het nog steeds bijzonder als je door Bath loopt en mensen vragen of ze een foto mogen maken.</em> → D.",
+    markIds: ["m-uniform", "m-kleid"]
+  },
+  "19": {
+    correct: "B",
+    uitleg:
+      "Juist is B. In alinea 4 staat: <em>„Auch auf solche Arbeitsplätze werden die Studierenden vorbereitet. So stehen auch Selbstverteidigung mit einem Kinderwagen und Fahrtraining auf dem Stundenplan, um sich gegen Angreifer schützen zu können.“</em> Studenten leren dus om te gaan met moeilijke situaties (zoals een aanval afweren). " +
+      "A (goede banen snel vergeven) staat er niet; C (sommigen willen alleen nanny worden voor beroemde mensen) staat er niet; D (nauwelijks tijd voor ontspanning) klopt niet — er staat juist dat ze een normaal studentenleven hebben.",
+    vertaling:
+      "<strong>Auch auf solche Arbeitsplätze werden die Studierenden vorbereitet. So stehen auch Selbstverteidigung mit einem Kinderwagen und Fahrtraining auf dem Stundenplan, um sich gegen Angreifer schützen zu können.</strong> = <em>Ook op zulke werkplekken worden de studenten voorbereid. Zo staan ook zelfverdediging met een kinderwagen en rijtraining op het rooster, om zich tegen aanvallers te kunnen beschermen.</em> → B.",
+    markIds: ["m-arbeitsgeber"]
+  },
+  "20": {
+    correct: "C",
+    uitleg:
+      "Juist is C. In alinea 5 staat: <em>„Wo ihre berufliche Reise hingeht, weiß sie bisher nicht. Erst einmal möchte sie als Nanny arbeiten, später vielleicht auch als Tagesmutter oder Schlafcoach.“</em> Ze weet dus nog niet precies hoe haar toekomst eruitziet. " +
+      "A (toekomst al tot in detail gepland) klopt niet; B (wil snel eigen kinderen) staat er niet; D (wil na studie eerst reizen) staat er niet.",
+    vertaling:
+      "<strong>Wo ihre berufliche Reise hingeht, weiß sie bisher nicht.</strong> = <em>Waar haar beroepsreis naartoe gaat, weet ze tot nu toe niet.</em> " +
+      "<strong>Erst einmal möchte sie als Nanny arbeiten, später vielleicht auch als Tagesmutter oder Schlafcoach.</strong> = <em>Eerst wil ze als nanny werken, later misschien ook als kinderoppas of slaapcoach.</em> → C.",
+    markIds: ["m-zukunft"]
+  }
+};
+
+/* ---------- meerkeuze ---------- */
+function showFeedback(q, isCorrect) {
+  const data = answers[q];
+  const fb = document.getElementById("fb" + q);
+  fb.className = "feedback show " + (isCorrect ? "ok" : "nok");
+  fb.innerHTML =
+    (isCorrect ? "✅ <strong>Juist!</strong> " : "❌ <strong>Onjuist.</strong> Het juiste antwoord is <strong>" + data.correct + "</strong>. ") +
+    '<div class="uitleg">' + data.uitleg + "</div>" +
+    '<div class="vertaling"><strong>Uitleg van de Duitse zin(nen):</strong><br>' + data.vertaling + "</div>";
+  (data.markIds || []).forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add("active");
+  });
+}
+
+function handleClick(e) {
+  const btn = e.target.closest(".option-btn");
+  if (!btn || btn.disabled) return;
+
+  const q = btn.dataset.q;
+  const opt = btn.dataset.opt;
+  const data = answers[q];
+  const isCorrect = opt === data.correct;
+
+  document.querySelectorAll('#q' + q + '-options .option-btn').forEach(b => {
+    b.disabled = true;
+    if (b.dataset.opt === opt) b.classList.add(isCorrect ? "correct" : "wrong");
+    if (!isCorrect && b.dataset.opt === data.correct) b.classList.add("correct");
+  });
+
+  showFeedback(q, isCorrect);
+}
+
+document.querySelectorAll(".option-btn").forEach(btn => {
+  btn.addEventListener("click", handleClick);
+});
+
+/* ---------- invulvraag ---------- */
+function normalize(s) {
+  return s.toLowerCase().replace(/[.,!?"'’]/g, "").replace(/\s+/g, " ").trim();
+}
+
+function checkInvul(q) {
+  const input = document.getElementById("q" + q + "-input");
+  const val = input.value;
+  const data = answers[q];
+  const fb = document.getElementById("fb" + q);
+  const isCorrect = normalize(val) === normalize(data.correct);
+
+  fb.className = "feedback show " + (isCorrect ? "ok" : "nok");
+  fb.innerHTML =
+    (isCorrect ? "✅ <strong>Juist!</strong> " : "❌ <strong>Onjuist.</strong> Het juiste antwoord is <strong>" + data.correct + "</strong>. ") +
+    '<div class="uitleg">' + data.uitleg + "</div>" +
+    '<div class="vertaling"><strong>Uitleg van de Duitse zin(nen):</strong><br>' + data.vertaling + "</div>";
+  (data.markIds || []).forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add("active");
+  });
+}
+
+/* ---------- reset ---------- */
+function resetAll() {
+  document.querySelectorAll(".option-btn").forEach(b => {
+    b.disabled = false;
+    b.classList.remove("correct", "wrong");
+  });
+  document.querySelectorAll(".feedback").forEach(f => {
+    f.className = "feedback";
+    f.innerHTML = "";
+  });
+  document.querySelectorAll("mark").forEach(m => m.classList.remove("active"));
+  document.querySelectorAll('.invul input').forEach(i => i.value = "");
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mode, Musik und mehr – oefening</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    max-width: 1280px;
+    margin: 30px auto;
+    padding: 0 16px;
+    line-height: 1.6;
+    color: #222;
+    background: #fafafa;
+  }
+  h1 { font-size: 1.4em; border-bottom: 2px solid #333; padding-bottom: 6px; }
+  h2 { font-size: 1.05em; margin-top: 1.6em; }
+  .examen-header {
+    font-size: 1.05em;
+    font-weight: bold;
+    color: #444;
+    letter-spacing: .3px;
+  }
+  .layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    align-items: start;
+    margin-top: 24px;
+  }
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+  }
+  .article {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px 20px;
+    position: sticky;
+    top: 16px;
+    max-height: calc(100vh - 32px);
+    overflow-y: auto;
+  }
+  @media (max-width: 900px) {
+    .article { position: static; max-height: none; overflow-y: visible; }
+  }
+  .article h3 { margin-top: 0; }
+  .source { font-size: .85em; color: #666; margin-top: 12px; }
+  .vragen { min-width: 0; }
+
+  .feedback {
+    margin-top: 10px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    display: none;
+    font-size: .95em;
+  }
+  .feedback.show { display: block; }
+  .feedback.ok { background: #e3f6e3; border-left: 5px solid #2e8b2e; }
+  .feedback.nok { background: #fdeaea; border-left: 5px solid #c0392b; }
+  .feedback .uitleg { margin-top: 6px; }
+  .feedback .vertaling {
+    margin-top: 8px;
+    padding: 8px 10px;
+    background: rgba(255,255,255,.65);
+    border-left: 3px solid #888;
+    border-radius: 4px;
+    font-size: .93em;
+  }
+  .feedback .vertaling em { color: #333; }
+
+  mark {
+    background: transparent;
+    color: inherit;
+    padding: 0;
+    border-radius: 3px;
+    transition: background .3s;
+  }
+  mark.active {
+    background: #ffe680;
+    padding: 0 2px;
+    outline: 2px solid #ffb347;
+  }
+
+  .invul {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 8px;
+  }
+  .invul input {
+    font-family: inherit;
+    font-size: .97em;
+    padding: 8px 10px;
+    border: 1.5px solid #999;
+    border-radius: 6px;
+    min-width: 240px;
+  }
+  .invul button {
+    padding: 8px 14px;
+    font-family: inherit;
+    font-size: .95em;
+    border: 1.5px solid #555;
+    background: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .invul button:hover { background: #eee; }
+
+  .reset {
+    margin-top: 24px;
+    padding: 8px 16px;
+    font-family: inherit;
+    font-size: .95em;
+    border: 1.5px solid #555;
+    background: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .reset:hover { background: #eee; }
+</style>
+</head>
+<body>
+
+<p class="examen-header">Examen vmbo gl/tl 2025 Tijdvak 2</p>
+<h1>Tekst 7 – Mode, Musik und mehr</h1>
+
+<div class="layout">
+
+  <!-- ================= TEKST (links) ================= -->
+  <div class="article">
+    <h3>Mode, Musik und mehr</h3>
+    <p>
+      Fashion, Hip-Hop, Tattoos – das sind die Dinge, die Jana, auch Yung
+      Nello genannt, auf ihrem Instagram-Kanal verkörpert. Die 22-Jährige hat
+      rund 330 000 Followern – und bleibt dabei sie selbst.
+    </p>
+    <p>
+      Seit einigen Jahren beschäftigt sich die Kölnerin intensiv mit Sneakern
+      und anderer Mode und hat vor ein paar Monaten sogar ihre eigene
+      Modelinie „Love Scars“ auf den Markt gebracht. Musikalisch ist die
+      22-Jährige unter dem Namen Yung Nello aktiv. Sie beschäftigt sich vor
+      allem mit Rap und Hip-Hop und hat bereits mehrere Mixtapes
+      veröffentlicht.
+    </p>
+    <p>
+      <mark id="m-ernster">Neben Mode und Musik spricht Jana auch immer mal wieder über
+      ernstere Themen wie psychische Gesundheit, Sexismus und Selbstzweifel. Dabei versucht sie, ihre Follower zu ermutigen und solche
+      Themen zu normalisieren. Auch auf YouTube beschäftigt sie sich damit.</mark>
+    </p>
+    <p class="source">Eichsfelder Tageblatt, 8 augustus 2</p>
+  </div>
+
+  <!-- ================= VRAGEN (rechts) ================= -->
+  <div class="vragen">
+
+    <!-- VRAAG 22 -->
+    <h2>1p 22 &nbsp;„Mode, Musik und mehr“ (titel)<br>
+    Uit welke zin in de tekst wordt duidelijk dat Jana zich op social media met méér bezighoudt dan alleen mode, uiterlijk en muziek?<br>
+    Schrijf de eerste twee Duitse woorden van die zin op.</h2>
+    <div class="invul">
+      <input type="text" id="q22-input" placeholder="Typ de eerste twee Duitse woorden…" autocomplete="off">
+      <button type="button" onclick="checkInvul()">Controleer</button>
+    </div>
+    <div class="feedback" id="fb22"></div>
+
+  </div>
+</div>
+
+<button class="reset" onclick="resetAll()">Alles opnieuw proberen</button>
+
+<script>
+const answers = {
+  "22": {
+    correct: "Neben Mode",
+    uitleg:
+      "Het juiste antwoord is <strong>„Neben Mode“</strong>. De zin die duidelijk maakt dat Jana zich met méér bezighoudt dan mode, uiterlijk en muziek is: <em>„Neben Mode und Musik spricht Jana auch immer mal wieder über ernstere Themen wie psychische Gesundheit, Sexismus und Selbstzweifel.“</em> De eerste twee Duitse woorden van die zin zijn „Neben Mode“.",
+    vertaling:
+      "<strong>Neben Mode und Musik spricht Jana auch immer mal wieder über ernstere Themen wie psychische Gesundheit, Sexismus und Selbstzweifel.</strong> = <em>Naast mode en muziek spreekt Jana ook af en toe over serieuzere onderwerpen zoals psychische gezondheid, seksisme en zelf twijfels.</em> " +
+      "„neben“ = naast; „ernstere Themen“ = serieuzere onderwerpen. → „Neben Mode“.",
+    markIds: ["m-ernster"]
+  }
+};
+
+/* ---------- invulvraag ---------- */
+function normalize(s) {
+  return s.toLowerCase().replace(/[.,!?"'’]/g, "").replace(/\s+/g, " ").trim();
+}
+
+function checkInvul() {
+  const input = document.getElementById("q22-input");
+  const val = input.value;
+  const data = answers[22];
+  const fb = document.getElementById("fb22");
+  const isCorrect = normalize(val) === normalize(data.correct);
+
+  fb.className = "feedback show " + (isCorrect ? "ok" : "nok");
+  fb.innerHTML =
+    (isCorrect ? "✅ <strong>Juist!</strong> " : "❌ <strong>Onjuist.</strong> Het juiste antwoord is <strong>" + data.correct + "</strong>. ") +
+    '<div class="uitleg">' + data.uitleg + "</div>" +
+    '<div class="vertaling"><strong>Uitleg van de Duitse zin:</strong><br>' + data.vertaling + "</div>";
+  (data.markIds || []).forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add("active");
+  });
+}
+
+/* ---------- reset ---------- */
+function resetAll() {
+  document.querySelectorAll(".feedback").forEach(f => {
+    f.className = "feedback";
+    f.innerHTML = "";
+  });
+  document.querySelectorAll("mark").forEach(m => m.classList.remove("active"));
+  document.querySelectorAll('.invul input').forEach(i => i.value = "");
+}
+</script>
+
+</body>
+</html>

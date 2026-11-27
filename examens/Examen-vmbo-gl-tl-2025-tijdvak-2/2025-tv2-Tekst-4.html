@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Darum sind viele genervt von den E-Rollern – oefening</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    max-width: 1280px;
+    margin: 30px auto;
+    padding: 0 16px;
+    line-height: 1.6;
+    color: #222;
+    background: #fafafa;
+  }
+  h1 { font-size: 1.4em; border-bottom: 2px solid #333; padding-bottom: 6px; }
+  h2 { font-size: 1.05em; margin-top: 1.6em; }
+  .examen-header {
+    font-size: 1.05em;
+    font-weight: bold;
+    color: #444;
+    letter-spacing: .3px;
+  }
+  .layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    align-items: start;
+    margin-top: 24px;
+  }
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+  }
+  .article {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px 20px;
+    position: sticky;
+    top: 16px;
+    max-height: calc(100vh - 32px);
+    overflow-y: auto;
+  }
+  @media (max-width: 900px) {
+    .article { position: static; max-height: none; overflow-y: visible; }
+  }
+  .article h3 { margin-top: 0; }
+  .source { font-size: .85em; color: #666; margin-top: 12px; }
+  .vragen { min-width: 0; }
+
+  .options { list-style: none; padding-left: 0; }
+  .options li { margin: 6px 0; }
+  .option-btn {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 9px 12px;
+    font-size: .97em;
+    font-family: inherit;
+    border: 1.5px solid #999;
+    border-radius: 6px;
+    background: #fff;
+    cursor: pointer;
+    transition: background .15s, border-color .15s;
+  }
+  .option-btn:hover:not(:disabled) { background: #eef4fb; border-color: #4a7fb5; }
+  .option-btn:disabled { cursor: default; opacity: .95; }
+  .option-btn.correct { background: #d8f5d8; border-color: #2e8b2e; font-weight: bold; }
+  .option-btn.wrong { background: #fbdcdc; border-color: #c0392b; }
+
+  .feedback {
+    margin-top: 10px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    display: none;
+    font-size: .95em;
+  }
+  .feedback.show { display: block; }
+  .feedback.ok { background: #e3f6e3; border-left: 5px solid #2e8b2e; }
+  .feedback.nok { background: #fdeaea; border-left: 5px solid #c0392b; }
+  .feedback .uitleg { margin-top: 6px; }
+  .feedback .vertaling {
+    margin-top: 8px;
+    padding: 8px 10px;
+    background: rgba(255,255,255,.65);
+    border-left: 3px solid #888;
+    border-radius: 4px;
+    font-size: .93em;
+  }
+  .feedback .vertaling em { color: #333; }
+
+  mark {
+    background: transparent;
+    color: inherit;
+    padding: 0;
+    border-radius: 3px;
+    transition: background .3s;
+  }
+  mark.active {
+    background: #ffe680;
+    padding: 0 2px;
+    outline: 2px solid #ffb347;
+  }
+
+  .invul {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 8px;
+  }
+  .invul input {
+    font-family: inherit;
+    font-size: .97em;
+    padding: 8px 10px;
+    border: 1.5px solid #999;
+    border-radius: 6px;
+    min-width: 240px;
+  }
+  .invul button, .check-btn {
+    padding: 8px 14px;
+    font-family: inherit;
+    font-size: .95em;
+    border: 1.5px solid #555;
+    background: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .invul button:hover, .check-btn:hover { background: #eee; }
+
+  .bewering-tabel {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+    font-size: .95em;
+  }
+  .bewering-tabel th, .bewering-tabel td {
+    border: 1px solid #ccc;
+    padding: 8px 10px;
+    text-align: left;
+    vertical-align: top;
+  }
+  .bewering-tabel th { background: #f0f0f0; }
+  .bewering-tabel td.keuze { text-align: center; white-space: nowrap; }
+  .bewering-tabel label { margin: 0 6px; cursor: pointer; }
+
+  .reset {
+    margin-top: 24px;
+    padding: 8px 16px;
+    font-family: inherit;
+    font-size: .95em;
+    border: 1.5px solid #555;
+    background: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .reset:hover { background: #eee; }
+</style>
+</head>
+<body>
+
+<p class="examen-header">Examen vmbo gl/tl 2025 Tijdvak 2</p>
+<h1>Tekst 4 – Darum sind viele genervt von den E-Rollern!</h1>
+
+<div class="layout">
+
+  <!-- ================= TEKST (links) ================= -->
+  <div class="article">
+    <h3>Darum sind viele genervt von den E-Rollern!</h3>
+    <p>
+      In vielen Städten sieht man sie überall: E-Roller. Viele finden die
+      Roller praktisch. Andere sind super genervt!
+    </p>
+    <p>
+      <strong>(1)</strong> E-Roller können in Großstädten geliehen werden, um kurze Strecken
+      bequem hinter sich zu bringen. Die elektrisch betriebenen Roller können
+      bis zu 20 Kilometer pro Stunde fahren und kosten nur wenige Euro Miete.
+      Eigentlich eine gute Sache. <mark id="m-falsch">Doch oft werden sie von den Menschen, die
+      sie genutzt haben, achtlos in der Gegend stehen gelassen. Die Fahrzeuge
+      stehen dann zum Beispiel auf Gehwegen.</mark> Das ist besonders für
+      Rollstuhlfahrer, Blinde oder Eltern mit Kinderwagen gefährlich.
+    </p>
+    <p>
+      <strong>(2)</strong> <mark id="m-geborgt">Doch es geht noch weiter: Einige Nutzer schmeißen die Fahrzeuge in
+      Flüsse oder Seen. In Köln haben Taucher schon über 100 E-Roller aus
+      dem Rhein geborgen.</mark> Insgesamt haben E-Roller, seitdem sie für den
+      Straßenverkehr zugelassen wurden, für viel Ärger gesorgt. <mark id="m-regels">Viele Städte
+      haben deswegen die Regeln für die E-Roller geändert. In der
+      französischen Hauptstadt Paris wurde abgestimmt. Nun steht fest: Die
+      Verleih-Roller sind für die Innenstadt verboten. In anderen Städten dürfen
+      sie nur noch in bestimmten Zonen abgestellt werden. Außerdem soll so
+      lange für den Roller bezahlt werden, bis das Fahrzeug an einem offiziellen
+      Parkplatz abgestellt ist.</mark>
+    </p>
+    <p>
+      <strong>(3)</strong> <mark id="m-dusseldorf">In der Stadt Düsseldorf wurde jetzt die 100. „Sharing-Station für
+      Mikromobilität“ eröffnet. Dabei handelt es sich um markierte Parkflächen
+      für E-Roller. In der Stadt Ulm ist es verboten, die E-Roller auf Grünflächen
+      oder in der Fußgängerzone abzustellen. Wer es trotzdem macht, kann
+      sich nicht aus dem Bezahlsystem ausloggen. In der Stadt Nürnberg soll
+      die Zahl der E-Roller von 5000 auf 4000 verringert werden.</mark> <mark id="m-essen">Die Stadt
+      Essen setzt auf die Mithilfe anderer E-Roller-Fahrerinnen und -Fahrer: Auf
+      einer Internetseite können dort falsch abgestellte E-Roller gemeldet
+      werden.</mark>
+    </p>
+    <p>
+      <strong>(4)</strong> Wer mit einem E-Roller unterwegs sein will, muss einige wichtige
+      Regeln beachten: <mark id="m-regels4">Man braucht zwar keinen Führerschein für das
+      Fahrzeug, muss aber mindestens 14 Jahre alt sein. Mit dem E-Roller darf
+      man nur fahren, wo Fahrräder auch fahren dürfen. Auch die
+      Geschwindigkeit ist genau geregelt: Die zugelassene Höchstgeschwindigkeit liegt bei 20 Kilometer pro Stunde, die Mindestgeschwindigkeit bei
+      6 Kilometer pro Stunde.</mark>
+    </p>
+    <p class="source">checky-kinderzeitung.de, 22 september 2023</p>
+  </div>
+
+  <!-- ================= VRAGEN (rechts) ================= -->
+  <div class="vragen">
+
+    <!-- VRAAG 10 -->
+    <h2>1p 10 &nbsp;Aus welchem Grund ärgern sich manche Leute über E-Roller? (1. Absatz)</h2>
+    <ul class="options" id="q10-options">
+      <li><button class="option-btn" data-q="10" data-opt="A">A&nbsp; E-Roller sind relativ teuer und gehen schnell kaputt.</button></li>
+      <li><button class="option-btn" data-q="10" data-opt="B">B&nbsp; E-Roller werden von den Benutzern oft falsch abgestellt.</button></li>
+      <li><button class="option-btn" data-q="10" data-opt="C">C&nbsp; Manchmal wird mit E-Rollern auf dem Bürgersteig gefahren.</button></li>
+      <li><button class="option-btn" data-q="10" data-opt="D">D&nbsp; Viele E-Rollerfahrer fahren mit zu hoher Geschwindigkeit.</button></li>
+    </ul>
+    <div class="feedback" id="fb10"></div>
+
+    <!-- VRAAG 11 -->
+    <h2>1p 11 &nbsp;Welcher Titel passt zum 2. Absatz?</h2>
+    <ul class="options" id="q11-options">
+      <li><button class="option-btn" data-q="11" data-opt="A">A&nbsp; Bürgerproteste</button></li>
+      <li><button class="option-btn" data-q="11" data-opt="B">B&nbsp; Keine E-Roller mehr in Frankreich</button></li>
+      <li><button class="option-btn" data-q="11" data-opt="C">C&nbsp; Neue Maßnahmen</button></li>
+      <li><button class="option-btn" data-q="11" data-opt="D">D&nbsp; Umweltverschmutzung</button></li>
+    </ul>
+    <div class="feedback" id="fb11"></div>
+
+    <!-- VRAAG 12 -->
+    <h2>1p 12 &nbsp;Duitse steden willen door parkeermaatregelen de overlast van elektrische steps verminderen.<br>
+    Welke in alinea 3 genoemde stad heeft een andere oplossing dan parkeermaatregelen bedacht?<br>
+    Noteer het antwoord.</h2>
+    <div class="invul">
+      <input type="text" id="q12-input" placeholder="Typ de naam van de stad…" autocomplete="off">
+      <button type="button" onclick="checkInvul(12)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb12"></div>
+
+    <!-- VRAAG 13 -->
+    <h2>2p 13 &nbsp;Geef van elk van de onderstaande beweringen aan of deze wel of niet overeenkomt met alinea 4.<br>
+    Kruis ‘wel’ of ‘niet’ aan.</h2>
+    <table class="bewering-tabel">
+      <thead>
+        <tr><th>Bewering</th><th>wel</th><th>niet</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1 Om met een elektrische step te mogen rijden, moet je binnenkort over een rijbewijs beschikken.</td>
+          <td class="keuze"><label><input type="radio" name="b1" value="wel"> wel</label><label><input type="radio" name="b1" value="niet"> niet</label></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>2 Er geldt een minimumleeftijd voor bestuurders van een elektrische step.</td>
+          <td class="keuze"><label><input type="radio" name="b2" value="wel"> wel</label><label><input type="radio" name="b2" value="niet"> niet</label></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>3 Het ligt vast, waar je met een elektrische step mag rijden.</td>
+          <td class="keuze"><label><input type="radio" name="b3" value="wel"> wel</label><label><input type="radio" name="b3" value="niet"> niet</label></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>4 Er geldt zowel een minimum- als een maximumsnelheid voor elektrische steps.</td>
+          <td class="keuze"><label><input type="radio" name="b4" value="wel"> wel</label><label><input type="radio" name="b4" value="niet"> niet</label></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+    <button class="check-btn" type="button" onclick="checkBeweringen()">Controleer</button>
+    <div class="feedback" id="fb13"></div>
+
+    <!-- VRAAG 14 -->
+    <h2>1p 14 &nbsp;„Viele finden … super genervt!” (inleiding)<br>
+    In de tekst wordt vooral ingegaan op de ergernissen die elektrische steps veroorzaken.<br>
+    In welke alinea wordt echter ook uitgelegd, waarom de elektrische steps praktisch kunnen zijn?<br>
+    Noteer het nummer van de alinea.</h2>
+    <div class="invul">
+      <input type="text" id="q14-input" placeholder="Typ het nummer van de alinea…" autocomplete="off">
+      <button type="button" onclick="checkInvul(14)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb14"></div>
+
+  </div>
+</div>
+
+<button class="reset" onclick="resetAll()">Alles opnieuw proberen</button>
+
+<script>
+const answers = {
+  "10": {
+    correct: "B",
+    uitleg:
+      "Juist is B. In alinea 1 staat: <em>„Doch oft werden sie von den Menschen, die sie genutzt haben, achtlos in der Gegend stehen gelassen. Die Fahrzeuge stehen dann zum Beispiel auf Gehwegen.“</em> De steps worden dus vaak achteloos (verkeerd) neergezet. " +
+      "A (duur en snel kapot) klopt niet — ze kosten juist maar een paar euro. C (rijden op de stoep) staat er niet — ze <em>staan</em> op de stoep. D (te hoge snelheid) staat er niet — de maximumsnelheid is juist vastgelegd.",
+    vertaling:
+      "<strong>Doch oft werden sie von den Menschen, die sie genutzt haben, achtlos in der Gegend stehen gelassen.</strong> = <em>Maar vaak worden ze door de mensen die ze gebruikt hebben, achteloos ergens neergezet.</em> " +
+      "<strong>Die Fahrzeuge stehen dann zum Beispiel auf Gehwegen.</strong> = <em>De voertuigen staan dan bijvoorbeeld op stoepen.</em> → B.",
+    markIds: ["m-falsch"]
+  },
+  "11": {
+    correct: "C",
+    uitleg:
+      "Juist is C (Neue Maßnahmen). In alinea 2 staan allerlei nieuwe maatregelen tegen de overlast: in Parijs zijn de huursteps in de binnenstad verboden, in andere steden mogen ze alleen nog in bepaalde zones worden neergezet, en je moet blijven betalen tot de step op een officiële parkeerplek staat. " +
+      "A (burgerprotesten) staat er niet; B (geen e-steps meer in Frankrijk) klopt niet — alleen in de binnenstad van Parijs; D (milieuvervuiling) is niet de kern van de alinea.",
+    vertaling:
+      "<strong>Viele Städte haben deswegen die Regeln für die E-Roller geändert.</strong> = <em>Veel steden hebben daarom de regels voor de e-steps veranderd.</em> " +
+      "<strong>Die Verleih-Roller sind für die Innenstadt verboten.</strong> = <em>De huursteps zijn verboden in de binnenstad.</em> → C.",
+    markIds: ["m-regels"]
+  },
+  "12": {
+    correct: "Essen",
+    uitleg:
+      "Het juiste antwoord is <strong>Essen</strong>. In alinea 3 worden verschillende steden genoemd: Düsseldorf (gemarkeerde parkeerplekken), Ulm (verbod op groen en in voetgangerszone), Nürnberg (minder steps) en <strong>Essen</strong>. Essen kiest een andere oplossing: <em>„Die Stadt Essen setzt auf die Mithilfe anderer E-Roller-Fahrerinnen und -Fahrer: Auf einer Internetseite können dort falsch abgestellte E-Roller gemeldet werden.“</em> Dat is geen parkeermaatregel, maar een meldpunt.",
+    vertaling:
+      "<strong>Die Stadt Essen setzt auf die Mithilfe anderer E-Roller-Fahrerinnen und -Fahrer: Auf einer Internetseite können dort falsch abgestellte E-Roller gemeldet werden.</strong> = <em>De stad Essen rekent op de medewerking van andere e-stepgebruikers: op een website kunnen daar verkeerd neergezette e-steps worden gemeld.</em> → Essen.",
+    markIds: ["m-essen"]
+  },
+  "13": {
+    correct: "1 niet, 2 wel, 3 wel, 4 wel",
+    uitleg:
+      "1 <strong>niet</strong> — er staat juist: <em>„Man braucht zwar keinen Führerschein für das Fahrzeug“</em> (je hebt géén rijbewijs nodig). " +
+      "2 <strong>wel</strong> — <em>„muss aber mindestens 14 Jahre alt sein“</em> (minimaal 14 jaar). " +
+      "3 <strong>wel</strong> — <em>„Mit dem E-Roller darf man nur fahren, wo Fahrräder auch fahren dürfen.“</em> " +
+      "4 <strong>wel</strong> — <em>„Die zugelassene Höchstgeschwindigkeit liegt bei 20 Kilometer pro Stunde, die Mindestgeschwindigkeit bei 6 Kilometer pro Stunde.“</em>",
+    vertaling:
+      "<strong>Man braucht zwar keinen Führerschein für das Fahrzeug, muss aber mindestens 14 Jahre alt sein.</strong> = <em>Je hebt weliswaar geen rijbewijs nodig voor het voertuig, maar je moet minstens 14 jaar oud zijn.</em> " +
+      "<strong>Mit dem E-Roller darf man nur fahren, wo Fahrräder auch fahren dürfen.</strong> = <em>Met de e-step mag je alleen rijden waar fietsen ook mogen rijden.</em> " +
+      "<strong>Die zugelassene Höchstgeschwindigkeit liegt bei 20 km/h, die Mindestgeschwindigkeit bei 6 km/h.</strong> = <em>De toegestane maximumsnelheid is 20 km/u, de minimumsnelheid 6 km/u.</em>",
+    markIds: ["m-regels4"]
+  },
+  "14": {
+    correct: "1",
+    uitleg:
+      "Juist is alinea <strong>1</strong>. In de inleiding staat dat veel mensen de steps praktisch vinden, maar anderen juist heel geïrriteerd zijn. In alinea 1 wordt uitgelegd <em>waarom</em> ze praktisch zijn: <em>„E-Roller können in Großstädten geliehen werden, um kurze Strecken bequem hinter sich zu bringen. Die elektrisch betriebenen Roller können bis zu 20 Kilometer pro Stunde fahren und kosten nur wenige Euro Miete.“</em> Daarna gaat het vooral over de ergernissen.",
+    vertaling:
+      "<strong>E-Roller können in Großstädten geliehen werden, um kurze Strecken bequem hinter sich zu bringen.</strong> = <em>E-steps kunnen in grote steden worden gehuurd om korte afstanden gemakkelijk af te leggen.</em> " +
+      "<strong>Die elektrisch betriebenen Roller können bis zu 20 Kilometer pro Stunde fahren und kosten nur wenige Euro Miete.</strong> = <em>De elektrisch aangedreven steps kunnen tot 20 km/u rijden en kosten maar een paar euro huur.</em> → alinea 1.",
+    markIds: ["m-dusseldorf"]
+  }
+};
+
+/* ---------- meerkeuze ---------- */
+function showFeedback(q, isCorrect) {
+  const data = answers[q];
+  const fb = document.getElementById("fb" + q);
+  fb.className = "feedback show " + (isCorrect ? "ok" : "nok");
+  fb.innerHTML =
+    (isCorrect ? "✅ <strong>Juist!</strong> " : "❌ <strong>Onjuist.</strong> Het juiste antwoord is <strong>" + data.correct + "</strong>. ") +
+    '<div class="uitleg">' + data.uitleg + "</div>" +
+    '<div class="vertaling"><strong>Uitleg van de Duitse zin(nen):</strong><br>' + data.vertaling + "</div>";
+  (data.markIds || []).forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add("active");
+  });
+}
+
+function handleClick(e) {
+  const btn = e.target.closest(".option-btn");
+  if (!btn || btn.disabled) return;
+
+  const q = btn.dataset.q;
+  const opt = btn.dataset.opt;
+  const data = answers[q];
+  const isCorrect = opt === data.correct;
+
+  document.querySelectorAll('#q' + q + '-options .option-btn').forEach(b => {
+    b.disabled = true;
+    if (b.dataset.opt === opt) b.classList.add(isCorrect ? "correct" : "wrong");
+    if (!isCorrect && b.dataset.opt === data.correct) b.classList.add("correct");
+  });
+
+  showFeedback(q, isCorrect);
+}
+
+document.querySelectorAll(".option-btn").forEach(btn => {
+  btn.addEventListener("click", handleClick);
+});
+
+/* ---------- invulvragen ---------- */
+function normalize(s) {
+  return s.toLowerCase().replace(/[.,!?"'’]/g, "").replace(/\s+/g, " ").trim();
+}
+
+function checkInvul(q) {
+  const input = document.getElementById("q" + q + "-input");
+  const val = input.value;
+  const data = answers[q];
+  const fb = document.getElementById("fb" + q);
+  let isCorrect = false;
+
+  if (q === 12) {
+    isCorrect = normalize(val) === "essen";
+  } else if (q === 14) {
+    isCorrect = normalize(val) === "1" || normalize(val) === "alinea 1" || normalize(val) === "eerste";
+  }
+
+  fb.className = "feedback show " + (isCorrect ? "ok" : "nok");
+  fb.innerHTML =
+    (isCorrect ? "✅ <strong>Juist!</strong> " : "❌ <strong>Onjuist.</strong> Het juiste antwoord is <strong>" + data.correct + "</strong>. ") +
+    '<div class="uitleg">' + data.uitleg + "</div>" +
+    '<div class="vertaling"><strong>Uitleg van de Duitse zin(nen):</strong><br>' + data.vertaling + "</div>";
+  (data.markIds || []).forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add("active");
+  });
+}
+
+/* ---------- wel/niet ---------- */
+function checkBeweringen() {
+  const juist = { b1: "niet", b2: "wel", b3: "wel", b4: "wel" };
+  let goed = 0;
+  let totaal = 4;
+  let details = [];
+
+  for (const naam in juist) {
+    const gekozen = document.querySelector('input[name="' + naam + '"]:checked');
+    const ok = gekozen && gekozen.value === juist[naam];
+    if (ok) goed++;
+    details.push((ok ? "✅" : "❌") + " bewering " + naam.replace("b", "") + ": " + juist[naam]);
+  }
+
+  const data = answers[13];
+  const fb = document.getElementById("fb13");
+  fb.className = "feedback show " + (goed === totaal ? "ok" : "nok");
+  fb.innerHTML =
+    (goed === totaal ? "✅ <strong>Alles juist!</strong> " : "❌ <strong>" + goed + " van " + totaal + " juist.</strong> ") +
+    '<div class="uitleg">' + details.join("<br>") + "<br><br>" + data.uitleg + "</div>" +
+    '<div class="vertaling"><strong>Uitleg van de Duitse zin(nen):</strong><br>' + data.vertaling + "</div>";
+  (data.markIds || []).forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add("active");
+  });
+}
+
+/* ---------- reset ---------- */
+function resetAll() {
+  document.querySelectorAll(".option-btn").forEach(b => {
+    b.disabled = false;
+    b.classList.remove("correct", "wrong");
+  });
+  document.querySelectorAll(".feedback").forEach(f => {
+    f.className = "feedback";
+    f.innerHTML = "";
+  });
+  document.querySelectorAll("mark").forEach(m => m.classList.remove("active"));
+  document.querySelectorAll('.invul input').forEach(i => i.value = "");
+  document.querySelectorAll('.bewering-tabel input[type="radio"]').forEach(r => r.checked = false);
+}
+</script>
+
+</body>
+</html>
