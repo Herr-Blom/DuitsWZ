@@ -3,14 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Tijdvak 1 - Examens</title>
-
+<title>Examens</title>
 <style>
-* {
-    box-sizing: border-box;
-}
-
+* { box-sizing: border-box; }
 body {
     margin: 0;
     padding: 35px 20px;
@@ -19,37 +14,10 @@ body {
     background: linear-gradient(135deg, #10152b, #202b49);
     color: white;
 }
+header { text-align: center; margin-bottom: 30px; }
+header h1 { font-size: clamp(28px, 5vw, 42px); margin-bottom: 10px; }
+header p { color: #b8c5df; font-size: 16px; }
 
-header {
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-header h1 {
-    font-size: clamp(28px, 5vw, 42px);
-    margin-bottom: 10px;
-}
-
-header p {
-    color: #b8c5df;
-    font-size: 16px;
-}
-
-/* Terug-knop styling */
-.back-btn {
-    display: inline-block;
-    margin-bottom: 20px;
-    color: #b8c5df;
-    text-decoration: none;
-    font-size: 15px;
-    transition: color 0.2s;
-}
-
-.back-btn:hover {
-    color: white;
-}
-
-/* De lijst met horizontale knoppen */
 .list-container {
     max-width: 700px;
     margin: auto;
@@ -57,95 +25,47 @@ header p {
     flex-direction: column;
     gap: 12px;
 }
-
 .list-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255,255,255,0.05);
     padding: 18px 24px;
     border-radius: 12px;
     text-decoration: none;
     color: white;
     font-size: clamp(16px, 2.5vw, 18px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255,255,255,0.1);
     transition: all 0.2s ease;
 }
-
 .list-item:hover {
-    background: rgba(255, 255, 255, 0.1);
-    transform: translateX(5px); /* Schuift iets naar rechts bij hover */
-    border-color: #F59E0B; /* Geeft een gele rand (matcht je examens-tegel) */
+    background: rgba(255,255,255,0.1);
+    transform: translateX(5px);
+    border-color: #F59E0B;
 }
-
-.list-item span {
-    color: #b8c5df;
-    font-size: 14px;
-}
+.list-item span { color: #b8c5df; font-size: 14px; }
 </style>
 </head>
-
 <body>
 
 <header>
-    <a href="../index.html" class="back-btn">← Terug naar overzicht</a>
-    <h1>📖 Tijdvak 1</h1>
-    <p>Kies een tekst om te maken</p>
+    <h1>📚 Examens</h1>
+    <p>Kies een tijdvak</p>
 </header>
 
 <main class="list-container">
-
-    <!-- Als je bestanden anders heten, pas dan de href aan -->
-    <a href="2026-tv1-Tekst-1.html" class="list-item">
-        <strong>Tekst 1</strong>
+    <a href="2025-tv1/index.html" class="list-item">
+        <strong>2025 – Tijdvak 1</strong>
         <span>Openen →</span>
     </a>
-
-    <a href="2026-tv1-Tekst-2.html" class="list-item">
-        <strong>Tekst 2</strong>
+    <a href="2026-tv1/index.html" class="list-item">
+        <strong>2026 – Tijdvak 1</strong>
         <span>Openen →</span>
     </a>
-
-    <a href="2026-tv1-Tekst-3.html" class="list-item">
-        <strong>Tekst 3</strong>
+    <a href="2026-tv2/index.html" class="list-item">
+        <strong>2026 – Tijdvak 2</strong>
         <span>Openen →</span>
     </a>
-
-    <a href="2026-tv1-Tekst-4.html" class="list-item">
-        <strong>Tekst 4</strong>
-        <span>Openen →</span>
-    </a>
-
-    <a href="2026-tv1-Tekst-5.html" class="list-item">
-        <strong>Tekst 5</strong>
-        <span>Openen →</span>
-    </a>
-
-    <a href="2026-tv1-Tekst-6.html" class="list-item">
-        <strong>Tekst 6</strong>
-        <span>Openen →</span>
-    </a>
-
-    <a href="2026-tv1-Tekst-7.html" class="list-item">
-        <strong>Tekst 7</strong>
-        <span>Openen →</span>
-    </a>
-
-    <a href="2026-tv1-Tekst-8.html" class="list-item">
-        <strong>Tekst 8</strong>
-        <span>Openen →</span>
-    </a>
-
-    <a href="2026-tv1-Tekst-9.html" class="list-item">
-        <strong>Tekst 9</strong>
-        <span>Openen →</span>
-    </a>
-
-    <a href="2026-tv1-Tekst-10.html" class="list-item">
-        <strong>Tekst 10</strong>
-        <span>Openen →</span>
-    </a>
-
 </main>
 
 </body>
