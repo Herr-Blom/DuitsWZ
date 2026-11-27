@@ -81,16 +81,6 @@ header p { color: #b8c5df; font-size: 16px; }
     box-shadow: 0 12px 28px rgba(244,114,182,0.55);
 }
 
-/* Tijdelijk een 'binnenkort' blokje voor als je later meer toetsen toevoegt */
-.tv-binnenkort {
-    background: rgba(255,255,255,0.05);
-    border: 1px dashed rgba(255,255,255,0.3);
-    box-shadow: none;
-    cursor: default;
-    pointer-events: none;
-}
-.tv-binnenkort strong { color: #b8c5df; }
-
 @media (max-width: 520px) {
     .list-container { grid-template-columns: 1fr; }
 }
@@ -106,27 +96,11 @@ header p { color: #b8c5df; font-size: 16px; }
 
 <main class="list-container">
 
-    <!-- Oefentoets Hoofdstuk 1 -->
-    <a href="oefentoets-hoofdstuk-1-dz/index.html" class="list-item tv-oefentoets">
+    <!-- Oefentoets Hoofdstuk 1 (AANGEPAST: verwijst nu direct naar het bestand) -->
+    <a href="oefentoets-hoofdstuk-1-dz.html" class="list-item tv-oefentoets">
         <strong>Hoofdstuk 1</strong>
         <span>Duitse Zinsstructuren →</span>
     </a>
-
-    <!-- Ruimte voor toekomstige oefentoetsen -->
-    <!--
-    <a href="oefentoets-hoofdstuk-2-dz/index.html" class="list-item tv-oefentoets">
-        <strong>Hoofdstuk 2</strong>
-        <span>Duitse Zinsstructuren →</span>
-    </a>
-    -->
-
-    <!-- Optioneel: een niet-klikbaar 'binnenkort' blokje -->
-    <!--
-    <div class="list-item tv-binnenkort">
-        <strong>Meer oefentoetsen</strong>
-        <span>Binnenkort beschikbaar</span>
-    </div>
-    -->
 
 </main>
 
