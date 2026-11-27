@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oefentoetsen</title>
+<style>
+* { box-sizing: border-box; }
+body {
+    margin: 0;
+    padding: 35px 20px;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #10152b, #202b49);
+    color: white;
+}
+header { text-align: center; margin-bottom: 30px; }
+header h1 { font-size: clamp(28px, 5vw, 42px); margin-bottom: 10px; }
+header p { color: #b8c5df; font-size: 16px; }
+
+.back-btn {
+    display: inline-block;
+    margin-bottom: 20px;
+    color: #b8c5df;
+    text-decoration: none;
+    font-size: 15px;
+    transition: color 0.2s;
+}
+.back-btn:hover { color: white; }
+
+.list-container {
+    max-width: 700px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+}
+
+.list-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+    padding: 22px 24px;
+    border-radius: 14px;
+    text-decoration: none;
+    color: white;
+    font-size: clamp(16px, 2.5vw, 18px);
+    border: none;
+    transition: all 0.25s ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+}
+.list-item strong { font-size: clamp(17px, 2.6vw, 19px); }
+.list-item span {
+    color: rgba(255,255,255,0.85);
+    font-size: 14px;
+    transition: color 0.2s;
+}
+.list-item:hover {
+    transform: translateY(-4px);
+}
+.list-item:hover span { color: white; }
+
+.list-item::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 50%;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.18), transparent);
+    pointer-events: none;
+}
+
+/* Oefentoetsen krijgen een eigen kleur (roze/rood) */
+.tv-oefentoets {
+    background: linear-gradient(135deg, #F472B6, #DB2777);
+    box-shadow: 0 6px 18px rgba(244,114,182,0.35);
+}
+.tv-oefentoets:hover {
+    box-shadow: 0 12px 28px rgba(244,114,182,0.55);
+}
+
+/* Tijdelijk een 'binnenkort' blokje voor als je later meer toetsen toevoegt */
+.tv-binnenkort {
+    background: rgba(255,255,255,0.05);
+    border: 1px dashed rgba(255,255,255,0.3);
+    box-shadow: none;
+    cursor: default;
+    pointer-events: none;
+}
+.tv-binnenkort strong { color: #b8c5df; }
+
+@media (max-width: 520px) {
+    .list-container { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<header>
+    <a href="../index.html" class="back-btn">← Terug naar overzicht</a>
+    <h1>📝 Oefentoetsen</h1>
+    <p>Kies een oefentoets om te maken</p>
+</header>
+
+<main class="list-container">
+
+    <!-- Oefentoets Hoofdstuk 1 -->
+    <a href="oefentoets-hoofdstuk-1-dz/index.html" class="list-item tv-oefentoets">
+        <strong>Hoofdstuk 1</strong>
+        <span>Duitse Zinsstructuren →</span>
+    </a>
+
+    <!-- Ruimte voor toekomstige oefentoetsen -->
+    <!--
+    <a href="oefentoets-hoofdstuk-2-dz/index.html" class="list-item tv-oefentoets">
+        <strong>Hoofdstuk 2</strong>
+        <span>Duitse Zinsstructuren →</span>
+    </a>
+    -->
+
+    <!-- Optioneel: een niet-klikbaar 'binnenkort' blokje -->
+    <!--
+    <div class="list-item tv-binnenkort">
+        <strong>Meer oefentoetsen</strong>
+        <span>Binnenkort beschikbaar</span>
+    </div>
+    -->
+
+</main>
+
+</body>
+</html>
