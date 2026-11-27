@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Falsche Schönheit in der Kritik – oefening</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    max-width: 1280px;
+    margin: 30px auto;
+    padding: 0 16px;
+    line-height: 1.6;
+    color: #222;
+    background: #fafafa;
+  }
+  h1 { font-size: 1.4em; border-bottom: 2px solid #333; padding-bottom: 6px; }
+  h2 { font-size: 1.05em; margin-top: 1.6em; }
+  .examen-header {
+    font-size: 1.05em;
+    font-weight: bold;
+    color: #444;
+    letter-spacing: .3px;
+  }
+  .layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    align-items: start;
+    margin-top: 24px;
+  }
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+  }
+  .article {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px 20px;
+    position: sticky;
+    top: 16px;
+    max-height: calc(100vh - 32px);
+    overflow-y: auto;
+  }
+  @media (max-width: 900px) {
+    .article { position: static; max-height: none; overflow-y: visible; }
+  }
+  .article h3 { margin-top: 0; }
+  .source { font-size: .85em; color: #666; margin-top: 12px; }
+  .vragen { min-width: 0; }
+
+  .options { list-style: none; padding-left: 0; }
+  .options li { margin: 6px 0; }
+  .option-btn {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 9px 12px;
+    font-size: .97em;
+    font-family: inherit;
+    border: 1.5px solid #999;
+    border-radius: 6px;
+    background: #fff;
+    cursor: pointer;
+    transition: background .15s, border-color .15s;
+  }
+  .option-btn:hover:not(:disabled) { background: #eef4fb; border-color: #4a7fb5; }
+  .option-btn:disabled { cursor: default; opacity: .95; }
+  .option-btn.correct { background: #d8f5d8; border-color: #2e8b2e; font-weight: bold; }
+  .option-btn.wrong { background: #fbdcdc; border-color: #c0392b; }
+
+  .feedback {
+    margin-top: 10px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    display: none;
+    font-size: .95em;
+  }
+  .feedback.show { display: block; }
+  .feedback.ok { background: #e3f6e3; border-left: 5px solid #2e8b2e; }
+  .feedback.nok { background: #fdeaea; border-left: 5px solid #c0392b; }
+  .feedback .uitleg { margin-top: 6px; }
+  .feedback .vertaling {
+    margin-top: 8px;
+    padding: 8px 10px;
+    background: rgba(255,255,255,.65);
+    border-left: 3px solid #888;
+    border-radius: 4px;
+    font-size: .93em;
+  }
+  .feedback .vertaling em { color: #333; }
+
+  mark {
+    background: transparent;
+    color: inherit;
+    padding: 0;
+    border-radius: 3px;
+    transition: background .3s;
+  }
+  mark.active {
+    background: #ffe680;
+    padding: 0 2px;
+    outline: 2px solid #ffb347;
+  }
+
+  .invul {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 8px;
+  }
+  .invul input {
+    font-family: inherit;
+    font-size: .97em;
+    padding: 8px 10px;
+    border: 1.5px solid #999;
+    border-radius: 6px;
+    min-width: 240px;
+  }
+  .invul button, .check-btn {
+    padding: 8px 14px;
+    font-family: inherit;
+    font-size: .95em;
+    border: 1.5px solid #555;
+    background: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .invul button:hover, .check-btn:hover { background: #eee; }
+
+  .reset {
+    margin-top: 24px;
+    padding: 8px 16px;
+    font-family: inherit;
+    font-size: .95em;
+    border: 1.5px solid #555;
+    background: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .reset:hover { background: #eee; }
+</style>
+</head>
+<body>
+
+<p class="examen-header">Examen vmbo gl/tl 2025 Tijdvak 1</p>
+<h1>Tekst 9 – Falsche Schönheit in der Kritik</h1>
+
+<div class="layout">
+
+  <!-- ================= TEKST (links) ================= -->
+  <div class="article">
+    <h3>Falsche Schönheit in der Kritik</h3>
+    <p>
+      Wer ungeschminkt in die Kamera blickt, trägt in der nächsten Sekunde ein
+      perfektes Make-up. Zumindest sieht das dank eines Schönheitsfilters auf
+      Fotos und Videos so aus.
+    </p>
+    <p>
+      <strong>(1)</strong> Ein besonders bekannter Filter ist „Bold Glamour“. Seit Anfang des Jahres
+      nutzen ihn viele Menschen bei Tiktok. Mit nur einer Bewegung kann man ihn sich
+      aufs Gesicht zaubern. Das finden aber nicht alle Nutzerinnen und Nutzer gut.
+      <mark id="m-warnhinweis">Manche fordern, solche Filter mit einem Warnhinweis zu kennzeichnen. Dann
+      könnte man ein bearbeitetes Video oder Foto direkt erkennen.</mark>
+    </p>
+    <p>
+      <strong>(2)</strong> Kinder-Psychotherapeutin Katja Domin warnt vor solchen Filtern. Sie sagt:
+      <mark id="m-ideal">„Durch die Filter kann ein unrealistisches Schönheitsideal entstehen. Filter
+      spielen etwas vor, was nicht real ist.“</mark> Das bringt eine große <strong>37</strong> mit sich:
+      Manche Menschen ziehen sich dann immer mehr in die digitale Welt zurück. Mit
+      der Realität wollen sie nicht mehr viel zu tun haben. Denn mit Filtern scheint
+      jedes Schönheitsideal auf einmal erreichbar. Das kann sogar zu Problemen mit
+      dem eigenen Selbstwertgefühl führen, meint die Fachfrau. Auch Krankheiten
+      könnten daraus entstehen.
+    </p>
+    <p>
+      <strong>(3)</strong> Was also sollte man nun tun? <mark id="m-lustig">Einige Fachleute raten, statt Schönheitsfilter
+      auch mal lustige Filter auszuprobieren. Wer sich selbst Tierohren aufsetzt oder
+      sein Video mit Wellenbewegungen versieht, sieht witzig aus. So lernt man einen
+      spielerischen Umgang mit sich und seinem Aussehen, meinen die Fachleute.</mark>
+      <mark id="m-influencer">Und: Auch mal bei Influencerinnen und Influencern vorbeischauen, die nicht dem
+      Schönheitsideal entsprechen. Diese können tolle Vorbilder sein.</mark>
+    </p>
+    <p>
+      <strong>(4)</strong> <mark id="m-woznica">„Wie viel Arbeit hinter einem spontan wirkenden Selfie steckt, sieht man
+      häufig gar nicht“, sagt Wissenschaftler Marcel Woznica. „Bis das perfekte Foto
+      oder Video auf Instagram oder Tiktok erscheint, kann es dauern.“ Denn
+      zahlreiche Bilder und Videos werden mit Filtern oder anderen Hilfsmitteln
+      bearbeitet. „Schon kleine Veränderungen können ausreichen, damit der Himmel
+      blauer wirkt oder die Haut glatter. Das heißt: Was auf einem Bild zu sehen ist,
+      wird vorab von Menschen hinter der Kamera festgelegt. Es wird genau geplant,
+      was auf dem Foto zu sehen sein soll. Spontanität sieht anders aus.”</mark>
+    </p>
+    <p class="source">www.checky-kinderzeitung.de, 04.07.2023</p>
+  </div>
+
+  <!-- ================= VRAGEN (rechts) ================= -->
+  <div class="vragen">
+
+    <!-- VRAAG 36 -->
+    <h2>1p 36 &nbsp;„mit einem Warnhinweis zu kennzeichnen” (alinea 1)<br>
+    Waarvoor moet deze „Warnhinweis“ waarschuwen?<br>
+    Beantwoord deze vraag in het Nederlands.</h2>
+    <div class="invul">
+      <input type="text" id="q36-input" placeholder="Typ je antwoord in het Nederlands…" autocomplete="off">
+      <button type="button" onclick="checkInvul(36)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb36"></div>
+
+    <!-- VRAAG 37 -->
+    <h2>1p 37 &nbsp;Welches Wort passt im Sinne des Textes in die Lücke im 2. Absatz?</h2>
+    <ul class="options" id="q37-options">
+      <li><button class="option-btn" data-q="37" data-opt="A">A&nbsp; Freiheit</button></li>
+      <li><button class="option-btn" data-q="37" data-opt="B">B&nbsp; Gefahr</button></li>
+      <li><button class="option-btn" data-q="37" data-opt="C">C&nbsp; Herausforderung</button></li>
+      <li><button class="option-btn" data-q="37" data-opt="D">D&nbsp; Verantwortung</button></li>
+    </ul>
+    <div class="feedback" id="fb37"></div>
+
+    <!-- VRAAG 38 -->
+    <h2>1p 38 &nbsp;„Was also sollte man nun tun?” (alinea 3)<br>
+    Hoeveel verschillende adviezen worden er in alinea 3 gegeven?</h2>
+    <div class="invul">
+      <input type="text" id="q38-input" placeholder="Typ een getal…" autocomplete="off">
+      <button type="button" onclick="checkInvul(38)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb38"></div>
+
+    <!-- VRAAG 39 -->
+    <h2>1p 39 &nbsp;Was wird aus den Worten von Marcel Woznica deutlich? (4. Absatz)</h2>
+    <ul class="options" id="q39-options">
+      <li><button class="option-btn" data-q="39" data-opt="A">A&nbsp; Er bedauert es, dass die Auswahl an Filtern immer größer wird.</button></li>
+      <li><button class="option-btn" data-q="39" data-opt="B">B&nbsp; Er bewundert es, wenn Leute viel Zeit in ihre Bilder stecken.</button></li>
+      <li><button class="option-btn" data-q="39" data-opt="C">C&nbsp; Er beschreibt, dass Bilder oft bearbeitet sind.</button></li>
+      <li><button class="option-btn" data-q="39" data-opt="D">D&nbsp; Er wünscht sich, dass weniger auf sozialen Medien gepostet wird.</button></li>
+    </ul>
+    <div class="feedback" id="fb39"></div>
+
+  </div>
+</div>
+
+<button class="reset" onclick="resetAll()">Alles opnieuw proberen</button>
+
+<script>
+const answers = {
+  "36": {
+    correct: "Dat de foto of video bewerkt is (met een schoonheidsfilter)",
+    uitleg:
+      "De waarschuwing moet duidelijk maken dat een foto of video <strong>bewerkt is</strong> (met een schoonheidsfilter), zodat je meteen kunt zien dat het beeld niet echt is. In de tekst staat: <em>„Dann könnte man ein bearbeitetes Video oder Foto direkt erkennen.“</em> Antwoorden als „dat het beeld bewerkt is“ of „dat er een filter is gebruikt“ zijn goed.",
+    vertaling:
+      "<strong>Manche fordern, solche Filter mit einem Warnhinweis zu kennzeichnen. Dann könnte man ein bearbeitetes Video oder Foto direkt erkennen.</strong> = <em>Sommigen eisen dat zulke filters met een waarschuwing worden gemarkeerd. Dan zou je een bewerkte video of foto meteen kunnen herkennen.</em> " +
+      "„bearbeitet“ = bewerkt; „erkennen“ = herkennen.",
+    markIds: ["m-warnhinweis"]
+  },
+  "37": {
+    correct: "B",
+    uitleg:
+      "Juist is B (Gefahr). De filter kan een onrealistisch schoonheidsideaal veroorzaken, waardoor mensen zich terugtrekken in de digitale wereld en problemen krijgen met hun zelfbeeld — zelfs ziektes kunnen ontstaan. Dat is een <strong>gevaar</strong>. „Freiheit“ (vrijheid), „Herausforderung“ (uitdaging) en „Verantwortung“ (verantwoordelijkheid) passen niet in deze context.",
+    vertaling:
+      "<strong>Das bringt eine große Gefahr mit sich: Manche Menschen ziehen sich dann immer mehr in die digitale Welt zurück.</strong> = <em>Dat brengt een groot gevaar met zich mee: sommige mensen trekken zich dan steeds meer terug in de digitale wereld.</em> " +
+      "„die Gefahr“ = het gevaar. → B.",
+    markIds: ["m-ideal"]
+  },
+  "38": {
+    correct: "2",
+    uitleg:
+      "Juist is <strong>2</strong>. In alinea 3 worden twee adviezen gegeven: (1) probeer ook eens <em>lustige Filter</em> uit in plaats van schoonheidsfilters, en (2) kijk ook eens bij <em>influencers die niet aan het schoonheidsideaal voldoen</em>. Dus twee verschillende adviezen.",
+    vertaling:
+      "<strong>Einige Fachleute raten, statt Schönheitsfilter auch mal lustige Filter auszuprobieren.</strong> = <em>Sommige deskundigen raden aan om in plaats van schoonheidsfilters ook eens grappige filters uit te proberen.</em> " +
+      "<strong>Und: Auch mal bei Influencerinnen und Influencern vorbeischauen, die nicht dem Schönheitsideal entsprechen.</strong> = <em>En: kijk ook eens bij influencers die niet aan het schoonheidsideaal voldoen.</em> → 2 adviezen.",
+    markIds: ["m-lustig", "m-influencer"]
+  },
+  "39": {
+    correct: "C",
+    uitleg:
+      "Juist is C. Marcel Woznica legt uit dat veel foto's en video's met filters of andere hulpmiddelen worden bewerkt voordat ze online verschijnen: <em>„Zahlreiche Bilder und Videos werden mit Filtern oder anderen Hilfsmitteln bearbeitet.“</em> Hij beschrijft dus dat beelden vaak bewerkt zijn. A (betreurt groter fileraanbod) staat er niet; B (bewondert tijdinvestering) staat er niet — hij constateert het vooral; D (wenst minder posts) staat er niet.",
+    vertaling:
+      "<strong>Zahlreiche Bilder und Videos werden mit Filtern oder anderen Hilfsmitteln bearbeitet.</strong> = <em>Talrijke foto's en video's worden met filters of andere hulpmiddelen bewerkt.</em> " +
+      "<strong>Was auf einem Bild zu sehen ist, wird vorab von Menschen hinter der Kamera festgelegt.</strong> = <em>Wat op een beeld te zien is, wordt vooraf door mensen achter de camera bepaald.</em> → C.",
+    markIds: ["m-woznica"]
+  }
+};
+
+/* ---------- meerkeuze ---------- */
+function showFeedback(q, isCorrect) {
+  const data = answers[q];
+  const fb = document.getElementById("fb" + q);
+  fb.className = "feedback show " + (isCorrect ? "ok" : "nok");
+  fb.innerHTML =
+    (isCorrect ? "✅ <strong>Juist!</strong> " : "❌ <strong>Onjuist.</strong> Het juiste antwoord is <strong>" + data.correct + "</strong>. ") +
+    '<div class="uitleg">' + data.uitleg + "</div>" +
+    '<div class="vertaling"><strong>Uitleg van de Duitse zin(nen):</strong><br>' + data.vertaling + "</div>";
+  (data.markIds || []).forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add("active");
+  });
+}
+
+function handleClick(e) {
+  const btn = e.target.closest(".option-btn");
+  if (!btn || btn.disabled) return;
+
+  const q = btn.dataset.q;
+  const opt = btn.dataset.opt;
+  const data = answers[q];
+  const isCorrect = opt === data.correct;
+
+  document.querySelectorAll('#q' + q + '-options .option-btn').forEach(b => {
+    b.disabled = true;
+    if (b.dataset.opt === opt) b.classList.add(isCorrect ? "correct" : "wrong");
+    if (!isCorrect && b.dataset.opt === data.correct) b.classList.add("correct");
+  });
+
+  showFeedback(q, isCorrect);
+}
+
+document.querySelectorAll(".option-btn").forEach(btn => {
+  btn.addEventListener("click", handleClick);
+});
+
+/* ---------- invulvragen ---------- */
+function normalize(s) {
+  return s.toLowerCase().replace(/[.,!?"'’]/g, "").replace(/\s+/g, " ").trim();
+}
+
+function checkInvul(q) {
+  const input = document.getElementById("q" + q + "-input");
+  const val = input.value;
+  const data = answers[q];
+  const fb = document.getElementById("fb" + q);
+  let isCorrect = false;
+
+  if (q === 36) {
+    const v = normalize(val);
+    isCorrect = (v.includes("bewerk") || v.includes("filter") || v.includes("nep") || v.includes("niet echt") || v.includes("onrealistisch"));
+  } else if (q === 38) {
+    isCorrect = normalize(val) === "2" || normalize(val) === "twee";
+  }
+
+  fb.className = "feedback show " + (isCorrect ? "ok" : "nok");
+  fb.innerHTML =
+    (isCorrect ? "✅ <strong>Juist!</strong> " : "❌ <strong>Onjuist.</strong> Het juiste antwoord is <strong>" + data.correct + "</strong>. ") +
+    '<div class="uitleg">' + data.uitleg + "</div>" +
+    '<div class="vertaling"><strong>Uitleg van de Duitse zin(nen):</strong><br>' + data.vertaling + "</div>";
+  (data.markIds || []).forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add("active");
+  });
+}
+
+/* ---------- reset ---------- */
+function resetAll() {
+  document.querySelectorAll(".option-btn").forEach(b => {
+    b.disabled = false;
+    b.classList.remove("correct", "wrong");
+  });
+  document.querySelectorAll(".feedback").forEach(f => {
+    f.className = "feedback";
+    f.innerHTML = "";
+  });
+  document.querySelectorAll("mark").forEach(m => m.classList.remove("active"));
+  document.querySelectorAll('.invul input').forEach(i => i.value = "");
+}
+</script>
+
+</body>
+</html>

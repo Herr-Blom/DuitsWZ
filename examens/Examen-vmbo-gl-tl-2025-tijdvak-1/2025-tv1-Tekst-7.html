@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kirmes ist für mich Hobby und Leidenschaft – oefening</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    max-width: 1280px;
+    margin: 30px auto;
+    padding: 0 16px;
+    line-height: 1.6;
+    color: #222;
+    background: #fafafa;
+  }
+  h1 { font-size: 1.4em; border-bottom: 2px solid #333; padding-bottom: 6px; }
+  h2 { font-size: 1.05em; margin-top: 1.6em; }
+  .examen-header {
+    font-size: 1.05em;
+    font-weight: bold;
+    color: #444;
+    letter-spacing: .3px;
+  }
+  .layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    align-items: start;
+    margin-top: 24px;
+  }
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+  }
+  .article {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px 20px;
+    position: sticky;
+    top: 16px;
+    max-height: calc(100vh - 32px);
+    overflow-y: auto;
+  }
+  @media (max-width: 900px) {
+    .article { position: static; max-height: none; overflow-y: visible; }
+  }
+  .article h3 { margin-top: 0; }
+  .source { font-size: .85em; color: #666; margin-top: 12px; }
+  .vragen { min-width: 0; }
+
+  .options { list-style: none; padding-left: 0; }
+  .options li { margin: 6px 0; }
+  .option-btn {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 9px 12px;
+    font-size: .97em;
+    font-family: inherit;
+    border: 1.5px solid #999;
+    border-radius: 6px;
+    background: #fff;
+    cursor: pointer;
+    transition: background .15s, border-color .15s;
+  }
+  .option-btn:hover:not(:disabled) { background: #eef4fb; border-color: #4a7fb5; }
+  .option-btn:disabled { cursor: default; opacity: .95; }
+  .option-btn.correct { background: #d8f5d8; border-color: #2e8b2e; font-weight: bold; }
+  .option-btn.wrong { background: #fbdcdc; border-color: #c0392b; }
+
+  .feedback {
+    margin-top: 10px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    display: none;
+    font-size: .95em;
+  }
+  .feedback.show { display: block; }
+  .feedback.ok { background: #e3f6e3; border-left: 5px solid #2e8b2e; }
+  .feedback.nok { background: #fdeaea; border-left: 5px solid #c0392b; }
+  .feedback .uitleg { margin-top: 6px; }
+  .feedback .vertaling {
+    margin-top: 8px;
+    padding: 8px 10px;
+    background: rgba(255,255,255,.65);
+    border-left: 3px solid #888;
+    border-radius: 4px;
+    font-size: .93em;
+  }
+  .feedback .vertaling em { color: #333; }
+
+  mark {
+    background: transparent;
+    color: inherit;
+    padding: 0;
+    border-radius: 3px;
+    transition: background .3s;
+  }
+  mark.active {
+    background: #ffe680;
+    padding: 0 2px;
+    outline: 2px solid #ffb347;
+  }
+
+  .reset {
+    margin-top: 24px;
+    padding: 8px 16px;
+    font-family: inherit;
+    font-size: .95em;
+    border: 1.5px solid #555;
+    background: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .reset:hover { background: #eee; }
+</style>
+</head>
+<body>
+
+<p class="examen-header">Examen vmbo gl/tl 2025 Tijdvak 1</p>
+<h1>Tekst 7 – Kirmes ist für mich Hobby und Leidenschaft zugleich</h1>
+
+<div class="layout">
+
+  <!-- ================= TEKST (links) ================= -->
+  <div class="article">
+    <h3>Kirmes ist für mich Hobby und Leidenschaft zugleich</h3>
+    <p>
+      <strong>(1)</strong> Alles beginnt mit einem Fliegerkarussell. <mark id="m-kind">„Meine Eltern haben mich als
+      kleines Kind da nicht runterbekommen“</mark>, erinnert sich Chris Brückner lachend. Mit
+      acht Jahren folgt dann die erste Runde auf einem großen Fahrgeschäft. Eine
+      Attraktion hat es dem heute 31-Jährigen besonders angetan: der „Break Dancer”.
+      Hier ist er nicht nur seit vielen Jahren Stammgast, sondern hilft seit 2018 auch
+      beim Aufbau zur Pfingstkirmes in Geldern.
+    </p>
+    <p>
+      <strong>(2)</strong> „Mein Herz schlägt für die Kirmes. Das Lichterspiel abends, die Musik, das
+      rasante Fahrgefühl – das alles fasziniert mich.“ <mark id="m-freund">Die besondere Verbindung zum
+      „Break Dancer“ kommt über Freund Patrick zustande, mit dem Chris in einer
+      Hobbyfußballmannschaft spielt. „Er war Ansager – also die Stimme – beim
+      „Break Dancer“. Irgendwann hat er mich gefragt, ob ich nicht auch Interesse
+      hätte, auf der Kirmes zu arbeiten.“</mark>
+    </p>
+    <p>
+      <strong>(3)</strong> <mark id="m-chips">Zunächst sammelt Chris die Fahrchips ein, hilft den Gästen, insbesondere
+      Familien mit Kindern, beim Einsteigen.</mark> „Wenn ich die Freude der Kinder sehe,
+      geht mir das Herz auf“, verrät der Vater einer kleinen Tochter. <mark id="m-aufbau">Seit 2018 hilft er
+      nun auch beim Aufbau. „Das ist noch mal etwas ganz anderes. Es ist harte Arbeit
+      – aber ich packe gerne an“</mark>, sagt der Metallarbeiter.
+    </p>
+    <p>
+      <strong>(4)</strong> Jedes Jahr nimmt er sich eine Woche Urlaub, um beim Aufbau zur Gelderner
+      Pfingstkirmes zu helfen. <mark id="m-bekloppt">Immer wieder hört er dann von Freunden und Bekannten
+      denselben Satz: „Du bist doch bekloppt.“</mark> Aber: „Wenn man auf der Kirmes
+      arbeitet, erlebt man sie ganz anders. Es gibt viele lustige Momente, man lernt
+      immer neue Menschen kennen, ich habe hier viele Freunde gefunden. Und man
+      sieht, wie viel Spaß die Menschen haben. Das macht mich glücklich“, sagt Chris
+      mit einem Lächeln. Kirmes ist für ihn „Hobby und Leidenschaft“ zugleich.
+    </p>
+    <p>
+      <strong>(5)</strong> Die eigene Begeisterung, die man ihm auch während der Arbeit am
+      Fahrgeschäft jederzeit anmerkt, hat er mittlerweile an seine kleine Tochter
+      weitergegeben, ebenso an seine Freundin: <mark id="m-freundin">„Als wir uns kennenlernten, war sie
+      von der Kirmes noch nicht begeistert – inzwischen habe ich sie schon etwas
+      angesteckt. In Geldern ist sie abends mit Freundinnen unterwegs“</mark>, während
+      Chris selbst am „Break Dancer“ arbeitet.
+    </p>
+    <p>
+      <strong>(6)</strong> Seit seinem ersten Kirmesbesuch ist er vermutlich mit jedem Fahrgeschäft
+      gefahren, das es gibt. „Ich gehe auf alles, kenne keine Grenzen.“ <mark id="m-attraktionen">Zwei
+      Attraktionen haben aber Eindruck bei ihm hinterlassen: „lnfinity“, seiner Meinung
+      nach „in Sachen Adrenalin das Allerbeste“, und der „Predator“, der in diesem
+      Jahr auch in Geldern steht: „An einer bestimmten Stelle schießt einem das Blut
+      in den Kopf, dann gibt es einen Adrenalinkick.“</mark>
+    </p>
+    <p>
+      <strong>(7)</strong> 2008 beginnt er eine Ausbildung zum Metallbauer. „Hätte ich keine Lehrstelle
+      gefunden, hätte ich vielleicht ein Jahr auf der Kirmes gearbeitet“, sagt der 31-
+      Jährige. <mark id="m-schausteller">Ein richtiges Leben als Schausteller könnte er sich zwar für sich
+      vorstellen, doch nur in einer Familie mit Generationen von Schaustellern.
+      „Außerdem,“ betont er schmunzelnd: „wie es heute ist, ist es auch toll.“</mark>
+    </p>
+    <p class="source">www.niederrhein-nachrichten.de, 27.05.2023</p>
+  </div>
+
+  <!-- ================= VRAGEN (rechts) ================= -->
+  <div class="vragen">
+
+    <!-- VRAAG 23 -->
+    <h2>1p 23 &nbsp;Was sagt der 1. Absatz über Chris Brückner aus?</h2>
+    <ul class="options" id="q23-options">
+      <li><button class="option-btn" data-q="23" data-opt="A">A&nbsp; Er geht seit Jahren immer in dieselbe Kneipe.</button></li>
+      <li><button class="option-btn" data-q="23" data-opt="B">B&nbsp; Er hat mal auf der Kirmes einen schweren Unfall erlebt.</button></li>
+      <li><button class="option-btn" data-q="23" data-opt="C">C&nbsp; Er war früher ein besonders ungehorsames Kind.</button></li>
+      <li><button class="option-btn" data-q="23" data-opt="D">D&nbsp; Er war schon als kleiner Junge von der Kirmes begeistert.</button></li>
+    </ul>
+    <div class="feedback" id="fb23"></div>
+
+    <!-- VRAAG 24 -->
+    <h2>1p 24 &nbsp;Welche Frage wird im 2. Absatz beantwortet?</h2>
+    <ul class="options" id="q24-options">
+      <li><button class="option-btn" data-q="24" data-opt="A">A&nbsp; Was macht Chris alles in seiner Freizeit?</button></li>
+      <li><button class="option-btn" data-q="24" data-opt="B">B&nbsp; Welche Aufgabe hat Chris auf der Kirmes?</button></li>
+      <li><button class="option-btn" data-q="24" data-opt="C">C&nbsp; Wie ist Chris ins Kirmesgeschäft gekommen?</button></li>
+      <li><button class="option-btn" data-q="24" data-opt="D">D&nbsp; Wo hat Chris die meisten Freunde?</button></li>
+    </ul>
+    <div class="feedback" id="fb24"></div>
+
+    <!-- VRAAG 25 -->
+    <h2>1p 25 &nbsp;Was wird aus dem 3. Absatz über Chris deutlich?</h2>
+    <ul class="options" id="q25-options">
+      <li><button class="option-btn" data-q="25" data-opt="A">A&nbsp; Er hat auf der Kirmes verschiedene Tätigkeiten.</button></li>
+      <li><button class="option-btn" data-q="25" data-opt="B">B&nbsp; Er hatte am Anfang als Kirmesarbeiter eine langweilige Aufgabe.</button></li>
+      <li><button class="option-btn" data-q="25" data-opt="C">C&nbsp; Er mag bestimmte Arbeiten auf der Kirmes nicht.</button></li>
+      <li><button class="option-btn" data-q="25" data-opt="D">D&nbsp; Er möchte am liebsten nur mit Kindern arbeiten.</button></li>
+    </ul>
+    <div class="feedback" id="fb25"></div>
+
+    <!-- VRAAG 26 -->
+    <h2>1p 26 &nbsp;Welche Aussage ist dem 4. Absatz nach richtig?</h2>
+    <ul class="options" id="q26-options">
+      <li><button class="option-btn" data-q="26" data-opt="A">A&nbsp; Chris bekommt viel Respekt für seine Arbeit auf der Kirmes.</button></li>
+      <li><button class="option-btn" data-q="26" data-opt="B">B&nbsp; Chris möchte eigentlich nur noch auf der Kirmes arbeiten.</button></li>
+      <li><button class="option-btn" data-q="26" data-opt="C">C&nbsp; Kirmesveranstalter bilden eine große Familie.</button></li>
+      <li><button class="option-btn" data-q="26" data-opt="D">D&nbsp; Manche Leute verstehen Chris’ Begeisterung für die Kirmes nicht.</button></li>
+    </ul>
+    <div class="feedback" id="fb26"></div>
+
+    <!-- VRAAG 27 -->
+    <h2>1p 27 &nbsp;Was sagt Chris über seine Freundin? (5. Absatz)</h2>
+    <ul class="options" id="q27-options">
+      <li><button class="option-btn" data-q="27" data-opt="A">A&nbsp; Sie findet die Kirmes schöner als früher.</button></li>
+      <li><button class="option-btn" data-q="27" data-opt="B">B&nbsp; Sie hat Chris auf der Kirmes kennengelernt.</button></li>
+      <li><button class="option-btn" data-q="27" data-opt="C">C&nbsp; Sie mag es nicht, alleine auf die Kirmes zu gehen.</button></li>
+      <li><button class="option-btn" data-q="27" data-opt="D">D&nbsp; Sie unterstützt Chris manchmal bei der Kirmesarbeit.</button></li>
+    </ul>
+    <div class="feedback" id="fb27"></div>
+
+    <!-- VRAAG 28 -->
+    <h2>1p 28 &nbsp;Welche Aussage über Chris ist richtig? (6. Absatz)</h2>
+    <ul class="options" id="q28-options">
+      <li><button class="option-btn" data-q="28" data-opt="A">A&nbsp; Die meisten Fahrgeschäfte sind für ihn nicht mehr interessant.</button></li>
+      <li><button class="option-btn" data-q="28" data-opt="B">B&nbsp; Er mag vor allem die spektakulären Fahrgeschäfte.</button></li>
+      <li><button class="option-btn" data-q="28" data-opt="C">C&nbsp; Er nimmt es mit der Sicherheit nicht so ernst.</button></li>
+      <li><button class="option-btn" data-q="28" data-opt="D">D&nbsp; Oft fährt er für einen Kirmesbesuch sogar ins Ausland.</button></li>
+    </ul>
+    <div class="feedback" id="fb28"></div>
+
+    <!-- VRAAG 29 -->
+    <h2>1p 29 &nbsp;Was sagt Chris im 7. Absatz über die Arbeit auf der Kirmes?</h2>
+    <ul class="options" id="q29-options">
+      <li><button class="option-btn" data-q="29" data-opt="A">A&nbsp; Er denkt darüber nach, bald ein eigenes Kirmesgeschäft zu betreiben.</button></li>
+      <li><button class="option-btn" data-q="29" data-opt="B">B&nbsp; Er ist mit seiner aktuellen Situation sehr zufrieden.</button></li>
+      <li><button class="option-btn" data-q="29" data-opt="C">C&nbsp; Er will die Arbeit nur noch ein paar Jahre machen.</button></li>
+      <li><button class="option-btn" data-q="29" data-opt="D">D&nbsp; Er will sich auf den Bau von Fahrgeschäften spezialisieren.</button></li>
+    </ul>
+    <div class="feedback" id="fb29"></div>
+
+  </div>
+</div>
+
+<button class="reset" onclick="resetAll()">Alles opnieuw proberen</button>
+
+<script>
+const answers = {
+  "23": {
+    correct: "D",
+    uitleg:
+      "Juist is D. In alinea 1 staat: <em>„Meine Eltern haben mich als kleines Kind da nicht runterbekommen“</em> — hij wilde als klein kind maar niet van het vliegtuigcarrousel af. Even later: <em>„Mit acht Jahren folgt dann die erste Runde auf einem großen Fahrgeschäft.“</em> Hij was dus al als kleine jongen dol op de kermis. A (altijd dezelfde kroeg) staat er niet; B (zwaar ongeluk) staat er niet; C (ongehoorzaam kind) staat er niet — hij wilde alleen niet van het karretje af.",
+    vertaling:
+      "<strong>„Meine Eltern haben mich als kleines Kind da nicht runterbekommen“</strong> = <em>Mijn ouders kregen mij als klein kind daar niet vanaf.</em> " +
+      "„runterbekommen“ = eraf krijgen; „das Fliegerkarussell“ = het vliegtuigcarrousel. " +
+      "<strong>Mit acht Jahren folgt dann die erste Runde auf einem großen Fahrgeschäft.</strong> = <em>Op achtjarige leeftijd volgt dan de eerste ronde in een grote kermisattractie.</em> → D.",
+    markIds: ["m-kind"]
+  },
+  "24": {
+    correct: "C",
+    uitleg:
+      "Juist is C. In alinea 2 legt Chris uit hoe hij bij de kermis terechtkwam: via zijn vriend Patrick, die de stem (Ansager) was bij de „Break Dancer“ en hem vroeg of hij ook interesse had om op de kermis te werken. De vraag „Hoe is Chris in het kermiswezen terechtgekomen?“ wordt dus beantwoord. A (vrijetijdsbesteding) is te breed; B (welke taak) komt pas in alinea 3; D (waar de meeste vrienden) staat er niet.",
+    vertaling:
+      "<strong>Die besondere Verbindung zum „Break Dancer“ kommt über Freund Patrick zustande.</strong> = <em>De bijzondere band met de „Break Dancer“ ontstaat via vriend Patrick.</em> " +
+      "<strong>Irgendwann hat er mich gefragt, ob ich nicht auch Interesse hätte, auf der Kirmes zu arbeiten.</strong> = <em>Op een gegeven moment vroeg hij mij of ik ook geen interesse zou hebben om op de kermis te werken.</em> → C.",
+    markIds: ["m-freund"]
+  },
+  "25": {
+    correct: "A",
+    uitleg:
+      "Juist is A. In alinea 3 staan meerdere taken: hij zamelt eerst de muntjes in („Fahrchips“), helpt gasten bij het instappen en helpt sinds 2018 ook bij de opbouw. Hij heeft dus verschillende werkzaamheden op de kermis. B (langdurige saaie taak) klopt niet; C (bepaalde werkzaamheden niet leuk) staat er niet — hij zegt juist „ich packe gerne an“; D (het liefst alleen met kinderen) staat er niet.",
+    vertaling:
+      "<strong>Zunächst sammelt Chris die Fahrchips ein, hilft den Gästen, insbesondere Familien mit Kindern, beim Einsteigen.</strong> = <em>Eerst zamelt Chris de kermismuntjes in, helpt de gasten, vooral gezinnen met kinderen, bij het instappen.</em> " +
+      "<strong>Seit 2018 hilft er nun auch beim Aufbau.</strong> = <em>Sinds 2018 helpt hij nu ook bij de opbouw.</em> → A.",
+    markIds: ["m-chips", "m-aufbau"]
+  },
+  "26": {
+    correct: "D",
+    uitleg:
+      "Juist is D. In alinea 4 staat: <em>„Immer wieder hört er dann von Freunden und Bekannten denselben Satz: ‚Du bist doch bekloppt.‘“</em> — vrienden en bekenden vinden hem dus maar gek dat hij dit doet; ze begrijpen zijn enthousiasme niet. A (veel respect) klopt niet — ze noemen hem „bekloppt“; B (wil alleen nog op de kermis werken) staat er niet; C (kermisondernemers vormen een grote familie) staat er niet.",
+    vertaling:
+      "<strong>Immer wieder hört er dann von Freunden und Bekannten denselben Satz: „Du bist doch bekloppt.“</strong> = <em>Steeds weer hoort hij dan van vrienden en bekenden dezelfde zin: „Je bent toch gek.“</em> " +
+      "„bekloppt“ = gek/maf. → D.",
+    markIds: ["m-bekloppt"]
+  },
+  "27": {
+    correct: "A",
+    uitleg:
+      "Juist is A. In alinea 5 zegt Chris: <em>„Als wir uns kennenlernten, war sie von der Kirmes noch nicht begeistert – inzwischen habe ich sie schon etwas angesteckt.“</em> — eerst was ze niet enthousiast, nu wel een beetje. Ze vindt de kermis dus leuker dan vroeger. B (op de kermis leren kennen) staat er niet; C (gaat niet graag alleen) staat er niet — ze gaat juist met vriendinnen; D (helpt soms bij de kermisarbeid) staat er niet.",
+    vertaling:
+      "<strong>Als wir uns kennenlernten, war sie von der Kirmes noch nicht begeistert – inzwischen habe ich sie schon etwas angesteckt.</strong> = <em>Toen we elkaar leerden kennen, was zij nog niet enthousiast over de kermis – inmiddels heb ik haar al een beetje aangestoken.</em> " +
+      "„anstecken“ = aansteken/besmetten (figuurlijk: enthousiasme overbrengen). → A.",
+    markIds: ["m-freundin"]
+  },
+  "28": {
+    correct: "B",
+    uitleg:
+      "Juist is B. In alinea 6 zegt hij: <em>„Ich gehe auf alles, kenne keine Grenzen.“</em> En hij noemt twee attracties die indruk op hem hebben gemaakt: „Infinity“ („in Sachen Adrenalin das Allerbeste“) en de „Predator“ („Adrenalinkick“). Hij houdt dus vooral van de spectaculaire attracties. A (de meeste attracties niet meer interessant) klopt niet — hij gaat juist op alles; C (veiligheid niet zo nauw) staat er niet; D (vaak naar het buitenland) staat er niet.",
+    vertaling:
+      "<strong>„Ich gehe auf alles, kenne keine Grenzen.“</strong> = <em>„Ik ga op alles af, ik ken geen grenzen.“</em> " +
+      "<strong>„Infinity“, seiner Meinung nach „in Sachen Adrenalin das Allerbeste“</strong> = <em>„Infinity“, volgens hem „op het gebied van adrenaline het allerbeste“.</em> " +
+      "<strong>„An einer bestimmten Stelle schießt einem das Blut in den Kopf, dann gibt es einen Adrenalinkick.“</strong> = <em>„Op een bepaald punt schiet het bloed je naar het hoofd, dan krijg je een adrenalinestoot.“</em> → B.",
+    markIds: ["m-attraktionen"]
+  },
+  "29": {
+    correct: "B",
+    uitleg:
+      "Juist is B. In alinea 7 zegt Chris: <em>„Ein richtiges Leben als Schausteller könnte er sich zwar für sich vorstellen, doch nur in einer Familie mit Generationen von Schaustellern. ‚Außerdem,‘ betont er schmunzelnd: ‚wie es heute ist, ist es auch toll.‘“</em> Hij is dus tevreden met hoe het nu is. A (eigen kermisbedrijf) staat er niet — hij zou het alleen in een echte kermisfamilie willen; C (nog maar een paar jaar) staat er niet; D (specialiseren in bouw van attracties) staat er niet.",
+    vertaling:
+      "<strong>Ein richtiges Leben als Schausteller könnte er sich zwar für sich vorstellen, doch nur in einer Familie mit Generationen von Schaustellern.</strong> = <em>Een echt leven als kermisexploitant zou hij zich wel voor zichzelf kunnen voorstellen, maar alleen in een familie met generaties kermisexploitanten.</em> " +
+      "<strong>„Außerdem, wie es heute ist, ist es auch toll.“</strong> = <em>„Bovendien, zoals het vandaag is, is het ook geweldig.“</em> → B.",
+    markIds: ["m-schausteller"]
+  }
+};
+
+/* ---------- meerkeuze ---------- */
+function showFeedback(q, isCorrect) {
+  const data = answers[q];
+  const fb = document.getElementById("fb" + q);
+  fb.className = "feedback show " + (isCorrect ? "ok" : "nok");
+  fb.innerHTML =
+    (isCorrect ? "✅ <strong>Juist!</strong> " : "❌ <strong>Onjuist.</strong> Het juiste antwoord is <strong>" + data.correct + "</strong>. ") +
+    '<div class="uitleg">' + data.uitleg + "</div>" +
+    '<div class="vertaling"><strong>Uitleg van de Duitse zin(nen):</strong><br>' + data.vertaling + "</div>";
+  (data.markIds || []).forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add("active");
+  });
+}
+
+function handleClick(e) {
+  const btn = e.target.closest(".option-btn");
+  if (!btn || btn.disabled) return;
+
+  const q = btn.dataset.q;
+  const opt = btn.dataset.opt;
+  const data = answers[q];
+  const isCorrect = opt === data.correct;
+
+  document.querySelectorAll('#q' + q + '-options .option-btn').forEach(b => {
+    b.disabled = true;
+    if (b.dataset.opt === opt) b.classList.add(isCorrect ? "correct" : "wrong");
+    if (!isCorrect && b.dataset.opt === data.correct) b.classList.add("correct");
+  });
+
+  showFeedback(q, isCorrect);
+}
+
+document.querySelectorAll(".option-btn").forEach(btn => {
+  btn.addEventListener("click", handleClick);
+});
+
+/* ---------- reset ---------- */
+function resetAll() {
+  document.querySelectorAll(".option-btn").forEach(b => {
+    b.disabled = false;
+    b.classList.remove("correct", "wrong");
+  });
+  document.querySelectorAll(".feedback").forEach(f => {
+    f.className = "feedback";
+    f.innerHTML = "";
+  });
+  document.querySelectorAll("mark").forEach(m => m.classList.remove("active"));
+}
+</script>
+
+</body>
+</html>

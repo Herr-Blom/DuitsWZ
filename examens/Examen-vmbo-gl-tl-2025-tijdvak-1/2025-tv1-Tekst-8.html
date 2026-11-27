@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wie geht es nach der Schule weiter? – oefening</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    max-width: 1280px;
+    margin: 30px auto;
+    padding: 0 16px;
+    line-height: 1.6;
+    color: #222;
+    background: #fafafa;
+  }
+  h1 { font-size: 1.4em; border-bottom: 2px solid #333; padding-bottom: 6px; }
+  h2 { font-size: 1.05em; margin-top: 1.6em; }
+  .examen-header {
+    font-size: 1.05em;
+    font-weight: bold;
+    color: #444;
+    letter-spacing: .3px;
+  }
+  .layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    align-items: start;
+    margin-top: 24px;
+  }
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+  }
+  .article {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px 20px;
+    position: sticky;
+    top: 16px;
+    max-height: calc(100vh - 32px);
+    overflow-y: auto;
+  }
+  @media (max-width: 900px) {
+    .article { position: static; max-height: none; overflow-y: visible; }
+  }
+  .article h3 { margin-top: 0; }
+  .source { font-size: .85em; color: #666; margin-top: 12px; }
+  .vragen { min-width: 0; }
+
+  .options { list-style: none; padding-left: 0; }
+  .options li { margin: 6px 0; }
+  .option-btn {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 9px 12px;
+    font-size: .97em;
+    font-family: inherit;
+    border: 1.5px solid #999;
+    border-radius: 6px;
+    background: #fff;
+    cursor: pointer;
+    transition: background .15s, border-color .15s;
+  }
+  .option-btn:hover:not(:disabled) { background: #eef4fb; border-color: #4a7fb5; }
+  .option-btn:disabled { cursor: default; opacity: .95; }
+  .option-btn.correct { background: #d8f5d8; border-color: #2e8b2e; font-weight: bold; }
+  .option-btn.wrong { background: #fbdcdc; border-color: #c0392b; }
+
+  .feedback {
+    margin-top: 10px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    display: none;
+    font-size: .95em;
+  }
+  .feedback.show { display: block; }
+  .feedback.ok { background: #e3f6e3; border-left: 5px solid #2e8b2e; }
+  .feedback.nok { background: #fdeaea; border-left: 5px solid #c0392b; }
+  .feedback .uitleg { margin-top: 6px; }
+  .feedback .vertaling {
+    margin-top: 8px;
+    padding: 8px 10px;
+    background: rgba(255,255,255,.65);
+    border-left: 3px solid #888;
+    border-radius: 4px;
+    font-size: .93em;
+  }
+  .feedback .vertaling em { color: #333; }
+
+  mark {
+    background: transparent;
+    color: inherit;
+    padding: 0;
+    border-radius: 3px;
+    transition: background .3s;
+  }
+  mark.active {
+    background: #ffe680;
+    padding: 0 2px;
+    outline: 2px solid #ffb347;
+  }
+
+  .bewering-tabel {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+    font-size: .95em;
+  }
+  .bewering-tabel th, .bewering-tabel td {
+    border: 1px solid #ccc;
+    padding: 8px 10px;
+    text-align: left;
+    vertical-align: top;
+  }
+  .bewering-tabel th { background: #f0f0f0; }
+  .bewering-tabel td.keuze { text-align: center; white-space: nowrap; }
+  .bewering-tabel label { margin: 0 6px; cursor: pointer; }
+
+  .check-btn {
+    margin-top: 8px;
+    padding: 8px 14px;
+    font-family: inherit;
+    font-size: .95em;
+    border: 1.5px solid #555;
+    background: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .check-btn:hover { background: #eee; }
+
+  .reset {
+    margin-top: 24px;
+    padding: 8px 16px;
+    font-family: inherit;
+    font-size: .95em;
+    border: 1.5px solid #555;
+    background: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .reset:hover { background: #eee; }
+</style>
+</head>
+<body>
+
+<p class="examen-header">Examen vmbo gl/tl 2025 Tijdvak 1</p>
+<h1>Tekst 8 – Wie geht es nach der Schule weiter?</h1>
+
+<div class="layout">
+
+  <!-- ================= TEKST (links) ================= -->
+  <div class="article">
+    <h3>Wie geht es nach der Schule weiter?</h3>
+    <p>
+      Eine Berufsausbildung bietet beste Startmöglichkeiten und
+      Karrierechancen. Im Handwerk finden junge Menschen Berufe mit Zukunft,
+      einen sicheren Arbeitsplatz ganz in ihrer Nähe und zahlreiche
+      Aufstiegsmöglichkeiten.
+    </p>
+    <p>
+      <strong>(1)</strong> Was wünsche ich mir von meinem Traumberuf? <mark id="m-wuensche">Die Antworten, die junge
+      Menschen auf diese Frage geben, fallen so unterschiedlich nicht aus. Ganz oben
+      auf der Rangliste stehen regelmäßig drei Wünsche: Sie wollen einen Sinn
+      erkennen, Spaß an dem haben, was sie tun, und sie wollen davon gut leben
+      können.</mark>
+    </p>
+    <p>
+      Zugegeben, ganz so einfach ist es nicht mit der Berufswahl. <mark id="m-faktoren">Denn tatsächlich
+      gibt es viele weitere Aspekte, die die Entscheidungen von Jugendlichen
+      bestimmen. Vorbilder in der Familie gehören dazu, die Eltern, die Schule und
+      nicht zuletzt auch das Image bestimmter Ausbildungen und einzelner Berufe.</mark>
+    </p>
+    <p>
+      <strong>(2)</strong> <mark id="m-handwerk">Gerade das Handwerk bietet heute interessante berufliche Perspektiven für
+      etwa 360 000 Auszubildende. Vom ersten Tag an sind die Auszubildenden im
+      Handwerk in ein Team des Unternehmens eingebunden, übernehmen Schritt für
+      Schritt produktive Aufgaben und lernen das Unternehmen und seine Arbeitswelt
+      sowie ihre eigenen Entwicklungschancen kennen.</mark> Die direkte Verbindung von
+      Theorie und Praxis ermöglicht es jungen Menschen, Fähigkeiten zu erwerben,
+      die sie im späteren Arbeitsleben brauchen.
+    </p>
+    <p>
+      <strong>(3)</strong> <mark id="m-vorurteile">„Schlechte Bezahlung“, „Knochenarbeit“, „Das kann doch jeder!“ – so lauten
+      oft gehörte Vorurteile über Handwerksberufe.</mark> Auch wenn diese Meinungen mit der
+      Realität nichts zu tun haben, werden sie zum Problem, wenn sie unser Handeln
+      bestimmen. Aus diesem Grund ist es notwendig, stereotype Berufsvorstellungen
+      aus der Welt zu schaffen. Die Berufswahl sollte sich immer ausschließlich an den
+      eigenen Neigungen und Interessen orientieren und nicht an Erwartungen anderer
+      Leute.
+    </p>
+    <p>
+      <mark id="m-praktika">Praktika sind der beste Weg, sich über die vielfältigen Möglichkeiten zu
+      informieren und so die richtige Entscheidung treffen zu können.</mark>
+    </p>
+    <p>
+      <strong>(4)</strong> <mark id="m-zukunft">Das Handwerk bietet, wie kaum ein anderer Wirtschaftsbereich, attraktive
+      berufliche Perspektiven für jede und jeden: Klimaschutz, Energie- und
+      Mobilitätswende, Lebensqualität mit und ohne Handicap, Versorgung mit
+      Produkten und Dienstleistungen rund um gutes Hören, Sehen und Gehen. Das
+      Handwerk heute bedeutet viel mehr als Schrauben und Hämmern, es setzt
+      innovative und ökologische Technik um und hinterlässt einen positiven
+      Fußabdruck in der Welt.</mark>
+    </p>
+    <p class="source">Den eigenen Weg finden. Osnabrücker Zeitung, 19.02.2023</p>
+  </div>
+
+  <!-- ================= VRAGEN (rechts) ================= -->
+  <div class="vragen">
+
+    <!-- VRAAG 30 -->
+    <h2>1p 30 &nbsp;Welche Aussage über Traumberufe und Jugendliche ist richtig? (1. Absatz)</h2>
+    <ul class="options" id="q30-options">
+      <li><button class="option-btn" data-q="30" data-opt="A">A&nbsp; Für Jugendliche ist ‚reich werden‘ ein wichtiger Aspekt vom Traumberuf.</button></li>
+      <li><button class="option-btn" data-q="30" data-opt="B">B&nbsp; Jugendliche haben Mühe damit, sich ihren Traumberuf vorzustellen.</button></li>
+      <li><button class="option-btn" data-q="30" data-opt="C">C&nbsp; Jugendliche sind sich über mehrere Merkmale ihres Traumberufs einig.</button></li>
+      <li><button class="option-btn" data-q="30" data-opt="D">D&nbsp; Jugendliche von heute haben andere Erwartungen an einen Traumberuf als ältere Generationen.</button></li>
+    </ul>
+    <div class="feedback" id="fb30"></div>
+
+    <!-- VRAAG 31 -->
+    <h2>1p 31 &nbsp;Was wird im 1. Absatz über die Berufswahl von Jugendlichen ausgesagt?</h2>
+    <ul class="options" id="q31-options">
+      <li><button class="option-btn" data-q="31" data-opt="A">A&nbsp; Bei der Berufswahl spielen viele Faktoren eine Rolle.</button></li>
+      <li><button class="option-btn" data-q="31" data-opt="B">B&nbsp; Die Berufswahl sorgt bei den meisten Jugendlichen für viel Stress.</button></li>
+      <li><button class="option-btn" data-q="31" data-opt="C">C&nbsp; Es gibt neue Trends bei der Berufswahl von Jugendlichen.</button></li>
+    </ul>
+    <div class="feedback" id="fb31"></div>
+
+    <!-- VRAAG 32 -->
+    <h2>2p 32 &nbsp;Geef van elke bewering aan of die overeenkomt met alinea 2.<br>Kruis ‘wel’ of ‘niet’ aan.</h2>
+    <table class="bewering-tabel">
+      <thead>
+        <tr><th>Bewering</th><th>wel</th><th>niet</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1 Duizenden jongeren zoeken nog een stageplek in het bedrijfsleven.</td>
+          <td class="keuze"><label><input type="radio" name="b1" value="wel"> wel</label><label><input type="radio" name="b1" value="niet"> niet</label></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>2 Bij een leer-werktraject maak je van begin af aan onderdeel uit van een bedrijfsteam.</td>
+          <td class="keuze"><label><input type="radio" name="b2" value="wel"> wel</label><label><input type="radio" name="b2" value="niet"> niet</label></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>3 Binnen een leer-werktraject leer je als leerling binnen een bedrijf steeds meer taken uit te voeren.</td>
+          <td class="keuze"><label><input type="radio" name="b3" value="wel"> wel</label><label><input type="radio" name="b3" value="niet"> niet</label></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>4 Voor sommigen is het lastig zich voor het theoretische deel van een leer-werktraject te motiveren.</td>
+          <td class="keuze"><label><input type="radio" name="b4" value="wel"> wel</label><label><input type="radio" name="b4" value="niet"> niet</label></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+    <button class="check-btn" type="button" onclick="checkBeweringen()">Controleer</button>
+    <div class="feedback" id="fb32"></div>
+
+    <!-- VRAAG 33 -->
+    <h2>1p 33 &nbsp;Welches Wort passt im Sinne des Textes in die Lücke im 3. Absatz?</h2>
+    <ul class="options" id="q33-options">
+      <li><button class="option-btn" data-q="33" data-opt="A">A&nbsp; Regeln</button></li>
+      <li><button class="option-btn" data-q="33" data-opt="B">B&nbsp; Slogans</button></li>
+      <li><button class="option-btn" data-q="33" data-opt="C">C&nbsp; Tipps</button></li>
+      <li><button class="option-btn" data-q="33" data-opt="D">D&nbsp; Vorurteile</button></li>
+    </ul>
+    <div class="feedback" id="fb33"></div>
+
+    <!-- VRAAG 34 -->
+    <h2>1p 34 &nbsp;„wenn sie unser Handeln bestimmen […] ist es notwendig, stereotype Berufsvorstellungen aus der Welt zu schaffen“ (3. Absatz)<br>
+    Hoe kan dit volgens de tekst het beste gedaan worden?</h2>
+    <ul class="options" id="q34-options">
+      <li><button class="option-btn" data-q="34" data-opt="A">A&nbsp; door de bijscholing van vaklieden te verbeteren</button></li>
+      <li><button class="option-btn" data-q="34" data-opt="B">B&nbsp; door de lonen van vaklieden te verhogen</button></li>
+      <li><button class="option-btn" data-q="34" data-opt="C">C&nbsp; door jongeren het vakwerk te laten ervaren</button></li>
+    </ul>
+    <div class="feedback" id="fb34"></div>
+
+    <!-- VRAAG 35 -->
+    <h2>1p 35 &nbsp;Welche Funktion hat der 4. Absatz?</h2>
+    <ul class="options" id="q35-options">
+      <li><button class="option-btn" data-q="35" data-opt="A">A&nbsp; das Handwerk anpreisen</button></li>
+      <li><button class="option-btn" data-q="35" data-opt="B">B&nbsp; den Text zusammenfassen</button></li>
+      <li><button class="option-btn" data-q="35" data-opt="C">C&nbsp; mögliche Risiken im Handwerk besprechen</button></li>
+      <li><button class="option-btn" data-q="35" data-opt="D">D&nbsp; wirtschaftliche Trends erklären</button></li>
+    </ul>
+    <div class="feedback" id="fb35"></div>
+
+  </div>
+</div>
+
+<button class="reset" onclick="resetAll()">Alles opnieuw proberen</button>
+
+<script>
+const answers = {
+  "30": {
+    correct: "C",
+    uitleg:
+      "Juist is C. In alinea 1 staat: <em>„Ganz oben auf der Rangliste stehen regelmäßig drei Wünsche: Sie wollen einen Sinn erkennen, Spaß an dem haben, was sie tun, und sie wollen davon gut leben können.“</em> Jongeren zijn het dus eens over meerdere kenmerken van hun droomberoep: zingeving, plezier en een goed inkomen. A klopt niet: 'rijk worden' is niet hetzelfde als 'goed kunnen leven', en het is maar één van de drie. B (moeite met voorstellen) staat er niet. D (andere verwachtingen dan oudere generaties) staat er niet.",
+    vertaling:
+      "<strong>Ganz oben auf der Rangliste stehen regelmäßig drei Wünsche: Sie wollen einen Sinn erkennen, Spaß an dem haben, was sie tun, und sie wollen davon gut leben können.</strong> = <em>Helemaal bovenaan de ranglijst staan regelmatig drie wensen: zij willen een zin herkennen, plezier hebben in wat ze doen, en ze willen daarvan goed kunnen leven.</em> → C.",
+    markIds: ["m-wuensche"]
+  },
+  "31": {
+    correct: "A",
+    uitleg:
+      "Juist is A. In alinea 1 staat: <em>„Denn tatsächlich gibt es viele weitere Aspekte, die die Entscheidungen von Jugendlichen bestimmen. Vorbilder in der Familie gehören dazu, die Eltern, die Schule und nicht zuletzt auch das Image bestimmter Ausbildungen und einzelner Berufe.“</em> Er spelen dus veel factoren een rol bij de beroepskeuze. B (veel stress) staat er niet; C (nieuwe trends) staat er niet.",
+    vertaling:
+      "<strong>Denn tatsächlich gibt es viele weitere Aspekte, die die Entscheidungen von Jugendlichen bestimmen.</strong> = <em>Want er zijn inderdaad veel andere aspecten die de beslissingen van jongeren bepalen.</em> " +
+      "<strong>Vorbilder in der Familie gehören dazu, die Eltern, die Schule und nicht zuletzt auch das Image bestimmter Ausbildungen und einzelner Berufe.</strong> = <em>Voorbeelden in de familie horen daarbij, de ouders, de school en niet in de laatste plaats ook het imago van bepaalde opleidingen en afzonderlijke beroepen.</em> → A.",
+    markIds: ["m-faktoren"]
+  },
+  "32": {
+    correct: "1 niet, 2 wel, 3 wel, 4 niet",
+    uitleg:
+      "1 <strong>niet</strong> — er staat wel dat het handwerk perspectieven biedt voor zo'n 360.000 leerlingen, maar niet dat duizenden jongeren nog een stageplek zoeken. " +
+      "2 <strong>wel</strong> — <em>„Vom ersten Tag an sind die Auszubildenden im Handwerk in ein Team des Unternehmens eingebunden.“</em> Vanaf dag één zit je dus in een bedrijfsteam. " +
+      "3 <strong>wel</strong> — <em>„übernehmen Schritt für Schritt produktive Aufgaben“</em> — stap voor stap krijg je meer taken. " +
+      "4 <strong>niet</strong> — over motivatie voor het theoretische deel staat niets in alinea 2.",
+    vertaling:
+      "<strong>Vom ersten Tag an sind die Auszubildenden im Handwerk in ein Team des Unternehmens eingebunden.</strong> = <em>Vanaf de eerste dag zijn de leerlingen in het handwerk betrokken bij een team van het bedrijf.</em> " +
+      "<strong>übernehmen Schritt für Schritt produktive Aufgaben</strong> = <em>nemen stap voor stap productieve taken over.</em>",
+    markIds: ["m-handwerk"]
+  },
+  "33": {
+    correct: "D",
+    uitleg:
+      "Juist is D (Vorurteile). De zinnen ervoor noemen uitspraken als „slechte betaling“, „zwaar werk“ en „dat kan toch iedereen“ — dat zijn vooroordelen over handwerksberoepen. De volgende zin heeft het ook over „stereotype Berufsvorstellungen“ (stereotiepe beroepsbeelden). In de leemte past dus „Vorurteile“.",
+    vertaling:
+      "<strong>„Schlechte Bezahlung“, „Knochenarbeit“, „Das kann doch jeder!“ – so lauten oft gehörte Vorurteile über Handwerksberufe.</strong> = <em>„Slechte betaling“, „zwaar werk“, „dat kan toch iedereen!“ – zo luiden vaak gehoorde vooroordelen over handwerksberoepen.</em> " +
+      "„das Vorurteil“ = het vooroordeel. → D.",
+    markIds: ["m-vorurteile"]
+  },
+  "34": {
+    correct: "C",
+    uitleg:
+      "Juist is C. In de tekst staat: <em>„Praktika sind der beste Weg, sich über die vielfältigen Möglichkeiten zu informieren und so die richtige Entscheidung treffen zu können.“</em> Door stages (praktika) laten jongeren het vakwerk ervaren; dat is volgens de tekst de beste manier om stereotypen weg te nemen. A (bijscholing) en B (lonen verhogen) staan er niet.",
+    vertaling:
+      "<strong>Praktika sind der beste Weg, sich über die vielfältigen Möglichkeiten zu informieren und so die richtige Entscheidung treffen zu können.</strong> = <em>Stages zijn de beste weg om je over de vele mogelijkheden te informeren en zo de juiste beslissing te kunnen nemen.</em> " +
+      "„das Praktikum“ = de stage. → C.",
+    markIds: ["m-praktika"]
+  },
+  "35": {
+    correct: "A",
+    uitleg:
+      "Juist is A. In alinea 4 wordt het handwerk aangeprezen: het biedt aantrekkelijke perspectieven (klimaatbescherming, energietransitie, levenskwaliteit, enz.), betekent veel meer dan „schroeven en hameren“ en zet innovatieve en ecologische techniek in. De functie is dus: het handwerk aanprijzen. B (samenvatten) klopt niet — er komt nieuwe informatie; C (risico's) staat er niet; D (economische trends uitleggen) is te breed.",
+    vertaling:
+      "<strong>Das Handwerk bietet, wie kaum ein anderer Wirtschaftsbereich, attraktive berufliche Perspektiven für jede und jeden.</strong> = <em>Het handwerk biedt, zoals bijna geen enkele andere economische sector, aantrekkelijke beroepsperspectieven voor iedereen.</em> " +
+      "<strong>Das Handwerk heute bedeutet viel mehr als Schrauben und Hämmern, es setzt innovative und ökologische Technik um.</strong> = <em>Het handwerk van vandaag betekent veel meer dan schroeven en hameren, het zet innovatieve en ecologische techniek in.</em> → A.",
+    markIds: ["m-zukunft"]
+  }
+};
+
+/* ---------- meerkeuze ---------- */
+function showFeedback(q, isCorrect) {
+  const data = answers[q];
+  const fb = document.getElementById("fb" + q);
+  fb.className = "feedback show " + (isCorrect ? "ok" : "nok");
+  fb.innerHTML =
+    (isCorrect ? "✅ <strong>Juist!</strong> " : "❌ <strong>Onjuist.</strong> Het juiste antwoord is <strong>" + data.correct + "</strong>. ") +
+    '<div class="uitleg">' + data.uitleg + "</div>" +
+    '<div class="vertaling"><strong>Uitleg van de Duitse zin(nen):</strong><br>' + data.vertaling + "</div>";
+  (data.markIds || []).forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add("active");
+  });
+}
+
+function handleClick(e) {
+  const btn = e.target.closest(".option-btn");
+  if (!btn || btn.disabled) return;
+
+  const q = btn.dataset.q;
+  const opt = btn.dataset.opt;
+  const data = answers[q];
+  const isCorrect = opt === data.correct;
+
+  document.querySelectorAll('#q' + q + '-options .option-btn').forEach(b => {
+    b.disabled = true;
+    if (b.dataset.opt === opt) b.classList.add(isCorrect ? "correct" : "wrong");
+    if (!isCorrect && b.dataset.opt === data.correct) b.classList.add("correct");
+  });
+
+  showFeedback(q, isCorrect);
+}
+
+document.querySelectorAll(".option-btn").forEach(btn => {
+  btn.addEventListener("click", handleClick);
+});
+
+/* ---------- wel/niet ---------- */
+function checkBeweringen() {
+  const juist = { b1: "niet", b2: "wel", b3: "wel", b4: "niet" };
+  let goed = 0;
+  let totaal = 4;
+  let details = [];
+
+  for (const naam in juist) {
+    const gekozen = document.querySelector('input[name="' + naam + '"]:checked');
+    const ok = gekozen && gekozen.value === juist[naam];
+    if (ok) goed++;
+    details.push((ok ? "✅" : "❌") + " bewering " + naam.replace("b", "") + ": " + juist[naam]);
+  }
+
+  const data = answers[32];
+  const fb = document.getElementById("fb32");
+  fb.className = "feedback show " + (goed === totaal ? "ok" : "nok");
+  fb.innerHTML =
+    (goed === totaal ? "✅ <strong>Alles juist!</strong> " : "❌ <strong>" + goed + " van " + totaal + " juist.</strong> ") +
+    '<div class="uitleg">' + details.join("<br>") + "<br><br>" + data.uitleg + "</div>" +
+    '<div class="vertaling"><strong>Uitleg van de Duitse zin(nen):</strong><br>' + data.vertaling + "</div>";
+  (data.markIds || []).forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add("active");
+  });
+}
+
+/* ---------- reset ---------- */
+function resetAll() {
+  document.querySelectorAll(".option-btn").forEach(b => {
+    b.disabled = false;
+    b.classList.remove("correct", "wrong");
+  });
+  document.querySelectorAll(".feedback").forEach(f => {
+    f.className = "feedback";
+    f.innerHTML = "";
+  });
+  document.querySelectorAll("mark").forEach(m => m.classList.remove("active"));
+  document.querySelectorAll('.bewering-tabel input[type="radio"]').forEach(r => r.checked = false);
+}
+</script>
+
+</body>
+</html>
