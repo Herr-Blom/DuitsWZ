@@ -48,11 +48,12 @@ header p {
     color: white;
 }
 
+/* Twee kolommen */
 .list-container {
     max-width: 700px;
     margin: auto;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: 12px;
 }
 
@@ -96,6 +97,11 @@ header p {
     color: #b8c5df;
     font-size: 18px;
 }
+
+/* Op mobiel: 1 kolom */
+@media (max-width: 520px) {
+    .list-container { grid-template-columns: 1fr; }
+}
 </style>
 </head>
 
@@ -103,7 +109,7 @@ header p {
 
 <header>
     <a href="../index.html" class="back-btn">← Terug naar overzicht</a>
-    <h1>🎓 Examen VMBO-GL/TL 2025</h1>
+    <h1>Examen VMBO-GL/TL 2025 - Tijdvak 1</h1>
     <p>Kies een tekst om te maken</p>
 </header>
 
@@ -111,7 +117,7 @@ header p {
 
     <a href="2025-tv1-Tekst-1.html" class="list-item">
         <div class="item-text">
-            <strong>Examen VMBO-GL/TL 2026</strong>
+            <strong>Tekst 1</strong>
             <span>Tijdvak 1</span>
         </div>
         <div class="arrow">→</div>
@@ -119,7 +125,7 @@ header p {
 
     <a href="2025-tv1-Tekst-2.html" class="list-item">
         <div class="item-text">
-            <strong>Examen VMBO-GL/TL 2025</strong>
+            <strong>Tekst 2</strong>
             <span>Tijdvak 1</span>
         </div>
         <div class="arrow">→</div>
@@ -127,7 +133,7 @@ header p {
 
     <a href="2025-tv1-Tekst-3.html" class="list-item">
         <div class="item-text">
-            <strong>Examen VMBO-GL/TL 2025</strong>
+            <strong>Tekst 3</strong>
             <span>Tijdvak 1</span>
         </div>
         <div class="arrow">→</div>
@@ -135,7 +141,7 @@ header p {
 
     <a href="2025-tv1-Tekst-4.html" class="list-item">
         <div class="item-text">
-            <strong>Examen VMBO-GL/TL 2025</strong>
+            <strong>Tekst 4</strong>
             <span>Tijdvak 1</span>
         </div>
         <div class="arrow">→</div>
@@ -143,7 +149,7 @@ header p {
 
     <a href="2025-tv1-Tekst-5.html" class="list-item">
         <div class="item-text">
-            <strong>Examen VMBO-GL/TL 2025</strong>
+            <strong>Tekst 5</strong>
             <span>Tijdvak 1</span>
         </div>
         <div class="arrow">→</div>
@@ -151,7 +157,7 @@ header p {
 
     <a href="2025-tv1-Tekst-6.html" class="list-item">
         <div class="item-text">
-            <strong>Examen VMBO-GL/TL 2025</strong>
+            <strong>Tekst 6</strong>
             <span>Tijdvak 1</span>
         </div>
         <div class="arrow">→</div>
@@ -159,7 +165,7 @@ header p {
 
     <a href="2025-tv1-Tekst-7.html" class="list-item">
         <div class="item-text">
-            <strong>Examen VMBO-GL/TL 2025</strong>
+            <strong>Tekst 7</strong>
             <span>Tijdvak 1</span>
         </div>
         <div class="arrow">→</div>
@@ -167,7 +173,7 @@ header p {
 
     <a href="2025-tv1-Tekst-8.html" class="list-item">
         <div class="item-text">
-            <strong>Examen VMBO-GL/TL 2025</strong>
+            <strong>Tekst 8</strong>
             <span>Tijdvak 1</span>
         </div>
         <div class="arrow">→</div>
@@ -175,7 +181,7 @@ header p {
 
     <a href="2025-tv1-Tekst-9.html" class="list-item">
         <div class="item-text">
-            <strong>Examen VMBO-GL/TL 2025</strong>
+            <strong>Tekst 9</strong>
             <span>Tijdvak 1</span>
         </div>
         <div class="arrow">→</div>
@@ -183,7 +189,7 @@ header p {
 
     <a href="2025-tv1-Tekst-10.html" class="list-item">
         <div class="item-text">
-            <strong>Examen VMBO-GL/TL 2025</strong>
+            <strong>Tekst 10</strong>
             <span>Tijdvak 1</span>
         </div>
         <div class="arrow">→</div>

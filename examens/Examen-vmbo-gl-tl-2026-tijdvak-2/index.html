@@ -48,11 +48,12 @@ header p {
     color: white;
 }
 
+/* Twee kolommen */
 .list-container {
     max-width: 700px;
     margin: auto;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: 12px;
 }
 
@@ -75,26 +76,19 @@ header p {
     border-color: #F59E0B;
 }
 
-/* Styling voor de tekst binnen de knop */
-.item-text {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
-
-.item-text strong {
+.list-item strong {
     font-size: clamp(16px, 2.5vw, 18px);
     font-weight: 600;
-}
-
-.item-text span {
-    font-size: 13px;
-    color: #b8c5df;
 }
 
 .arrow {
     color: #b8c5df;
     font-size: 18px;
+}
+
+/* Op mobiel: 1 kolom */
+@media (max-width: 520px) {
+    .list-container { grid-template-columns: 1fr; }
 }
 </style>
 </head>
@@ -103,89 +97,59 @@ header p {
 
 <header>
     <a href="../index.html" class="back-btn">← Terug naar overzicht</a>
-    <h1>🎓 Examen VMBO-GL/TL 2026</h1>
+    <h1>🎓 Examen VMBO-GL/TL 2026 Tijdvak 2</h1>
     <p>Kies een tekst om te maken</p>
 </header>
 
 <main class="list-container">
 
     <a href="2026-tv2-Tekst-1.html" class="list-item">
-        <div class="item-text">
-            <strong>Examen VMBO-GL/TL 2026</strong>
-            <span>Tijdvak 2</span>
-        </div>
+        <strong>Tekst 1</strong>
         <div class="arrow">→</div>
     </a>
 
     <a href="2026-tv2-Tekst-2.html" class="list-item">
-        <div class="item-text">
-            <strong>Examen VMBO-GL/TL 2026</strong>
-            <span>Tijdvak 2</span>
-        </div>
+        <strong>Tekst 2</strong>
         <div class="arrow">→</div>
     </a>
 
     <a href="2026-tv2-Tekst-3.html" class="list-item">
-        <div class="item-text">
-            <strong>Examen VMBO-GL/TL 2026</strong>
-            <span>Tijdvak 2</span>
-        </div>
+        <strong>Tekst 3</strong>
         <div class="arrow">→</div>
     </a>
 
     <a href="2026-tv2-Tekst-4.html" class="list-item">
-        <div class="item-text">
-            <strong>Examen VMBO-GL/TL 2026</strong>
-            <span>Tijdvak 2</span>
-        </div>
+        <strong>Tekst 4</strong>
         <div class="arrow">→</div>
     </a>
 
     <a href="2026-tv2-Tekst-5.html" class="list-item">
-        <div class="item-text">
-            <strong>Examen VMBO-GL/TL 2026</strong>
-            <span>Tijdvak 2</span>
-        </div>
+        <strong>Tekst 5</strong>
         <div class="arrow">→</div>
     </a>
 
     <a href="2026-tv2-Tekst-6.html" class="list-item">
-        <div class="item-text">
-            <strong>Examen VMBO-GL/TL 2026</strong>
-            <span>Tijdvak 2</span>
-        </div>
+        <strong>Tekst 6</strong>
         <div class="arrow">→</div>
     </a>
 
     <a href="2026-tv2-Tekst-7.html" class="list-item">
-        <div class="item-text">
-            <strong>Examen VMBO-GL/TL 2026</strong>
-            <span>Tijdvak 2</span>
-        </div>
+        <strong>Tekst 7</strong>
         <div class="arrow">→</div>
     </a>
 
     <a href="2026-tv2-Tekst-8.html" class="list-item">
-        <div class="item-text">
-            <strong>Examen VMBO-GL/TL 2026</strong>
-            <span>Tijdvak 2</span>
-        </div>
+        <strong>Tekst 8</strong>
         <div class="arrow">→</div>
     </a>
 
     <a href="2026-tv2-Tekst-9.html" class="list-item">
-        <div class="item-text">
-            <strong>Examen VMBO-GL/TL 2026</strong>
-            <span>Tijdvak 2</span>
-        </div>
+        <strong>Tekst 9</strong>
         <div class="arrow">→</div>
     </a>
 
     <a href="2026-tv2-Tekst-10.html" class="list-item">
-        <div class="item-text">
-            <strong>Examen VMBO-GL/TL 2026</strong>
-            <span>Tijdvak 2</span>
-        </div>
+        <strong>Tekst 10</strong>
         <div class="arrow">→</div>
     </a>
 
