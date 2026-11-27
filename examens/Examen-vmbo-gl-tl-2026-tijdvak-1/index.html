@@ -53,7 +53,27 @@ header p { color: #b8c5df; font-size: 16px; }
     transform: translateX(5px);
     border-color: #F59E0B;
 }
-.list-item span { color: #b8c5df; font-size: 14px; }
+
+/* Nieuw: linkerkant met titel + vraag-label */
+.list-item .info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+.list-item .info strong {
+    font-size: clamp(16px, 2.5vw, 18px);
+}
+.list-item .info small {
+    color: #F59E0B;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+.list-item .open {
+    color: #b8c5df;
+    font-size: 14px;
+    white-space: nowrap;
+}
 </style>
 </head>
 <body>
@@ -65,36 +85,87 @@ header p { color: #b8c5df; font-size: 16px; }
 </header>
 
 <main class="list-container">
+
     <a href="2026-tv1-Tekst-1.html" class="list-item">
-        <strong>Tekst 1</strong><span>Openen →</span>
+        <div class="info">
+            <strong>Tekst 1</strong>
+            <small>Vraag 1 – 5</small>
+        </div>
+        <span class="open">Openen →</span>
     </a>
+
     <a href="2026-tv1-Tekst-2.html" class="list-item">
-        <strong>Tekst 2</strong><span>Openen →</span>
+        <div class="info">
+            <strong>Tekst 2</strong>
+            <small>Vraag 6 – 10</small>
+        </div>
+        <span class="open">Openen →</span>
     </a>
+
     <a href="2026-tv1-Tekst-3.html" class="list-item">
-        <strong>Tekst 3</strong><span>Openen →</span>
+        <div class="info">
+            <strong>Tekst 3</strong>
+            <small>Vraag 11 – 15</small>
+        </div>
+        <span class="open">Openen →</span>
     </a>
+
     <a href="2026-tv1-Tekst-4.html" class="list-item">
-        <strong>Tekst 4</strong><span>Openen →</span>
+        <div class="info">
+            <strong>Tekst 4</strong>
+            <small>Vraag 16 – 20</small>
+        </div>
+        <span class="open">Openen →</span>
     </a>
+
     <a href="2026-tv1-Tekst-5.html" class="list-item">
-        <strong>Tekst 5</strong><span>Openen →</span>
+        <div class="info">
+            <strong>Tekst 5</strong>
+            <small>Vraag 21 – 25</small>
+        </div>
+        <span class="open">Openen →</span>
     </a>
+
     <a href="2026-tv1-Tekst-6.html" class="list-item">
-        <strong>Tekst 6</strong><span>Openen →</span>
+        <div class="info">
+            <strong>Tekst 6</strong>
+            <small>Vraag 26 – 30</small>
+        </div>
+        <span class="open">Openen →</span>
     </a>
+
     <a href="2026-tv1-Tekst-7.html" class="list-item">
-        <strong>Tekst 7</strong><span>Openen →</span>
+        <div class="info">
+            <strong>Tekst 7</strong>
+            <small>Vraag 31 – 35</small>
+        </div>
+        <span class="open">Openen →</span>
     </a>
+
     <a href="2026-tv1-Tekst-8.html" class="list-item">
-        <strong>Tekst 8</strong><span>Openen →</span>
+        <div class="info">
+            <strong>Tekst 8</strong>
+            <small>Vraag 36 – 40</small>
+        </div>
+        <span class="open">Openen →</span>
     </a>
+
     <a href="2026-tv1-Tekst-9.html" class="list-item">
-        <strong>Tekst 9</strong><span>Openen →</span>
+        <div class="info">
+            <strong>Tekst 9</strong>
+            <small>Vraag 41 – 45</small>
+        </div>
+        <span class="open">Openen →</span>
     </a>
+
     <a href="2026-tv1-Tekst-10.html" class="list-item">
-        <strong>Tekst 10</strong><span>Openen →</span>
+        <div class="info">
+            <strong>Tekst 10</strong>
+            <small>Vraag 46 – 50</small>
+        </div>
+        <span class="open">Openen →</span>
     </a>
+
 </main>
 
 </body>
