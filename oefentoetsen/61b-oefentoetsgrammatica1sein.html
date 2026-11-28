@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vertaalzinnen Grammatica 1: SEIN Duitse Zinsstructuren</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 0 16px;
+    line-height: 1.6;
+    color: #222;
+    background: #fafafa;
+  }
+  h1 { font-size: 1.5em; border-bottom: 2px solid #333; padding-bottom: 6px; }
+  p.uitleg { font-size: 1.05em; background: #eef4fb; padding: 12px 16px; border-left: 4px solid #4a7fb5; border-radius: 4px; }
+  
+  .opgave {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .opgave-nl {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #333;
+  }
+  .input-rij {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .input-rij input {
+    flex: 1;
+    min-width: 250px;
+    font-family: inherit;
+    font-size: 1.05em;
+    padding: 10px 12px;
+    border: 1.5px solid #999;
+    border-radius: 6px;
+  }
+  .input-rij input:focus { outline: none; border-color: #4a7fb5; background: #f7fbff; }
+  .input-rij input.correct { border-color: #2e8b2e; background: #d8f5d8; }
+  .input-rij input.wrong { border-color: #c0392b; background: #fbdcdc; }
+  
+  .check-btn {
+    padding: 10px 18px;
+    font-family: inherit;
+    font-size: 1em;
+    font-weight: bold;
+    border: none;
+    background: #4a7fb5;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .check-btn:hover { background: #35618f; }
+
+  .feedback {
+    margin-top: 6px;
+    padding: 12px 16px;
+    border-radius: 6px;
+    display: none;
+    font-size: 0.95em;
+    line-height: 1.5;
+  }
+  .feedback.show { display: block; }
+  .feedback.ok { background: #e3f6e3; border-left: 5px solid #2e8b2e; }
+  .feedback.nok { background: #fdeaea; border-left: 5px solid #c0392b; }
+  .feedback strong { font-size: 1.05em; }
+  .diff-list { margin-top: 8px; padding-left: 20px; }
+  .diff-list li { margin-bottom: 6px; }
+  .correct-answer { font-weight: bold; color: #222; background: rgba(255,255,255,0.6); padding: 2px 6px; border-radius: 4px; }
+
+  .reset {
+    margin-top: 24px;
+    padding: 10px 18px;
+    font-family: inherit;
+    font-size: 1em;
+    border: 1.5px solid #555;
+    background: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+    display: block;
+    width: 100%;
+  }
+  .reset:hover { background: #eee; }
+</style>
+</head>
+<body>
+
+<h1>Vertaalzinnen Grammatica 1: SEIN</h1>
+<p class="uitleg">Vertaal de zinnen naar het Duits met de woorden uit de afbeelding. Let goed op de juiste vorm van het werkwoord <strong>sein</strong> (bin, bist, ist, sind, seid, sind) en de <strong>hoofdletters</strong>.</p>
+
+<div id="opgaven-container">
+
+  <!-- 1 -->
+  <div class="opgave">
+    <div class="opgave-nl">1. Ik ben lang.</div>
+    <div class="input-rij">
+      <input type="text" id="in-1" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(1)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-1"></div>
+  </div>
+
+  <!-- 2 -->
+  <div class="opgave">
+    <div class="opgave-nl">2. Jij bent knap.</div>
+    <div class="input-rij">
+      <input type="text" id="in-2" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(2)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-2"></div>
+  </div>
+
+  <!-- 3 -->
+  <div class="opgave">
+    <div class="opgave-nl">3. Hij is lelijk.</div>
+    <div class="input-rij">
+      <input type="text" id="in-3" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(3)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-3"></div>
+  </div>
+
+  <!-- 4 -->
+  <div class="opgave">
+    <div class="opgave-nl">4. Zij is mooi.</div>
+    <div class="input-rij">
+      <input type="text" id="in-4" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(4)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-4"></div>
+  </div>
+
+  <!-- 5 -->
+  <div class="opgave">
+    <div class="opgave-nl">5. Het kind is klein.</div>
+    <div class="input-rij">
+      <input type="text" id="in-5" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(5)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-5"></div>
+  </div>
+
+  <!-- 6 -->
+  <div class="opgave">
+    <div class="opgave-nl">6. Wij zijn gespierd.</div>
+    <div class="input-rij">
+      <input type="text" id="in-6" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(6)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-6"></div>
+  </div>
+
+  <!-- 7 -->
+  <div class="opgave">
+    <div class="opgave-nl">7. Jullie zijn mollig.</div>
+    <div class="input-rij">
+      <input type="text" id="in-7" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(7)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-7"></div>
+  </div>
+
+  <!-- 8 -->
+  <div class="opgave">
+    <div class="opgave-nl">8. Zij (mv) zijn slank.</div>
+    <div class="input-rij">
+      <input type="text" id="in-8" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(8)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-8"></div>
+  </div>
+
+  <!-- 9 -->
+  <div class="opgave">
+    <div class="opgave-nl">9. U bent de leraar.</div>
+    <div class="input-rij">
+      <input type="text" id="in-9" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(9)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-9"></div>
+  </div>
+
+  <!-- 10 -->
+  <div class="opgave">
+    <div class="opgave-nl">10. Ik ben sterk.</div>
+    <div class="input-rij">
+      <input type="text" id="in-10" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(10)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-10"></div>
+  </div>
+
+  <!-- 11 -->
+  <div class="opgave">
+    <div class="opgave-nl">11. Jij bent eerlijk.</div>
+    <div class="input-rij">
+      <input type="text" id="in-11" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(11)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-11"></div>
+  </div>
+
+  <!-- 12 -->
+  <div class="opgave">
+    <div class="opgave-nl">12. Hij is ontspannen.</div>
+    <div class="input-rij">
+      <input type="text" id="in-12" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(12)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-12"></div>
+  </div>
+
+  <!-- 13 -->
+  <div class="opgave">
+    <div class="opgave-nl">13. Zij is lui.</div>
+    <div class="input-rij">
+      <input type="text" id="in-13" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(13)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-13"></div>
+  </div>
+
+  <!-- 14 -->
+  <div class="opgave">
+    <div class="opgave-nl">14. Het is ijverig.</div>
+    <div class="input-rij">
+      <input type="text" id="in-14" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(14)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-14"></div>
+  </div>
+
+  <!-- 15 -->
+  <div class="opgave">
+    <div class="opgave-nl">15. Wij zijn brutaal.</div>
+    <div class="input-rij">
+      <input type="text" id="in-15" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(15)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-15"></div>
+  </div>
+
+  <!-- 16 -->
+  <div class="opgave">
+    <div class="opgave-nl">16. Jullie zijn vriendelijk.</div>
+    <div class="input-rij">
+      <input type="text" id="in-16" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(16)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-16"></div>
+  </div>
+
+  <!-- 17 -->
+  <div class="opgave">
+    <div class="opgave-nl">17. Zij (mv) zijn geduldig.</div>
+    <div class="input-rij">
+      <input type="text" id="in-17" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(17)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-17"></div>
+  </div>
+
+  <!-- 18 -->
+  <div class="opgave">
+    <div class="opgave-nl">18. U bent streng.</div>
+    <div class="input-rij">
+      <input type="text" id="in-18" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(18)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-18"></div>
+  </div>
+
+  <!-- 19 -->
+  <div class="opgave">
+    <div class="opgave-nl">19. Ik ben gierig.</div>
+    <div class="input-rij">
+      <input type="text" id="in-19" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(19)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-19"></div>
+  </div>
+
+  <!-- 20 -->
+  <div class="opgave">
+    <div class="opgave-nl">20. Jij bent gemeen voor mij.</div>
+    <div class="input-rij">
+      <input type="text" id="in-20" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(20)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-20"></div>
+  </div>
+
+  <!-- 21 -->
+  <div class="opgave">
+    <div class="opgave-nl">21. Zij is spraakzaam.</div>
+    <div class="input-rij">
+      <input type="text" id="in-21" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(21)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-21"></div>
+  </div>
+
+  <!-- 22 -->
+  <div class="opgave">
+    <div class="opgave-nl">22. Hij is gul.</div>
+    <div class="input-rij">
+      <input type="text" id="in-22" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(22)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-22"></div>
+  </div>
+
+  <!-- 23 -->
+  <div class="opgave">
+    <div class="opgave-nl">23. Het is goed gehumeurd.</div>
+    <div class="input-rij">
+      <input type="text" id="in-23" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(23)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-23"></div>
+  </div>
+
+  <!-- 24 -->
+  <div class="opgave">
+    <div class="opgave-nl">24. Wij zijn behulpzaam.</div>
+    <div class="input-rij">
+      <input type="text" id="in-24" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(24)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-24"></div>
+  </div>
+
+  <!-- 25 -->
+  <div class="opgave">
+    <div class="opgave-nl">25. Jullie zijn intelligent.</div>
+    <div class="input-rij">
+      <input type="text" id="in-25" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(25)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-25"></div>
+  </div>
+
+  <!-- 26 -->
+  <div class="opgave">
+    <div class="opgave-nl">26. Zij (mv) zijn saai.</div>
+    <div class="input-rij">
+      <input type="text" id="in-26" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(26)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-26"></div>
+  </div>
+
+  <!-- 27 -->
+  <div class="opgave">
+    <div class="opgave-nl">27. Ik ben grappig.</div>
+    <div class="input-rij">
+      <input type="text" id="in-27" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(27)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-27"></div>
+  </div>
+
+  <!-- 28 -->
+  <div class="opgave">
+    <div class="opgave-nl">28. Jij bent irritant.</div>
+    <div class="input-rij">
+      <input type="text" id="in-28" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(28)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-28"></div>
+  </div>
+
+  <!-- 29 -->
+  <div class="opgave">
+    <div class="opgave-nl">29. Hij is aardig.</div>
+    <div class="input-rij">
+      <input type="text" id="in-29" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(29)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-29"></div>
+  </div>
+
+  <!-- 30 -->
+  <div class="opgave">
+    <div class="opgave-nl">30. U bent betrouwbaar.</div>
+    <div class="input-rij">
+      <input type="text" id="in-30" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(30)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-30"></div>
+  </div>
+
+</div>
+
+<button class="reset" onclick="resetAlles()">Alles opnieuw proberen</button>
+
+<script>
+const antwoorden = {
+  1: { de: "Ich bin groß.", tip: "'Ich' hoort bij 'bin'." },
+  2: { de: "Du bist gutaussehend.", tip: "'Du' hoort bij 'bist'. 'Gutaussehend' is één woord." },
+  3: { de: "Er ist hässlich.", tip: "'Er' hoort bij 'ist'. Let op de umlaut bij 'hässlich'." },
+  4: { de: "Sie ist schön.", tip: "'Sie' (zij) hoort bij 'ist'. Let op de umlaut bij 'schön'." },
+  5: { de: "Das Kind ist klein.", tip: "'Das Kind' is onzijdig ('es'), dus 'ist'." },
+  6: { de: "Wir sind muskulös.", tip: "'Wir' hoort bij 'sind'." },
+  7: { de: "Ihr seid pummelig.", tip: "'Ihr' (jullie) hoort bij 'seid' (met een d!)." },
+  8: { de: "Sie sind schlank.", tip: "'Sie' (meervoud) hoort bij 'sind'." },
+  9: { de: "Sie sind der Lehrer.", tip: "Let op de beleefdheidsvorm 'Sie' (met hoofdletter) en 'sind'." },
+  10: { de: "Ich bin stark.", tip: "'Ich' hoort bij 'bin'." },
+  11: { de: "Du bist ehrlich.", tip: "'Du' hoort bij 'bist'." },
+  12: { de: "Er ist entspannt.", tip: "'Er' hoort bij 'ist'." },
+  13: { de: "Sie ist faul.", tip: "'Sie' (zij) hoort bij 'ist'." },
+  14: { de: "Es ist fleißig.", tip: "'Es' (het) hoort bij 'ist'. En let op de ß bij 'fleißig'." },
+  15: { de: "Wir sind frech.", tip: "'Wir' hoort bij 'sind'." },
+  16: { de: "Ihr seid freundlich.", tip: "'Ihr' hoort bij 'seid'." },
+  17: { de: "Sie sind geduldig.", tip: "'Sie' (meervoud) hoort bij 'sind'." },
+  18: { de: "Sie sind streng.", tip: "Let op de beleefdheidsvorm 'Sie' en 'sind'." },
+  19: { de: "Ich bin geizig.", tip: "'Ich' hoort bij 'bin'." },
+  20: { de: "Du bist gemein zu mir.", tip: "Let op de uitdrukking 'gemein zu mir' (gemeen voor mij)." },
+  21: { de: "Sie ist geschwätzig.", tip: "'Sie' (zij) hoort bij 'ist'. Let op de umlaut en 'tz'." },
+  22: { de: "Er ist großzügig.", tip: "'Er' hoort bij 'ist'. Let op de ß en umlaut." },
+  23: { de: "Es ist gut gelaunt.", tip: "'Es' (het) hoort bij 'ist'. 'Gut gelaunt' is met een spatie." },
+  24: { de: "Wir sind hilfsbereit.", tip: "'Wir' hoort bij 'sind'." },
+  25: { de: "Ihr seid intelligent.", tip: "'Ihr' hoort bij 'seid'." },
+  26: { de: "Sie sind langweilig.", tip: "'Sie' (meervoud) hoort bij 'sind'." },
+  27: { de: "Ich bin lustig.", tip: "'Ich' hoort bij 'bin'." },
+  28: { de: "Du bist nervig.", tip: "'Du' hoort bij 'bist'." },
+  29: { de: "Er ist nett.", tip: "'Er' hoort bij 'ist'." },
+  30: { de: "Sie sind zuverlässig.", tip: "Let op de beleefdheidsvorm 'Sie' en 'sind'. En 'zuverlässig' met umlaut." }
+};
+
+function isLeesteken(token) {
+  return /^[.,!?;:'"„“]$/.test(token);
+}
+
+function leestekenNaam(teken) {
+  if (teken === '.') return 'punt';
+  if (teken === ',') return 'komma';
+  if (teken === '?') return 'vraagteken';
+  if (teken === '!') return 'uitroepteken';
+  return 'leesteken (' + teken + ')';
+}
+
+function vergelijkZinnen(ingetypt, correct) {
+  const tokenize = (str) => str.match(/[\wÀ-ÿ]+|[^\s\w]/g) || [];
+  
+  const tokensIn = tokenize(ingetypt);
+  const tokensCorr = tokenize(correct);
+  
+  const diffs = [];
+  const maxLen = Math.max(tokensIn.length, tokensCorr.length);
+
+  for (let i = 0; i < maxLen; i++) {
+    const tIn = tokensIn[i] !== undefined ? tokensIn[i] : null;
+    const tCorr = tokensCorr[i] !== undefined ? tokensCorr[i] : null;
+
+    if (tIn !== tCorr) {
+      if (tIn === null) {
+        if (isLeesteken(tCorr)) {
+          if (tCorr === '.' && i === tokensCorr.length - 1) {
+            diffs.push(`De punt ontbreekt aan het einde van de zin.`);
+          } else {
+            diffs.push(`Het ${leestekenNaam(tCorr)} ontbreekt.`);
+          }
+        } else {
+          diffs.push(`Er ontbreekt een woord: het woord <strong>${tCorr}</strong> staat er niet.`);
+        }
+      } else if (tCorr === null) {
+        if (isLeesteken(tIn)) {
+          diffs.push(`Er staat een extra ${leestekenNaam(tIn)}, dat hoort er niet bij.`);
+        } else {
+          diffs.push(`Er staat te veel: het woord <strong>${tIn}</strong> hoort er niet bij.`);
+        }
+      } else {
+        if (isLeesteken(tIn) || isLeesteken(tCorr)) {
+          if (isLeesteken(tIn) && isLeesteken(tCorr)) {
+            diffs.push(`Hier staat een ${leestekenNaam(tIn)}, maar er moet een ${leestekenNaam(tCorr)} staan.`);
+          } else if (isLeesteken(tIn)) {
+            diffs.push(`Hier staat een ${leestekenNaam(tIn)}, maar er moet het woord '${tCorr}' staan.`);
+          } else {
+            diffs.push(`Hier staat het woord '${tIn}', maar er moet een ${leestekenNaam(tCorr)} staan.`);
+          }
+        } else {
+          let foutType = "Gewoon een typefout of verkeerd woord.";
+          if (tIn.toLowerCase() === tCorr.toLowerCase()) {
+            foutType = "Let op de <strong>hoofdletters</strong>! Je typte '" + tIn + "', maar het moet '" + tCorr + "' zijn.";
+          } else if (tIn.replace(/[ß]/g, 'ss') === tCorr.replace(/[ß]/g, 'ss')) {
+            foutType = "Let op de <strong>ß</strong> versus <strong>ss</strong>!";
+          } else {
+            foutType = "Hier staat '" + tIn + "', maar het moet '" + tCorr + "' zijn. Kijk naar de spelling of de juiste Duitse vertaling.";
+          }
+          diffs.push(`Woord ${i + 1}: ${foutType}`);
+        }
+      }
+    }
+  }
+  return diffs;
+}
+
+function checkZin(id) {
+  const inputField = document.getElementById("in-" + id);
+  const feedbackDiv = document.getElementById("fb-" + id);
+  const antwoord = antwoorden[id];
+  
+  const ingetypt = inputField.value.trim();
+  const isExactCorrect = ingetypt === antwoord.de;
+  const isLowerCorrect = ingetypt.toLowerCase() === antwoord.de.toLowerCase();
+
+  feedbackDiv.className = "feedback show";
+
+  if (isExactCorrect) {
+    inputField.className = "correct";
+    feedbackDiv.classList.add("ok");
+    feedbackDiv.innerHTML = "✅ <strong>Perfect!</strong> Alles klopt, inclusief de hoofdletters en leestekens.";
+  } else {
+    inputField.className = "wrong";
+    feedbackDiv.classList.add("nok");
+    
+    let feedbackHTML = "❌ <strong>Nog niet helemaal goed.</strong> ";
+    
+    if (isLowerCorrect) {
+      feedbackHTML += "Je zin is bijna perfect, maar je bent de <strong>hoofdletters</strong> vergeten (bijvoorbeeld bij zelfstandige naamwoorden of aan het begin van de zin).<br>";
+    } else {
+      const diffs = vergelijkZinnen(ingetypt, antwoord.de);
+      if (diffs.length > 0) {
+        feedbackHTML += "<br>Wat gaat er mis?<ul class='diff-list'>";
+        diffs.forEach(d => { feedbackHTML += `<li>${d}</li>`; });
+        feedbackHTML += "</ul>";
+      }
+    }
+    
+    feedbackHTML += `<div style="margin-top: 10px;">Het juiste antwoord is: <span class="correct-answer">${antwoord.de}</span></div>`;
+    feedbackHTML += `<div style="margin-top: 6px; color: #555;"><em>💡 Tip: ${antwoord.tip}</em></div>`;
+    
+    feedbackDiv.innerHTML = feedbackHTML;
+  }
+}
+
+function resetAlles() {
+  for (let i = 1; i <= 30; i++) {
+    const inputField = document.getElementById("in-" + i);
+    const feedbackDiv = document.getElementById("fb-" + i);
+    if(inputField) inputField.value = "";
+    if(inputField) inputField.className = "";
+    if(feedbackDiv) feedbackDiv.className = "feedback";
+    if(feedbackDiv) feedbackDiv.innerHTML = "";
+  }
+}
+</script>
+
+</body>
+</html>

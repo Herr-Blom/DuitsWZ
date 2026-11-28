@@ -29,7 +29,7 @@ header p { color: #b8c5df; font-size: 16px; }
 .back-btn:hover { color: white; }
 
 .list-container {
-    max-width: 700px;
+    max-width: 800px;
     margin: auto;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -50,8 +50,8 @@ header p { color: #b8c5df; font-size: 16px; }
     transition: all 0.25s ease;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.3);
 }
+
 .list-item strong { font-size: clamp(17px, 2.6vw, 19px); }
 .list-item span {
     color: rgba(255,255,255,0.85);
@@ -72,16 +72,41 @@ header p { color: #b8c5df; font-size: 16px; }
     pointer-events: none;
 }
 
-/* Oefentoetsen krijgen een eigen kleur (roze/rood) */
-.tv-oefentoets {
-    background: linear-gradient(135deg, #F472B6, #DB2777);
-    box-shadow: 0 6px 18px rgba(244,114,182,0.35);
-}
-.tv-oefentoets:hover {
-    box-shadow: 0 12px 28px rgba(244,114,182,0.55);
-}
+/* Individuele kleuren voor elke knop */
+.btn-1 { background: linear-gradient(135deg, #F472B6, #DB2777); box-shadow: 0 6px 18px rgba(244,114,182,0.35); }
+.btn-1:hover { box-shadow: 0 12px 28px rgba(244,114,182,0.55); }
 
-@media (max-width: 520px) {
+.btn-2 { background: linear-gradient(135deg, #60A5FA, #2563EB); box-shadow: 0 6px 18px rgba(96,165,250,0.35); }
+.btn-2:hover { box-shadow: 0 12px 28px rgba(96,165,250,0.55); }
+
+.btn-3 { background: linear-gradient(135deg, #34D399, #059669); box-shadow: 0 6px 18px rgba(52,211,153,0.35); }
+.btn-3:hover { box-shadow: 0 12px 28px rgba(52,211,153,0.55); }
+
+.btn-4 { background: linear-gradient(135deg, #FBBF24, #D97706); box-shadow: 0 6px 18px rgba(251,191,36,0.35); }
+.btn-4:hover { box-shadow: 0 12px 28px rgba(251,191,36,0.55); }
+
+.btn-5 { background: linear-gradient(135deg, #A78BFA, #7C3AED); box-shadow: 0 6px 18px rgba(167,139,250,0.35); }
+.btn-5:hover { box-shadow: 0 12px 28px rgba(167,139,250,0.55); }
+
+.btn-6 { background: linear-gradient(135deg, #F87171, #DC2626); box-shadow: 0 6px 18px rgba(248,113,113,0.35); }
+.btn-6:hover { box-shadow: 0 12px 28px rgba(248,113,113,0.55); }
+
+.btn-7 { background: linear-gradient(135deg, #2DD4BF, #0D9488); box-shadow: 0 6px 18px rgba(45,212,191,0.35); }
+.btn-7:hover { box-shadow: 0 12px 28px rgba(45,212,191,0.55); }
+
+.btn-8 { background: linear-gradient(135deg, #FB923C, #EA580C); box-shadow: 0 6px 18px rgba(251,146,60,0.35); }
+.btn-8:hover { box-shadow: 0 12px 28px rgba(251,146,60,0.55); }
+
+.btn-9 { background: linear-gradient(135deg, #C084FC, #9333EA); box-shadow: 0 6px 18px rgba(192,132,252,0.35); }
+.btn-9:hover { box-shadow: 0 12px 28px rgba(192,132,252,0.55); }
+
+.btn-10 { background: linear-gradient(135deg, #38BDF8, #0284C7); box-shadow: 0 6px 18px rgba(56,189,248,0.35); }
+.btn-10:hover { box-shadow: 0 12px 28px rgba(56,189,248,0.55); }
+
+.btn-11 { background: linear-gradient(135deg, #818CF8, #4F46E5); box-shadow: 0 6px 18px rgba(129,140,248,0.35); }
+.btn-11:hover { box-shadow: 0 12px 28px rgba(129,140,248,0.55); }
+
+@media (max-width: 600px) {
     .list-container { grid-template-columns: 1fr; }
 }
 </style>
@@ -96,10 +121,59 @@ header p { color: #b8c5df; font-size: 16px; }
 
 <main class="list-container">
 
-    <!-- Oefentoets Hoofdstuk 1 (AANGEPAST: verwijst nu direct naar het bestand) -->
-    <a href="oefentoets-hoofdstuk-1-dz" class="list-item tv-oefentoets">
+    <a href="1-oefentoetshoofdstuk1.html" class="list-item btn-1">
         <strong>Hoofdstuk 1</strong>
-        <span>Duitse Zinsstructuren →</span>
+        <span>Oefentoets →</span>
+    </a>
+
+    <a href="2-oefentoetshoofdstuk2.html" class="list-item btn-2">
+        <strong>Hoofdstuk 2</strong>
+        <span>Oefentoets →</span>
+    </a>
+
+    <a href="3-oefentoetshoofdstuk3.html" class="list-item btn-3">
+        <strong>Hoofdstuk 3</strong>
+        <span>Oefentoets →</span>
+    </a>
+
+    <a href="4a-oefentoetshoofdstuk4a.html" class="list-item btn-4">
+        <strong>Hoofdstuk 4a</strong>
+        <span>Oefentoets →</span>
+    </a>
+
+    <a href="4-oefentoetshoofdstuk4.html" class="list-item btn-5">
+        <strong>Hoofdstuk 4</strong>
+        <span>Oefentoets →</span>
+    </a>
+
+    <a href="5-oefentoetshoofdstuk5.html" class="list-item btn-6">
+        <strong>Hoofdstuk 5</strong>
+        <span>Oefentoets →</span>
+    </a>
+
+    <a href="6a-oefentoetshoofdstuk6a.html" class="list-item btn-7">
+        <strong>Hoofdstuk 6a</strong>
+        <span>Oefentoets →</span>
+    </a>
+
+    <a href="61a-oefentoetshoofdstuk6deel1.html" class="list-item btn-8">
+        <strong>Hoofdstuk 6 (Deel 1)</strong>
+        <span>Oefentoets →</span>
+    </a>
+
+    <a href="61b-oefentoetsgrammatica1sein.html" class="list-item btn-9">
+        <strong>Grammatica 1: Sein</strong>
+        <span>Oefentoets →</span>
+    </a>
+
+    <a href="61c-oefentoetsgrammatica2haben.html" class="list-item btn-10">
+        <strong>Grammatica 2: Haben</strong>
+        <span>Oefentoets →</span>
+    </a>
+
+    <a href="62-oefentoetshoofdstuk6deel2.html" class="list-item btn-11">
+        <strong>Hoofdstuk 6 (Deel 2)</strong>
+        <span>Oefentoets →</span>
     </a>
 
 </main>

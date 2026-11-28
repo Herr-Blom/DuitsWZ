@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vertaalzinnen Hoofdstuk 4a Duitse Zinsstructuren</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 0 16px;
+    line-height: 1.6;
+    color: #222;
+    background: #fafafa;
+  }
+  h1 { font-size: 1.5em; border-bottom: 2px solid #333; padding-bottom: 6px; }
+  p.uitleg { font-size: 1.05em; background: #eef4fb; padding: 12px 16px; border-left: 4px solid #4a7fb5; border-radius: 4px; }
+  
+  .opgave {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .opgave-nl {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #333;
+  }
+  .input-rij {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .input-rij input {
+    flex: 1;
+    min-width: 250px;
+    font-family: inherit;
+    font-size: 1.05em;
+    padding: 10px 12px;
+    border: 1.5px solid #999;
+    border-radius: 6px;
+  }
+  .input-rij input:focus { outline: none; border-color: #4a7fb5; background: #f7fbff; }
+  .input-rij input.correct { border-color: #2e8b2e; background: #d8f5d8; }
+  .input-rij input.wrong { border-color: #c0392b; background: #fbdcdc; }
+  
+  .check-btn {
+    padding: 10px 18px;
+    font-family: inherit;
+    font-size: 1em;
+    font-weight: bold;
+    border: none;
+    background: #4a7fb5;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .check-btn:hover { background: #35618f; }
+
+  .feedback {
+    margin-top: 6px;
+    padding: 12px 16px;
+    border-radius: 6px;
+    display: none;
+    font-size: 0.95em;
+    line-height: 1.5;
+  }
+  .feedback.show { display: block; }
+  .feedback.ok { background: #e3f6e3; border-left: 5px solid #2e8b2e; }
+  .feedback.nok { background: #fdeaea; border-left: 5px solid #c0392b; }
+  .feedback strong { font-size: 1.05em; }
+  .diff-list { margin-top: 8px; padding-left: 20px; }
+  .diff-list li { margin-bottom: 6px; }
+  .correct-answer { font-weight: bold; color: #222; background: rgba(255,255,255,0.6); padding: 2px 6px; border-radius: 4px; }
+
+  .reset {
+    margin-top: 24px;
+    padding: 10px 18px;
+    font-family: inherit;
+    font-size: 1em;
+    border: 1.5px solid #555;
+    background: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+    display: block;
+    width: 100%;
+  }
+  .reset:hover { background: #eee; }
+</style>
+</head>
+<body>
+
+<h1>Vertaalzinnen Hoofdstuk 4a Duitse Zinsstructuren</h1>
+<p class="uitleg">Vertaal de zinnen naar het Duits met de woorden uit de afbeelding. Let goed op <strong>hoofdletters</strong>, de volgorde van de woorden (zoals 'Das Wetter ist' en 'Es ist') en de leestekens.</p>
+
+<div id="opgaven-container">
+
+  <!-- 1 -->
+  <div class="opgave">
+    <div class="opgave-nl">1. Het weer is mooi.</div>
+    <div class="input-rij">
+      <input type="text" id="in-1" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(1)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-1"></div>
+  </div>
+
+  <!-- 2 -->
+  <div class="opgave">
+    <div class="opgave-nl">2. Het weer is slecht.</div>
+    <div class="input-rij">
+      <input type="text" id="in-2" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(2)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-2"></div>
+  </div>
+
+  <!-- 3 -->
+  <div class="opgave">
+    <div class="opgave-nl">3. Het weer is verschrikkelijk.</div>
+    <div class="input-rij">
+      <input type="text" id="in-3" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(3)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-3"></div>
+  </div>
+
+  <!-- 4 -->
+  <div class="opgave">
+    <div class="opgave-nl">4. Het weer is altijd goed.</div>
+    <div class="input-rij">
+      <input type="text" id="in-4" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(4)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-4"></div>
+  </div>
+
+  <!-- 5 -->
+  <div class="opgave">
+    <div class="opgave-nl">5. Het weer is vaak oké.</div>
+    <div class="input-rij">
+      <input type="text" id="in-5" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(5)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-5"></div>
+  </div>
+
+  <!-- 6 -->
+  <div class="opgave">
+    <div class="opgave-nl">6. Het weer is normaal gesproken mooi.</div>
+    <div class="input-rij">
+      <input type="text" id="in-6" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(6)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-6"></div>
+  </div>
+
+  <!-- 7 -->
+  <div class="opgave">
+    <div class="opgave-nl">7. Het is zwaar bewolkt.</div>
+    <div class="input-rij">
+      <input type="text" id="in-7" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(7)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-7"></div>
+  </div>
+
+  <!-- 8 -->
+  <div class="opgave">
+    <div class="opgave-nl">8. Het is soms bewolkt.</div>
+    <div class="input-rij">
+      <input type="text" id="in-8" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(8)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-8"></div>
+  </div>
+
+  <!-- 9 -->
+  <div class="opgave">
+    <div class="opgave-nl">9. Het is heet.</div>
+    <div class="input-rij">
+      <input type="text" id="in-9" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(9)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-9"></div>
+  </div>
+
+  <!-- 10 -->
+  <div class="opgave">
+    <div class="opgave-nl">10. Het is koud.</div>
+    <div class="input-rij">
+      <input type="text" id="in-10" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(10)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-10"></div>
+  </div>
+
+  <!-- 11 -->
+  <div class="opgave">
+    <div class="opgave-nl">11. Het is zelden mistig.</div>
+    <div class="input-rij">
+      <input type="text" id="in-11" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(11)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-11"></div>
+  </div>
+
+  <!-- 12 -->
+  <div class="opgave">
+    <div class="opgave-nl">12. Het is nooit stormachtig.</div>
+    <div class="input-rij">
+      <input type="text" id="in-12" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(12)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-12"></div>
+  </div>
+
+  <!-- 13 -->
+  <div class="opgave">
+    <div class="opgave-nl">13. Het is zonnig en warm.</div>
+    <div class="input-rij">
+      <input type="text" id="in-13" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(13)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-13"></div>
+  </div>
+
+  <!-- 14 -->
+  <div class="opgave">
+    <div class="opgave-nl">14. Het is winderig.</div>
+    <div class="input-rij">
+      <input type="text" id="in-14" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(14)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-14"></div>
+  </div>
+
+  <!-- 15 -->
+  <div class="opgave">
+    <div class="opgave-nl">15. De zon schijnt vaak.</div>
+    <div class="input-rij">
+      <input type="text" id="in-15" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(15)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-15"></div>
+  </div>
+
+  <!-- 16 -->
+  <div class="opgave">
+    <div class="opgave-nl">16. Er is vaak onweer.</div>
+    <div class="input-rij">
+      <input type="text" id="in-16" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(16)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-16"></div>
+  </div>
+
+  <!-- 17 -->
+  <div class="opgave">
+    <div class="opgave-nl">17. Het regent vaak.</div>
+    <div class="input-rij">
+      <input type="text" id="in-17" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(17)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-17"></div>
+  </div>
+
+  <!-- 18 -->
+  <div class="opgave">
+    <div class="opgave-nl">18. Het sneeuwt vaak.</div>
+    <div class="input-rij">
+      <input type="text" id="in-18" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(18)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-18"></div>
+  </div>
+
+  <!-- 19 -->
+  <div class="opgave">
+    <div class="opgave-nl">19. Het is mooi in de lente.</div>
+    <div class="input-rij">
+      <input type="text" id="in-19" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(19)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-19"></div>
+  </div>
+
+  <!-- 20 -->
+  <div class="opgave">
+    <div class="opgave-nl">20. Het is heet in de zomer.</div>
+    <div class="input-rij">
+      <input type="text" id="in-20" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(20)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-20"></div>
+  </div>
+
+  <!-- 21 -->
+  <div class="opgave">
+    <div class="opgave-nl">21. Het is winderig in de herfst.</div>
+    <div class="input-rij">
+      <input type="text" id="in-21" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(21)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-21"></div>
+  </div>
+
+  <!-- 22 -->
+  <div class="opgave">
+    <div class="opgave-nl">22. Het is koud in de winter.</div>
+    <div class="input-rij">
+      <input type="text" id="in-22" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(22)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-22"></div>
+  </div>
+
+  <!-- 23 -->
+  <div class="opgave">
+    <div class="opgave-nl">23. Het is slecht in januari en februari.</div>
+    <div class="input-rij">
+      <input type="text" id="in-23" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(23)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-23"></div>
+  </div>
+
+  <!-- 24 -->
+  <div class="opgave">
+    <div class="opgave-nl">24. Het is zonnig waar ik woon.</div>
+    <div class="input-rij">
+      <input type="text" id="in-24" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(24)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-24"></div>
+  </div>
+
+  <!-- 25 -->
+  <div class="opgave">
+    <div class="opgave-nl">25. Het is mooi in Berlijn en Wenen.</div>
+    <div class="input-rij">
+      <input type="text" id="in-25" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(25)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-25"></div>
+  </div>
+
+  <!-- 26 -->
+  <div class="opgave">
+    <div class="opgave-nl">26. Het is koud in het noorden en het zuiden.</div>
+    <div class="input-rij">
+      <input type="text" id="in-26" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(26)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-26"></div>
+  </div>
+
+</div>
+
+<button class="reset" onclick="resetAlles()">Alles opnieuw proberen</button>
+
+<script>
+const antwoorden = {
+  1: { de: "Das Wetter ist schön.", tip: "Let op: 'Das Wetter ist' (Het weer is). En 'schön' met umlaut." },
+  2: { de: "Das Wetter ist schlecht.", tip: "Let op de 'sch' en 'ch' in 'schlecht'." },
+  3: { de: "Das Wetter ist furchtbar.", tip: "Let op de 'ch' in 'furchtbar'." },
+  4: { de: "Das Wetter ist immer gut.", tip: "'Immer' (altijd) staat na 'ist'. En 'gut'." },
+  5: { de: "Das Wetter ist oft okay.", tip: "'oft' (vaak) staat na 'ist'. En 'okay'." },
+  6: { de: "Das Wetter ist normalerweise schön.", tip: "'normalerweise' (normaal gesproken). Let op de 'w' en 's'." },
+  7: { de: "Es ist bedeckt.", tip: "'Es ist' (Het is). En 'bedeckt'." },
+  8: { de: "Es ist manchmal bewölkt.", tip: "'manchmal' (soms) staat na 'ist'. En let op de umlaut bij 'bewölkt'." },
+  9: { de: "Es ist heiß.", tip: "Let op de ß in 'heiß'." },
+  10: { de: "Es ist kalt.", tip: "Let op de 'k' en 't' in 'kalt'." },
+  11: { de: "Es ist selten neblig.", tip: "'selten' (zelden) staat na 'ist'. En 'neblig'." },
+  12: { de: "Es ist nie stürmisch.", tip: "'nie' (nooit) staat na 'ist'. En let op de umlaut bij 'stürmisch'." },
+  13: { de: "Es ist sonnig und warm.", tip: "Vergeet de 'und' niet. En 'sonnig' en 'warm'." },
+  14: { de: "Es ist windig.", tip: "Let op de 'w' en 'd' in 'windig'." },
+  15: { de: "Die Sonne scheint oft.", tip: "'Die Sonne scheint' (De zon schijnt). En 'oft' (vaak) aan het eind." },
+  16: { de: "Es gibt oft Gewitter.", tip: "'Es gibt' (Er is). En 'Gewitter' met hoofdletter." },
+  17: { de: "Es regnet oft.", tip: "'Es regnet' (Het regent). En 'oft' (vaak)." },
+  18: { de: "Es schneit oft.", tip: "'Es schneit' (Het sneeuwt). En 'oft' (vaak)." },
+  19: { de: "Es ist schön im Frühling.", tip: "'im Frühling' (in de lente). Let op de umlaut." },
+  20: { de: "Es ist heiß im Sommer.", tip: "'im Sommer' (in de zomer). En 'heiß' met ß." },
+  21: { de: "Es ist windig im Herbst.", tip: "'im Herbst' (in de herfst). En 'windig'." },
+  22: { de: "Es ist kalt im Winter.", tip: "'im Winter' (in de winter). En 'kalt'." },
+  23: { de: "Es ist schlecht im Januar und Februar.", tip: "Let op de maanden met hoofdletters en de 'und'." },
+  24: { de: "Es ist sonnig, wo ich wohne.", tip: "Let op de komma en 'wo ich wohne' (waar ik woon)." },
+  25: { de: "Es ist schön in Berlin und Wien.", tip: "Let op de steden 'Berlin' en 'Wien' met hoofdletters." },
+  26: { de: "Es ist kalt im Norden und Süden.", tip: "Let op 'im Norden' en 'Süden' (met umlaut)." }
+};
+
+function isLeesteken(token) {
+  return /^[.,!?;:'"„“]$/.test(token);
+}
+
+function leestekenNaam(teken) {
+  if (teken === '.') return 'punt';
+  if (teken === ',') return 'komma';
+  if (teken === '?') return 'vraagteken';
+  if (teken === '!') return 'uitroepteken';
+  return 'leesteken (' + teken + ')';
+}
+
+function vergelijkZinnen(ingetypt, correct) {
+  const tokenize = (str) => str.match(/[\wÀ-ÿ]+|[^\s\w]/g) || [];
+  
+  const tokensIn = tokenize(ingetypt);
+  const tokensCorr = tokenize(correct);
+  
+  const diffs = [];
+  const maxLen = Math.max(tokensIn.length, tokensCorr.length);
+
+  for (let i = 0; i < maxLen; i++) {
+    const tIn = tokensIn[i] !== undefined ? tokensIn[i] : null;
+    const tCorr = tokensCorr[i] !== undefined ? tokensCorr[i] : null;
+
+    if (tIn !== tCorr) {
+      if (tIn === null) {
+        if (isLeesteken(tCorr)) {
+          if (tCorr === '.' && i === tokensCorr.length - 1) {
+            diffs.push(`De punt ontbreekt aan het einde van de zin.`);
+          } else {
+            diffs.push(`Het ${leestekenNaam(tCorr)} ontbreekt.`);
+          }
+        } else {
+          diffs.push(`Er ontbreekt een woord: het woord <strong>${tCorr}</strong> staat er niet.`);
+        }
+      } else if (tCorr === null) {
+        if (isLeesteken(tIn)) {
+          diffs.push(`Er staat een extra ${leestekenNaam(tIn)}, dat hoort er niet bij.`);
+        } else {
+          diffs.push(`Er staat te veel: het woord <strong>${tIn}</strong> hoort er niet bij.`);
+        }
+      } else {
+        if (isLeesteken(tIn) || isLeesteken(tCorr)) {
+          if (isLeesteken(tIn) && isLeesteken(tCorr)) {
+            diffs.push(`Hier staat een ${leestekenNaam(tIn)}, maar er moet een ${leestekenNaam(tCorr)} staan.`);
+          } else if (isLeesteken(tIn)) {
+            diffs.push(`Hier staat een ${leestekenNaam(tIn)}, maar er moet het woord '${tCorr}' staan.`);
+          } else {
+            diffs.push(`Hier staat het woord '${tIn}', maar er moet een ${leestekenNaam(tCorr)} staan.`);
+          }
+        } else {
+          let foutType = "Gewoon een typefout of verkeerd woord.";
+          if (tIn.toLowerCase() === tCorr.toLowerCase()) {
+            foutType = "Let op de <strong>hoofdletters</strong>! Je typte '" + tIn + "', maar het moet '" + tCorr + "' zijn.";
+          } else if (tIn.replace(/[ß]/g, 'ss') === tCorr.replace(/[ß]/g, 'ss')) {
+            foutType = "Let op de <strong>ß</strong> versus <strong>ss</strong>!";
+          } else {
+            foutType = "Hier staat '" + tIn + "', maar het moet '" + tCorr + "' zijn. Kijk naar de spelling of de juiste Duitse vertaling.";
+          }
+          diffs.push(`Woord ${i + 1}: ${foutType}`);
+        }
+      }
+    }
+  }
+  return diffs;
+}
+
+function checkZin(id) {
+  const inputField = document.getElementById("in-" + id);
+  const feedbackDiv = document.getElementById("fb-" + id);
+  const antwoord = antwoorden[id];
+  
+  const ingetypt = inputField.value.trim();
+  const isExactCorrect = ingetypt === antwoord.de;
+  const isLowerCorrect = ingetypt.toLowerCase() === antwoord.de.toLowerCase();
+
+  feedbackDiv.className = "feedback show";
+
+  if (isExactCorrect) {
+    inputField.className = "correct";
+    feedbackDiv.classList.add("ok");
+    feedbackDiv.innerHTML = "✅ <strong>Perfect!</strong> Alles klopt, inclusief de hoofdletters en leestekens.";
+  } else {
+    inputField.className = "wrong";
+    feedbackDiv.classList.add("nok");
+    
+    let feedbackHTML = "❌ <strong>Nog niet helemaal goed.</strong> ";
+    
+    if (isLowerCorrect) {
+      feedbackHTML += "Je zin is bijna perfect, maar je bent de <strong>hoofdletters</strong> vergeten (bijvoorbeeld bij zelfstandige naamwoorden of aan het begin van de zin).<br>";
+    } else {
+      const diffs = vergelijkZinnen(ingetypt, antwoord.de);
+      if (diffs.length > 0) {
+        feedbackHTML += "<br>Wat gaat er mis?<ul class='diff-list'>";
+        diffs.forEach(d => { feedbackHTML += `<li>${d}</li>`; });
+        feedbackHTML += "</ul>";
+      }
+    }
+    
+    feedbackHTML += `<div style="margin-top: 10px;">Het juiste antwoord is: <span class="correct-answer">${antwoord.de}</span></div>`;
+    feedbackHTML += `<div style="margin-top: 6px; color: #555;"><em>💡 Tip: ${antwoord.tip}</em></div>`;
+    
+    feedbackDiv.innerHTML = feedbackHTML;
+  }
+}
+
+function resetAlles() {
+  for (let i = 1; i <= 26; i++) {
+    const inputField = document.getElementById("in-" + i);
+    const feedbackDiv = document.getElementById("fb-" + i);
+    if(inputField) inputField.value = "";
+    if(inputField) inputField.className = "";
+    if(feedbackDiv) feedbackDiv.className = "feedback";
+    if(feedbackDiv) feedbackDiv.innerHTML = "";
+  }
+}
+</script>
+
+</body>
+</html>

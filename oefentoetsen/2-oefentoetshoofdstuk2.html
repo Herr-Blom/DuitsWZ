@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vertaalzinnen Hoofdstuk 2 Duitse Zinsstructuren</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 0 16px;
+    line-height: 1.6;
+    color: #222;
+    background: #fafafa;
+  }
+  h1 { font-size: 1.5em; border-bottom: 2px solid #333; padding-bottom: 6px; }
+  p.uitleg { font-size: 1.05em; background: #eef4fb; padding: 12px 16px; border-left: 4px solid #4a7fb5; border-radius: 4px; }
+  
+  .opgave {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .opgave-nl {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #333;
+  }
+  .input-rij {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .input-rij input {
+    flex: 1;
+    min-width: 250px;
+    font-family: inherit;
+    font-size: 1.05em;
+    padding: 10px 12px;
+    border: 1.5px solid #999;
+    border-radius: 6px;
+  }
+  .input-rij input:focus { outline: none; border-color: #4a7fb5; background: #f7fbff; }
+  .input-rij input.correct { border-color: #2e8b2e; background: #d8f5d8; }
+  .input-rij input.wrong { border-color: #c0392b; background: #fbdcdc; }
+  
+  .check-btn {
+    padding: 10px 18px;
+    font-family: inherit;
+    font-size: 1em;
+    font-weight: bold;
+    border: none;
+    background: #4a7fb5;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .check-btn:hover { background: #35618f; }
+
+  .feedback {
+    margin-top: 6px;
+    padding: 12px 16px;
+    border-radius: 6px;
+    display: none;
+    font-size: 0.95em;
+    line-height: 1.5;
+  }
+  .feedback.show { display: block; }
+  .feedback.ok { background: #e3f6e3; border-left: 5px solid #2e8b2e; }
+  .feedback.nok { background: #fdeaea; border-left: 5px solid #c0392b; }
+  .feedback strong { font-size: 1.05em; }
+  .diff-list { margin-top: 8px; padding-left: 20px; }
+  .diff-list li { margin-bottom: 6px; }
+  .correct-answer { font-weight: bold; color: #222; background: rgba(255,255,255,0.6); padding: 2px 6px; border-radius: 4px; }
+
+  .reset {
+    margin-top: 24px;
+    padding: 10px 18px;
+    font-family: inherit;
+    font-size: 1em;
+    border: 1.5px solid #555;
+    background: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+    display: block;
+    width: 100%;
+  }
+  .reset:hover { background: #eee; }
+</style>
+</head>
+<body>
+
+<h1>Vertaalzinnen Hoofdstuk 2 Duitse Zinsstructuren</h1>
+<p class="uitleg">Vertaal de zinnen naar het Duits met de woorden uit de afbeelding. Let goed op <strong>hoofdletters</strong>, de juiste werkwoordsvormen (komme/kommt, ist) en de leestekens.</p>
+
+<div id="opgaven-container">
+
+  <!-- 1 -->
+  <div class="opgave">
+    <div class="opgave-nl">1. Ik heet Max en ik kom uit Berlijn.</div>
+    <div class="input-rij">
+      <input type="text" id="in-1" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(1)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-1"></div>
+  </div>
+
+  <!-- 2 -->
+  <div class="opgave">
+    <div class="opgave-nl">2. Ik ben 12 jaar oud.</div>
+    <div class="input-rij">
+      <input type="text" id="in-2" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(2)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-2"></div>
+  </div>
+
+  <!-- 3 -->
+  <div class="opgave">
+    <div class="opgave-nl">3. Mijn vriendin heet Lena.</div>
+    <div class="input-rij">
+      <input type="text" id="in-3" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(3)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-3"></div>
+  </div>
+
+  <!-- 4 -->
+  <div class="opgave">
+    <div class="opgave-nl">4. Zij komt uit München.</div>
+    <div class="input-rij">
+      <input type="text" id="in-4" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(4)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-4"></div>
+  </div>
+
+  <!-- 5 -->
+  <div class="opgave">
+    <div class="opgave-nl">5. Mijn vriend heet Toni en hij is 14 jaar oud.</div>
+    <div class="input-rij">
+      <input type="text" id="in-5" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(5)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-5"></div>
+  </div>
+
+  <!-- 6 -->
+  <div class="opgave">
+    <div class="opgave-nl">6. Mijn verjaardag is op 1 januari.</div>
+    <div class="input-rij">
+      <input type="text" id="in-6" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(6)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-6"></div>
+  </div>
+
+  <!-- 7 -->
+  <div class="opgave">
+    <div class="opgave-nl">7. Mijn verjaardag is op 2 februari.</div>
+    <div class="input-rij">
+      <input type="text" id="in-7" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(7)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-7"></div>
+  </div>
+
+  <!-- 8 -->
+  <div class="opgave">
+    <div class="opgave-nl">8. Zijn verjaardag is op 3 maart.</div>
+    <div class="input-rij">
+      <input type="text" id="in-8" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(8)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-8"></div>
+  </div>
+
+  <!-- 9 -->
+  <div class="opgave">
+    <div class="opgave-nl">9. Haar verjaardag is op 4 april.</div>
+    <div class="input-rij">
+      <input type="text" id="in-9" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(9)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-9"></div>
+  </div>
+
+  <!-- 10 -->
+  <div class="opgave">
+    <div class="opgave-nl">10. Mijn verjaardag is op 5 mei.</div>
+    <div class="input-rij">
+      <input type="text" id="in-10" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(10)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-10"></div>
+  </div>
+
+  <!-- 11 -->
+  <div class="opgave">
+    <div class="opgave-nl">11. Zijn verjaardag is op 6 juni.</div>
+    <div class="input-rij">
+      <input type="text" id="in-11" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(11)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-11"></div>
+  </div>
+
+  <!-- 12 -->
+  <div class="opgave">
+    <div class="opgave-nl">12. Haar verjaardag is op 7 juli.</div>
+    <div class="input-rij">
+      <input type="text" id="in-12" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(12)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-12"></div>
+  </div>
+
+  <!-- 13 -->
+  <div class="opgave">
+    <div class="opgave-nl">13. Mijn verjaardag is op 8 augustus.</div>
+    <div class="input-rij">
+      <input type="text" id="in-13" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(13)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-13"></div>
+  </div>
+
+  <!-- 14 -->
+  <div class="opgave">
+    <div class="opgave-nl">14. Zijn verjaardag is op 9 september.</div>
+    <div class="input-rij">
+      <input type="text" id="in-14" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(14)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-14"></div>
+  </div>
+
+  <!-- 15 -->
+  <div class="opgave">
+    <div class="opgave-nl">15. Haar verjaardag is op 10 oktober.</div>
+    <div class="input-rij">
+      <input type="text" id="in-15" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(15)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-15"></div>
+  </div>
+
+  <!-- 16 -->
+  <div class="opgave">
+    <div class="opgave-nl">16. Mijn verjaardag is op 11 november.</div>
+    <div class="input-rij">
+      <input type="text" id="in-16" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(16)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-16"></div>
+  </div>
+
+  <!-- 17 -->
+  <div class="opgave">
+    <div class="opgave-nl">17. Zijn verjaardag is op 12 december.</div>
+    <div class="input-rij">
+      <input type="text" id="in-17" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(17)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-17"></div>
+  </div>
+
+  <!-- 18 -->
+  <div class="opgave">
+    <div class="opgave-nl">18. Haar verjaardag is op 20 januari.</div>
+    <div class="input-rij">
+      <input type="text" id="in-18" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(18)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-18"></div>
+  </div>
+
+  <!-- 19 -->
+  <div class="opgave">
+    <div class="opgave-nl">19. Mijn verjaardag is op 21 maart.</div>
+    <div class="input-rij">
+      <input type="text" id="in-19" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(19)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-19"></div>
+  </div>
+
+  <!-- 20 -->
+  <div class="opgave">
+    <div class="opgave-nl">20. Zijn verjaardag is op 22 april.</div>
+    <div class="input-rij">
+      <input type="text" id="in-20" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(20)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-20"></div>
+  </div>
+
+  <!-- 21 -->
+  <div class="opgave">
+    <div class="opgave-nl">21. Haar verjaardag is op 25 mei.</div>
+    <div class="input-rij">
+      <input type="text" id="in-21" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(21)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-21"></div>
+  </div>
+
+  <!-- 22 -->
+  <div class="opgave">
+    <div class="opgave-nl">22. Mijn verjaardag is op 28 juni.</div>
+    <div class="input-rij">
+      <input type="text" id="in-22" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(22)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-22"></div>
+  </div>
+
+  <!-- 23 -->
+  <div class="opgave">
+    <div class="opgave-nl">23. Zijn verjaardag is op 30 juli.</div>
+    <div class="input-rij">
+      <input type="text" id="in-23" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(23)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-23"></div>
+  </div>
+
+  <!-- 24 -->
+  <div class="opgave">
+    <div class="opgave-nl">24. Haar verjaardag is op 31 augustus.</div>
+    <div class="input-rij">
+      <input type="text" id="in-24" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(24)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-24"></div>
+  </div>
+
+  <!-- 25 -->
+  <div class="opgave">
+    <div class="opgave-nl">25. Ik heet Max, ik kom uit Berlijn en mijn verjaardag is op 1 januari.</div>
+    <div class="input-rij">
+      <input type="text" id="in-25" placeholder="Typ de Duitse zin...">
+      <button class="check-btn" onclick="checkZin(25)">Controleer</button>
+    </div>
+    <div class="feedback" id="fb-25"></div>
+  </div>
+
+</div>
+
+<button class="reset" onclick="resetAlles()">Alles opnieuw proberen</button>
+
+<script>
+const antwoorden = {
+  1: { de: "Ich heiße Max und ich komme aus Berlin.", tip: "Let op de ß in 'heiße' en de 'und' ertussen." },
+  2: { de: "Ich bin zwölf Jahre alt.", tip: "Let op de umlaut bij 'zwölf'." },
+  3: { de: "Meine Freundin heißt Lena.", tip: "Vrouwelijk: 'Meine Freundin'. 'Heißt' met een t." },
+  4: { de: "Sie kommt aus München.", tip: "'Sie' is zij. Het werkwoord is 'kommt' (met een t). En let op de umlaut bij München." },
+  5: { de: "Mein Freund heißt Toni und er ist vierzehn Jahre alt.", tip: "Mannelijk: 'Mein Freund'. Let op 'er ist' en 'vierzehn' (met 'ie')." },
+  6: { de: "Mein Geburtstag ist am ersten Januar.", tip: "Let op: 1e = 'ersten'. En de maand 'Januar' met een hoofdletter." },
+  7: { de: "Mein Geburtstag ist am zweiten Februar.", tip: "2e = 'zweiten'. En 'Februar' met een hoofdletter." },
+  8: { de: "Sein Geburtstag ist am dritten März.", tip: "'Sein' = zijn. 3e = 'dritten'. Let op de umlaut bij 'März'." },
+  9: { de: "Ihr Geburtstag ist am vierten April.", tip: "'Ihr' = haar. 4e = 'vierten'." },
+  10: { de: "Mein Geburtstag ist am fünften Mai.", tip: "5e = 'fünften'. Let op de umlaut bij 'fünften'." },
+  11: { de: "Sein Geburtstag ist am sechsten Juni.", tip: "6e = 'sechsten'. Let op de 's' en 'ch'." },
+  12: { de: "Ihr Geburtstag ist am siebten Juli.", tip: "7e = 'siebten' (zonder 'en' in het midden!)." },
+  13: { de: "Mein Geburtstag ist am achten August.", tip: "8e = 'achten' (zonder 't' in het midden!)." },
+  14: { de: "Sein Geburtstag ist am neunten September.", tip: "9e = 'neunten'. Let op 'eu' en 'z'." },
+  15: { de: "Ihr Geburtstag ist am zehnten Oktober.", tip: "10e = 'zehnten'." },
+  16: { de: "Mein Geburtstag ist am elften November.", tip: "11e = 'elften'. Let op de 'f'." },
+  17: { de: "Sein Geburtstag ist am zwölften Dezember.", tip: "12e = 'zwölften'. Let op de umlaut bij 'zwölften'." },
+  18: { de: "Ihr Geburtstag ist am zwanzigsten Januar.", tip: "20e = 'zwanzigsten'." },
+  19: { de: "Mein Geburtstag ist am einundzwanzigsten März.", tip: "21e = 'einundzwanzigsten' (één woord)." },
+  20: { de: "Sein Geburtstag ist am zweiundzwanzigsten April.", tip: "22e = 'zweiundzwanzigsten'." },
+  21: { de: "Ihr Geburtstag ist am fünfundzwanzigsten Mai.", tip: "25e = 'fünfundzwanzigsten'." },
+  22: { de: "Mein Geburtstag ist am achtundzwanzigsten Juni.", tip: "28e = 'achtundzwanzigsten'." },
+  23: { de: "Sein Geburtstag ist am dreißigsten Juli.", tip: "30e = 'dreißigsten'. Let op de ß!" },
+  24: { de: "Ihr Geburtstag ist am einunddreißigsten August.", tip: "31e = 'einunddreißigsten'." },
+  25: { de: "Ich heiße Max, ich komme aus Berlin und mein Geburtstag ist am ersten Januar.", tip: "Denk aan de komma's en 'am ersten'." }
+};
+
+function isLeesteken(token) {
+  return /^[.,!?;:'"„“]$/.test(token);
+}
+
+function leestekenNaam(teken) {
+  if (teken === '.') return 'punt';
+  if (teken === ',') return 'komma';
+  if (teken === '?') return 'vraagteken';
+  if (teken === '!') return 'uitroepteken';
+  return 'leesteken (' + teken + ')';
+}
+
+function vergelijkZinnen(ingetypt, correct) {
+  const tokenize = (str) => str.match(/[\wÀ-ÿ]+|[^\s\w]/g) || [];
+  
+  const tokensIn = tokenize(ingetypt);
+  const tokensCorr = tokenize(correct);
+  
+  const diffs = [];
+  const maxLen = Math.max(tokensIn.length, tokensCorr.length);
+
+  for (let i = 0; i < maxLen; i++) {
+    const tIn = tokensIn[i] !== undefined ? tokensIn[i] : null;
+    const tCorr = tokensCorr[i] !== undefined ? tokensCorr[i] : null;
+
+    if (tIn !== tCorr) {
+      if (tIn === null) {
+        if (isLeesteken(tCorr)) {
+          if (tCorr === '.' && i === tokensCorr.length - 1) {
+            diffs.push(`De punt ontbreekt aan het einde van de zin.`);
+          } else {
+            diffs.push(`Het ${leestekenNaam(tCorr)} ontbreekt.`);
+          }
+        } else {
+          diffs.push(`Er ontbreekt een woord: het woord <strong>${tCorr}</strong> staat er niet.`);
+        }
+      } else if (tCorr === null) {
+        if (isLeesteken(tIn)) {
+          diffs.push(`Er staat een extra ${leestekenNaam(tIn)}, dat hoort er niet bij.`);
+        } else {
+          diffs.push(`Er staat te veel: het woord <strong>${tIn}</strong> hoort er niet bij.`);
+        }
+      } else {
+        if (isLeesteken(tIn) || isLeesteken(tCorr)) {
+          if (isLeesteken(tIn) && isLeesteken(tCorr)) {
+            diffs.push(`Hier staat een ${leestekenNaam(tIn)}, maar er moet een ${leestekenNaam(tCorr)} staan.`);
+          } else if (isLeesteken(tIn)) {
+            diffs.push(`Hier staat een ${leestekenNaam(tIn)}, maar er moet het woord '${tCorr}' staan.`);
+          } else {
+            diffs.push(`Hier staat het woord '${tIn}', maar er moet een ${leestekenNaam(tCorr)} staan.`);
+          }
+        } else {
+          let foutType = "Gewoon een typefout of verkeerd woord.";
+          if (tIn.toLowerCase() === tCorr.toLowerCase()) {
+            foutType = "Let op de <strong>hoofdletters</strong>! Je typte '" + tIn + "', maar het moet '" + tCorr + "' zijn.";
+          } else if (tIn.replace(/[ß]/g, 'ss') === tCorr.replace(/[ß]/g, 'ss')) {
+            foutType = "Let op de <strong>ß</strong> versus <strong>ss</strong>!";
+          } else {
+            foutType = "Hier staat '" + tIn + "', maar het moet '" + tCorr + "' zijn. Kijk naar de spelling of de juiste Duitse vertaling.";
+          }
+          diffs.push(`Woord ${i + 1}: ${foutType}`);
+        }
+      }
+    }
+  }
+  return diffs;
+}
+
+function checkZin(id) {
+  const inputField = document.getElementById("in-" + id);
+  const feedbackDiv = document.getElementById("fb-" + id);
+  const antwoord = antwoorden[id];
+  
+  const ingetypt = inputField.value.trim();
+  const isExactCorrect = ingetypt === antwoord.de;
+  const isLowerCorrect = ingetypt.toLowerCase() === antwoord.de.toLowerCase();
+
+  feedbackDiv.className = "feedback show";
+
+  if (isExactCorrect) {
+    inputField.className = "correct";
+    feedbackDiv.classList.add("ok");
+    feedbackDiv.innerHTML = "✅ <strong>Perfect!</strong> Alles klopt, inclusief de hoofdletters en leestekens.";
+  } else {
+    inputField.className = "wrong";
+    feedbackDiv.classList.add("nok");
+    
+    let feedbackHTML = "❌ <strong>Nog niet helemaal goed.</strong> ";
+    
+    if (isLowerCorrect) {
+      feedbackHTML += "Je zin is bijna perfect, maar je bent de <strong>hoofdletters</strong> vergeten (bijvoorbeeld bij de maanden of aan het begin van de zin).<br>";
+    } else {
+      const diffs = vergelijkZinnen(ingetypt, antwoord.de);
+      if (diffs.length > 0) {
+        feedbackHTML += "<br>Wat gaat er mis?<ul class='diff-list'>";
+        diffs.forEach(d => { feedbackHTML += `<li>${d}</li>`; });
+        feedbackHTML += "</ul>";
+      }
+    }
+    
+    feedbackHTML += `<div style="margin-top: 10px;">Het juiste antwoord is: <span class="correct-answer">${antwoord.de}</span></div>`;
+    feedbackHTML += `<div style="margin-top: 6px; color: #555;"><em>💡 Tip: ${antwoord.tip}</em></div>`;
+    
+    feedbackDiv.innerHTML = feedbackHTML;
+  }
+}
+
+function resetAlles() {
+  for (let i = 1; i <= 25; i++) {
+    const inputField = document.getElementById("in-" + i);
+    const feedbackDiv = document.getElementById("fb-" + i);
+    if(inputField) inputField.value = "";
+    if(inputField) inputField.className = "";
+    if(feedbackDiv) feedbackDiv.className = "feedback";
+    if(feedbackDiv) feedbackDiv.innerHTML = "";
+  }
+}
+</script>
+
+</body>
+</html>
